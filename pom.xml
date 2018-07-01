@@ -74,4 +74,10 @@
             <version>${cn.cerc.summer.version}</version>
         </dependency>
     </dependencies>
+    <repositories>
+        <repository>
+            <id>vine</id>
+            <url>http://121.40.194.178:8081/nexus/content/groups/public</url>
+        </repository>
+    </repositories>
 </project>

@@ -5,6 +5,8 @@
            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
     <import resource="classpath*:jbean-service.xml" />
     <import resource="classpath*:jmis-service.xml" />
+
+    <!-- 范例 -->
     <bean id="SvrExample.search" class="cn.cerc.example.service.SvrExample">
         <property name="funcCode" value="search"></property>
     </bean>
