@@ -1,0 +1,77 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+           http://www.springframework.org/schema/task  
+           http://www.springframework.org/schema/task/spring-task-4.0.xsd
+           http://www.springframework.org/schema/context  
+           http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <!-- 显示层配置对象 -->
+    <bean id="AppConfig" class="cn.cerc.jbean.core.AppConfig">
+        <property name="params">
+            <map>
+                <entry key="configFile" value="classpath:application.properties" />
+                <entry key="jspLoginFile" value="common/Login.jsp" />
+
+                <!-- System Table -->
+                <entry key="OurInfo" value="s_BookInfo" />
+                <entry key="VineOptions" value="s_BookOptions" />
+                <entry key="SysFormDef" value="s_AppMenus" />
+                <entry key="cusmenu" value="s_CustomMenus" />
+                <entry key="UserMenu" value="s_UserMenus" />
+
+                <entry key="Account" value="s_UserInfo" />
+                <entry key="UserOptions" value="s_UserOptions" />
+                <entry key="UserRoles" value="s_UserRoles" />
+                <entry key="RoleAccess" value="s_UserAccess" />
+                <entry key="AccountVerify" value="s_DeviceVerify" />
+
+                <entry key="CurrentUser" value="s_CurrentUser" />
+                <entry key="message_temp" value="s_UserMessages" />
+                <entry key="UserLogs" value="s_UserLogs" />
+                <entry key="AppServiceLogs" value="s_AppLogs" />
+                <entry key="WebPageLogs" value="s_PageLogs" />
+
+                <entry key="formWelcome" value="FrmWelcome" />
+                <entry key="formDefault" value="FrmWelcome" />
+            </map>
+        </property>
+    </bean>
+
+    <!-- Handle实体 -->
+    <bean id="AppHandle" class="cn.cerc.jbean.core.CustomHandle" scope="prototype">
+        <property name="connections">
+            <map>
+                <!-- key定义于SqlQuery -->
+                <entry key="sqlSession" value-ref="SqlConnection" />
+                <entry key="cacheSession" value-ref="CacheConnection" />
+                <entry key="aliyunQueueSession" value-ref="QueueConnection" />
+            </map>
+        </property>
+    </bean>
+
+    <!-- 连接mysql -->
+    <bean id="SqlConnection" class="cn.cerc.jdb.mysql.SqlConnection">
+        <property name="config" ref="ServerConfig"></property>
+    </bean>
+    <!-- 连接缓存 -->
+    <bean id="CacheConnection" class="cn.cerc.jdb.cache.CacheConnection">
+        <property name="config" ref="ServerConfig"></property>
+    </bean>
+    <!-- 连接队列 -->
+    <bean id="QueueConnection" class="cn.cerc.jdb.queue.QueueConnection">
+        <property name="config" ref="ServerConfig"></property>
+    </bean>
+
+    <!-- 读取本地配置文件 -->
+    <bean id="ServerConfig" class="cn.cerc.jbean.core.ServerConfig" />
+    <!-- 权限检查 -->
+    <bean id="Passport" class="site.jayun.example.common.Passport" scope="prototype" />
+    <!-- 系统菜单定义表 -->
+    <bean id="AppMenus" class="site.jayun.example.common.MenuFactory" scope="prototype" />
+    <!-- 系统登录对象 -->
+    <bean id="AppLogin" class="cn.cerc.jmis.page.AppLoginPage" scope="prototype" />
+
+</beans>
