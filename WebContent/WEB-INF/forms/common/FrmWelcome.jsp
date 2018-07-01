@@ -2,13 +2,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<title>jayun-java-example</title>
+<title>欢迎学习summer框架</title>
 </head>
-<body style="font-size: 2em;">
-    <div style="text-align: center; padding-top: 2em;">
-        <div>
-            <a href="JayunApiExample">聚安Api功能演示</a>
-        </div>
-    </div>
+<body>
+    请根据需求文档，自行建立相关文件
 </body>
 </html>

@@ -1,3 +1,3 @@
-# jayun-java-sdk
+# summer-training
 
-聚安api调用示例
+summer framework 学习范例

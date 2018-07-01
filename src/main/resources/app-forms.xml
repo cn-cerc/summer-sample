@@ -4,5 +4,5 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans  
            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
     <bean id="FrmWelcome" class="cn.cerc.example.forms.FrmWelcome" scope="prototype" />
-    <bean id="FrmIndex" class="cn.cerc.example.forms.FrmIndex" scope="prototype" />
+    <bean id="FrmExample" class="cn.cerc.example.forms.FrmExample" scope="prototype" />
 </beans>

@@ -1,9 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>site.jayun</groupId>
-    <artifactId>jayun-java-sample</artifactId>
-    <url>https://github.com/jayun/jayun-java-sample</url>
+    <groupId>cn.cerc</groupId>
+    <artifactId>summer-training</artifactId>
     <version>1.0.0</version>
     <packaging>war</packaging>
     <properties>
