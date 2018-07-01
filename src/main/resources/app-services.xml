@@ -5,4 +5,19 @@
            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
     <import resource="classpath*:jbean-service.xml" />
     <import resource="classpath*:jmis-service.xml" />
+    <bean id="SvrExample.search" class="cn.cerc.example.service.SvrExample">
+        <property name="funcCode" value="search"></property>
+    </bean>
+    <bean id="SvrExample.append" class="cn.cerc.example.service.SvrExample">
+        <property name="funcCode" value="append"></property>
+    </bean>
+    <bean id="SvrExample.download" class="cn.cerc.example.service.SvrExample">
+        <property name="funcCode" value="download"></property>
+    </bean>
+    <bean id="SvrExample.modify" class="cn.cerc.example.service.SvrExample">
+        <property name="funcCode" value="modify"></property>
+    </bean>
+    <bean id="SvrExample.delete" class="cn.cerc.example.service.SvrExample">
+        <property name="funcCode" value="delete"></property>
+    </bean>
 </beans>
