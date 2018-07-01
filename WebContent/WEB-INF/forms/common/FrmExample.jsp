@@ -5,6 +5,8 @@
 <title>欢迎学习summer框架</title>
 </head>
 <body>
+    <div><a href="FrmWelcome">首页</a></div>
+
     <div>${message}</div>
     <form method="post" action="FrmExample">
         <label id="searchText">条件</label>
