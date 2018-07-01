@@ -8,7 +8,7 @@ public class FrmExample extends AbstractForm {
 
     @Override
     public IPage execute() {
-        return new JspPage(this, "common/FrmWelcome.jsp");
+        return new JspPage(this, "common/FrmExample.jsp");
     }
 
     @Override
