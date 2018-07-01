@@ -1,4 +1,4 @@
-package site.jayun.example.forms;
+package cn.cerc.example.forms;
 
 import cn.cerc.jbean.form.IPage;
 import cn.cerc.jmis.form.AbstractForm;

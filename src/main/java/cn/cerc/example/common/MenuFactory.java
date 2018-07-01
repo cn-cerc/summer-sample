@@ -1,4 +1,4 @@
-package site.jayun.example.common;
+package cn.cerc.example.common;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

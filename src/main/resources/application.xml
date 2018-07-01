@@ -68,9 +68,9 @@
     <!-- 读取本地配置文件 -->
     <bean id="ServerConfig" class="cn.cerc.jbean.core.ServerConfig" />
     <!-- 权限检查 -->
-    <bean id="Passport" class="site.jayun.example.common.Passport" scope="prototype" />
+    <bean id="Passport" class="cn.cerc.example.common.Passport" scope="prototype" />
     <!-- 系统菜单定义表 -->
-    <bean id="AppMenus" class="site.jayun.example.common.MenuFactory" scope="prototype" />
+    <bean id="AppMenus" class="cn.cerc.example.common.MenuFactory" scope="prototype" />
     <!-- 系统登录对象 -->
     <bean id="AppLogin" class="cn.cerc.jmis.page.AppLoginPage" scope="prototype" />
 

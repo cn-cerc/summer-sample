@@ -1,4 +1,4 @@
-package site.jayun.example.common;
+package cn.cerc.example.common;
 
 import cn.cerc.jbean.core.AbstractHandle;
 import cn.cerc.jbean.core.IPassport;
