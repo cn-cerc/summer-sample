@@ -5,6 +5,7 @@
     <artifactId>summer-training</artifactId>
     <version>1.0.0</version>
     <packaging>war</packaging>
+        <url>https://github.com/cn-cerc/summer-training</url>
     <properties>
         <cn.cerc.summer.version>1.5.0</cn.cerc.summer.version>
     </properties>
