@@ -5,7 +5,9 @@
 <title>修改范例</title>
 </head>
 <body>
-    <div>${message}</div>
+
+    <%@ include file="head.jspf" %>
+
     <form method="post" action="FrmExample.modify">
         <input type="hidden" id="uid" name="uid" value="${record.items.UID_}">
         <div>

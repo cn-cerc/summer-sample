@@ -7,12 +7,18 @@ import cn.cerc.jdb.core.Record;
 import cn.cerc.jmis.form.AbstractForm;
 import cn.cerc.jmis.page.JspPage;
 import cn.cerc.jmis.page.RedirectPage;
+import cn.cerc.jpage.core.UrlRecord;
 
 public class FrmExample extends AbstractForm {
 
     @Override
     public IPage execute() {
         JspPage jspPage = new JspPage(this, "common/FrmExample.jsp");
+
+        String message = getRequest().getParameter("message");
+        if (message != null) {
+            jspPage.setMessage(message);
+        }
 
         LocalService svr = new LocalService(this, "SvrExample.search");
         Record headIn = svr.getDataIn().getHead();
@@ -65,7 +71,11 @@ public class FrmExample extends AbstractForm {
             jspPage.setMessage(svr.getMessage());
             return jspPage;
         }
-        return new RedirectPage(this, "FrmExample");
+
+        UrlRecord url = new UrlRecord();
+        url.setSite("FrmExample");
+        url.addParam("message", "添加成功");
+        return new RedirectPage(this, url.getUrl());
     }
 
     public IPage modify() {
@@ -74,6 +84,11 @@ public class FrmExample extends AbstractForm {
         if (uid == null || "".equals(uid)) {
             jspPage.setMessage("uid 不允许为空");
             return jspPage;
+        }
+
+        String message = getRequest().getParameter("message");
+        if (message != null) {
+            jspPage.setMessage(message);
         }
 
         LocalService svr1 = new LocalService(this, "SvrExample.download");
@@ -101,12 +116,23 @@ public class FrmExample extends AbstractForm {
     }
 
     public IPage delete() {
+        UrlRecord url = new UrlRecord();
+
         String uid = getRequest().getParameter("uid");
         LocalService svr = new LocalService(this, "SvrExample.delete");
         Record headIn2 = svr.getDataIn().getHead();
         headIn2.setField("UID_", uid);
-        svr.exec();
-        return new RedirectPage(this, "FrmExample");
+
+        if (!svr.exec()) {
+            url.setSite("FrmExample.modify");
+            url.addParam("uid", uid);
+            url.addParam("message", svr.getMessage());
+            return new RedirectPage(this, url.getUrl());
+        }
+
+        url.setSite("FrmExample");
+        url.addParam("message", "删除成功");
+        return new RedirectPage(this, url.getUrl());
     }
 
     @Override

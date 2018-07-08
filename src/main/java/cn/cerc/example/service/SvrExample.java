@@ -85,7 +85,6 @@ public class SvrExample extends CustomService {
         DataValidateException.stopRun("记录不存在", cdsTmp.eof());
 
         cdsTmp.delete();
-        cdsTmp.post();
         return true;
     }
 }

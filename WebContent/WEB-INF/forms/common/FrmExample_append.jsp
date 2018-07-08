@@ -5,7 +5,9 @@
 <title>增加范例</title>
 </head>
 <body>
-    <div>${message}</div>
+
+    <%@ include file="head.jspf" %>
+
     <form method="post" action="FrmExample.append">
         <div>
             <label>姓名</label>

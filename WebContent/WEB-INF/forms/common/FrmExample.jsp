@@ -5,9 +5,9 @@
 <title>欢迎学习summer框架</title>
 </head>
 <body>
-    <div><a href="FrmWelcome">首页</a></div>
 
-    <div>${message}</div>
+    <%@ include file="head.jspf" %>
+
     <form method="post" action="FrmExample">
         <label id="searchText">条件</label>
         <input id="searchText" name="searchText" value="${param.searchText}" />
