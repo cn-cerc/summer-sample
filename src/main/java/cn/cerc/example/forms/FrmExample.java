@@ -1,5 +1,8 @@
 package cn.cerc.example.forms;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.form.IPage;
 import cn.cerc.jdb.core.DataSet;
@@ -10,6 +13,8 @@ import cn.cerc.jmis.page.RedirectPage;
 import cn.cerc.jpage.core.UrlRecord;
 
 public class FrmExample extends AbstractForm {
+
+    private static final Logger log = LoggerFactory.getLogger(FrmExample.class);
 
     @Override
     public IPage execute() {
@@ -34,6 +39,7 @@ public class FrmExample extends AbstractForm {
             dataSet.setField("sex_", sex);
         }
         jspPage.add("dataSet", dataSet);
+        log.info("dataSet {}", dataSet);
         return jspPage;
     }
 
