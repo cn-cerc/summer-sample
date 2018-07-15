@@ -12,6 +12,11 @@ import cn.cerc.jmis.page.JspPage;
 import cn.cerc.jmis.page.RedirectPage;
 import cn.cerc.jpage.core.UrlRecord;
 
+/**
+ * 注意
+ * 
+ * 新建的Frm类请重写 logon() 函数，否则会被过滤器拦截
+ */
 public class FrmExample extends AbstractForm {
 
     private static final Logger log = LoggerFactory.getLogger(FrmExample.class);
