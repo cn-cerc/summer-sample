@@ -50,19 +50,19 @@ public class FrmExample extends AbstractForm {
             return jspPage;
         }
 
-        String name = jspPage.getRequest().getParameter("name");
+        String name = getRequest().getParameter("name");
         if (name == null || "".equals(name)) {
             jspPage.setMessage("姓名不允许为空");
             return jspPage;
         }
 
-        String sex = jspPage.getRequest().getParameter("sex");
+        String sex = getRequest().getParameter("sex");
         if (sex == null || "".equals(sex)) {
             jspPage.setMessage("性别不允许为空");
             return jspPage;
         }
 
-        String age = jspPage.getRequest().getParameter("age");
+        String age = getRequest().getParameter("age");
         if (age == null || "".equals(age)) {
             jspPage.setMessage("姓名不允许为空");
             return jspPage;
@@ -111,7 +111,7 @@ public class FrmExample extends AbstractForm {
             LocalService svr2 = new LocalService(this, "SvrExample.modify");
             Record headIn2 = svr2.getDataIn().getHead();
             headIn2.setField("UID_", uid);
-            headIn2.setField("age_", jspPage.getRequest().getParameter("age"));
+            headIn2.setField("age_", getRequest().getParameter("age"));
             if (!svr2.exec()) {
                 jspPage.setMessage(svr2.getMessage());
                 return jspPage;
