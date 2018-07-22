@@ -19,7 +19,7 @@
 
 ![](source/img/环境变量.png)
 
-**3、安装路径请根据自身电脑进行配置，建议使用软件的默认安装配置**
+**3、安装路径请根据自身电脑进行配置，建议使用软件的默认安装配路径
 
 新建 JAVA_HOME
 
@@ -41,6 +41,9 @@ C:\Users\iCrazyMage\Documents\i-tool\apache-maven-3.3.9
 ```
 
 修改系统变量 Path
+
+注意：在原有变量后面追加，不要覆盖其他变量路径
+
 ```
 Path
 ;%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;%MAVEN_HOME%\bin
