@@ -4,6 +4,7 @@ import cn.cerc.example.common.AppDB;
 import cn.cerc.jbean.core.CustomService;
 import cn.cerc.jbean.core.DataValidateException;
 import cn.cerc.jdb.core.Record;
+import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.mysql.BuildQuery;
 import cn.cerc.jdb.mysql.SqlQuery;
 
@@ -33,6 +34,8 @@ public class SvrExample extends CustomService {
         cdsTmp.setField("name_", headIn.getString("name_"));
         cdsTmp.setField("sex_", headIn.getString("sex_"));
         cdsTmp.setField("age_", headIn.getString("age_"));
+        cdsTmp.setField("createTime_", TDateTime.Now());
+        cdsTmp.setField("updateTime_", TDateTime.Now());
         cdsTmp.post();
 
         return true;
@@ -69,6 +72,7 @@ public class SvrExample extends CustomService {
 
         cdsTmp.edit();
         cdsTmp.setField("age_", age);
+        cdsTmp.setField("updateTime_", TDateTime.Now());
         cdsTmp.post();
         return true;
     }
