@@ -1,5 +1,7 @@
 # 简易进销存开发说明
 
+[仓库地址](https://github.com/cn-cerc/summer-training)
+
 ## 一、搭建环境
 
 ### 1、环境变量
