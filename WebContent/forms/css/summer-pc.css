@@ -1,0 +1,685 @@
+@charset "UTF-8";
+@media only screen and (min-width: 768px) {
+    body{
+        background: #fff !important;
+    }
+    
+    .item-group{
+        width: 60%;
+        height: auto;
+        margin: 2em auto;
+        padding: 1.5em;
+        background: #dfe9ef;
+        border-radius: 0.5em;
+        -webkit-border-radius: 0.5em;
+        
+    }
+    .item-group .input-item{
+        width: 100%;
+        height: 2.4em;
+        line-height: 2.4em;
+        margin: 0.5em 0;
+        text-align: center;
+    }
+    .item-group .input-item>label{
+        display: inline-block;
+        width: 6em;
+        text-align: right;
+    }
+    .item-group .input-item>input,.item-group .input-item>select{
+        width: 16em;
+        height: 2em;
+        border: 1px solid #e6e6e6;
+        border-radius: 0.4em;
+        -webkit-border-radius: 0.4em;
+        padding-left: 0.7em;
+        margin-left: 0.7em;
+    }
+    .item-group .ui-btn{
+        display: block;
+        width: 16em;
+        height: 2.4em;
+        line-height: 2.4em;
+        border-radius: 0.4em;
+        -webkit-border-radius: 0.4em;
+        background: #2884cc;
+        color: #fff;
+        text-align: center;
+        margin: 3em auto;
+    }
+    
+    input[type="text"], input[type="number"], input[type="tel"], input[type="email"], select, input[type="password"] {
+        width: 10em;
+        height: 1.75em;
+        line-height: 1.75em;
+        border-radius: .4em;
+        -webkit-border-radius: .4em;
+        border: none;
+        outline: none;
+        background-color: #fff;
+        border: 1px solid #e6e6e6;
+        padding-left: .6em;
+        color: #333;
+    }
+    
+    .dbgrid tr:hover,table tr:hover{
+        background: #e0eff7;
+    }
+    
+    .scrollArea{
+        padding: 0 0.5em 0.7em;
+    }
+    .dbgrid{
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+    .selectSup .block301 {
+        padding: 0.8em;
+        border-bottom: 1px solid #dedede;
+        position: relative;
+    }
+    
+    .selectSup .block301 img[role='icon'] {
+        float: left;
+        width: 4.375em;
+        height: 4.375em;
+        margin-right: 0.8em;
+        border-radius: 5px;
+    }
+    .selectSup .block301 img[role='right'] {
+        float: right;
+        width: 0.8em;
+        position: absolute;
+        right: 0;
+        margin-top: 1.5em;
+        margin-right: 1em;
+    }
+    .selectSup .block301 span[role="red"]{
+        border: 1px solid;
+        color: red;
+        padding: 0 0.2em;
+    }
+    .selectSup .block301 span[role="green"]{
+        border: 1px solid;
+        color: green;
+        padding: 0 0.2em;
+    }
+    
+    a:link {
+        text-decoration: none;
+        color: #0f6cb4;
+    }
+    a:visited {
+        text-decoration: none;
+        color: #2884cc;
+    }
+    
+    button, input[type="submit"], input[type="button"]{
+        /* background: #0f6cb4; */
+        background: #25ba3a;
+        border-radius: 0em;
+        -webkit-border-radius: 0em;
+    }
+    
+    button:hover, input[type="submit"]:hover, input[type="button"]:hover{
+        background: #80d78f;
+    }
+    
+    nav[role="mainMenu"] a:hover {
+        background-size: cover;
+        color: #2884cc;
+    }
+    
+    form.search,form.modify{
+        background: #f9fdff;
+        border: 1px solid #e6e6e6;
+    }
+    .ui-title{
+        display: inline-block;
+        width: 100%;
+        height: 2.5em;
+        line-height:2.5em;
+        padding-left: 1em;
+        background: linear-gradient(#f8f8f8, #e6e6e6); /* 标准的语法 */
+        background: -webkit-linear-gradient(#f8f8f8, #e6e6e6); /* 标准的语法 */
+        FILTER:progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#f8f8f8', endColorstr='#e6e6e6');
+        position: relative;
+    }
+    /* .ui-title-operate{
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: inline-block;
+        width: 2.5em;
+        height: 2.5em;
+        background: url(../images/title-operate.png);
+        background-repeat: no-repeat;
+        background-size: auto auto;
+        background-position: center center;
+        cursor: pointer;
+    } */
+    .ui-title-hide{
+        transform: rotate(-180deg);
+        -webkit-transform: rotate(-180deg);
+    }
+    
+	.dbgrid th{
+	    font-weight: bold;
+        padding-left: 0.7em;
+        text-align: left;
+        background: #f3f3f3;
+	}
+	
+	.dbgrid td{
+	    text-align: left;
+        padding-left: 0.7em;
+	}
+	
+	/* 修改form专用 */
+	form.modify {
+		width: 100%;
+		max-width: 1366px;
+		z-index: 2;
+	}
+	form.modify table {
+		width: 80%;
+	}
+	form.modify div {
+		clear: both;
+	}
+	form.modify th {
+		width: 15%;
+	}
+	form.modify td {
+		width: 30%;
+	}
+	form.modify td.hint {
+		width: 5%;
+	}
+	form.modify {
+		min-width: 980px;
+		text-align: left;
+	}
+	form.modify ul {
+		max-width: 860px;
+		min-width: 855px;
+		float: left;
+		width: 80%;
+	}
+	form.modify ul li {
+		width: 32.5%;
+		display: inline-block;
+		padding-left: 1em;
+	}
+	form.modify ul li input, form.modify ul li select {
+		width: 50%;
+		min-width: 3em;
+	}
+	form.modify ul li span {
+		padding: 0;
+		width: 1em;
+	}
+	form.modify input[type=submit] {
+		margin-top: 0.25em;
+		display: block;
+	}
+	form.modify button {
+		margin-top: 0.25em;
+		display: block;
+	}
+
+	/*搜索区域样式*/
+	form.search table {
+		width: 80%;
+	}
+	form.search div {
+		clear: both;
+	}
+	form.search th {
+		width: 15%;
+	}
+	form.search td {
+		width: 30%;
+	}
+	form.search td.hint {
+		width: 5%;
+	}
+	form.search ul {
+		max-width: 860px;
+		min-width: 855px;
+		float: left;
+		width: 80%;
+	}
+	form.search ul li {
+		width: 32.5%;
+		padding-left: 1em;
+		display: inline-block;
+	}
+	form ul li.select {
+		padding-left: 0.25em;
+	}
+	form.search ul li span {
+		padding: 0;
+		width: 1em;
+	}
+	form.search ul li input, form.search ul li select {
+		width: 50%;
+		min-width: 3em;
+	}
+	form.search ul li input.price {
+		width: 24.5%;
+	}
+	form.search input[type=submit] {
+		clear: both;
+		margin: 0.5em auto 0;
+	}
+	form.search button {
+		clear: both;
+		margin: 0.5em auto 0;
+	}
+	form.upload ul li {
+		width: 45%;
+		padding-left: 1em;
+		display: inline-block;
+	}
+	form.upload ul li input, form.upload ul li select {
+		width: 60%;
+		min-width: 3em;
+	}
+	body {
+		position: relative;
+		max-width: 1366px;
+		min-width: 980px;
+		overflow: hidden;
+	}
+	table {
+		border: 1px solid #e6e6e6;
+	}
+	.inputGroup {
+		display: inline-block;
+		width: 16em;
+		height: 3em;
+		line-height: 3em;
+		float: left;
+	}
+	.inputGroup label {
+		display: inline-block;
+		width: 5em;
+		height: 3em;
+		margin-right: .6em;
+		text-align: right;
+	}
+	.inputGroup input[type="submit"] {
+		margin-left: .6em;
+	}
+
+	/*头部*/
+	header[role="header"] {
+		position: absolute;
+		top: 0;
+		left: 0;
+		max-width: 1366px;
+		width: 100%;
+		min-width: 980px;
+		min-height: 2.2em;
+		z-index: 101;
+	}
+	
+	
+	section[role="advertisement"] {
+		width: 100%;
+		height: 120px;
+		padding: 0 10px 10px;
+        background: #b0d8ef;
+        position: relative;
+	}
+	section[role="advertisement"]:after{
+	   display: inline-block;
+	   width: 100%;
+	   height: 10px;
+	   position: absolute;
+	   bottom: 0;
+	   left: 0;
+	   content: "";
+	   background: url(../images/ads-bg.png);
+	   background-repeat: no-repeat;
+	   background-position: center;
+	   background-size: 100% 10px;
+	   z-index: 999;
+	}
+	section[role="advertisement"] img {
+		width: 100%;
+		height: 110px;
+	}
+	nav[role="mainMenu"] {
+		width: 100%;
+		height: 2.2em;
+		padding: 0 10px;
+		color: #0f6cb4;
+		background: #fff;
+		border-bottom: 1px solid #e6e6e6;
+		padding-right: 310px;
+	}
+	nav[role="mainMenu"] section[role="leftMenu"] {
+		width: 70%;
+		height: 2.2em;
+		line-height: 2.2em;
+		float: left;
+		position: relative;
+	}
+	nav[role="mainMenu"] section[role="leftMenu"] .menu {
+		display: none;
+	}
+	nav[role="mainMenu"] section[role="leftMenu"]>ul {
+		width: auto;
+		min-height: 2.2em;
+		display: inline-block;
+		float: left;
+	}
+	nav[role="mainMenu"] section[role="leftMenu"] div[role="headerButtons"] {
+		width: auto;
+		min-height: 2.2em;
+		display: inline-block;
+		float: left;
+	}
+	nav[role="mainMenu"] section[role="leftMenu"] div[role="headerButtons"] a{
+	    color: #333;
+	    border-left: 1px solid #e6e6e6;
+		padding-left: 1em;
+		margin-right: 1em;
+	}
+	nav[role="mainMenu"] section[role="leftMenu"] div[role="headerButtons"] a>img{
+	    margin-right: 0.5em;
+	    margin-top: -0.2em;
+	}
+	section[role="leftMenu"]>ul li {
+		float: left;
+		height: 2.2em;
+		line-height: 2.2em;
+		padding-right:0.5em;
+		color: #0f6cb4;
+	}
+	section[role="leftMenu"]>ul li a {
+		color: #0f6cb4;
+	}
+	section[role="leftMenu"]>ul li span {
+		margin-right: 0.3em;
+	}
+	nav[role="mainMenu"] section[role="rightMenu"] {
+		width: 100%;
+		min-height: 2.2em;
+	}
+	section[role="rightMenu"]>ul{
+		float: right;
+	}
+	section[role="rightMenu"]>ul li {
+		float: left;
+		height: 2.2em;
+		line-height: 2.2em;
+		padding: 0 .5em 0 0.5em;
+		color: #0f6cb4;
+	}
+	section[role="rightMenu"]>ul li a {
+		color: #0f6cb4;
+	}
+	section[role="rightMenu"]>ul li img {
+		width: 1.2em;
+		height: 1.2em;
+		margin-top: -0.4em;
+		/*vertical-align: baseline;*/
+	}
+	nav[role="mainMenu"] section[role="rightMenu"] a {
+		color: #0f6cb4;
+	}
+	nav[role="mainMenu"] section[role="leftMenu"] .menu {
+		width: 1.8em;
+		height: 1.5em;
+		margin-top: -.4em;
+	}
+	nav[role="mainMenu"] section[role="rightMenu"] {
+		width: 30%;
+		height: 2.2em;
+		line-height: 2.2em;
+		float: left;
+		text-align: right;
+	}
+	nav[role="mainMenu"] section[role="rightMenu"] .exit {
+		width: 1.3em;
+		height: 1.3em;
+		margin-top: -.4em;
+	}
+
+	/*主体部分*/
+	article[role="document"] {
+		max-width: 1366px;
+		width: 100%;
+		min-width: 980px;
+		min-height: 10em;
+		padding-right: 320px;
+		overflow: auto;
+		position: relative;
+	}
+	article[role="document"] section[role="control"] {
+		padding: 0.5em;
+	    background: transparent;
+	    clear: both;
+	    padding-right: 0;
+	}
+	article[role="document"] section[role="content"] {
+		min-height: 5em;
+		overflow-y: auto;
+		padding-bottom: 0.7em;
+	}
+	
+	/*leftSide区内的样式*/
+	.info-newStyle div.leftSide section {
+	    margin: 5px;
+	    border: 1px solid #dedede;
+	    border-radius: 10px 0;
+	}
+	
+	.info-newStyle div.leftSide section ul li {
+	    padding: 0.05em 0.5em;
+	}
+	
+	.info-newStyle div.leftSide section div.title {
+	    display: block;
+	    padding: 0.05em 0.5em;
+	    box-shadow: 0 2px white;
+	    background: #dedede;
+	    color: #4d4d4d;
+	    font-weight: bold;
+	    border-radius: 8px 0 0 0;
+	}
+	
+	.info-newStyle div.leftSide section div.title a {
+	    float: right;
+	    margin-right: 0.5em;
+	}
+	
+	.info-newStyle div.leftSide section div.contents span {
+	    display: block;
+	    margin-left: 0.5em;
+	}
+	
+	/*工具栏部分*/
+	aside[role="toolBar"] {
+		position: absolute;
+		top: 110px;
+		right: 0;
+		width: 310px;
+		height: 100%;
+		background: #b0d8ef;
+		z-index: 102;
+		padding: 0.5em .3em 3.3em .3em;
+	}
+	
+	.leftAside {
+		position: absolute;
+		top: 0;
+		right: 310px;
+		width: 0.7em;
+		height: 100%;
+		display: inline-block;
+		background-image: url(../images/handle-right.png);
+		background-repeat: no-repeat;
+		background-size: .7em 4.5em;
+		background-position: 0px center;
+		border-right: 2px solid #b0d8ef;
+		z-index: 100;
+		padding: 3.2em 0 3.3em 0;
+		cursor: pointer;
+	}
+	
+
+	/*底部*/
+	footer[role="footer"] {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		max-width: 1366px;
+		width: 100%;
+		min-width: 980px;
+		height: 2.5em;
+		background: #ececec;
+		z-index: 101;
+	}
+	
+	footer[role="footer"] section[role="footerTools"],footer[role="footer"] section[role="footerButtons"] {
+        display: inline-block;
+        height: 2.5em;
+        line-height: 2.5em;
+    }
+    section[role="footerTools"]>a,section[role="footerButtons"] a {
+        display: inline-block;
+        min-width: 4em;
+        height: 1.75em;
+        line-height: 1.75em;
+        background: #0f6bb3;
+        color: #fff;
+        text-align: center;
+        padding: 0 0.8em;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        margin-left: 1em;
+    }
+	
+	footer[role="footer"] section[role="buttons"] {
+		display: inline-block;
+		height: 2.5em;
+		line-height: 2.5em;
+	}
+	section[role="buttons"] button {
+		margin-left: 1em;
+	}
+	
+	section[role="buttons"] .bottomBotton {
+		display: inline-block;
+		min-width: 4em;
+		height: 1.75em;
+		line-height: 1.75em;
+		border-radius: .4em;
+		-webkit-border-radius: .4em;
+		background: #058FCA;
+		color: #FFFFFF;
+		text-align: center;
+		padding: 0 0.8em;
+		border: none;
+		outline: none;
+		cursor: pointer;
+		margin-left: 1em;
+	}
+	section[role="buttons"] .bottomBotton:hover{
+		background: #63a8e6;
+	}
+
+	/*pc版表格样式*/
+	table.dbgrid tr td span {
+		padding-right: 1em;
+	}
+	table.dbgrid tr[id*=_] {
+		background-color: #fff;
+		font-size: 0.9em;
+		color: #979797;
+	}
+	table.dbgrid {
+		color: #333333;
+		border-width: 1px;
+		border-color: #729ea5;
+		border-collapse: collapse;
+	}
+	.dbgrid input[role=edit] {
+		color: red;
+	}
+	
+	/*选择弹窗的样式*/
+	.selectDialog {
+	    width: 95%;
+	}
+	
+	section[role="content"] ul.info li{
+		margin: 0 auto;
+	}
+	section[role="content"] ul.info li input[type='text'], 
+	section[role="content"] ul.info li input[type='file'],
+	select, textarea {
+	    width: 14em;
+	}
+	
+	section[role="content"] ul.info li label {
+	    max-width: none;
+	}
+	
+	section[role="content"] ul.info li img {
+	    float: right;
+	    padding-top: 0.25em;
+	}
+	
+	/*卡片样式 用于基本资料、帐号权限管理等*/
+	section[role="content"] section[role="sheetCard"] {
+	    width: 32%;
+	    margin: 0.66%;
+	    min-height: 13em;
+	}
+}
+/*选择弹窗的样式*/
+.selectDialog {
+    width: 95%;
+}
+.relational-box{
+	width: 80%;
+	height: auto;
+	margin: 1em auto;
+	display: flex;
+	display: -webkit-flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	align-content: flex-start;
+}
+.relational-box>div{
+	width: 45%;
+}
+.body-relational>label{
+	border-left: 3px solid #0f6cb4;
+	padding-left: 0.7em;
+	margin-bottom: 1em;
+}
+.relational-box .payment{
+	width: 100%;
+	height: 4.5em;
+	line-height: 4.5em;
+	border-bottom: 1px solid #e6e6e6;
+}
+.relational-box .block_Img_Div{
+	display: flex;
+    display: -webkit-flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.relational-box .block_Img_Div>img{
+	width: 3.5em;
+	height: 3.5em;
+	margin-right: 0.7em;
+}
