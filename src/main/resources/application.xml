@@ -46,22 +46,12 @@
             <map>
                 <!-- key定义于SqlQuery -->
                 <entry key="sqlSession" value-ref="SqlConnection" />
-                <entry key="cacheSession" value-ref="CacheConnection" />
-                <entry key="aliyunQueueSession" value-ref="QueueConnection" />
             </map>
         </property>
     </bean>
 
     <!-- 连接mysql -->
     <bean id="SqlConnection" class="cn.cerc.jdb.mysql.SqlConnection">
-        <property name="config" ref="ServerConfig"></property>
-    </bean>
-    <!-- 连接缓存 -->
-    <bean id="CacheConnection" class="cn.cerc.jdb.cache.CacheConnection">
-        <property name="config" ref="ServerConfig"></property>
-    </bean>
-    <!-- 连接队列 -->
-    <bean id="QueueConnection" class="cn.cerc.jdb.queue.QueueConnection">
         <property name="config" ref="ServerConfig"></property>
     </bean>
 
