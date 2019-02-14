@@ -56,7 +56,7 @@
     </bean>
 
     <!-- 读取本地配置文件 -->
-    <bean id="ServerConfig" class="cn.cerc.jbean.core.ServerConfig" />
+    <bean id="ServerConfig" class="cn.cerc.jdb.core.ServerConfig" />
     <!-- 权限检查 -->
     <bean id="Passport" class="cn.cerc.example.common.Passport" scope="prototype" />
     <!-- 系统菜单定义表 -->

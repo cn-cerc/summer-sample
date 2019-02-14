@@ -77,7 +77,7 @@ mvn -v
 
 2-3、导入 `i-work`目录下的 `summer-training`项目
 
-![](source/img/环境变量.png)
+![](source/img/导入项目.png)
 
 2-4、等待大约3分钟，根据 `maven` 导入依赖包
 

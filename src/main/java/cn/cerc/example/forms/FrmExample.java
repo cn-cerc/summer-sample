@@ -85,7 +85,7 @@ public class FrmExample extends AbstractForm {
 
         UrlRecord url = new UrlRecord();
         url.setSite("FrmExample");
-        url.addParam("message", "添加成功");
+        url.putParam("message", "添加成功");
         return new RedirectPage(this, url.getUrl());
     }
 
@@ -136,13 +136,13 @@ public class FrmExample extends AbstractForm {
 
         if (!svr.exec()) {
             url.setSite("FrmExample.modify");
-            url.addParam("uid", uid);
-            url.addParam("message", svr.getMessage());
+            url.putParam("uid", uid);
+            url.putParam("message", svr.getMessage());
             return new RedirectPage(this, url.getUrl());
         }
 
         url.setSite("FrmExample");
-        url.addParam("message", "删除成功");
+        url.putParam("message", "删除成功");
         return new RedirectPage(this, url.getUrl());
     }
 
