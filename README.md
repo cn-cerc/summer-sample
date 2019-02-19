@@ -157,11 +157,13 @@ mvn -v
 
 ### 5、连接Mysql
 
-5-1、安装`i-tool`目录下的 `sqlyog_x64`软件
+5-1、打开`Navicat`软件
+
+![1550570982905](assets/1550570982905.png)
 
 5-2、参考 `application.properties` 下的rds配置，添加到以下窗口
 
-![](source/img/1531068541105.png)
+![1550571437976](assets/1550571437976.png)
 
 ## 二、需求说明
 
