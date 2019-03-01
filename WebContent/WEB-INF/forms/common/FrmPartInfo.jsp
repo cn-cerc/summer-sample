@@ -18,16 +18,21 @@
 
     <table>
         <tr>
-            <th>姓名</th>
-            <th>性别</th>
-            <th>年龄</th>
-            <th>操作</th>
+            <th>编号</th>
+            <th>名称</th>
+            <th>规格</th>
+            <th>单位</th>
+            <th>库存</th>
+            <th>备注</th>
         </tr>
         <c:forEach items="${dataSet.records}" var="record">
         <tr>
-            <td>${record.items.name_}</td>
-            <td>${record.items.sex_}</td>
-            <td>${record.items.age_}</td>
+            <td>${record.items.code_}</td>
+            <td>${record.items.desc_}</td>
+            <td>${record.items.spec_}</td>
+            <td>${record.items.unit_}</td>
+            <td>${record.items.stock_}</td>
+            <td>${record.items.remark_}</td>
             <td><a href="FrmPartInfo.modify?uid=${record.items.UID_}">修改</a></td>
         </tr>
         </c:forEach>

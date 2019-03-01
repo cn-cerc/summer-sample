@@ -49,48 +49,68 @@ public class FrmPartInfo extends AbstractForm {
     }
 
     public IPage append() {
-        JspPage jspPage = new JspPage(this, "common/FrmExample_append.jsp");
+        JspPage jspPage = new JspPage(this, "common/FrmPartInfo_append.jsp");
         String submit = getRequest().getParameter("submit");
         if (submit == null || "".equals(submit)) {
             return jspPage;
         }
-
-        String name = getRequest().getParameter("name");
-        if (name == null || "".equals(name)) {
-            jspPage.setMessage("姓名不允许为空");
+        
+        String corpNo = getRequest().getParameter("corpNo");
+        if (corpNo == null || "".equals(corpNo)) {
+            jspPage.setMessage("账套不允许为空");
+            return jspPage;
+        }
+        
+        String code = getRequest().getParameter("code");
+        if (code == null || "".equals(code)) {
+            jspPage.setMessage("编号不允许为空");
             return jspPage;
         }
 
-        String sex = getRequest().getParameter("sex");
-        if (sex == null || "".equals(sex)) {
-            jspPage.setMessage("性别不允许为空");
+        String desc = getRequest().getParameter("desc");
+        if (desc == null || "".equals(desc)) {
+            jspPage.setMessage("名称不允许为空");
             return jspPage;
         }
 
-        String age = getRequest().getParameter("age");
-        if (age == null || "".equals(age)) {
-            jspPage.setMessage("姓名不允许为空");
+        String spec = getRequest().getParameter("spec");
+        if (spec == null || "".equals(spec)) {
+            jspPage.setMessage("规格不允许为空");
             return jspPage;
         }
 
-        LocalService svr = new LocalService(this, "SvrExample.append");
+        String unit = getRequest().getParameter("unit");
+        if (unit == null || "".equals(unit)) {
+            jspPage.setMessage("单位不允许为空");
+            return jspPage;
+        }
+        
+        String remark = getRequest().getParameter("remark");
+        if (remark == null ) {
+            return jspPage;
+        }
+
+        LocalService svr = new LocalService(this, "SvrPartInfo.append");
         Record headIn = svr.getDataIn().getHead();
-        headIn.setField("name_", name);
-        headIn.setField("sex_", sex);
-        headIn.setField("age_", age);
+        headIn.setField("desc_", desc);
+        headIn.setField("spec_", spec);
+        headIn.setField("unit_", unit);
+        headIn.setField("corpNo_",corpNo);
+        headIn.setField("code_",code);
+        headIn.setField("remark_",remark);
         if (!svr.exec()) {
             jspPage.setMessage(svr.getMessage());
             return jspPage;
         }
 
         UrlRecord url = new UrlRecord();
-        url.setSite("FrmExample");
+        url.setSite("FrmPartInfo");
         url.putParam("message", "添加成功");
         return new RedirectPage(this, url.getUrl());
     }
 
     public IPage modify() {
-        JspPage jspPage = new JspPage(this, "common/FrmExample_modify.jsp");
+        JspPage jspPage = new JspPage(this, "common/FrmPartInfo_modify.jsp");
         String uid = getRequest().getParameter("uid");
         if (uid == null || "".equals(uid)) {
             jspPage.setMessage("uid 不允许为空");
@@ -102,7 +122,7 @@ public class FrmPartInfo extends AbstractForm {
             jspPage.setMessage(message);
         }
 
-        LocalService svr1 = new LocalService(this, "SvrExample.download");
+        LocalService svr1 = new LocalService(this, "SvrPartInfo.download");
         Record headIn1 = svr1.getDataIn().getHead();
         headIn1.setField("UID_", uid);
         if (!svr1.exec()) {
@@ -113,15 +133,22 @@ public class FrmPartInfo extends AbstractForm {
 
         String submit = getRequest().getParameter("submit");
         if (submit != null && !"".equals(submit)) {
-            LocalService svr2 = new LocalService(this, "SvrExample.modify");
+            LocalService svr2 = new LocalService(this, "SvrPartInfo.modify");
             Record headIn2 = svr2.getDataIn().getHead();
             headIn2.setField("UID_", uid);
-            headIn2.setField("age_", getRequest().getParameter("age"));
+            /*
+             * headIn2.setField("corpNo_", getRequest().getParameter("corpNo_"));
+             * headIn2.setField("code_", getRequest().getParameter("code_"));
+             */
+            headIn2.setField("desc_", getRequest().getParameter("desc"));
+            headIn2.setField("spec_", getRequest().getParameter("spec"));
+            headIn2.setField("unit_", getRequest().getParameter("unit"));
+            headIn2.setField("remark_", getRequest().getParameter("remark"));
             if (!svr2.exec()) {
                 jspPage.setMessage(svr2.getMessage());
                 return jspPage;
             }
-            return new RedirectPage(this, "FrmExample");
+            return new RedirectPage(this, "FrmPartInfo");
         }
         return jspPage;
     }
