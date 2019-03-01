@@ -7,5 +7,6 @@
 <body>
     <div>根据需求文档，自行建立相关文件</div>
     <a href="FrmExample">范例参考</a>
+    <a href="FrmPartInfo">商品资料</a>
 </body>
 </html>

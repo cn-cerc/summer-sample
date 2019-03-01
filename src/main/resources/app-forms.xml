@@ -5,4 +5,5 @@
            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
     <bean id="FrmWelcome" class="cn.cerc.example.forms.FrmWelcome" scope="prototype" />
     <bean id="FrmExample" class="cn.cerc.example.forms.FrmExample" scope="prototype" />
+    <bean id="FrmPartInfo" class="cn.cerc.example.forms.FrmPartInfo" scope="prototype" />
 </beans>

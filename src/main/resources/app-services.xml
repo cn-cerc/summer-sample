@@ -22,4 +22,8 @@
     <bean id="SvrExample.delete" class="cn.cerc.example.service.SvrExample">
         <property name="funcCode" value="delete"></property>
     </bean>
+    <!-- 商品资料 -->
+    <bean id="SvrPartInfo.search" class="cn.cerc.example.service.SvrPartInfo">
+        <property name="funcCode" value="search"></property>
+    </bean>
 </beans>
