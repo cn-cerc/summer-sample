@@ -9,11 +9,6 @@
     <%@ include file="head.jspf" %>
 
     <form method="post" action="FrmPartInfo.append">
-      <div>
-            <label>账套</label>
-            <input id=corpNo name="corpNo" value="${param.corpNo}" />
-        </div>
-        
         <div>
             <label>编号</label>
             <input id=code name="code" value="${param.code}" />

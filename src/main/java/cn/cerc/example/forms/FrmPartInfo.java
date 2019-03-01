@@ -55,11 +55,6 @@ public class FrmPartInfo extends AbstractForm {
             return jspPage;
         }
         
-        String corpNo = getRequest().getParameter("corpNo");
-        if (corpNo == null || "".equals(corpNo)) {
-            jspPage.setMessage("账套不允许为空");
-            return jspPage;
-        }
         
         String code = getRequest().getParameter("code");
         if (code == null || "".equals(code)) {
@@ -95,7 +90,6 @@ public class FrmPartInfo extends AbstractForm {
         headIn.setField("desc_", desc);
         headIn.setField("spec_", spec);
         headIn.setField("unit_", unit);
-        headIn.setField("corpNo_",corpNo);
         headIn.setField("code_",code);
         headIn.setField("remark_",remark);
         if (!svr.exec()) {
@@ -157,18 +151,18 @@ public class FrmPartInfo extends AbstractForm {
         UrlRecord url = new UrlRecord();
 
         String uid = getRequest().getParameter("uid");
-        LocalService svr = new LocalService(this, "SvrExample.delete");
+        LocalService svr = new LocalService(this, "SvrPartInfo.delete");
         Record headIn2 = svr.getDataIn().getHead();
         headIn2.setField("UID_", uid);
 
         if (!svr.exec()) {
-            url.setSite("FrmExample.modify");
+            url.setSite("FrmPartInfo.modify");
             url.putParam("uid", uid);
             url.putParam("message", svr.getMessage());
             return new RedirectPage(this, url.getUrl());
         }
 
-        url.setSite("FrmExample");
+        url.setSite("FrmPartInfo");
         url.putParam("message", "删除成功");
         return new RedirectPage(this, url.getUrl());
     }

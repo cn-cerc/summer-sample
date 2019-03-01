@@ -11,11 +11,6 @@
     <form method="post" action="FrmPartInfo.modify">
         <input type="hidden" id="uid" name="uid" value="${record.items.UID_}">
         <div>
-            <label>账套</label>
-            <input id="corpNo" name="corpNo" value="${record.items.corpNo_}" readonly="readonly" />
-        </div>
-
-        <div>
             <label>编号</label>
             <input id="code" name="code" value="${record.items.code_}" readonly="readonly" />
         </div>

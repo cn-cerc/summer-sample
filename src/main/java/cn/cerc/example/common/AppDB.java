@@ -7,4 +7,6 @@ public class AppDB {
 
     public static final String Table_PartInfo = "s_partinfo";
 
+    public static final String  corpNo="2223";
+
 }

@@ -35,4 +35,7 @@
     <bean id="SvrPartInfo.modify" class="cn.cerc.example.service.SvrPartInfo">
         <property name="funcCode" value="modify"></property>
     </bean>
+    <bean id="SvrPartInfo.delete" class="cn.cerc.example.service.SvrPartInfo">
+        <property name="funcCode" value="delete"></property>
+    </bean>
 </beans>

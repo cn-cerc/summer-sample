@@ -20,7 +20,7 @@ public class SvrPartInfo extends CustomService {
 
         BuildQuery f = new BuildQuery(this);
         f.add("select * from %s", AppDB.Table_PartInfo);
-
+        f.byField("corpNo_", AppDB.corpNo);
         if (headIn.hasValue("code_")) {
             f.byField("code_", headIn.getString("code_"));
         }
@@ -42,10 +42,10 @@ public class SvrPartInfo extends CustomService {
         cdsTmp.open();
 
         cdsTmp.append();
+        cdsTmp.setField("corpNo_", AppDB.corpNo);
         cdsTmp.setField("desc_", headIn.getString("desc_"));
         cdsTmp.setField("spec_", headIn.getString("spec_"));
         cdsTmp.setField("remark_", headIn.getString("remark_"));
-        cdsTmp.setField("corpNo_", headIn.getString("corpNo_"));
         cdsTmp.setField("code_", headIn.getString("code_"));
         cdsTmp.setField("unit_", headIn.getString("unit_"));
         /*
@@ -65,6 +65,7 @@ public class SvrPartInfo extends CustomService {
         SqlQuery cdsTmp = new SqlQuery(this);
         cdsTmp.add("select * from %s", AppDB.Table_PartInfo);
         cdsTmp.add("where UID_=%s", uid);
+        cdsTmp.add("and corpNo_='%s'", AppDB.corpNo);
         cdsTmp.open();
         DataValidateException.stopRun("记录不存在", cdsTmp.eof());
 
@@ -92,6 +93,7 @@ public class SvrPartInfo extends CustomService {
         SqlQuery cdsTmp = new SqlQuery(this);
         cdsTmp.add("select * from %s", AppDB.Table_PartInfo);
         cdsTmp.add("where UID_=%s", uid);
+        cdsTmp.add("and corpNo_=%s", AppDB.corpNo);
         cdsTmp.open();
         DataValidateException.stopRun("记录不存在", cdsTmp.eof());
 
@@ -111,8 +113,9 @@ public class SvrPartInfo extends CustomService {
         String uid = headIn.getString("UID_");
 
         SqlQuery cdsTmp = new SqlQuery(this);
-        cdsTmp.add("select * from %s", AppDB.Table_Example);
+        cdsTmp.add("select * from %s", AppDB.Table_PartInfo);
         cdsTmp.add("where UID_=%s", uid);
+        cdsTmp.add("and corpNo_=%s", AppDB.corpNo);
         cdsTmp.open();
         DataValidateException.stopRun("记录不存在", cdsTmp.eof());
 
