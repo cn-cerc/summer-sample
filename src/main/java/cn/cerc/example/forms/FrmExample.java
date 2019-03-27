@@ -74,9 +74,9 @@ public class FrmExample extends AbstractForm {
 
     public IPage modify() {
         JspPage jspPage = new JspPage(this, "common/FrmExample_modify.jsp");
-        String uid = getRequest().getParameter("uid");
-        if (uid == null || "".equals(uid)) {
-            jspPage.setMessage("uid 不允许为空");
+        String code = getRequest().getParameter("code");
+        if (code == null || "".equals(code)) {
+            jspPage.setMessage("code 不允许为空");
             return jspPage;
         }
 
@@ -87,7 +87,7 @@ public class FrmExample extends AbstractForm {
 
         LocalService svr1 = new LocalService(this, "SvrExample.download");
         Record headIn1 = svr1.getDataIn().getHead();
-        headIn1.setField("UID_", uid);
+        headIn1.setField("code_", code);
         if (!svr1.exec()) {
             jspPage.setMessage(svr1.getMessage());
             return jspPage;
@@ -98,7 +98,7 @@ public class FrmExample extends AbstractForm {
         if (submit != null && !"".equals(submit)) {
             LocalService svr2 = new LocalService(this, "SvrExample.modify");
             Record headIn2 = svr2.getDataIn().getHead();
-            headIn2.setField("UID_", uid);
+            headIn2.setField("code_", code);
             headIn2.setField("age_", getRequest().getParameter("age"));
             if (!svr2.exec()) {
                 jspPage.setMessage(svr2.getMessage());
@@ -112,18 +112,16 @@ public class FrmExample extends AbstractForm {
     public IPage delete() {
         UrlRecord url = new UrlRecord();
 
-        String uid = getRequest().getParameter("uid");
+        String code = getRequest().getParameter("code");
         LocalService svr = new LocalService(this, "SvrExample.delete");
         Record headIn2 = svr.getDataIn().getHead();
-        headIn2.setField("UID_", uid);
-
+        headIn2.setField("code_", code);
         if (!svr.exec()) {
             url.setSite("FrmExample.modify");
-            url.putParam("uid", uid);
+            url.putParam("code_", code);
             url.putParam("message", svr.getMessage());
             return new RedirectPage(this, url.getUrl());
         }
-
         url.setSite("FrmExample");
         url.putParam("message", "删除成功");
         return new RedirectPage(this, url.getUrl());
@@ -133,4 +131,5 @@ public class FrmExample extends AbstractForm {
     public boolean logon() {
         return true;
     }
+
 }

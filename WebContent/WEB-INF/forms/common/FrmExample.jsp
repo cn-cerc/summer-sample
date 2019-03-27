@@ -30,7 +30,7 @@
             <td>${record.items.name_}</td>
             <td>${record.items.sex_}</td>
             <td>${record.items.age_}</td>
-            <td><a href="FrmExample.modify?uid=${record.items.code_}">修改</a></td>
+            <td><a href="FrmExample.modify?code=${record.items.code_}">修改</a></td>
         </tr>
         </c:forEach>
     </table>

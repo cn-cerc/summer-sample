@@ -64,12 +64,12 @@ public class SvrExample extends CustomService {
 
     public boolean download() throws DataValidateException {
         Record headIn = getDataIn().getHead();
-        DataValidateException.stopRun("UID_不允许为空", !headIn.hasValue("UID_"));
-        String uid = headIn.getString("UID_");
+        DataValidateException.stopRun("code_不允许为空", !headIn.hasValue("code_"));
+        String code = headIn.getString("code_");
 
         SqlQuery cdsTmp = new SqlQuery(this);
         cdsTmp.add("select * from %s", AppDB.Table_Example);
-        cdsTmp.add("where UID_=%s", uid);
+        cdsTmp.add("where code_=%s", code);
         cdsTmp.open();
         DataValidateException.stopRun("记录不存在", cdsTmp.eof());
 
@@ -79,15 +79,15 @@ public class SvrExample extends CustomService {
 
     public boolean modify() throws DataValidateException {
         Record headIn = getDataIn().getHead();
-        DataValidateException.stopRun("UID_不允许为空", !headIn.hasValue("UID_"));
-        String uid = headIn.getString("UID_");
+        DataValidateException.stopRun("code_ 不允许为空", !headIn.hasValue("code_"));
+        String code = headIn.getString("code_");
 
         int age = headIn.getInt("age_");
         DataValidateException.stopRun("年龄不允许小于0", age <= 0);
 
         SqlQuery cdsTmp = new SqlQuery(this);
         cdsTmp.add("select * from %s", AppDB.Table_Example);
-        cdsTmp.add("where UID_=%s", uid);
+        cdsTmp.add("where code_=%s", code);
         cdsTmp.open();
         DataValidateException.stopRun("记录不存在", cdsTmp.eof());
 
@@ -100,12 +100,12 @@ public class SvrExample extends CustomService {
 
     public boolean delete() throws DataValidateException {
         Record headIn = getDataIn().getHead();
-        DataValidateException.stopRun("UID_不允许为空", !headIn.hasValue("UID_"));
-        String uid = headIn.getString("UID_");
+        DataValidateException.stopRun("code_ 不允许为空", !headIn.hasValue("code_"));
+        String code = headIn.getString("code_");
 
         SqlQuery cdsTmp = new SqlQuery(this);
         cdsTmp.add("select * from %s", AppDB.Table_Example);
-        cdsTmp.add("where UID_=%s", uid);
+        cdsTmp.add("where code_=%s", code);
         cdsTmp.open();
         DataValidateException.stopRun("记录不存在", cdsTmp.eof());
 
