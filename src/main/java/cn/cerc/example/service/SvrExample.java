@@ -27,7 +27,7 @@ public class SvrExample extends CustomService {
         }
 
         if (headIn.hasValue("searchText_")) {
-            f.byLink(new String[] { "name_", "age_" }, headIn.getString("searchText_"));
+            f.byLink(new String[] { "code_", "name_", "age_" }, headIn.getString("searchText_"));
         }
         log.info("sql {}", f.getCommandText());
 

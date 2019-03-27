@@ -111,7 +111,6 @@ public class FrmExample extends AbstractForm {
 
     public IPage delete() {
         UrlRecord url = new UrlRecord();
-
         String code = getRequest().getParameter("code");
         LocalService svr = new LocalService(this, "SvrExample.delete");
         Record headIn2 = svr.getDataIn().getHead();
