@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<title>增加范例</title>
+<title>添加学生</title>
 </head>
 <body>
 
@@ -10,10 +10,13 @@
 
     <form method="post" action="FrmExample.append">
         <div>
+            <label>学号</label>
+            <input id="code" name="code" value="${param.code}" />
+        </div>
+        <div>
             <label>姓名</label>
             <input id="name" name="name" value="${param.name}" />
         </div>
-
         <div>
             <label>性别</label>
             <select id="sex" name="sex">
@@ -21,7 +24,6 @@
                 <option value="1">女</option>
             </select>
         </div>
-
         <div>
             <label>年龄</label>
             <input id="age" name="age" value="${param.age}" />

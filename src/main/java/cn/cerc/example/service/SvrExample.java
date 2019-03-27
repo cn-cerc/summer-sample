@@ -35,14 +35,23 @@ public class SvrExample extends CustomService {
         return true;
     }
 
-    public boolean append() {
+    public boolean append() throws DataValidateException {
         Record headIn = getDataIn().getHead();
+        DataValidateException.stopRun("学号不允许为空", !headIn.hasValue("code_"));
+        String code = headIn.getString("code_");
+
+        DataValidateException.stopRun("姓名不允许为空", !headIn.hasValue("name_"));
+        DataValidateException.stopRun("性别不允许为空", !headIn.hasValue("sex_"));
+        DataValidateException.stopRun("年龄不允许为空", !headIn.hasValue("age_"));
+
         SqlQuery cdsTmp = new SqlQuery(this);
         cdsTmp.add("select * from %s", AppDB.Table_Example);
-        cdsTmp.setMaximum(0);
+        cdsTmp.add("where code_='%s'", code);
         cdsTmp.open();
+        DataValidateException.stopRun("学号不允许重复登记 ", !cdsTmp.eof());
 
         cdsTmp.append();
+        cdsTmp.setField("code_", code);
         cdsTmp.setField("name_", headIn.getString("name_"));
         cdsTmp.setField("sex_", headIn.getString("sex_"));
         cdsTmp.setField("age_", headIn.getString("age_"));

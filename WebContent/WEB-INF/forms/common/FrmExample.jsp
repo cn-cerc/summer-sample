@@ -18,6 +18,7 @@
 
     <table>
         <tr>
+            <th>学号</th>
             <th>姓名</th>
             <th>性别</th>
             <th>年龄</th>
@@ -25,10 +26,11 @@
         </tr>
         <c:forEach items="${dataSet.records}" var="record">
         <tr>
+            <td>${record.items.code_}</td>
             <td>${record.items.name_}</td>
             <td>${record.items.sex_}</td>
             <td>${record.items.age_}</td>
-            <td><a href="FrmExample.modify?uid=${record.items.UID_}">修改</a></td>
+            <td><a href="FrmExample.modify?uid=${record.items.code_}">修改</a></td>
         </tr>
         </c:forEach>
     </table>

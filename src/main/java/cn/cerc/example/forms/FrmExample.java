@@ -1,8 +1,5 @@
 package cn.cerc.example.forms;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.form.IPage;
 import cn.cerc.jdb.core.DataSet;
@@ -11,15 +8,13 @@ import cn.cerc.jmis.form.AbstractForm;
 import cn.cerc.jmis.page.JspPage;
 import cn.cerc.jmis.page.RedirectPage;
 import cn.cerc.jpage.core.UrlRecord;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * 注意
- * 
- * 新建的Frm类请重写 logon() 函数，否则会被过滤器拦截
+ * 新建的Frm类请重写 logon() 函数（详见底部），否则会被过滤器拦截
  */
+@Slf4j
 public class FrmExample extends AbstractForm {
-
-    private static final Logger log = LoggerFactory.getLogger(FrmExample.class);
 
     @Override
     public IPage execute() {
@@ -55,26 +50,14 @@ public class FrmExample extends AbstractForm {
             return jspPage;
         }
 
+        String code = getRequest().getParameter("code");
         String name = getRequest().getParameter("name");
-        if (name == null || "".equals(name)) {
-            jspPage.setMessage("姓名不允许为空");
-            return jspPage;
-        }
-
         String sex = getRequest().getParameter("sex");
-        if (sex == null || "".equals(sex)) {
-            jspPage.setMessage("性别不允许为空");
-            return jspPage;
-        }
-
         String age = getRequest().getParameter("age");
-        if (age == null || "".equals(age)) {
-            jspPage.setMessage("姓名不允许为空");
-            return jspPage;
-        }
 
         LocalService svr = new LocalService(this, "SvrExample.append");
         Record headIn = svr.getDataIn().getHead();
+        headIn.setField("code_", code);
         headIn.setField("name_", name);
         headIn.setField("sex_", sex);
         headIn.setField("age_", age);
