@@ -128,7 +128,11 @@ mvn -v
 
 ### 6、运行项目
 
-4-1、将 `summer-traning` 加入 `tomcat`容器
+4-1、启动redis
+
+![1555924689766](assets/1555924689766.png)
+
+4-2、将 `summer-traning` 加入 `tomcat`容器
 
 ![](source/img/1531066369028.png)
 
