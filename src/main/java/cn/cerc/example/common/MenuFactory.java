@@ -1,16 +1,5 @@
 package cn.cerc.example.common;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.BeanCreationException;
-import org.springframework.beans.factory.CannotLoadBeanClassException;
-import org.springframework.context.ApplicationContext;
-
 import cn.cerc.jbean.core.Application;
 import cn.cerc.jbean.core.IPassport;
 import cn.cerc.jdb.core.IHandle;
@@ -18,11 +7,20 @@ import cn.cerc.jmis.core.IAppMenus;
 import cn.cerc.jmis.core.MenuData;
 import cn.cerc.jmis.core.MenuItem;
 import cn.cerc.jmis.form.AbstractForm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.BeanCreationException;
+import org.springframework.beans.factory.CannotLoadBeanClassException;
+import org.springframework.context.ApplicationContext;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MenuFactory implements IAppMenus {
     private static final Logger log = LoggerFactory.getLogger(MenuFactory.class);
     private static final Map<String, MenuData> menus = new LinkedHashMap<>();
-    private IPassport passport;
 
     static {
         try {
@@ -71,6 +69,8 @@ public class MenuFactory implements IAppMenus {
             e.printStackTrace();
         }
     }
+
+    private IPassport passport;
 
     public static Map<String, MenuData> getItems() {
         return menus;

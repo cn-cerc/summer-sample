@@ -2,6 +2,7 @@ package cn.cerc.example.example;
 
 import cn.cerc.jdb.core.DataSet;
 import cn.cerc.jdb.core.Record;
+import cn.cerc.jdb.core.TDate;
 import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.other.utils;
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +17,11 @@ public class ToolExample {
         // 时间工具类 TDateTime
         log.info("当前时间 {}", TDateTime.Now());
 
+        log.info("{}", TDate.Today());
+
         // 数学工具类 utils
-        log.info("随机数字 {}", utils.getNumRandom(6));
-        log.info("随机字符 {}", utils.getStrRandom(6));
+        log.info("随机数字 {}", utils.getNumRandom(12));
+        log.info("随机字符 {}", utils.getStrRandom(32));
 
         DataSet dataSet = new DataSet();
         Record head = dataSet.getHead();

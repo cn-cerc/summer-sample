@@ -1,8 +1,5 @@
 package cn.cerc.example.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import cn.cerc.example.common.AppDB;
 import cn.cerc.jbean.core.CustomService;
 import cn.cerc.jbean.core.DataValidateException;
@@ -10,6 +7,8 @@ import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.mysql.BuildQuery;
 import cn.cerc.jdb.mysql.SqlQuery;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SvrExample extends CustomService {
 
@@ -27,7 +26,7 @@ public class SvrExample extends CustomService {
         }
 
         if (headIn.hasValue("searchText_")) {
-            f.byLink(new String[] { "code_", "name_", "age_" }, headIn.getString("searchText_"));
+            f.byLink(new String[]{"name_", "age_"}, headIn.getString("searchText_"));
         }
         log.info("sql {}", f.getCommandText());
 
@@ -48,7 +47,7 @@ public class SvrExample extends CustomService {
         cdsTmp.add("select * from %s", AppDB.Table_Example);
         cdsTmp.add("where code_='%s'", code);
         cdsTmp.open();
-        DataValidateException.stopRun("学号不允许重复登记 ", !cdsTmp.eof());
+        DataValidateException.stopRun("该学号已经存在，不允许重复登记", !cdsTmp.eof());
 
         cdsTmp.append();
         cdsTmp.setField("code_", code);

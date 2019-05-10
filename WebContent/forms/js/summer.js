@@ -10,7 +10,7 @@ function TApplication(defaultForm) {
     this.Session = new TSession();
     this.Confirm = new TConfirm();
 
-    this.Logout = function() {
+    this.Logout = function () {
         if (Application.logon) {
             Application.logon = false;
             this.ChildForms = [];
@@ -20,7 +20,7 @@ function TApplication(defaultForm) {
     };
 
     // 初始化环境变
-    this.readParams = function() {
+    this.readParams = function () {
         try {
             if (sessionStorage.logon) {
                 this.logon = JSON.parse(sessionStorage.logon);
@@ -38,17 +38,17 @@ function TApplication(defaultForm) {
     }
 
     // 保存环境变量
-    this.saveParams = function() {
+    this.saveParams = function () {
         if (sessionStorage) {
             sessionStorage.setItem('logon', JSON.stringify(Application.logon));
             sessionStorage.setItem('ChildForms', JSON
-                    .stringify(this.ChildForms));
+                .stringify(this.ChildForms));
         }
     }
 
     this.readParams();
 
-    this.addChildForm = function(form) {
+    this.addChildForm = function (form) {
         if (this.ChildForms.length > 0) {
             var str = this.ChildForms[this.ChildForms.length - 1];
             if (str == form)
@@ -58,7 +58,7 @@ function TApplication(defaultForm) {
         this.saveParams();
     }
 
-    this.getChildForm = function() {
+    this.getChildForm = function () {
         if (this.ChildForms.length > 0) {
             return this.ChildForms[this.ChildForms.length - 1];
         } else {
@@ -66,15 +66,15 @@ function TApplication(defaultForm) {
         }
     }
 
-    this.reload = function() {
+    this.reload = function () {
         document.location.reload();
     }
 
-    this.init = function() {
+    this.init = function () {
         if (this.logon) {
             $('footer').css('visibility', 'hidden');
         }
-        if(this.onReady)
+        if (this.onReady)
             this.onReady();
         if (!localStorage) {
             $(".main").attr("display", "block");
@@ -83,7 +83,7 @@ function TApplication(defaultForm) {
         // window.onresize = updateFace;
     }
 
-    this.CloseForm = function() {
+    this.CloseForm = function () {
         if (this.ChildForms.length > 0) {
             this.ChildForms.pop();
         }
@@ -102,7 +102,7 @@ function OutputMessage(text, style_class) {
 
 function getScrollHeight() {
     return Math.max(document.body.scrollHeight,
-            document.documentElement.scrollHeight);
+        document.documentElement.scrollHeight);
 }
 
 function TDBGrid(AOwner, dataset) {
@@ -112,11 +112,11 @@ function TDBGrid(AOwner, dataset) {
 
     this.dataset = dataset;
 
-    this.html = function() {
+    this.html = function () {
         var sl = new TStringList();
         if (this.dataset) {
             sl
-                    .add('<table bordercolor="blue" border="1" cellspacing="0" cellpadding="0">');
+                .add('<table bordercolor="blue" border="1" cellspacing="0" cellpadding="0">');
             if (this.dataset.fieldDef.length > 0) {
                 sl.add('<tr>');
                 for (var i = 0; i < this.dataset.fieldDef.length; i++) {
@@ -140,6 +140,7 @@ function TDBGrid(AOwner, dataset) {
         return sl.text();
     }
 }
+
 TDBGrid.prototype = new TWinControl();
 TDBGrid.prototype.constructor = TDBGrid;
 
@@ -152,14 +153,14 @@ function TAppService() {
     this.proxyFile = '/service/';
     this.rst = false;
     this.sid = "";
-    this.exec = function() {
+    this.exec = function () {
         this.rst = false;
         self = this;
         this.CallService(this.datain, this.sid);
         return this.rst;
     }
 
-    this.CallService = function(dataIn, sid) {
+    this.CallService = function (dataIn, sid) {
         if (sessionStorage.sid) {
             sid = sessionStorage.sid;
             if (!sid) {
@@ -170,24 +171,24 @@ function TAppService() {
         var param = JSON.stringify(dataIn);
 
         $.ajax({
-            url : this.proxyFile + this.service + '?sid=' + sid,
-            type : 'post',
-            data : param,
-            async : false,
-            contentType : "application/json",
-            dataType : 'JSON',
-            timeout : 3000,
-            error : this.onError,
-            success : this.onSuccess
+            url: this.proxyFile + this.service + '?sid=' + sid,
+            type: 'post',
+            data: param,
+            async: false,
+            contentType: "application/json",
+            dataType: 'JSON',
+            timeout: 3000,
+            error: this.onError,
+            success: this.onSuccess
         });
     }
 
-    this.onError = function(e) {
+    this.onError = function (e) {
         self.message = e.responseText;
         // OutputMessage('Service Error: ' + e.responseText);
     }
 
-    this.onSuccess = function(result) {
+    this.onSuccess = function (result) {
         var outData = eval(result);
         if (outData.result) {
             self.rst = true;
@@ -245,54 +246,55 @@ function Service2(serviceClass, params) {
 }
 
 // 轮播图片广告
-(function(e, t) {
-    var n = function() {
+(function (e, t) {
+    var n = function () {
         function r(t, r) {
             if (t == "dot") {
                 r = '<ol class="dots">';
-                e.each(n.li, function(e) {
+                e.each(n.li, function (e) {
                     r += '<li class="' + (e == n.i ? t + " active" : t) + '">'
-                            + ++e + "</li>"
+                        + ++e + "</li>"
                 });
                 r += "</ol>"
             } else {
                 r = '<div class="';
                 r = r + t + 's">' + r + t + ' prev">' + n.o.prev + "</div>" + r
-                        + t + ' next">' + n.o.next + "</div></div>"
+                    + t + ' next">' + n.o.next + "</div></div>"
             }
             n.el.addClass("has-" + t + "s").append(r).find("." + t).click(
-                    function() {
-                        var t = e(this);
-                        t.hasClass("dot") ? n.stop().to(t.index()) : t
-                                .hasClass("prev") ? n.prev() : n.next()
-                    })
+                function () {
+                    var t = e(this);
+                    t.hasClass("dot") ? n.stop().to(t.index()) : t
+                        .hasClass("prev") ? n.prev() : n.next()
+                })
         }
+
         var n = this;
         n.o = {
-            speed : 500,
-            delay : 3e3,
-            init : 0,
-            pause : !t,
-            loop : !t,
-            keys : t,
-            dots : t,
-            arrows : t,
-            prev : "&larr;",
-            next : "&rarr;",
-            fluid : t,
-            starting : t,
-            complete : t,
-            items : ">ul",
-            item : ">li",
-            easing : "swing",
-            autoplay : true
+            speed: 500,
+            delay: 3e3,
+            init: 0,
+            pause: !t,
+            loop: !t,
+            keys: t,
+            dots: t,
+            arrows: t,
+            prev: "&larr;",
+            next: "&rarr;",
+            fluid: t,
+            starting: t,
+            complete: t,
+            items: ">ul",
+            item: ">li",
+            easing: "swing",
+            autoplay: true
         };
-        n.init = function(t, i) {
+        n.init = function (t, i) {
             n.o = e.extend(n.o, i);
             n.el = t;
             n.ul = t.find(n.o.items);
-            n.max = [ t.outerWidth() | 0, t.outerHeight() - 4 | 0 ];
-            n.li = n.ul.find(n.o.item).each(function(t) {
+            n.max = [t.outerWidth() | 0, t.outerHeight() - 4 | 0];
+            n.li = n.ul.find(n.o.item).each(function (t) {
                 var r = e(this), i = r.outerWidth(), s = r.outerHeight() - 4;
                 if (i > n.max[0])
                     n.max[0] = i;
@@ -302,24 +304,24 @@ function Service2(serviceClass, params) {
             var i = n.o, s = n.ul, o = n.li, u = o.length;
             n.i = 0;
             t.css({
-                width : n.max[0],
-                height : o.first().outerHeight() - 4,
-                overflow : "hidden"
+                width: n.max[0],
+                height: o.first().outerHeight() - 4,
+                overflow: "hidden"
             });
             s.css({
-                position : "relative",
-                left : 0,
-                width : u * 100 + "%"
+                position: "relative",
+                left: 0,
+                width: u * 100 + "%"
             });
             o.css({
-                "float" : "left",
-                width : n.max[0] + "px"
+                "float": "left",
+                width: n.max[0] + "px"
             });
-            i.autoplay && setTimeout(function() {
+            i.autoplay && setTimeout(function () {
                 if (i.delay | 0) {
                     n.play();
                     if (i.pause) {
-                        t.on("mouseover mouseout", function(e) {
+                        t.on("mouseover mouseout", function (e) {
                             n.stop();
                             e.type == "mouseout" && n.play()
                         })
@@ -327,7 +329,7 @@ function Service2(serviceClass, params) {
                 }
             }, i.init | 0);
             if (i.keys) {
-                e(document).keydown(function(e) {
+                e(document).keydown(function (e) {
                     var t = e.which;
                     if (t == 37)
                         n.prev();
@@ -341,28 +343,28 @@ function Service2(serviceClass, params) {
             i.arrows && r("arrow");
             if (i.fluid) {
                 e(window).resize(
-                        function() {
-                            n.r && clearTimeout(n.r);
-                            n.r = setTimeout(function() {
-                                var e = {
-                                    height : o.eq(n.i).outerHeight() - 4
-                                }, r = t.outerWidth();
-                                s.css(e);
-                                e["width"] = Math.min(Math.round(r
-                                        / t.parent().width() * 100), 100)
-                                        + "%";
-                                t.css(e)
-                            }, 50)
-                        }).resize()
+                    function () {
+                        n.r && clearTimeout(n.r);
+                        n.r = setTimeout(function () {
+                            var e = {
+                                height: o.eq(n.i).outerHeight() - 4
+                            }, r = t.outerWidth();
+                            s.css(e);
+                            e["width"] = Math.min(Math.round(r
+                                / t.parent().width() * 100), 100)
+                                + "%";
+                            t.css(e)
+                        }, 50)
+                    }).resize()
             }
             if (e.event.special["swipe"] || e.Event("swipe")) {
-                t.on("swipeleft swiperight swipeLeft swipeRight", function(e) {
+                t.on("swipeleft swiperight swipeLeft swipeRight", function (e) {
                     e.type.toLowerCase() == "swipeleft" ? n.next() : n.prev()
                 })
             }
             return n
         };
-        n.to = function(r, i) {
+        n.to = function (r, i) {
             if (n.t) {
                 n.stop();
                 n.play()
@@ -377,43 +379,43 @@ function Service2(serviceClass, params) {
                 r = a.length - 1;
             c = a.eq(r);
             var h = i ? 5 : s.speed | 0, p = s.easing, d = {
-                height : c.outerHeight() - 4
+                height: c.outerHeight() - 4
             };
             if (!u.queue("fx").length) {
                 o.find(".dot").eq(r).addClass("active").siblings().removeClass(
-                        "active");
+                    "active");
                 o.animate(d, h, p) && u.animate(e.extend({
-                    left : "-" + r + "00%"
-                }, d), h, p, function(t) {
+                    left: "-" + r + "00%"
+                }, d), h, p, function (t) {
                     n.i = r;
                     e.isFunction(s.complete) && !i && s.complete(o, c)
                 })
             }
         };
-        n.play = function() {
-            n.t = setInterval(function() {
+        n.play = function () {
+            n.t = setInterval(function () {
                 n.to(n.i + 1)
             }, n.o.delay | 0)
         };
-        n.stop = function() {
+        n.stop = function () {
             n.t = clearInterval(n.t);
             return n
         };
-        n.next = function() {
+        n.next = function () {
             return n.stop().to(n.i + 1)
         };
-        n.prev = function() {
+        n.prev = function () {
             return n.stop().to(n.i - 1)
         };
     };
-    e.fn.unslider = function(t) {
+    e.fn.unslider = function (t) {
         var r = this.length;
         return this
-                .each(function(i) {
-                    var s = e(this), u = "unslider" + (r > 1 ? "-" + ++i : ""), a = (new n)
-                            .init(s, t);
-                    s.data(u, a).data("key", u)
-                })
+            .each(function (i) {
+                var s = e(this), u = "unslider" + (r > 1 ? "-" + ++i : ""), a = (new n)
+                    .init(s, t);
+                s.data(u, a).data("key", u)
+            })
     };
     n.version = "1.0.0"
 })(jQuery, false);
@@ -433,14 +435,14 @@ function resetSize_old() {
         if (device != 'phone' && device != 'weixin' && device != 'android' && device != 'iphone') {
             if (searchH > 0) {
                 $("form.search").css("position", "fixed").css("top", headerH)
-                        .css("width", "100%").css("max-width", "1366px").css(
-                                "z-index", "2");
+                    .css("width", "100%").css("max-width", "1366px").css(
+                    "z-index", "2");
                 $("header").next().css("padding-top", headerH + searchH);
             }
             if (modifyH > 0) {
                 $("form.modify").css("position", "fixed").css("top", headerH)
-                        .css("width", "100%").css("max-width", "1366px").css(
-                                "z-index", "2");
+                    .css("width", "100%").css("max-width", "1366px").css(
+                    "z-index", "2");
                 $("header").next().css("padding-top", headerH + modifyH);
             }
         } else {
@@ -456,7 +458,7 @@ function resetSize_old() {
         $('.main').css('min-height', mainH);
         var categoryH = $('#category').outerHeight(true);// 分类区域的高度
         var scrollAreaH = window.innerHeight - bottomH - headerH
-                - modifyH - searchH2 - searchH - categoryH - adH;
+            - modifyH - searchH2 - searchH - categoryH - adH;
         $('.scrollArea').css('height', scrollAreaH - 5);
         extGridHeight = scrollAreaH - 5;
     }
@@ -464,22 +466,22 @@ function resetSize_old() {
 
 //设置屏幕框架尺寸
 function resetSize() {
-	var windowHeight = $(window).outerHeight(true);
-	var headerHeight = $("header[role='header']").outerHeight(true);
-	var footerHeight = $("footer[role='footer']").outerHeight(true);
-	
-	if (isPhone()) {
+    var windowHeight = $(window).outerHeight(true);
+    var headerHeight = $("header[role='header']").outerHeight(true);
+    var footerHeight = $("footer[role='footer']").outerHeight(true);
+
+    if (isPhone()) {
         $("header[role='header']").hide();
         headerHeight = 0;
     } else {
-    	//TODO  改变滚动条样式
-    	$("html").addClass("scrollbar");
+        //TODO  改变滚动条样式
+        $("html").addClass("scrollbar");
     }
     // 选项卡
     $("ul[role='toolGroup'] ui:first-child").addClass('active');
     $("ul[role='toolGroup'] ui").css('width',
-            100 / ($("ul[role='toolGroup'] ui").length) + '%');
-    $("ul[role='toolGroup'] ui").on('click', function() {
+        100 / ($("ul[role='toolGroup'] ui").length) + '%');
+    $("ul[role='toolGroup'] ui").on('click', function () {
         var id = $(this).data('id');
         $(this).addClass('active').siblings().removeClass('active');
         $('div[role="toolSheet"]').hide();
@@ -488,29 +490,29 @@ function resetSize() {
 
     // 添加工具栏小图标
     if (!isPhone()) {
-    	if($(".leftAside").length == 0) {
-        	$("aside[role='toolBar']").prepend("<div class='leftAside'></div>");
+        if ($(".leftAside").length == 0) {
+            $("aside[role='toolBar']").prepend("<div class='leftAside'></div>");
         }
     }
-    
-  /*
-   * pc端计算滚动区域高度
-   */
+
+    /*
+     * pc端计算滚动区域高度
+     */
     if (isPhone()) {
         if ($('section[role="footerTools"]').length == 0) {
             var items = $('section[role="footerButtons"] a');
-            items.css('width','{0}%'.format(100 / items.length));
-            
+            items.css('width', '{0}%'.format(100 / items.length));
+
         }
     } else {
         var controlHeight = $("section[role='control']").outerHeight(true);
         var contentMarginTop = 0;
         if ($("section[role='content']").length > 0) {
             contentMarginTop = parseFloat($("section[role='content']").css(
-            'margin-top').replace('px', ''));
+                'margin-top').replace('px', ''));
         }
         var height = windowHeight
-        - (headerHeight + controlHeight + footerHeight + contentMarginTop);
+            - (headerHeight + controlHeight + footerHeight + contentMarginTop);
         if ($("footer[role='footer']").is(":hidden")) {
             // 没有子元素
             $("section[role='content']").height(height + footerHeight);
@@ -521,15 +523,15 @@ function resetSize() {
     }
     if (!$("footer[role='footer']").is(":hidden")) {
         $("article[role='document']")
-                .css('padding-bottom', footerHeight + 'px');
+            .css('padding-bottom', footerHeight + 'px');
     }
 
     // 计算窗口高度
     $('body').css({
-        'height' : (windowHeight - headerHeight),
-        'padding-top' : headerHeight,
-        'box-sizing' : 'content-box',
-        '-webkit-box-sizing' : 'content-box',
+        'height': (windowHeight - headerHeight),
+        'padding-top': headerHeight,
+        'box-sizing': 'content-box',
+        '-webkit-box-sizing': 'content-box',
     });
 }
 
@@ -544,7 +546,7 @@ function showWarning(message) {
     var browser = getBrowser();
     if (browser) {
         browser.req = {
-            "message" : message
+            "message": message
         };
         if (!browser.send("ShowWarning")) {
             alert(browser.getMessage());
@@ -560,7 +562,7 @@ function appendSearchMsg() {
         $("#msg").removeAttr("style");
     var msgText = "系统正在处理您的请求···";
     showMsg(msgText);
-    $("form").nextAll().map(function() {
+    $("form").nextAll().map(function () {
         if ($(this).attr("class") == "opera-bottom")
             return;
         else
@@ -572,7 +574,7 @@ function appendSearchMsg() {
 function showScrollButtons() {
     $("#back-top").html('<img src="images/top.png"/>');
     $("#back-bottom").html('<img src="images/bottom.png"/>');
-    $(window).scroll(function() {
+    $(window).scroll(function () {
         var bodyHeight = document.body.clientHeight;
         var screenHeight = window.screen.availHeight;
         var topHeight = $(window).scrollTop();
@@ -592,16 +594,16 @@ function showScrollButtons() {
             $("#back-top").fadeOut(400);
         }
     });
-    $("#back-bottom").click(function() {
+    $("#back-bottom").click(function () {
         $('html,body').stop();
         $('html,body').animate({
-            scrollTop : $('.bottom-space').offset().top
+            scrollTop: $('.bottom-space').offset().top
         }, 200);
     });
-    $("#back-top").click(function() {
+    $("#back-top").click(function () {
         $('html,body').stop();
         $('html,body').animate({
-            scrollTop : 0
+            scrollTop: 0
         }, 200);
     });
 }
@@ -652,19 +654,19 @@ function head_main_old() {
         fixOperation();
     // 添加快捷键
     shortcuts();
-    $("img").each(function() {
+    $("img").each(function () {
         $(this).attr("src", $(this).attr("src").replace(/\\/gm, "%5c"));
     });
     showLowerShelfInfo();
     $("input").attr('autocomplete', 'off');
     setMenu();
-    
+
     //当浏览器大小变化时,刷新当前页面
-  	$(window).resize(function () {
-  		resetSize_old();
-  		if (bottom)
-  	        fixOperation();
-  	});
+    $(window).resize(function () {
+        resetSize_old();
+        if (bottom)
+            fixOperation();
+    });
 }
 
 function showLowerShelfInfo() {
@@ -685,14 +687,14 @@ function showLowerShelfInfo() {
         field = "PartCode_";
     if (!field)
         return;
-    grid.each(function(index, value) {
+    grid.each(function (index, value) {
         var row = new GridRow(this);
         var code = row.getCell(field);
         if (code) {
             var url = $(code).find("a").attr("href");
-            if($(code).find("a").length > 1){
-                $(code).find("a").each(function() {
-                    if($(this).attr("href").indexOf("?") > -1) {
+            if ($(code).find("a").length > 1) {
+                $(code).find("a").each(function () {
+                    if ($(this).attr("href").indexOf("?") > -1) {
                         url = $(this).attr("href");
                         return;
                     }
@@ -712,21 +714,21 @@ function showLowerShelfInfo() {
     });
     if (!dataSet.bof) {
         $.post("TFrmPartInfo.getLowerShelfInfo", {
-            data : JSON.stringify(dataSet.getJSON())
-        },function(dataOut) {
+            data: JSON.stringify(dataSet.getJSON())
+        }, function (dataOut) {
             if (dataOut.result) {
                 var ds = new TAppDataSet(dataOut.data);
                 if (!ds.bof) {
                     ds.first();
                     while (!ds.eof) {
                         dataSet.first();
-                        while(!dataSet.eof){
+                        while (!dataSet.eof) {
                             if (dataSet.getField("PartCode_") == ds.getField("PartCode_")) {
                                 var row = new GridRow(grid[dataSet.getField("rowid")]);
                                 var td = row.getCell(field);
                                 var lowerShelf = "<span style='border: 1px solid red; color: red; padding: 0px 0.125em;margin-right: 0.25em;'>下架</span>";
-                                td.find("a").each(function() {
-                                    if($(this).attr("href").indexOf(ds.getField("PartCode_")) > -1) {
+                                td.find("a").each(function () {
+                                    if ($(this).attr("href").indexOf(ds.getField("PartCode_")) > -1) {
                                         $(this).html(lowerShelf + $(this).html());
                                         return;
                                     }
@@ -745,12 +747,12 @@ function showLowerShelfInfo() {
 }
 
 function shortcuts() {
-    this.clickA = function(id) {
+    this.clickA = function (id) {
         if ($(id).attr("href")) {
             location.href = $(id).attr("href");
         }
     }
-    this.addKeyUp = function(event) {
+    this.addKeyUp = function (event) {
         if (Application.device == 'ee') {
             if (event.keyCode == 111 + 1) { // F1
                 clickA("footer[role='footer'] #button1");
@@ -797,6 +799,7 @@ function inherit(p) {
     var t = typeof p;
     if (t !== 'object' && t !== 'function')
         throw TypeError();
+
     function f() {
     }
     ;
@@ -807,15 +810,16 @@ function inherit(p) {
 function TStringList() {
     this.FText = "";
     this.FCount = 0;
-    this.add = function(value) {
+    this.add = function (value) {
         this.FText += value;
         this.FCount++;
     };
-    this.text = function() {
+    this.text = function () {
         return this.FText;
     }
 }
-TStringList.prototype.count = function() {
+
+TStringList.prototype.count = function () {
     return this.FCount;
 };
 
@@ -834,19 +838,19 @@ function TWinControl(AOwner) {
     this.Controls = [];
     this.Parent;
 
-    this.add = function(obj) {
+    this.add = function (obj) {
         this.Controls[this.Controls.length] = obj;
     }
 
-    this.addLine = function(text) {
+    this.addLine = function (text) {
         this.Controls[this.Controls.length] = new THtml(this, text);
     }
 
-    this.clear = function() {
+    this.clear = function () {
         this.Controls = [];
     }
 
-    this.html = function() {
+    this.html = function () {
         var sl = new TStringList();
         for (var i = 0; i < this.Controls.length; i++) {
             sl.add(this.Controls[i].html());
@@ -854,6 +858,7 @@ function TWinControl(AOwner) {
         return sl.text();
     }
 }
+
 TWinControl.prototype = new TComponent();
 TWinControl.prototype.constructor = TWinControl;
 
@@ -865,7 +870,7 @@ function TPanel(AOwner) {
     }
     this.Controls = [];
 
-    this.html = function() {
+    this.html = function () {
         var sl = new TStringList();
         sl.add("<" + this.label);
         if (this.id)
@@ -892,7 +897,7 @@ function THtml(AOwner, content) {
         this.content = content;
     }
 
-    this.html = function() {
+    this.html = function () {
         return this.content;
     }
 }
@@ -907,7 +912,7 @@ function TLabel(AOwner, ACaption) {
     }
 
     this.href = '';
-    this.html = function() {
+    this.html = function () {
         if (this.href) {
             return '<a href="' + this.href + '">' + this.Caption + '</a>';
         } else {
@@ -928,22 +933,22 @@ function TEdit(AOwner) {
     }
     ;
 
-    this.html = function() {
+    this.html = function () {
         if (this.password) {
             return '<input id="' + this.id + '" value="' + this.value
-                    + '" type="password">';
+                + '" type="password">';
         } else {
             if (this.readonly) {
                 return '<input id="' + this.id + '" value="' + this.value
-                        + '" readonly="' + this.readonly + '">';
+                    + '" readonly="' + this.readonly + '">';
             } else {
                 if (this.onkeydown) {
                     return '<input id="' + this.id + '" value="' + this.value
-                            + '" onkeydown="' + this.onkeydown
-                            + '(event.keyCode || window.event)">';
+                        + '" onkeydown="' + this.onkeydown
+                        + '(event.keyCode || window.event)">';
                 } else {
                     return '<input id="' + this.id + '" value="' + this.value
-                            + '">';
+                        + '">';
                 }
             }
         }
@@ -961,15 +966,15 @@ function TComboBox(AOwner) {
     }
     ;
 
-    this.add = function(key, val) {
+    this.add = function (key, val) {
         this.items[key] = val;
     }
 
-    this.html = function() {
+    this.html = function () {
         var sl = new TStringList();
         sl.add('<select id=\"' + this.id + '\">');
         var i = -1;
-        for ( var key in this.items) {
+        for (var key in this.items) {
             i++;
             var val = this.items[key];
             sl.add('<option value=\"' + key + '\"');
@@ -993,7 +998,7 @@ function TButton(AOwner) {
     }
     ;
     this.caption = "button";
-    this.html = function() {
+    this.html = function () {
         var sl = new TStringList();
         sl.add('<button type="button"');
         if (this.id) {
@@ -1025,15 +1030,15 @@ function TCheckBox(AOwner) {
     }
     ;
 
-    this.html = function() {
+    this.html = function () {
         if (this.checked) {
             return '<label><input id="' + this.id + '" name="' + this.name
-                    + '" type="checkbox" checked/><small>' + this.text
-                    + '</small></label>';
+                + '" type="checkbox" checked/><small>' + this.text
+                + '</small></label>';
         } else {
             return '<label><input id="' + this.id + '" name="' + this.name
-                    + '" type="checkbox" /><small>' + this.text
-                    + '</small></label>';
+                + '" type="checkbox" /><small>' + this.text
+                + '</small></label>';
         }
     }
 }
@@ -1042,7 +1047,7 @@ function TCustomForm() {
     this.Caption = '未命名';
     this.Menus = [];
 
-    this.Resize = function(width, height) {
+    this.Resize = function (width, height) {
         if (this.Board) {
             if (this.Board.Items.length > 1) {
                 var id = 'Board1'
@@ -1055,11 +1060,11 @@ function TCustomForm() {
         }
     };
 
-    this.toolClick = function(index) {
+    this.toolClick = function (index) {
         alert('您选择了：' + this.Tools[index]);
     }
 
-    this.passport = function($key) {
+    this.passport = function ($key) {
         if (sessionStorage && sessionStorage.sid) {
             return true;
         } else {
@@ -1067,6 +1072,7 @@ function TCustomForm() {
         }
     }
 }
+
 TCustomForm.prototype = new TWinControl();
 TCustomForm.prototype.constructor = TCustomForm;
 
@@ -1087,10 +1093,10 @@ function TChessBoard(AOwner) {
     this.Checkboxs;
     this.PageNo;
     this.Items = new Array();
-    this.add = function(cell) {
+    this.add = function (cell) {
         this.Items[this.Items.length] = cell;
     };
-    this.html = function() {
+    this.html = function () {
         var sl = new TStringList();
         sl.add('<div id="' + this.ID + '" class="board">');
         for (var i = 0; i < this.Items.length; i++) {
@@ -1118,6 +1124,7 @@ function TChessBoard(AOwner) {
         return sl.text();
     };
 }
+
 TChessBoard.prototype = new TWinControl();
 TChessBoard.prototype.constructor = TChessBoard;
 
@@ -1146,23 +1153,23 @@ function TSession(id) {
         }
     }
 
-    this.set = function(key, val) {
+    this.set = function (key, val) {
         this[key] = val;
         if (this.autoSave)
             this.save();
         return this;
     }
 
-    this.save = function() {
+    this.save = function () {
         sessionStorage[this.id] = JSON.stringify(this);
         return this;
     }
 
-    this.readString = function(key, def) {
+    this.readString = function (key, def) {
         return this[key] || def;
     }
 
-    this.readInt = function(key, def) {
+    this.readInt = function (key, def) {
         if (this[key]) {
             return parseInt(this[key]);
         } else {
@@ -1171,13 +1178,13 @@ function TSession(id) {
         }
     }
 
-    this.clear = function(key) {
+    this.clear = function (key) {
         if (key) {
             this[key] = undefined;
         } else {
             for (key in this) {
                 if ((typeof (this[key]) != 'function') && (key != 'id')
-                        && (key != 'autoSave')) {
+                    && (key != 'autoSave')) {
                     this[key] = undefined;
                 }
             }
@@ -1187,6 +1194,7 @@ function TSession(id) {
         return this;
     }
 }
+
 TSession.prototype = new TComponent();
 
 function session(key) {
@@ -1221,12 +1229,12 @@ function TDeviceScreen() {
         }
     }
     switch (ss) {
-    case 'pad': // 平板
-        this.deviceType = 'pad';
-        break;
-    case 'phone': // 手机
-        this.deviceType = 'phone';
-        break;
+        case 'pad': // 平板
+            this.deviceType = 'pad';
+            break;
+        case 'phone': // 手机
+            this.deviceType = 'phone';
+            break;
     }
     //
     this.showTools = (this.deviceType != 'phone');
@@ -1245,7 +1253,7 @@ function TDeviceScreen() {
     }
     this.height = this.height - 16;
 
-    this.head_height = function() {
+    this.head_height = function () {
         var rst = 30;
         if (this.showHead) {
             rst += 60;
@@ -1253,13 +1261,13 @@ function TDeviceScreen() {
         return rst;
     };
 
-    this.main_height = function() {
+    this.main_height = function () {
         var rst = this.height // 640
-                - this.head_height() - 64;
+            - this.head_height() - 64;
         return rst;
     };
 
-    this.form_width = function() {
+    this.form_width = function () {
         var rst = this.width - 8;
         if (this.showTools == true) {
             rst = rst - 160 - 2; // tools.width = 160;
@@ -1283,20 +1291,20 @@ function TAppDataSet(def) {
     this.recNo = -1;
 
     // 设置单头数据
-    this.setHead = function(field, value) {
+    this.setHead = function (field, value) {
         this.head[field] = value;
     }
-    this.getHead = function(field) {
+    this.getHead = function (field) {
         return this.head[field];
     }
 
-    this.setFieldDefs = function(val) {
+    this.setFieldDefs = function (val) {
         this.fieldDefs = val;
         this.dataset[0] = val;
     }
 
     // 增加字段
-    this.addField = function(field) {
+    this.addField = function (field) {
         var len = this.fieldDef.length;
         this.fieldDef[len] = field;
         // return len + 1;
@@ -1304,13 +1312,13 @@ function TAppDataSet(def) {
     }
 
     // 增加记录
-    this.append = function() {
+    this.append = function () {
         var len = this.dataset.length;
         this.dataset[len] = [];
         this.recNo = len + 1;
     }
 
-    this.findField = function(field) {
+    this.findField = function (field) {
         // 查找字段索引
         var index = -1;
         if (Array.indexOf) {
@@ -1327,7 +1335,7 @@ function TAppDataSet(def) {
     };
 
     // 设置单身字段
-    this.setField = function(field, value) {
+    this.setField = function (field, value) {
         if (this.recNo == -1) {
             throw new Error("请先执行append!");
         }
@@ -1339,7 +1347,7 @@ function TAppDataSet(def) {
         this.dataset[this.recNo - 1][index] = value;
     }
 
-    this.getField = function(field) {
+    this.getField = function (field) {
         if (this.eof)
             return undefined;
         var index = this.findField(field);
@@ -1352,8 +1360,8 @@ function TAppDataSet(def) {
     }
 
     // 返回数据
-    this.data = function() {
-        var data = [ this.fieldDef ];
+    this.data = function () {
+        var data = [this.fieldDef];
         for (var i = 0, rows = this.dataset.length; i < rows; i++) {
             var rec = [];
             for (var j = 0, cols = this.fieldDef.length; j < cols; j++) {
@@ -1373,14 +1381,14 @@ function TAppDataSet(def) {
         return json;
     }
 
-    this.getJSON = function() {
+    this.getJSON = function () {
         return this.data();
     }
 
-    this.setJSON = function(value) {
+    this.setJSON = function (value) {
         var data = JSON.parse(value);
         this.head = data.head;
-        if(data.hasOwnProperty("dataset")){
+        if (data.hasOwnProperty("dataset")) {
             var fieldDefs = data.dataset[0];
             for (var i = 1; i < data.dataset.length; i++) {
                 this.append();
@@ -1392,13 +1400,13 @@ function TAppDataSet(def) {
         }
     }
 
-    this.first = function() {
+    this.first = function () {
         if (this.dataset.length > 0) {
             this.recNo = 1;
         }
     }
 
-    this.next = function() {
+    this.next = function () {
         if (this.recNo == -1) {
             this.first();
         } else {
@@ -1408,7 +1416,7 @@ function TAppDataSet(def) {
         return (this.recNo > 0) && (this.recNo <= this.dataset.length);
     }
 
-    this.loadFromService = function(dataset) {
+    this.loadFromService = function (dataset) {
         var head;
         for (var i = 0; i < dataset.length; i++) {
             if (i == 0) {
@@ -1423,8 +1431,8 @@ function TAppDataSet(def) {
                     // 在此要判断并转换为datetime
                     var src = JSON.stringify(str);
                     if (src && (src.charAt(5) == '@') && (src.charAt(8) == '#')
-                            && (src.charAt(14) == '@')
-                            && (src.charAt(17) == '#')) {
+                        && (src.charAt(14) == '@')
+                        && (src.charAt(17) == '#')) {
                         Year = src.substring(1, 5);
                         Month = src.substring(6, 8);
                         Day = src.substring(9, 11);
@@ -1432,7 +1440,7 @@ function TAppDataSet(def) {
                         Minute = src.substring(15, 17);
                         Second = src.substring(18, 20);
                         str = Year + '/' + Month + '/' + Day + ' ' + Hour + ':'
-                                + Minute + ':' + Second;
+                            + Minute + ':' + Second;
                     }
                     this.setField(head[j], str);
                 }
@@ -1443,7 +1451,7 @@ function TAppDataSet(def) {
     if (def) {
         this.setJSON(def);
     }
-    this.locate = function(field, value) {
+    this.locate = function (field, value) {
         var fieldValueMap = {};
         var fieldslist = field.split(";");
         for (var i = 0; i < fieldslist.length; i++) {
@@ -1475,27 +1483,28 @@ function TAppDataSet(def) {
         return retuls;
     }
 
-    this.delItem = function() {
+    this.delItem = function () {
         this.dataset.splice(this.recNo - 1, 1);
         this.recNo -= 1;
     }
 }
+
 Object.defineProperty(TAppDataSet.prototype, 'bof', {
-    get : function() {
+    get: function () {
         return this.recNo < 1;
     }
 });
 Object.defineProperty(TAppDataSet.prototype, 'eof', {
-    get : function() {
+    get: function () {
         return this.recNo > this.dataset.length;
     }
 });
 
-String.prototype.format = function(args) {
+String.prototype.format = function (args) {
     if (arguments.length > 0) {
         var result = this;
         if (arguments.length == 1 && typeof (args) == "object") {
-            for ( var key in args) {
+            for (var key in args) {
                 var reg = new RegExp("({" + key + "})", "g");
                 result = result.replace(reg, args[key]);
             }
@@ -1540,15 +1549,15 @@ function tableDirection(event, self) {
     var id = 0;
     var fixed = $(self).data("focus");
     var keyCode = event.keyCode - 37;
-    if(fixed){
+    if (fixed) {
         if (keyCode >= 0 && keyCode <= 3) {
             id = fixed[keyCode];
         }
         if (id != 0) {
             var position = getInputCursorPosition(self);
             if ((keyCode == 1 || keyCode == 3) || (position == 0 && keyCode == 0)
-                    || ($(self).val().length == position && keyCode == 2)) {
-                if(event.ctrlKey)
+                || ($(self).val().length == position && keyCode == 2)) {
+                if (event.ctrlKey)
                     $("#" + id).val($(self).val()).trigger("input");
                 $("#" + id).select();
                 return false;
@@ -1564,7 +1573,7 @@ function tableDirection(event, self) {
             var input = items[index + 1];
         if (input) {
             $(input).closest("tr").show();
-            if(event.ctrlKey)
+            if (event.ctrlKey)
                 $(input).val($(self).val()).trigger("input")
             $(input).select();
             return false;
@@ -1574,7 +1583,7 @@ function tableDirection(event, self) {
 }
 
 function GridRow(row) {
-    this.get = function(field) {
+    this.get = function (field) {
         var obj = $(row).find("[name=" + field + "]");
         if (obj.length > 0) {
             if (obj.attr("type") == "checkbox") {
@@ -1584,10 +1593,10 @@ function GridRow(row) {
             }
         } else {
             return $(row).find("[role=" + field + "]").text().replace(
-                    new RegExp("\n", "gm"), '');
+                new RegExp("\n", "gm"), '');
         }
     };
-    this.set = function(field, value) {
+    this.set = function (field, value) {
         var obj = $(row).find("[name=" + field + "]");
         $(row).attr("role", "edit");
         if (obj.length > 0)
@@ -1595,29 +1604,29 @@ function GridRow(row) {
         else
             return $(row).find("[role=" + field + "]").html(value);
     };
-    this.getOriginal = function(field) {
+    this.getOriginal = function (field) {
         var obj = $(row).find("[name=" + field + "]");
         if (obj.length > 0) {
             return obj.data(field.toLocaleLowerCase());
         } else
             return $(row).find("[role=" + field + "]").data(field.toLocaleLowerCase());
     };
-    this.cleanRowEditStatus = function() {
+    this.cleanRowEditStatus = function () {
         $(row).removeAttr("role");
         $(row).find("[role=edit]").removeAttr("role");
     };
-    this.getCell = function(field) {
+    this.getCell = function (field) {
         return $(row).find("[role=" + field + "]");
     }
 }
 
 function tableGetData(tableId) {
     var dataSet = new TAppDataSet();
-    $("." + tableId).find("tr[role=edit]").each(function() {
+    $("." + tableId).find("tr[role=edit]").each(function () {
         var row = new GridRow(this);
         dataSet.append();
         dataSet.setField("_id", String($(this).data("rowid")));
-        $(this).find("td").each(function() {
+        $(this).find("td").each(function () {
             var field = $(this).attr("role");
             dataSet.setField(field, row.get(field));
         });
@@ -1627,7 +1636,7 @@ function tableGetData(tableId) {
             if (childRow.length == 0)
                 break;
             var row1 = new GridRow(childRow);
-            childRow.find("td").each(function() {
+            childRow.find("td").each(function () {
                 var field = $(this).attr("role");
 
                 if (field != null && field)
@@ -1678,11 +1687,11 @@ function gridSort(self, field) {
     var items = tableClone.find("tr");
     items.splice(0, 1);// 删除第一个元素
     var rows = new Array();
-    items.each(function() {
+    items.each(function () {
         if ($(this).attr("id").indexOf("_") == -1)
             rows.push(new Array(this));
     });
-    $(rows).each(function() {
+    $(rows).each(function () {
         var id = $(this[0]).attr("id");
         for (var i = 1; i < 99; i++) {
             var childRow = $(tableClone).find("#" + id + "_" + i);
@@ -1691,11 +1700,11 @@ function gridSort(self, field) {
             this.push(childRow);
         }
     });
-    table.find("tr").each(function(key, value) {
+    table.find("tr").each(function (key, value) {
         if (key != 0)
             $(this).remove();
     });
-    rows.sort(function(o, p) {
+    rows.sort(function (o, p) {
         var stuts = 0;
         if (o && p && typeof o === 'object' && typeof p === 'object') {
             var value1 = new GridRow(o).get(field);
@@ -1710,7 +1719,7 @@ function gridSort(self, field) {
         }
         return parseFloat(sortStuts) * parseFloat(stuts);
     })
-    $(rows).each(function() {
+    $(rows).each(function () {
         table.append(this);
     });
     calculatePosition(table);
@@ -1721,19 +1730,19 @@ function calculatePosition(table) {
     var items = table.find("tr");
     items.splice(0, 1);// 删除第一个元素
     var rows = new Array();
-    items.each(function() {
+    items.each(function () {
         if ($(this).attr("id").indexOf("_") == -1)
             rows.push(new Array(this));
     });
-    $(rows).each(function(key, value) {
-        $(this).find("input").each(function(key2, value2) {
+    $(rows).each(function (key, value) {
+        $(this).find("input").each(function (key2, value2) {
             var fixed = $(this).data("focus");
-            if(fixed){
-                if (key == 0) 
+            if (fixed) {
+                if (key == 0)
                     fixed[1] = 0;
                 else
                     fixed[1] = $($(rows[key - 1]).find("input")[key2]).attr("id");
-                if (rows.length - 1 == key) 
+                if (rows.length - 1 == key)
                     fixed[3] = 0;
                 else
                     fixed[3] = $($(rows[key + 1]).find("input")[key2]).attr("id");
@@ -1746,7 +1755,7 @@ function calculatePosition(table) {
 // 获取URL中的参数
 function getUrlParam(name, url) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); // 构造一个含有目标参数的正则表达式对象
-    if(url)
+    if (url)
         url = url.substr(url.indexOf("?") + 1);
     else
         url = window.location.search.substr(1);
@@ -1755,11 +1764,12 @@ function getUrlParam(name, url) {
         return unescape(r[2]);
     return null; // 返回参数值
 }
+
 // 判断是否是手机类型
 function isPhone() {
     var device = Application.device;
     return device == "phone" || device == "weixin" || device == "android"
-            || device == "iphone";
+        || device == "iphone";
 }
 
 function ClientProxy() { // 安卓代理，对应android源码中的JavaScriptProxy
@@ -1773,36 +1783,36 @@ function ClientProxy() { // 安卓代理，对应android源码中的JavaScriptPr
     //android 浏览器
     if (window.JSobj) { // 兼容老的JSobj
         this.machine = window.JSobj;
-        this.device="android";
+        this.device = "android";
         this.active = true;
-    }else if (window.SanMaoJSInterface) { // 兼容三毛游js
+    } else if (window.SanMaoJSInterface) { // 兼容三毛游js
         this.machine = window.SanMaoJSInterface;
-        this.device="android";
+        this.device = "android";
         this.active = true;
-    }else if (window.jsAndroid) { // 原JSobj改名为jsAndroid
+    } else if (window.jsAndroid) { // 原JSobj改名为jsAndroid
         this.machine = window.jsAndroid;
-        this.device="android";
+        this.device = "android";
         this.active = true;
-    }else if(Application.device == "iphone"){
-        this.device="iphone";
+    } else if (Application.device == "iphone") {
+        this.device = "iphone";
         this.active = true;
     }
     //c#浏览器
-    if(!this.active){
-        if(window.external){ 
+    if (!this.active) {
+        if (window.external) {
             this.machine = window.external;
-            try{
+            try {
                 window.external.send("GetVersionName", "{}");
-                this.device="window";
+                this.device = "window";
                 this.active = true;
             } catch (e) {
                 this.active = false;
             }
         }
     }
-    
+
     // 判断是否支持指定的功能函数
-    this.support = function(classCode, callback) {
+    this.support = function (classCode, callback) {
         if (this.active) {
             var fn = new String(callback).toString().replace(new RegExp("\r\n", "gm"), "");
             this.req._callback_ = fn.replace(new RegExp("'", "gm"), "\\'");
@@ -1816,7 +1826,7 @@ function ClientProxy() { // 安卓代理，对应android源码中的JavaScriptPr
     }
 
     //列出所有可用的服务
-    this.list = function(callback){
+    this.list = function (callback) {
         if (this.active) {
             var fn = new String(callback).toString().replace(new RegExp("\r\n", "gm"), "");
             this.req._callback_ = fn.replace(new RegExp("'", "gm"), "\\'");
@@ -1828,18 +1838,18 @@ function ClientProxy() { // 安卓代理，对应android源码中的JavaScriptPr
             }
         }
     }
-    
+
     //请求具体的服务，并立即返回
-    this.send = function(classCode, callback) {
+    this.send = function (classCode, callback) {
         try {
             if (this.active) {
                 var fn = new String(callback).toString().replace(
-                        new RegExp("\r\n", "gm"), "");
+                    new RegExp("\r\n", "gm"), "");
                 this.req._callback_ = fn.replace(new RegExp("'", "gm"), "\\'");
                 if (this.device == "iphone") {
                     this.req.classCode = classCode;
                     window.webkit.messageHandlers.nativeMethod
-                            .postMessage(this.req);
+                        .postMessage(this.req);
                 } else {
                     this.machine.send(classCode, JSON.stringify(this.req));
                 }
@@ -1852,30 +1862,30 @@ function ClientProxy() { // 安卓代理，对应android源码中的JavaScriptPr
         }
         return this.resp.result;
     }
-    
-    this.sync = function(classCode, resultFunction, resultParams){
+
+    this.sync = function (classCode, resultFunction, resultParams) {
         this.req.resultFunction = resultFunction;
         this.req.resultParams = resultParams;
         return send();
     }
 
-    this.getData = function() { // 取得执行后结果数据
+    this.getData = function () { // 取得执行后结果数据
         if (this.resp.result)
             return this.resp.data;
         else
             return null;
     }
 
-    this.getMessage = function() { // 在执行出错时，取得出错原因
+    this.getMessage = function () { // 在执行出错时，取得出错原因
         return this.resp.message;
     }
 }
 
 /**
  * 开启或关闭客户端心跳检测
- * token 类型String 
+ * token 类型String
  * status 类型boolean
- * time 类型int 
+ * time 类型int
  */
 function heartbeatCheck(token, status, time) {
     if (!time) {
@@ -1883,8 +1893,8 @@ function heartbeatCheck(token, status, time) {
     }
     var client = new ClientProxy();
     client.req = {
-        'token' : token,
-        'status' : status,
+        'token': token,
+        'status': status,
         'time': time
     };
     if (!client.send("HeartbeatCheck")) {
@@ -1907,16 +1917,16 @@ function showMessage(data) {
 
 function setMenu() {
     var menus = $('.navigation div:eq(0) a[id^=component]');
-    if(menus.length >2) {
+    if (menus.length > 2) {
         var browser = new ClientBrowser();
-        if(browser.active){
+        if (browser.active) {
             var arr = new Array();
-            var param = {data:new Array()};
-            $.each(menus.splice(1,menus.length - 2),function(index, value) {
-                param.data[index]={'name':$(this).text(),'href':$(this).attr('href')}
+            var param = {data: new Array()};
+            $.each(menus.splice(1, menus.length - 2), function (index, value) {
+                param.data[index] = {'name': $(this).text(), 'href': $(this).attr('href')}
             });
             browser.req = param;
-            if(!browser.send("SetMenuList")){
+            if (!browser.send("SetMenuList")) {
                 alert(browser.getMessage())
             }
         }
@@ -1926,10 +1936,10 @@ function setMenu() {
 function callBrowser(url) {
     var client = new ClientProxy();
     if (client.active && client.device == 'android'
-            || client.device == 'iphone') {
+        || client.device == 'iphone') {
         if (client.support("CallBrowser")) {
             client.req = {
-                'url' : url
+                'url': url
             };
             if (!client.send("CallBrowser")) {
                 console.log(client.getMessage());
@@ -1953,64 +1963,66 @@ function startScanBarcode(callback) {
 
 /*****************新框架加载的js******************/
 function head_main() {
-	//设置屏幕框架尺寸
-	resetSize();
+    //设置屏幕框架尺寸
+    resetSize();
     if (isPhone()) {
-        addPhoneKeyBoardListener(function(){
+        addPhoneKeyBoardListener(function () {
             $(".form-box button").hide();
-        },function(){
+        }, function () {
             $(".form-box button").show();
             $(".form-box #bindingAliPay").hide();
             $(".form-box #saveAliPay").hide();
         });
-        
-    	/*适配iPhoneX*/
-    	if(isIphoneX()){
-        	$('footer[role="footer"]').css({"height":"auto","padding-bottom":"1em"});
+
+        /*适配iPhoneX*/
+        if (isIphoneX()) {
+            $('footer[role="footer"]').css({"height": "auto", "padding-bottom": "1em"});
         }
-    	
+
         /*phone端左侧工具栏点击隐藏*/
         asideToolBar('phone');
     } else {
         /*pc端左侧工具栏点击隐藏*/
         asideToolBar('pc');
-	}
-	trPosition();
-	if (Application.searchFormId) {
-		searchWait(Application.searchFormId);
-	}
-	if (Application.message && Application.message != '') {
-		showMsg(Application.message);
-	}
-	// 给商品增加下架标识
-	showLowerShelfInfo();
-	// 添加清除隐藏元素的值
-	clearNearHidden();
+    }
+    trPosition();
+    if (Application.searchFormId) {
+        searchWait(Application.searchFormId);
+    }
+    if (Application.message && Application.message != '') {
+        showMsg(Application.message);
+    }
+    // 给商品增加下架标识
+    showLowerShelfInfo();
+    // 添加清除隐藏元素的值
+    clearNearHidden();
     //当浏览器大小变化时,刷新当前页面
-	$(window).resize(function () {
-		resetSize();
-	});
+    $(window).resize(function () {
+        resetSize();
+    });
     // 添加快捷键
     shortcuts();
     // 设置菜单锁
     menuLock();
 }
-function menuLock(){
+
+function menuLock() {
     $('img[role="menuLock"]').addClass('gray');
     var item = $('img[role="menuLock"]').parent().parent().parent();
-    item.find("a").attr('href','javascript:void(0)').removeAttr('onclick').removeAttr('target');
-    item.click(function(){
+    item.find("a").attr('href', 'javascript:void(0)').removeAttr('onclick').removeAttr('target');
+    item.click(function () {
         showMsg("对不起，您没有权限执行此功能，请联系管理员开通权限！");
     });
 }
+
 // 设置标题显示状态
 function setAppliedTitleStatus(visibility) {
     var client = new ClientProxy();
     if (client.active && client.device == 'android'
-            || client.device == 'iphone') {
+        || client.device == 'iphone') {
         if (client.support("SetAppliedTitle")) {
             client.req = {
-                'visibility' : visibility
+                'visibility': visibility
             };
             if (!client.send("SetAppliedTitle")) {
                 console.log(client.getMessage());
@@ -2030,175 +2042,175 @@ function showMsg(msg) {
     if (!msg || msg == '') {
         return;
     }
-	var messageBox = $("section[role='message']");
-	// 兼容旧版本提示消息
-	if (messageBox.length == 0) {
-	    messageBox = $('<section role="message"></section>');
-	    messageBox.css({
-	        'width': '98%',
-    	    'position': 'fixed',
-    	    'margin': '0 1%',
-    	    'bottom': '0',
-    	    'padding': '5px',
-    	    'box-sizing': 'border-box',
-    	    '-webkit-box-sizing': 'border-box'
-	    });
-	    $('body').append(messageBox);
-	}
-	messageBox = messageBox.html('').css({
-	    'opacity' : 1,
-	    'width': $('section[role="content"]').outerWidth(false) + 'px',
-	    'left': $('body').offset().left
-	}).show();
-	
-	var messageClose = $("<span/>").css({
-        "display" : "inline-block",
-        "background" : "url(images/close.png)",
-        "background-repeat" : "no-repeat",
-        "background-position" : "center",
-        "background-size" : "1em 1em",
-        "position" : "absolute",
-        "cursor" : "pointer",
-        "width" : "1em",
-        "height" : "1em",
-        "top" : "0px",
-        "right" : "0px",
-        "z-index" : "102"
-    }).click(function() {
+    var messageBox = $("section[role='message']");
+    // 兼容旧版本提示消息
+    if (messageBox.length == 0) {
+        messageBox = $('<section role="message"></section>');
+        messageBox.css({
+            'width': '98%',
+            'position': 'fixed',
+            'margin': '0 1%',
+            'bottom': '0',
+            'padding': '5px',
+            'box-sizing': 'border-box',
+            '-webkit-box-sizing': 'border-box'
+        });
+        $('body').append(messageBox);
+    }
+    messageBox = messageBox.html('').css({
+        'opacity': 1,
+        'width': $('section[role="content"]').outerWidth(false) + 'px',
+        'left': $('body').offset().left
+    }).show();
+
+    var messageClose = $("<span/>").css({
+        "display": "inline-block",
+        "background": "url(images/close.png)",
+        "background-repeat": "no-repeat",
+        "background-position": "center",
+        "background-size": "1em 1em",
+        "position": "absolute",
+        "cursor": "pointer",
+        "width": "1em",
+        "height": "1em",
+        "top": "0px",
+        "right": "0px",
+        "z-index": "102"
+    }).click(function () {
         messageBox.stop().animate({
-            'opacity' : 0
+            'opacity': 0
         }, 500);
-        setTimeout(function() {
+        setTimeout(function () {
             messageBox.hide();
         }, 550);
     });
-    
+
     var messageContent = $("<div/>").html(msg).css({
-        "min-height" : "1.5em",
-        "max-height" : "6em",
-        "line-height" : "1.5em",
-        "overflow" : "auto",
-        "border-radius" : ".3em",
-        "-webkit-border-radius" : ".3em",
-        "padding" : ".5em",
-        "background-color" : "rgba(0,0,0,0.7)",
-        "width" : "100%",
-        "right" : "0",
-        "text-align" : "center",
+        "min-height": "1.5em",
+        "max-height": "6em",
+        "line-height": "1.5em",
+        "overflow": "auto",
+        "border-radius": ".3em",
+        "-webkit-border-radius": ".3em",
+        "padding": ".5em",
+        "background-color": "rgba(0,0,0,0.7)",
+        "width": "100%",
+        "right": "0",
+        "text-align": "center",
         'box-sizing': 'border-box',
         '-webkit-box-sizing': 'border-box',
         'color': '#fff'
     });
-	
-	// 获取底部操作区高度，设置消息提示出现的位置
+
+    // 获取底部操作区高度，设置消息提示出现的位置
     if ($('footer[role="footer"]').length == 0) {
         var height = '50px';
     } else {
         var height = $('footer[role="footer"]').css('height');
     }
-    
-	messageBox.stop().animate({
-	    'bottom' : height
-	}, 500);
-	
-	messageBox.append(messageContent);
-	
-	var timer;
-	if(msg.indexOf('</a>') == -1) {
-		timer = setTimeout(function() {
-	        messageBox.stop().animate({
-	            'opacity' : 0
-	        }, 500);
-	        setTimeout(function() {
-	            messageBox.hide();
-	        }, 550);
-	    }, 3000);
-	}
-	
-	//鼠标放入消息框清除定时器
-	messageBox.on("mouseover",function(){
-		clearTimeout(timer);
-	});
-	messageBox.on("mouseout",function(){
-		if(msg.indexOf('</a>') == -1) {
-			timer = setTimeout(function() {
-		        messageBox.stop().animate({
-		            'opacity' : 0
-		        }, 500);
-		        setTimeout(function() {
-		            messageBox.hide();
-		        }, 550);
-		    }, 3000);
-		}
-	});
-	
+
+    messageBox.stop().animate({
+        'bottom': height
+    }, 500);
+
+    messageBox.append(messageContent);
+
+    var timer;
+    if (msg.indexOf('</a>') == -1) {
+        timer = setTimeout(function () {
+            messageBox.stop().animate({
+                'opacity': 0
+            }, 500);
+            setTimeout(function () {
+                messageBox.hide();
+            }, 550);
+        }, 3000);
+    }
+
+    //鼠标放入消息框清除定时器
+    messageBox.on("mouseover", function () {
+        clearTimeout(timer);
+    });
+    messageBox.on("mouseout", function () {
+        if (msg.indexOf('</a>') == -1) {
+            timer = setTimeout(function () {
+                messageBox.stop().animate({
+                    'opacity': 0
+                }, 500);
+                setTimeout(function () {
+                    messageBox.hide();
+                }, 550);
+            }, 3000);
+        }
+    });
+
 }
 
 /*
 * 左侧工具栏点击隐藏方法
 */
 function asideToolBar(device) {
-	if (!device) return false;
-	var windowWidth = document.body.clientWidth;
-	$("body").on('click','.leftAside',function() {
-		if ($(this).hasClass('tool-active')) {
-			if (device == "phone"){
-				$(this).animate({'left':'0'},500);
-				$('aside[role="toolBar"]').animate({'left':'-100%'},500);
-				$(".cover").remove();
-				$(this).css("background-image","url('images/handle-left-phone.png')");
-			} else if (device == "pc") {
-				$(this).siblings().animate({'opacity':'1'},500);
-				$(this).animate({'right':'310px'},500);
-				$('aside[role="toolBar"]').animate({'right':'0'},500).css("background","#b0d8ef");
-				if(windowWidth > 1280){
-					$('article[role="document"]').animate({'padding-right':'320px'},500);
-				}
-				$(this).css("background-image","url('images/handle-right.png')");
-				$('section[role="content"],section[role="control"]').animate({'width':'100%'},500);
-			}
-			
-			$(this).removeClass('tool-active');
-		} else {
-			if (device == "phone") {
-				$(this).animate({'left':'95%'},500);
-				$('aside[role="toolBar"]').animate({'left':'0'},500);
-				$('body').append('<div class="cover" style="width: 100%;height: 100%;position: absolute;top: 0;left:0;z-index: 99;opacity: 0;"></div>');
-				$(this).css("background-image",'url("images/handle-right-phone.png")');
-			} else if (device == "pc") {
-				$(this).animate({'right':'310px'},500);
-				$('aside[role="toolBar"]').animate({'right':'-310px'},500).css("background","#f7f7f7");
-				$(this).siblings().animate({'opacity':'0'},500);
-				$('article[role="document"]').animate({'padding-right':'10px'},500);
-				$(this).css("background-image",'url("images/handle-left.png")');
-				$('section[role="content"],section[role="control"]').animate({'width':'100%'},500);
-			}
-			$(this).addClass('tool-active');
-		}
-	});
-    if(windowWidth < 1280 && !isPhone()){
+    if (!device) return false;
+    var windowWidth = document.body.clientWidth;
+    $("body").on('click', '.leftAside', function () {
+        if ($(this).hasClass('tool-active')) {
+            if (device == "phone") {
+                $(this).animate({'left': '0'}, 500);
+                $('aside[role="toolBar"]').animate({'left': '-100%'}, 500);
+                $(".cover").remove();
+                $(this).css("background-image", "url('images/handle-left-phone.png')");
+            } else if (device == "pc") {
+                $(this).siblings().animate({'opacity': '1'}, 500);
+                $(this).animate({'right': '310px'}, 500);
+                $('aside[role="toolBar"]').animate({'right': '0'}, 500).css("background", "#b0d8ef");
+                if (windowWidth > 1280) {
+                    $('article[role="document"]').animate({'padding-right': '320px'}, 500);
+                }
+                $(this).css("background-image", "url('images/handle-right.png')");
+                $('section[role="content"],section[role="control"]').animate({'width': '100%'}, 500);
+            }
+
+            $(this).removeClass('tool-active');
+        } else {
+            if (device == "phone") {
+                $(this).animate({'left': '95%'}, 500);
+                $('aside[role="toolBar"]').animate({'left': '0'}, 500);
+                $('body').append('<div class="cover" style="width: 100%;height: 100%;position: absolute;top: 0;left:0;z-index: 99;opacity: 0;"></div>');
+                $(this).css("background-image", 'url("images/handle-right-phone.png")');
+            } else if (device == "pc") {
+                $(this).animate({'right': '310px'}, 500);
+                $('aside[role="toolBar"]').animate({'right': '-310px'}, 500).css("background", "#f7f7f7");
+                $(this).siblings().animate({'opacity': '0'}, 500);
+                $('article[role="document"]').animate({'padding-right': '10px'}, 500);
+                $(this).css("background-image", 'url("images/handle-left.png")');
+                $('section[role="content"],section[role="control"]').animate({'width': '100%'}, 500);
+            }
+            $(this).addClass('tool-active');
+        }
+    });
+    if (windowWidth < 1280 && !isPhone()) {
         $('.leftAside').click();
     }
-    
+
 }
 
 /**判断是否为iPhoneX*/
-function isIphoneX(){
+function isIphoneX() {
     return /iphone/gi.test(navigator.userAgent) && (screen.height == 812 && screen.width == 375)
 }
 
 /**********************************************/
 
-(function(){
-    window.addPhoneKeyBoardListener = function(show, hide) {
-        var clientHeight = document.documentElement.clientHeight || document.body.clientHeight; 
+(function () {
+    window.addPhoneKeyBoardListener = function (show, hide) {
+        var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
         $(window).on('resize', function () {
             var nowClientHeight = document.documentElement.clientHeight || document.body.clientHeight;
             if (clientHeight - nowClientHeight > 100) {
                 show();
-            }else {
+            } else {
                 hide();
-            } 
+            }
         });
     }
 })();

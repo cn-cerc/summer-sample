@@ -27,6 +27,7 @@ public class FrmExample extends AbstractForm {
 
         LocalService svr = new LocalService(this, "SvrExample.search");
         Record headIn = svr.getDataIn().getHead();
+        headIn.setField("code_", getRequest().getParameter("code"));
         headIn.setField("searchText_", getRequest().getParameter("searchText"));
         if (!svr.exec()) {
             jspPage.setMessage(svr.getMessage());

@@ -1,14 +1,14 @@
 @charset "UTF-8";
 
 html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre,
-    code, form, fieldset, legend, input, textarea, p, blockquote, th, td,
-    header, hgroup, nav, section, article, aside, footer, figure,
-    figcaption, menu, button {
+code, form, fieldset, legend, input, textarea, p, blockquote, th, td,
+header, hgroup, nav, section, article, aside, footer, figure,
+figcaption, menu, button {
     margin: 0;
     padding: 0;
 }
 
-html{
+html {
     background: #f7f7f7;
 }
 
@@ -89,11 +89,11 @@ a:active {
 }
 
 nav[role="mainMenu"] a:hover {
-    background-size:cover;
+    background-size: cover;
     color: #7A98F7;
 }
 
-#selBusiness .block117{
+#selBusiness .block117 {
     padding: 0 0.75em;
 }
 
@@ -113,8 +113,7 @@ button, input[type="submit"], input[type="button"] {
 }
 
 input[type="text"], input[type="number"], input[type="tel"], input[type="email"],
-select, input[type="password"]
-    {
+select, input[type="password"] {
     width: 10em;
     height: 1.75em;
     line-height: 1.75em;
@@ -127,14 +126,15 @@ select, input[type="password"]
     padding-left: .6em;
     color: #C6CBE6;
 }
-select{
+
+select {
     min-height: 1.75em;
     height: auto;
     background-color: #1E2235;
 }
 
 input[type="text"]:focus, input[type="number"]:focus, input[type="tel"]:focus,
-    input[type="email"]:focus {
+input[type="email"]:focus {
     border: 1px solid #7b9af4;
 }
 
@@ -154,78 +154,91 @@ body {
     font-size: 0.9em;
 }
 
-.title-date{
+.title-date {
     width: 100%;
     height: 2.86em;
     padding: 0 0.7em;
     background: transparent;
     margin-top: 0.5em;
 }
-.title-date .block109{
+
+.title-date .block109 {
     width: 100%;
     height: 2.86em;
     line-height: 2.86em;
     text-align: right;
 }
-.title-date .block109 span{
+
+.title-date .block109 span {
     display: none;
 }
-.title-date .block109 img{
+
+.title-date .block109 img {
     width: 1.3em;
 }
-.title-date .block109 input{
+
+.title-date .block109 input {
     color: #22acd0;
     padding: 0 0.5em 0 0;
     text-align: right;
 }
 
-.scrollArea{
-    position:relative;
+.scrollArea {
+    position: relative;
     width: 100%;
     padding: 0.7em;
     background: #fff;
 }
+
 .scrollArea ol.context li {
-    padding:0.5em 0;
+    padding: 0.5em 0;
     border-bottom: 1px solid #e6e6e6;
 }
-.scrollArea ol.context li:last-child{
+
+.scrollArea ol.context li:last-child {
     border-bottom: 0;
 }
-.scrollArea ol.context li section{
+
+.scrollArea ol.context li section {
     font-size: 0.9em;
 }
-.scrollArea ol.context li section:first-child{
+
+.scrollArea ol.context li section:first-child {
     color: #333;
     font-size: 1em;
 }
-.scrollArea ol.context li section span.right a{
+
+.scrollArea ol.context li section span.right a {
     color: #fff;
 }
 
-.selBusiness{
+.selBusiness {
     width: 100%;
     height: auto;
     padding: 1em;
     border-bottom: 1px solid #323547;
     position: relative;
 }
-.selBusiness .block101>a{
+
+.selBusiness .block101 > a {
     position: absolute;
     top: 0;
     left: 0;
-    display:inline-block;
+    display: inline-block;
     width: 100%;
     height: 6.5em;
 }
-.selBusiness .block101>a>img{
+
+.selBusiness .block101 > a > img {
     float: right;
     margin: 3em 1em 0 0;
 }
-.selBusiness .block117{
+
+.selBusiness .block117 {
     padding: 0;
 }
-.selBusiness .block117 span{
+
+.selBusiness .block117 span {
     margin-right: 1em;
 }
 
@@ -236,16 +249,16 @@ body {
     position: fixed;
     z-index: 101;
     width: 100%;
-    cursor:move;
+    cursor: move;
 }
 
-.dialogClose span{
-    float:right;
+.dialogClose span {
+    float: right;
 }
 
-.dialogClose a{
-    color:white;
-    padding:0.15em 0.5em;
+.dialogClose a {
+    color: white;
+    padding: 0.15em 0.5em;
 }
 
 /*普及版购物车数量修改样式*/
@@ -396,7 +409,7 @@ form.search ul li input[type=checkbox] {
     vertical-align: middle;
 }
 
-form.search ul li input[type=checkbox]+label {
+form.search ul li input[type=checkbox] + label {
     max-width: 14em;
 }
 
@@ -417,7 +430,8 @@ form.search p input {
 [readonly=readonly] {
     background-color: #dcdbdb;
 }
-[readonly=readonly]:focus{
+
+[readonly=readonly]:focus {
     border: 1px solid #dcdbdb !important;
 }
 
@@ -522,7 +536,7 @@ form.modify ul li input[type=checkbox] {
     vertical-align: middle;
 }
 
-form.modify ul li input[type=checkbox]+label {
+form.modify ul li input[type=checkbox] + label {
     width: auto;
 }
 
@@ -614,15 +628,16 @@ section[role="content"] section[role="sheetCard"] label a {
 }
 
 /*首页图标样式*/
-.menuList{
+.menuList {
     padding: .625em;
     margin-top: 2em;
 }
-.menuList .block_Img_Div{
-    display:inline-block;
+
+.menuList .block_Img_Div {
+    display: inline-block;
     padding-top: 0.5em;
     width: 25%;
-    max-width:8.5em;
+    max-width: 8.5em;
     min-height: 8.5em;
     overflow: hidden;
     float: left;
@@ -630,26 +645,29 @@ section[role="content"] section[role="sheetCard"] label a {
     text-align: center;
     cursor: pointer;
 }
-.menuList .block_Img_Div img{
+
+.menuList .block_Img_Div img {
     height: 4.5em;
     width: auto;
     margin-bottom: 0.5em;
 }
 
-section[role="content"] ul[role="menuList"]{
+section[role="content"] ul[role="menuList"] {
     padding: .625em;
 }
-section[role="content"] ul[role="menuList"] li{
+
+section[role="content"] ul[role="menuList"] li {
     padding-top: 0.5em;
     width: 25%;
-    max-width:8.5em;
+    max-width: 8.5em;
     min-height: 8.5em;
     overflow: hidden;
     float: left;
     min-width: 3em;
     text-align: center;
 }
-section[role="content"] ul[role="menuList"] li a{
+
+section[role="content"] ul[role="menuList"] li a {
     color: #333;
 }
 
@@ -685,11 +703,12 @@ aside[role="toolBar"] section div.title {
     border-radius: 8px 0 0 0;
     position: relative;
 }
-aside[role="toolBar"] section div.title:before{
+
+aside[role="toolBar"] section div.title:before {
     position: absolute;
     top: 0.45em;
     left: 0;
-    content:"";
+    content: "";
     display: inline-block;
     width: 1em;
     height: 1em;
@@ -709,54 +728,59 @@ aside[role="toolBar"] section div.contents p {
     padding: 0 0.25em;
     text-indent: 0em;
 }
-aside[role="toolBar"] div.contents a{
+
+aside[role="toolBar"] div.contents a {
     display: inline-block;
     padding: 0 0.4em;
 }
 
 /*工具栏选项卡*/
-aside[role="toolBar"] ul[role="toolGroup"]{
+aside[role="toolBar"] ul[role="toolGroup"] {
     width: 100%;
 }
-aside[role="toolBar"] ul[role="toolGroup"] ui{
+
+aside[role="toolBar"] ul[role="toolGroup"] ui {
     display: inline-block;
-    height:2.5em;
-    line-height:2.5em;
+    height: 2.5em;
+    line-height: 2.5em;
     text-align: center;
-    box-sizing:border-box;
+    box-sizing: border-box;
     float: left;
     margin-bottom: .5em;
     cursor: pointer;
-    background:  #ececec;
+    background: #ececec;
     border: 1px solid #cecece;
 }
-aside[role="toolBar"] ul[role="toolGroup"] ui.active{
+
+aside[role="toolBar"] ul[role="toolGroup"] ui.active {
     color: #058FCA;
-    background:  #fff;
+    background: #fff;
     border: 0;
 }
 
-aside[role="toolBar"] div[role="toolSheet"]{
+aside[role="toolBar"] div[role="toolSheet"] {
     display: none;
     clear: both;
     height: auto;
     color: #fff;
     overflow-y: auto;
 }
-aside[role="toolBar"] div[role="toolSheet"]#group0{
+
+aside[role="toolBar"] div[role="toolSheet"]#group0 {
     display: block;
 }
 
-footer[role="footer"] section[role="footerOperation"]{
+footer[role="footer"] section[role="footerOperation"] {
     display: inline-block;
     margin-left: 1em;
 }
-footer[role="footer"] section[role="footerOperation"] input[type="checkbox"]{
+
+footer[role="footer"] section[role="footerOperation"] input[type="checkbox"] {
     margin-top: -0.1em;
     vertical-align: middle;
 }
 
-section[role="leftMenu"]>ul li img {
+section[role="leftMenu"] > ul li img {
     margin-top: -0.2em;
     width: 1.6em;
 }
@@ -764,7 +788,7 @@ section[role="leftMenu"]>ul li img {
 /*操作提示信息*/
 section[role="message"] {
     min-height: 2.5em;
-    max-height:7em;
+    max-height: 7em;
     line-height: 1.5em;
     position: fixed;
     left: 0;
@@ -775,22 +799,22 @@ section[role="message"] {
 }
 
 @media only screen and (max-width: 768px) {
-    html{
+    html {
         width: 100%;
         height: 100%;
         /* background: #011221 url(../images/bg-img.png) no-repeat fixed center; */
-        background:#f5f5f5;
+        background: #f5f5f5;
         background-size: 100% 100%;
     }
-    
-    img{
+
+    img {
         max-width: 100% !important;
     }
-                
+
     form.search {
         text-align: center;
     }
-    
+
     .inputGroup {
         width: 16em;
         height: 2em;
@@ -798,6 +822,7 @@ section[role="message"] {
         /*margin: .5em auto 0;*/
         margin: 0 auto;
     }
+
     .inputGroup label {
         display: inline-block;
         width: 5em;
@@ -805,6 +830,7 @@ section[role="message"] {
         margin-right: .6em;
         text-align: right;
     }
+
     .inputGroup .btnSubmit {
         display: block;
         margin: .5em auto 0;
@@ -820,15 +846,18 @@ section[role="message"] {
         background: #058FCA;
         z-index: 102;
     }
+
     section[role="ad"] {
         display: none;
         width: 100%;
         height: 2.2em;
     }
+
     section[role="ad"] img {
         width: 100%;
         height: 2.2em;
     }
+
     nav[role="mainMenu"] {
         width: 100%;
         height: 2.2em;
@@ -836,6 +865,7 @@ section[role="message"] {
         color: #fff;
         position: relative;
     }
+
     nav[role="mainMenu"] section[role="leftMenu"] {
         width: 100%;
         height: 2.2em;
@@ -844,64 +874,77 @@ section[role="message"] {
         top: 0;
         left: 0;
     }
+
     nav[role="mainMenu"] section[role="leftMenu"] .menu {
         display: none;
     }
-    nav[role="mainMenu"] section[role="leftMenu"]>ul {
+
+    nav[role="mainMenu"] section[role="leftMenu"] > ul {
         width: 100%;
         min-height: 2.2em;
     }
-    section[role="leftMenu"]>ul li {
+
+    section[role="leftMenu"] > ul li {
         float: left;
         height: 2.2em;
         line-height: 2.2em;
         padding-left: 0.5em;
         color: #FFFFFF;
     }
-    section[role="leftMenu"]>ul li a {
+
+    section[role="leftMenu"] > ul li a {
         color: #FFFFFF;
     }
-    section[role="leftMenu"]>ul li img {
+
+    section[role="leftMenu"] > ul li img {
         width: 1.25em;
         height: 1.1em;
         margin-top: -0.4em;
     }
-    span[role="shopNums"]{
-       top:-0.6em !important;
-       font-size: 11px !important;
+
+    span[role="shopNums"] {
+        top: -0.6em !important;
+        font-size: 11px !important;
     }
-    
+
     nav[role="mainMenu"] section[role="rightMenu"] {
         width: 100%;
         min-height: 2.2em;
     }
-    section[role="rightMenu"]>ul{
+
+    section[role="rightMenu"] > ul {
         float: right;
     }
-    section[role="rightMenu"]>ul li {
+
+    section[role="rightMenu"] > ul li {
         float: left;
         height: 2.2em;
         line-height: 2.2em;
         padding: 0 .5em 0 0.5em;
         color: #FFFFFF;
     }
-    section[role="rightMenu"]>ul li a {
+
+    section[role="rightMenu"] > ul li a {
         color: #FFFFFF;
     }
-    section[role="rightMenu"]>ul li img {
+
+    section[role="rightMenu"] > ul li img {
         width: 1.2em;
         height: 1.2em;
         margin-top: -0.4em;
         /*vertical-align: baseline;*/
     }
+
     nav[role="mainMenu"] section[role="rightMenu"] a {
         color: #fff;
     }
+
     nav[role="mainMenu"] section[role="leftMenu"] .menu {
         width: 1.8em;
         height: 1.5em;
         margin-top: -.4em;
     }
+
     nav[role="mainMenu"] section[role="rightMenu"] {
         width: auto;
         height: 2.2em;
@@ -913,7 +956,7 @@ section[role="message"] {
         z-index: 210;
         background-color: #058FCA;
     }
-    
+
 
     /*主体部分*/
     article[role="document"] {
@@ -922,18 +965,22 @@ section[role="message"] {
         position: relative;
         padding-bottom: 2.5em;
     }
+
     article[role="document"] section[role="control"] {
         width: 100%;
         min-height: 3em;
         background: #ececec;
     }
-    article[role="document"] section[role="control"] div[role="group"]{
+
+    article[role="document"] section[role="control"] div[role="group"] {
         padding: 0 0.5em;
     }
+
     article[role="document"] section[role="content"] {
         width: 100%;
         min-height: 5em;
     }
+
     article[role="document"] section[role="content"] .dbgrid {
         margin-top: 0.625em;
         padding: 0 0.625em;
@@ -951,6 +998,7 @@ section[role="message"] {
         z-index: 100;
         padding: 3.2em 2.625em 3.3em .625em;
     }
+
     .leftAside {
         background-image: url(../images/handle-left-phone.png);
         border-left: 2px solid rgb(250, 173, 97);
@@ -968,15 +1016,18 @@ section[role="message"] {
         height: 100%;
         z-index: 101;
     }
+
     aside[role="toolBar"] section[role="sheet"] {
         width: 100%;
         margin-top: .6em;
     }
+
     aside[role="toolBar"] section[role="sheet"] #tab {
         width: 100%;
         margin: 0 auto;
         /*box-shadow: 5px 5px 5px #058FCA;*/
     }
+
     aside[role="toolBar"] section[role="sheet"] #tab h3 {
         margin: 0px;
         padding: 0px;
@@ -987,6 +1038,7 @@ section[role="message"] {
         line-height: 2em;
         text-align: center;
     }
+
     aside[role="toolBar"] section[role="sheet"] #tab div {
         clear: both;
         height: 10em;
@@ -998,12 +1050,14 @@ section[role="message"] {
         word-wrap: break-word;
         white-space: pre-wrap;
     }
+
     aside[role="toolBar"] section[role="sheet"] #tab h3.active {
         background: #058FCA;
         border-top-left-radius: .4em;
         border-top-right-radius: .4em;
         color: #fff;
     }
+
     aside[role="toolBar"] section[role="sheet"] #tab div.content {
         display: block;
         background: #058FCA;
@@ -1019,11 +1073,13 @@ section[role="message"] {
         background: #f7f7f7;
         z-index: 101;
     }
+
     footer[role="footer"] section[role="footerTools"] {
         display: inline-block;
         height: 2.5em;
     }
-    section[role="footerTools"]>a {
+
+    section[role="footerTools"] > a {
         display: inline-block;
         min-width: 4em;
         height: 1.75em;
@@ -1041,10 +1097,12 @@ section[role="message"] {
         border: 1px solid #dedede;
         margin-top: 0.35em;
     }
+
     footer[role="footer"] section[role="footerButtons"] {
         width: 100%;
         height: 2.5em;
     }
+
     section[role="footerButtons"] a {
         display: inline-block;
         width: auto;
@@ -1066,59 +1124,68 @@ section[role="message"] {
         padding: 0.5em 0.75em;
         border-bottom: 1px solid #8c8c8c;
     }
+
     ol.context {
         list-style-type: none;
         padding: 0.25em;
         margin-top: 0;
     }
+
     ol.context li table {
         width: 100%;
         border-collapse: collapse;
     }
+
     ol.context li table tr th {
         text-align: right;
         font-weight: normal;
         padding: 0.25em;
     }
-    ol.context li table tr td{
+
+    ol.context li table tr td {
         text-align: left;
     }
-    
-    ol.context li table tr td:last-child{
+
+    ol.context li table tr td:last-child {
         text-align: right;
     }
-    
+
     ol.context li table tr input {
         width: 50%;
     }
+
     /* ol.context li table tbody tr:nth-child(odd) {
         background: #eee;
     } */
     ol.context li table tbody tr:hover {
         background: #b0d8ff;
     }
+
     ol.context li section span {
         margin-right: 0.5em;
     }
+
     ol.context li section span.right {
         float: right;
         color: #ca0000;
         font-size: 1.6em;
     }
-    ol.context li section span.right a{
+
+    ol.context li section span.right a {
         color: #22acd0 !important;
         text-decoration: underline;
     }
+
     ol.context li section span img {
         vertical-align: middle;
     }
 }
 
 .dialogClose {
-    width:100%;
+    width: 100%;
     background-color: #5e6a8f;
-    color:white;
-    padding:0.3em;
+    color: white;
+    padding: 0.3em;
     position: absolute;
 }
 
@@ -1187,11 +1254,11 @@ section[role="message"] {
 }
 
 /*多选框开关样式*/
-.switch>input {
+.switch > input {
     display: none;
 }
 
-.switch>input+label {
+.switch > input + label {
     background-color: #F0F0F2;
     border: 1px solid #C2C2C2;
     border-radius: 100px;
@@ -1200,12 +1267,12 @@ section[role="message"] {
     width: 3em;
 }
 
-.switch>input:checked+label {
+.switch > input:checked + label {
     background-color: #4cda60;
     border: 1px solid #4cda60;
 }
 
-.switch>input+label>span {
+.switch > input + label > span {
     border: 1px solid;
     border-radius: 50%;
     color: #cacaca;
@@ -1216,11 +1283,11 @@ section[role="message"] {
     float: left;
 }
 
-.switch>input:checked+label>span {
+.switch > input:checked + label > span {
     float: right;
 }
 
-#tableTbType>div{
+#tableTbType > div {
     background-color: #f2f2f2;
     font-size: 0.9em;
     height: 2.5em;
@@ -1229,10 +1296,12 @@ section[role="message"] {
     text-align: left;
     width: 100%;
 }
-#tableTbType ul li{
+
+#tableTbType ul li {
     display: inline-block;
     margin-left: 1em;
 }
+
 .gray {
     -webkit-filter: grayscale(100%);
     -moz-filter: grayscale(100%);
@@ -1241,7 +1310,8 @@ section[role="message"] {
     filter: grayscale(100%);
     filter: gray;
 }
-.treeGrid tr{
+
+.treeGrid tr {
     display: flex;
     display: -webkit-flex;
     /* display: -webkit-box;
@@ -1250,9 +1320,11 @@ section[role="message"] {
     justify-content: space-around;
     height: auto;
 }
-.treeGrid tr:hover{
+
+.treeGrid tr:hover {
     background: transparent;
 }
+
 .treeGrid td {
     text-align: center !important;
     border: 1px solid #21a8cb;
@@ -1264,7 +1336,8 @@ section[role="message"] {
     -webkit-border-radius: 0.3em;
     min-height: 2em;
 }
-.treeGrid td a{
+
+.treeGrid td a {
     display: inline-block;
     width: 100%;
     min-height: 2em;
@@ -1272,7 +1345,8 @@ section[role="message"] {
     padding: 0.3em 0;
     line-height: 1.4em;
 }
-.treeGrid td:before{
+
+.treeGrid td:before {
     position: absolute;
     bottom: -1.6em;
     left: -0.6em;
@@ -1284,7 +1358,8 @@ section[role="message"] {
     border-left: 1px solid #fff;
     border-right: 1px solid #fff;
 }
-.treeGrid td:after{
+
+.treeGrid td:after {
     position: absolute;
     bottom: -0.75em;
     left: 50%;
@@ -1294,25 +1369,29 @@ section[role="message"] {
     content: "";
     background: #fff;
 }
-.treeGrid tr:first-child td:before{
+
+.treeGrid tr:first-child td:before {
     left: -3.7em;
     width: 14em;
 }
-.treeGrid tr:last-child td:before{
+
+.treeGrid tr:last-child td:before {
     border: none;
     width: 0;
     height: 0;
 }
-.treeGrid tr:last-child td:after{
+
+.treeGrid tr:last-child td:after {
     background: transparent;
     width: 0;
     height: 0;
 }
-.treeGrid td span{
+
+.treeGrid td span {
     display: inline-block;
     width: 100%;
     overflow: hidden;
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
     white-space: nowrap;
     color: #21a8cb;
 }
