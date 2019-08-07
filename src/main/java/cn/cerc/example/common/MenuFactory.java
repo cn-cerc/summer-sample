@@ -7,8 +7,7 @@ import cn.cerc.jmis.core.IAppMenus;
 import cn.cerc.jmis.core.MenuData;
 import cn.cerc.jmis.core.MenuItem;
 import cn.cerc.jmis.form.AbstractForm;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.CannotLoadBeanClassException;
 import org.springframework.context.ApplicationContext;
@@ -18,8 +17,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class MenuFactory implements IAppMenus {
-    private static final Logger log = LoggerFactory.getLogger(MenuFactory.class);
+
     private static final Map<String, MenuData> menus = new LinkedHashMap<>();
 
     static {

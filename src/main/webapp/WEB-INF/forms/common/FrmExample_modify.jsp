@@ -7,6 +7,7 @@
 <body>
 
 <%@ include file="head.jspf" %>
+<div><a href="FrmExample">返回</a></div>
 
 <form method="post" action="FrmExample.modify">
     <input type="hidden" id="code" name="code" value="${record.items.code_}">
@@ -16,7 +17,10 @@
     </div>
     <div>
         <label>性别</label>
-        <input id="sex" name="sex" value="${record.items.sex_}" readonly="readonly"/>
+        <select id="sex" name="sex">
+            <option value="0" <c:if test="${record.items.sex_ eq 0}">selected="selected"</c:if>>男</option>
+            <option value="1" <c:if test="${record.items.sex_ eq 1}">selected="selected"</c:if>>女</option>
+        </select>
     </div>
     <div>
         <label>年龄</label>

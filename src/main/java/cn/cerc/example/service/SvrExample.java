@@ -5,32 +5,33 @@ import cn.cerc.jbean.core.CustomService;
 import cn.cerc.jbean.core.DataValidateException;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.TDateTime;
-import cn.cerc.jdb.mysql.BuildQuery;
 import cn.cerc.jdb.mysql.SqlQuery;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class SvrExample extends CustomService {
-
-    private static final Logger log = LoggerFactory.getLogger(SvrExample.class);
 
     public boolean search() {
         Record headIn = getDataIn().getHead();
         log.info("headIn {}", headIn);
 
-        BuildQuery f = new BuildQuery(this);
-        f.add("select * from %s", AppDB.Table_Example);
+        SqlQuery cdsTmp = new SqlQuery(this);
+        cdsTmp.add("select * from %s", AppDB.Table_Example);
+        cdsTmp.add("where 1=1");
 
         if (headIn.hasValue("code_")) {
-            f.byField("code_", headIn.getString("code_"));
+            cdsTmp.add("and code_='%s'", headIn.getString("code_"));
         }
 
         if (headIn.hasValue("searchText_")) {
-            f.byLink(new String[]{"name_", "age_"}, headIn.getString("searchText_"));
+            String searchText = headIn.getString("searchText_");
+            // 此处使用占位符进行%占位
+            cdsTmp.add("and (name_ like '%%%s%%' or age_ like '%%%s%%')", searchText, searchText);
         }
-        log.info("sql {}", f.getCommandText());
+        log.info("sql {}", cdsTmp.getSqlText().getText());
 
-        getDataOut().appendDataSet(f.open());
+        cdsTmp.open();
+        getDataOut().appendDataSet(cdsTmp);
         return true;
     }
 
@@ -68,7 +69,7 @@ public class SvrExample extends CustomService {
 
         SqlQuery cdsTmp = new SqlQuery(this);
         cdsTmp.add("select * from %s", AppDB.Table_Example);
-        cdsTmp.add("where code_=%s", code);
+        cdsTmp.add("where code_='%s'", code);
         cdsTmp.open();
         DataValidateException.stopRun("记录不存在", cdsTmp.eof());
 
@@ -81,17 +82,21 @@ public class SvrExample extends CustomService {
         DataValidateException.stopRun("code_ 不允许为空", !headIn.hasValue("code_"));
         String code = headIn.getString("code_");
 
+        DataValidateException.stopRun("sex_ 不允许为空", !headIn.hasValue("sex_"));
+        String sex = headIn.getString("sex_");
+
         int age = headIn.getInt("age_");
         DataValidateException.stopRun("年龄不允许小于0", age <= 0);
 
         SqlQuery cdsTmp = new SqlQuery(this);
         cdsTmp.add("select * from %s", AppDB.Table_Example);
-        cdsTmp.add("where code_=%s", code);
+        cdsTmp.add("where code_='%s'", code);
         cdsTmp.open();
         DataValidateException.stopRun("记录不存在", cdsTmp.eof());
 
         cdsTmp.edit();
         cdsTmp.setField("age_", age);
+        cdsTmp.setField("sex_", sex);
         cdsTmp.setField("updateTime_", TDateTime.Now());
         cdsTmp.post();
         return true;
@@ -104,7 +109,7 @@ public class SvrExample extends CustomService {
 
         SqlQuery cdsTmp = new SqlQuery(this);
         cdsTmp.add("select * from %s", AppDB.Table_Example);
-        cdsTmp.add("where code_=%s", code);
+        cdsTmp.add("where code_='%s'", code);
         cdsTmp.open();
         DataValidateException.stopRun("记录不存在", cdsTmp.eof());
 

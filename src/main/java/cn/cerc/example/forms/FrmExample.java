@@ -93,19 +93,30 @@ public class FrmExample extends AbstractForm {
             jspPage.setMessage(svr1.getMessage());
             return jspPage;
         }
-        jspPage.add("record", svr1.getDataOut().getHead());
+        Record record = svr1.getDataOut().getHead();
+        jspPage.add("record", record);
 
         String submit = getRequest().getParameter("submit");
         if (submit != null && !"".equals(submit)) {
+            String sex = getRequest().getParameter("sex");
+            if (sex == null || "".equals(sex)) {
+                jspPage.setMessage("sex 代码不允许为空");
+                return jspPage;
+            }
             LocalService svr2 = new LocalService(this, "SvrExample.modify");
             Record headIn2 = svr2.getDataIn().getHead();
             headIn2.setField("code_", code);
+            headIn2.setField("sex_", sex);
             headIn2.setField("age_", getRequest().getParameter("age"));
             if (!svr2.exec()) {
                 jspPage.setMessage(svr2.getMessage());
                 return jspPage;
             }
-            return new RedirectPage(this, "FrmExample");
+            UrlRecord url = new UrlRecord();
+            url.setSite("FrmExample.modify");
+            url.putParam("code", code);
+            url.putParam("message", "修改成功");
+            return new RedirectPage(this, url.getUrl());
         }
         return jspPage;
     }
