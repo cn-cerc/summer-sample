@@ -25,6 +25,7 @@ public class SvrExample extends CustomService {
 
         if (headIn.hasValue("searchText_")) {
             String searchText = headIn.getString("searchText_");
+            // 此处使用占位符进行%占位
             cdsTmp.add("and (name_ like '%%%s%%' or age_ like '%%%s%%')", searchText, searchText);
         }
         log.info("sql {}", cdsTmp.getSqlText().getText());
