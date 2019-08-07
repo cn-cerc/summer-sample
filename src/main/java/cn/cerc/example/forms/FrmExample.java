@@ -2,32 +2,12 @@ package cn.cerc.example.forms;
 
 import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.form.IPage;
-import cn.cerc.jbean.other.BufferType;
-import cn.cerc.jbean.other.MemoryBuffer;
 import cn.cerc.jdb.core.DataSet;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jmis.form.AbstractForm;
-import cn.cerc.jmis.language.R;
 import cn.cerc.jmis.page.JspPage;
 import cn.cerc.jmis.page.RedirectPage;
 import cn.cerc.jpage.core.UrlRecord;
-import cn.cerc.jpage.fields.ButtonField;
-import cn.cerc.jpage.fields.ItField;
-import cn.cerc.jpage.fields.OperaField;
-import cn.cerc.jpage.fields.StringField;
-import cn.cerc.jpage.grid.AbstractGrid;
-import cn.cerc.jpage.grid.PhoneGrid;
-import cn.cerc.jui.page.UIPagePhone;
-import cn.cerc.jui.page.UIPageSearch;
-import cn.cerc.jui.parts.UIFormHorizontal;
-import cn.cerc.jui.parts.UIHeader;
-import cn.cerc.jui.parts.UISheetHelp;
-import cn.cerc.jui.parts.UISheetUrl;
-import cn.cerc.jui.parts.UIToolBar;
-import cn.cerc.jui.phone.Block101;
-import cn.cerc.jui.vcl.UIGroupBox;
-import cn.cerc.jui.vcl.UIText;
-import cn.cerc.jui.vcl.ext.UISpan;
 import lombok.extern.slf4j.Slf4j;
 
 /**
