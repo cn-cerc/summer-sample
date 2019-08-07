@@ -6,12 +6,10 @@ import cn.cerc.jbean.core.DataValidateException;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.mysql.SqlQuery;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class SvrExample extends CustomService {
-
-    private static final Logger log = LoggerFactory.getLogger(SvrExample.class);
 
     public boolean search() {
         Record headIn = getDataIn().getHead();
