@@ -32,7 +32,7 @@ i-work，所有项目的总目录。
 
 2. 参考下图打开系统环境变量设置
 
-![](source/img/环境变量.png)
+![](assets/环境变量.png)
 
 3、参考以下变量进行配置
 
@@ -102,15 +102,15 @@ mvn -v
 
 2-1、点击`File`菜单，选择`Import`选项
 
-![](source/img/1531065824845.png)
+![](assets/1531065824845.png)
 
 2-2、选择 `Maven` 类型导入
 
-![](source/img/1531065942443.png)
+![](assets/1531065942443.png)
 
 2-3、导入 `i-work`目录下的 `summer-training`项目
 
-![](source/img/导入项目.png)
+![](assets/导入项目.png)
 
 2-4、等待大约3分钟，根据 `maven` 导入依赖包
 
@@ -118,13 +118,13 @@ mvn -v
 
 3-1、打开eclipse配置窗口
 
-![](source/img/1531061163969.png)
+![](assets/1531061163969.png)
 
 3-2、添加`i-tool`目录下的tomcat容器
 
 请根据`i-tool`目录下的`tomcat`选择引入合适的版本，若版本号不一致，则无法导入。
 
-![](source/img/1531061313876.png)
+![](assets/1531061313876.png)
 
 ### 6、运行项目
 
@@ -134,30 +134,30 @@ mvn -v
 
 4-2、将 `summer-traning` 加入 `tomcat`容器
 
-![](source/img/1531066369028.png)
+![](assets/1531066369028.png)
 
-![](source/img/1531060638738.png)
+![](assets/1531060638738.png)
 
 4-2、将 `server.xml`的端口为 `80`
 
-![](source/img/1531060785125.png)
+![](assets/1531060785125.png)
 
 4-3、移动到文件底部，将 `summer-training`放置到到根目录 `/`
 
 
-![](source/img/1531060737058.png)
+![](assets/1531060737058.png)
 
 4-4、启动项目
 
-![](source/img/1531060928768.png)
+![](assets/1531060928768.png)
 
 出现以下提示则说明项目运行成功了
 
-![](source/img/1531061009115.png)
+![](assets/1531061009115.png)
 
 打开浏览器输入 `127.0.0.1`，出现以下画面则说明运行成功
 
-![](source/img/1531061054036.png)
+![](assets/1531061054036.png)
 
 ### 7、连接Mysql
 
