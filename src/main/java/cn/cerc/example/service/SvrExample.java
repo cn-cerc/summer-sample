@@ -82,6 +82,9 @@ public class SvrExample extends CustomService {
         DataValidateException.stopRun("code_ 不允许为空", !headIn.hasValue("code_"));
         String code = headIn.getString("code_");
 
+        DataValidateException.stopRun("sex_ 不允许为空", !headIn.hasValue("sex_"));
+        String sex = headIn.getString("sex_");
+
         int age = headIn.getInt("age_");
         DataValidateException.stopRun("年龄不允许小于0", age <= 0);
 
@@ -93,6 +96,7 @@ public class SvrExample extends CustomService {
 
         cdsTmp.edit();
         cdsTmp.setField("age_", age);
+        cdsTmp.setField("sex_", sex);
         cdsTmp.setField("updateTime_", TDateTime.Now());
         cdsTmp.post();
         return true;
