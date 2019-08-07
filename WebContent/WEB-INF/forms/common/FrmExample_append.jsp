@@ -8,6 +8,7 @@
 
 <%@ include file="head.jspf" %>
 
+<div><a href="FrmExample">返回</a></div>
 <form method="post" action="FrmExample.append">
     <div>
         <label>学号</label>

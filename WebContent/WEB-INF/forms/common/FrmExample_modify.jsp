@@ -8,6 +8,7 @@
 
 <%@ include file="head.jspf" %>
 
+<div><a href="FrmExample">返回</a></div>
 <form method="post" action="FrmExample.modify">
     <input type="hidden" id="code" name="code" value="${record.items.code_}">
     <div>

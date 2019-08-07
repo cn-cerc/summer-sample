@@ -2,12 +2,32 @@ package cn.cerc.example.forms;
 
 import cn.cerc.jbean.client.LocalService;
 import cn.cerc.jbean.form.IPage;
+import cn.cerc.jbean.other.BufferType;
+import cn.cerc.jbean.other.MemoryBuffer;
 import cn.cerc.jdb.core.DataSet;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jmis.form.AbstractForm;
+import cn.cerc.jmis.language.R;
 import cn.cerc.jmis.page.JspPage;
 import cn.cerc.jmis.page.RedirectPage;
 import cn.cerc.jpage.core.UrlRecord;
+import cn.cerc.jpage.fields.ButtonField;
+import cn.cerc.jpage.fields.ItField;
+import cn.cerc.jpage.fields.OperaField;
+import cn.cerc.jpage.fields.StringField;
+import cn.cerc.jpage.grid.AbstractGrid;
+import cn.cerc.jpage.grid.PhoneGrid;
+import cn.cerc.jui.page.UIPagePhone;
+import cn.cerc.jui.page.UIPageSearch;
+import cn.cerc.jui.parts.UIFormHorizontal;
+import cn.cerc.jui.parts.UIHeader;
+import cn.cerc.jui.parts.UISheetHelp;
+import cn.cerc.jui.parts.UISheetUrl;
+import cn.cerc.jui.parts.UIToolBar;
+import cn.cerc.jui.phone.Block101;
+import cn.cerc.jui.vcl.UIGroupBox;
+import cn.cerc.jui.vcl.UIText;
+import cn.cerc.jui.vcl.ext.UISpan;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -93,7 +113,9 @@ public class FrmExample extends AbstractForm {
             jspPage.setMessage(svr1.getMessage());
             return jspPage;
         }
-        jspPage.add("record", svr1.getDataOut().getHead());
+        Record record = svr1.getDataOut().getHead();
+        record.setField("sex_", record.getInt("sex_") == 0 ? "男" : "女");
+        jspPage.add("record", record);
 
         String submit = getRequest().getParameter("submit");
         if (submit != null && !"".equals(submit)) {
@@ -105,7 +127,8 @@ public class FrmExample extends AbstractForm {
                 jspPage.setMessage(svr2.getMessage());
                 return jspPage;
             }
-            return new RedirectPage(this, "FrmExample");
+            jspPage.setMessage("保存成功！");
+            return jspPage;
         }
         return jspPage;
     }

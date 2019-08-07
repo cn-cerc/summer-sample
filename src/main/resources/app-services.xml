@@ -5,20 +5,23 @@
     <import resource="classpath*:jbean-service.xml"/>
     <import resource="classpath*:jmis-service.xml"/>
 
-    <!-- 范例 -->
-    <bean id="SvrExample.search" class="cn.cerc.example.service.SvrExample">
+    <!-- 范例 SvrExample.search-->
+    <bean id="SvrExample.search" class="cn.cerc.example.service.SvrExample" scope="prototype">
         <property name="funcCode" value="search"></property>
     </bean>
-    <bean id="SvrExample.append" class="cn.cerc.example.service.SvrExample">
+    <bean id="SvrExample.append" class="cn.cerc.example.service.SvrExample" scope="prototype">
         <property name="funcCode" value="append"></property>
     </bean>
-    <bean id="SvrExample.download" class="cn.cerc.example.service.SvrExample">
+    <bean id="SvrExample.download" class="cn.cerc.example.service.SvrExample" scope="prototype">
         <property name="funcCode" value="download"></property>
     </bean>
-    <bean id="SvrExample.modify" class="cn.cerc.example.service.SvrExample">
+    <bean id="SvrExample.modify" class="cn.cerc.example.service.SvrExample" scope="prototype">
         <property name="funcCode" value="modify"></property>
     </bean>
-    <bean id="SvrExample.delete" class="cn.cerc.example.service.SvrExample">
+    <bean id="SvrExample.delete" class="cn.cerc.example.service.SvrExample" scope="prototype">
         <property name="funcCode" value="delete"></property>
+    </bean>
+    <bean id="SvrExample.test" class="cn.cerc.example.service.SvrExample" scope="prototype">
+        <property name="funcCode" value="test"></property>
     </bean>
 </beans>

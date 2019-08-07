@@ -5,7 +5,6 @@ import cn.cerc.jbean.core.CustomService;
 import cn.cerc.jbean.core.DataValidateException;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.TDateTime;
-import cn.cerc.jdb.mysql.BuildQuery;
 import cn.cerc.jdb.mysql.SqlQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,19 +17,22 @@ public class SvrExample extends CustomService {
         Record headIn = getDataIn().getHead();
         log.info("headIn {}", headIn);
 
-        BuildQuery f = new BuildQuery(this);
-        f.add("select * from %s", AppDB.Table_Example);
+        SqlQuery cdsTmp = new SqlQuery(this);
+        cdsTmp.add("select * from %s", AppDB.Table_Example);
+        cdsTmp.add("where 1=1");
 
         if (headIn.hasValue("code_")) {
-            f.byField("code_", headIn.getString("code_"));
+            cdsTmp.add("and code_='%s'", headIn.getString("code_"));
         }
 
         if (headIn.hasValue("searchText_")) {
-            f.byLink(new String[]{"name_", "age_"}, headIn.getString("searchText_"));
+            String searchText = headIn.getString("searchText_");
+            cdsTmp.add("and (name_ like '%%%s%%' or age_ like '%%%s%%')", searchText, searchText);
         }
-        log.info("sql {}", f.getCommandText());
+        log.info("sql {}", cdsTmp.getSqlText().getText());
 
-        getDataOut().appendDataSet(f.open());
+        cdsTmp.open();
+        getDataOut().appendDataSet(cdsTmp);
         return true;
     }
 
@@ -68,7 +70,7 @@ public class SvrExample extends CustomService {
 
         SqlQuery cdsTmp = new SqlQuery(this);
         cdsTmp.add("select * from %s", AppDB.Table_Example);
-        cdsTmp.add("where code_=%s", code);
+        cdsTmp.add("where code_='%s'", code);
         cdsTmp.open();
         DataValidateException.stopRun("记录不存在", cdsTmp.eof());
 
@@ -86,7 +88,7 @@ public class SvrExample extends CustomService {
 
         SqlQuery cdsTmp = new SqlQuery(this);
         cdsTmp.add("select * from %s", AppDB.Table_Example);
-        cdsTmp.add("where code_=%s", code);
+        cdsTmp.add("where code_='%s'", code);
         cdsTmp.open();
         DataValidateException.stopRun("记录不存在", cdsTmp.eof());
 
@@ -104,7 +106,7 @@ public class SvrExample extends CustomService {
 
         SqlQuery cdsTmp = new SqlQuery(this);
         cdsTmp.add("select * from %s", AppDB.Table_Example);
-        cdsTmp.add("where code_=%s", code);
+        cdsTmp.add("where code_='%s'", code);
         cdsTmp.open();
         DataValidateException.stopRun("记录不存在", cdsTmp.eof());
 
