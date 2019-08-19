@@ -53,7 +53,13 @@ CLASSPATH
 .;%JAVA_HOME%\lib
 ```
 
-3-3、 新建Maven变量 `MAVEN_HOME`
+3-3、设置JVM全局 UTF-8 编码
+```
+JAVA_TOOL_OPTIONS
+-Dfile.encoding=UTF-8
+```
+
+3-4、 新建Maven变量 `MAVEN_HOME`
 
 ```
 MAVEN_HOME
@@ -61,7 +67,7 @@ MAVEN_HOME
 C:\Users\l1091\Documents\i-tool\apache-maven-3.6.0
 ```
 
-3-4、 修改系统变量 `Path`
+3-5、 修改系统变量 `Path`
 
 **注意**：在原有变量后面追加，不要覆盖其他变量路径
 
