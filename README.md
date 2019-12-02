@@ -1,3 +1,7 @@
+# summer-traing
+
+[![Build Status](https://travis-ci.org/cn-cerc/summer-training.svg)](https://travis-ci.org/cn-cerc/summer-training)
+
 # 简易进销存开发说明
 
 ## 一、搭建环境
