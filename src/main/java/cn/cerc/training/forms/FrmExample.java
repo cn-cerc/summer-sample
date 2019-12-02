@@ -1,4 +1,4 @@
-package cn.cerc.example.forms;
+package cn.cerc.training.forms;
 
 import cn.cerc.core.DataSet;
 import cn.cerc.core.Record;

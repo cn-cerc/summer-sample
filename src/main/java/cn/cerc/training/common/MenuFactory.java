@@ -1,4 +1,4 @@
-package cn.cerc.example.common;
+package cn.cerc.training.common;
 
 import cn.cerc.core.IHandle;
 import cn.cerc.mis.core.Application;

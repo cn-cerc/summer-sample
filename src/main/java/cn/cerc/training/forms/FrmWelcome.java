@@ -1,4 +1,4 @@
-package cn.cerc.example.forms;
+package cn.cerc.training.forms;
 
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;

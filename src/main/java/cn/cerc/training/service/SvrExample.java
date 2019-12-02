@@ -1,9 +1,9 @@
-package cn.cerc.example.service;
+package cn.cerc.training.service;
 
 import cn.cerc.core.Record;
 import cn.cerc.core.TDateTime;
 import cn.cerc.db.mysql.SqlQuery;
-import cn.cerc.example.common.AppDB;
+import cn.cerc.training.common.AppDB;
 import cn.cerc.mis.core.CustomService;
 import cn.cerc.mis.core.DataValidateException;
 import lombok.extern.slf4j.Slf4j;

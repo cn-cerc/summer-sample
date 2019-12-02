@@ -4,19 +4,19 @@
            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
     <!-- 范例服务 SvrExample-->
-    <bean id="SvrExample.search" class="cn.cerc.example.service.SvrExample" scope="prototype">
+    <bean id="SvrExample.search" class="cn.cerc.training.service.SvrExample" scope="prototype">
         <property name="funcCode" value="search"></property>
     </bean>
-    <bean id="SvrExample.append" class="cn.cerc.example.service.SvrExample" scope="prototype">
+    <bean id="SvrExample.append" class="cn.cerc.training.service.SvrExample" scope="prototype">
         <property name="funcCode" value="append"></property>
     </bean>
-    <bean id="SvrExample.download" class="cn.cerc.example.service.SvrExample" scope="prototype">
+    <bean id="SvrExample.download" class="cn.cerc.training.service.SvrExample" scope="prototype">
         <property name="funcCode" value="download"></property>
     </bean>
-    <bean id="SvrExample.modify" class="cn.cerc.example.service.SvrExample" scope="prototype">
+    <bean id="SvrExample.modify" class="cn.cerc.training.service.SvrExample" scope="prototype">
         <property name="funcCode" value="modify"></property>
     </bean>
-    <bean id="SvrExample.delete" class="cn.cerc.example.service.SvrExample" scope="prototype">
+    <bean id="SvrExample.delete" class="cn.cerc.training.service.SvrExample" scope="prototype">
         <property name="funcCode" value="delete"></property>
     </bean>
 </beans>

@@ -1,4 +1,4 @@
-package cn.cerc.example.common;
+package cn.cerc.training.common;
 
 public class AppDB {
 
