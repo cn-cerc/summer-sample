@@ -1,12 +1,13 @@
 package cn.cerc.example.common;
 
-import cn.cerc.jbean.core.Application;
-import cn.cerc.jbean.core.IPassport;
-import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jmis.core.IAppMenus;
-import cn.cerc.jmis.core.MenuData;
-import cn.cerc.jmis.core.MenuItem;
-import cn.cerc.jmis.form.AbstractForm;
+import cn.cerc.core.IHandle;
+import cn.cerc.mis.core.Application;
+
+import cn.cerc.mis.core.AbstractForm;
+import cn.cerc.mis.core.IAppMenu;
+import cn.cerc.mis.core.IPassport;
+import cn.cerc.mis.core.MenuData;
+import cn.cerc.mis.core.MenuItem;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.CannotLoadBeanClassException;
@@ -18,14 +19,14 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-public class MenuFactory implements IAppMenus {
+public class MenuFactory implements IAppMenu {
 
     private static final Map<String, MenuData> menus = new LinkedHashMap<>();
 
     static {
         try {
             menus.clear();
-            ApplicationContext forms = Application.getFormItems();
+            ApplicationContext forms = Application.getContext();
             for (String formCode : forms.getBeanDefinitionNames()) {
                 Object bean = null;
                 try {
@@ -92,7 +93,6 @@ public class MenuFactory implements IAppMenus {
         return menu;
     }
 
-    @Override
     public List<MenuItem> getList(IHandle handle, String parentMenu, boolean security) {
         if (this.passport == null) {
             this.passport = Application.getPassport(handle);

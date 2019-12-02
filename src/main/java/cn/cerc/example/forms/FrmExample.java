@@ -1,13 +1,13 @@
 package cn.cerc.example.forms;
 
-import cn.cerc.jbean.client.LocalService;
-import cn.cerc.jbean.form.IPage;
-import cn.cerc.jdb.core.DataSet;
-import cn.cerc.jdb.core.Record;
-import cn.cerc.jmis.form.AbstractForm;
-import cn.cerc.jmis.page.JspPage;
-import cn.cerc.jmis.page.RedirectPage;
-import cn.cerc.jpage.core.UrlRecord;
+import cn.cerc.core.DataSet;
+import cn.cerc.core.Record;
+import cn.cerc.mis.core.AbstractForm;
+import cn.cerc.mis.core.IPage;
+import cn.cerc.mis.core.LocalService;
+import cn.cerc.mis.page.JspPage;
+import cn.cerc.mis.page.RedirectPage;
+import cn.cerc.ui.core.UrlRecord;
 import lombok.extern.slf4j.Slf4j;
 
 /**

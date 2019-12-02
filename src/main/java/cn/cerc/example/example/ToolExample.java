@@ -1,10 +1,10 @@
 package cn.cerc.example.example;
 
-import cn.cerc.jdb.core.DataSet;
-import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.core.TDate;
-import cn.cerc.jdb.core.TDateTime;
-import cn.cerc.jdb.other.utils;
+import cn.cerc.core.DataSet;
+import cn.cerc.core.Record;
+import cn.cerc.core.TDate;
+import cn.cerc.core.TDateTime;
+import cn.cerc.core.Utils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -20,8 +20,8 @@ public class ToolExample {
         log.info("今日日期 {}", TDate.Today());
 
         // 数学工具类 utils
-        log.info("随机数字 {}", utils.getNumRandom(12));
-        log.info("随机字符 {}", utils.getStrRandom(32));
+        log.info("随机数字 {}", Utils.getNumRandom(12));
+        log.info("随机字符 {}", Utils.getStrRandom(32));
 
         // DataSet 范例说明
         DataSet dataSet = new DataSet();
@@ -43,7 +43,6 @@ public class ToolExample {
             String name = dataSet.getString("name_");
             log.info("{}, {}", code, name);
         }
-
     }
 
 }
