@@ -56,8 +56,6 @@ public class MenuFactory implements IAppMenu {
                 menuItem.setPhone(false);
                 menuItem.setDescribe(form.getParam("remark", ""));
                 menuItem.setWin(true);
-                menuItem.setClazz(form.getClass().getName());
-                menuItem.setFormNo("");
                 menuItem.setImage("");
                 menuItem.setProcess(form.getParam("process", "release"));
                 menuItem.setWeb(!"none".equals(menuItem.getProcess()));
@@ -143,7 +141,7 @@ public class MenuFactory implements IAppMenu {
 
     private void setMenuInfo(MenuItem menu, MenuData data) {
         menu.setParam(MenuItem.TITLE, data.getCaption());
-        menu.setParam(MenuItem.PAGENO, data.getFormNo());
+        menu.setParam(MenuItem.PAGENO, data.getPageNo());
         menu.setParam(MenuItem.SECURITY, data.isSecurity() ? "true" : "false");
         menu.setParam(MenuItem.SOFTWARE, data.getVersions());
         menu.setParam(MenuItem.PERMISSION, data.getProccode());

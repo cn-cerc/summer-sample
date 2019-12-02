@@ -41,40 +41,20 @@
     </build>
     <dependencies>
         <dependency>
+            <groupId>cn.cerc</groupId>
+            <artifactId>summer-mis</artifactId>
+            <version>${cn.cerc.summer.version}</version>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>cn.cerc</groupId>
-            <artifactId>summer-db</artifactId>
-            <version>${cn.cerc.summer.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.cerc</groupId>
-            <artifactId>summer-mis</artifactId>
-            <version>${cn.cerc.summer.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.cerc</groupId>
-            <artifactId>summer-security</artifactId>
-            <version>1.4.4</version>
-        </dependency>
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.25</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>3.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-            <version>1.9.3</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
