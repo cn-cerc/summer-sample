@@ -2,6 +2,6 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
-    <bean id="FrmWelcome" class="cn.cerc.training.forms.FrmWelcome" scope="prototype"/>
+    <bean id="FrmIndex" class="cn.cerc.training.forms.FrmIndex" scope="prototype"/>
     <bean id="FrmExample" class="cn.cerc.training.forms.FrmExample" scope="prototype"/>
 </beans>
