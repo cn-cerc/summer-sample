@@ -10,7 +10,7 @@
     <url>https://github.com/cn-cerc/summer-training</url>
 
     <properties>
-        <cn.cerc.summer.version>2.1.0</cn.cerc.summer.version>
+        <cn.cerc.summer.version>2.3.0</cn.cerc.summer.version>
     </properties>
     <build>
         <plugins>
