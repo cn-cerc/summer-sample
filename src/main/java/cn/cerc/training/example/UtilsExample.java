@@ -16,8 +16,8 @@ public class UtilsExample {
     public static void main(String[] args) {
 
         // 时间工具类 TDateTime
-        log.info("当前时间 {}", TDateTime.Now());
-        log.info("今日日期 {}", TDate.Today());
+        log.info("当前时间 {}", TDateTime.now());
+        log.info("今日日期 {}", TDate.today());
 
         // 数学工具类 utils
         log.info("随机数字 {}", Utils.getNumRandom(12));
@@ -27,7 +27,7 @@ public class UtilsExample {
         DataSet dataSet = new DataSet();
         Record head = dataSet.getHead();
         head.setField("tbNo", "AB201903270001");
-        head.setField("tDate", TDateTime.Now());
+        head.setField("tDate", TDateTime.now());
         log.info("dataSet 头部信息 {}", head);
 
         for (int i = 0; i < 2; i++) {

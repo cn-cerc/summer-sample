@@ -55,8 +55,8 @@ public class SvrExample extends CustomService {
         cdsTmp.setField("name_", headIn.getString("name_"));
         cdsTmp.setField("sex_", headIn.getString("sex_"));
         cdsTmp.setField("age_", headIn.getString("age_"));
-        cdsTmp.setField("createTime_", TDateTime.Now());
-        cdsTmp.setField("updateTime_", TDateTime.Now());
+        cdsTmp.setField("createTime_", TDateTime.now());
+        cdsTmp.setField("updateTime_", TDateTime.now());
         cdsTmp.post();
 
         return true;
@@ -97,7 +97,7 @@ public class SvrExample extends CustomService {
         cdsTmp.edit();
         cdsTmp.setField("age_", age);
         cdsTmp.setField("sex_", sex);
-        cdsTmp.setField("updateTime_", TDateTime.Now());
+        cdsTmp.setField("updateTime_", TDateTime.now());
         cdsTmp.post();
         return true;
     }
