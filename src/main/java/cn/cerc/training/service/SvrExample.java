@@ -12,13 +12,17 @@ import lombok.extern.slf4j.Slf4j;
 public class SvrExample extends CustomService {
 
     public boolean search() {
+        // 获取外部传进来的数据
         Record headIn = getDataIn().getHead();
         log.info("headIn {}", headIn);
 
+        // SqlQuery 用于操作数据库，可对数据进行增删改查，在使用增删改功能前，必须查询表。
         SqlQuery cdsTmp = new SqlQuery(this);
+        // add方法追加sql语句
         cdsTmp.add("select * from %s", AppDB.Table_Example);
-        cdsTmp.add("where 1=1");
+        cdsTmp.add("where 1=1 ");
 
+        // 判断传进来的值，存在code_并且不为空
         if (headIn.hasValue("code_")) {
             cdsTmp.add("and code_='%s'", headIn.getString("code_"));
         }
@@ -30,7 +34,9 @@ public class SvrExample extends CustomService {
         }
         log.info("sql {}", cdsTmp.getSqlText().getText());
 
+        // 将准备好的sql语句执行，并将结果存放于cdsTmp对象。
         cdsTmp.open();
+        // 将sql查询出来的结果存放到服务出口返回给调用者
         getDataOut().appendDataSet(cdsTmp);
         return true;
     }
