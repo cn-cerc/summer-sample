@@ -1,84 +1,37 @@
 @charset "UTF-8";
+body {
+    font-family: Microsoft YaHei;
+}
+
+/**滚动条样式**/
+::-webkit-scrollbar {
+    width: 3px; /*对垂直流动条有效*/
+    height: 7px;
+}
+
+/*定义滚动条的轨道颜色、内阴影及圆角*/
+::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 3px;
+}
+
+/*定义滑块颜色、内阴影及圆角*/
+::-webkit-scrollbar-thumb {
+    border-radius: 7px;
+    background-color: #c5c5c5;
+}
+
+/*定义两端按钮的样式*/
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+/*定义右下角汇合处的样式*/
+::-webkit-scrollbar-corner {
+    display: none;
+}
+
 @media only screen and (min-width: 768px) {
-    body {
-        background: #fff !important;
-    }
-
-    .item-group {
-        width: 60%;
-        height: auto;
-        margin: 2em auto;
-        padding: 1.5em;
-        background: #dfe9ef;
-        border-radius: 0.5em;
-        -webkit-border-radius: 0.5em;
-
-    }
-
-    .item-group .input-item {
-        width: 100%;
-        height: 2.4em;
-        line-height: 2.4em;
-        margin: 0.5em 0;
-        text-align: center;
-    }
-
-    .item-group .input-item > label {
-        display: inline-block;
-        width: 6em;
-        text-align: right;
-    }
-
-    .item-group .input-item > input, .item-group .input-item > select {
-        width: 16em;
-        height: 2em;
-        border: 1px solid #e6e6e6;
-        border-radius: 0.4em;
-        -webkit-border-radius: 0.4em;
-        padding-left: 0.7em;
-        margin-left: 0.7em;
-    }
-
-    .item-group .ui-btn {
-        display: block;
-        width: 16em;
-        height: 2.4em;
-        line-height: 2.4em;
-        border-radius: 0.4em;
-        -webkit-border-radius: 0.4em;
-        background: #2884cc;
-        color: #fff;
-        text-align: center;
-        margin: 3em auto;
-    }
-
-    input[type="text"], input[type="number"], input[type="tel"], input[type="email"], select, input[type="password"] {
-        width: 10em;
-        height: 1.75em;
-        line-height: 1.75em;
-        border-radius: .4em;
-        -webkit-border-radius: .4em;
-        border: none;
-        outline: none;
-        background-color: #fff;
-        border: 1px solid #e6e6e6;
-        padding-left: .6em;
-        color: #333;
-    }
-
-    .dbgrid tr:hover, table tr:hover {
-        background: #e0eff7;
-    }
-
-    .scrollArea {
-        padding: 0 0.5em 0.7em;
-    }
-
-    .dbgrid {
-        width: 100%;
-        margin: 0 auto;
-    }
-
     .selectSup .block301 {
         padding: 0.8em;
         border-bottom: 1px solid #dedede;
@@ -125,14 +78,18 @@
     }
 
     button, input[type="submit"], input[type="button"] {
-        /* background: #0f6cb4; */
-        background: #25ba3a;
+        background: #009307;
         border-radius: 0em;
         -webkit-border-radius: 0em;
     }
 
     button:hover, input[type="submit"]:hover, input[type="button"]:hover {
-        background: #80d78f;
+        background: #0068B7;
+    }
+
+    button[value='search'] {
+        background: #009307;
+        color: #ffffff;
     }
 
     nav[role="mainMenu"] a:hover {
@@ -142,22 +99,21 @@
 
     form.search, form.modify {
         background: #f9fdff;
-        border: 1px solid #e6e6e6;
     }
 
     .ui-title {
-        display: inline-block;
+        display: none;
         width: 100%;
         height: 2.5em;
         line-height: 2.5em;
         padding-left: 1em;
-        background: linear-gradient(#f8f8f8, #e6e6e6); /* 标准的语法 */
-        background: -webkit-linear-gradient(#f8f8f8, #e6e6e6); /* 标准的语法 */
-        FILTER: progid: DXImageTransform . Microsoft . gradient(GradientType = 0, startColorstr = '#f8f8f8', endColorstr = '#e6e6e6');
-        position: relative;
+        background-color: #D5D5D5;
+        color: #666666;
+        font-size: 1.2em;
+        border-radius: 0.5em 0.5em 0 0;
     }
 
-    /* .ui-title-operate{
+    .ui-title-operate {
         position: absolute;
         top: 0;
         right: 0;
@@ -169,28 +125,36 @@
         background-size: auto auto;
         background-position: center center;
         cursor: pointer;
-    } */
+        filter: contrast(0);
+    }
+
     .ui-title-hide {
         transform: rotate(-180deg);
         -webkit-transform: rotate(-180deg);
     }
 
     .dbgrid th {
-        font-weight: bold;
-        padding-left: 0.7em;
-        text-align: left;
-        background: #f3f3f3;
+        text-align: center;
+        color: #666666;
+    }
+
+    .dbgrid th a {
+        color: #ffffff;
     }
 
     .dbgrid td {
-        text-align: left;
-        padding-left: 0.7em;
+        /*text-align: left;*/
+        border: 1px solid #eeeeee;
+    }
+
+    .dbgrid tr:hover {
+        background-color: #d7ffef !important;
     }
 
     /* 修改form专用 */
     form.modify {
         width: 100%;
-        max-width: 1366px;
+        max-width: 100%;
         z-index: 2;
     }
 
@@ -220,14 +184,14 @@
     }
 
     form.modify ul {
-        max-width: 860px;
         min-width: 855px;
         float: left;
-        width: 80%;
+        width: 90%;
     }
 
     form.modify ul li {
-        width: 32.5%;
+        width: 24%;
+        min-width: 21em;
         display: inline-block;
         padding-left: 1em;
     }
@@ -248,7 +212,7 @@
     }
 
     form.modify button {
-        margin-top: 0.25em;
+        margin-top: 1em;
         display: block;
     }
 
@@ -274,20 +238,16 @@
     }
 
     form.search ul {
-        max-width: 860px;
         min-width: 855px;
         float: left;
-        width: 80%;
+        width: 94%;
     }
 
     form.search ul li {
-        width: 32.5%;
+        width: 22%;
+        min-width: 19em;
         padding-left: 1em;
         display: inline-block;
-    }
-
-    form ul li.select {
-        padding-left: 0.25em;
     }
 
     form.search ul li span {
@@ -312,6 +272,21 @@
     form.search button {
         clear: both;
         margin: 0.5em auto 0;
+        border-radius: 0.5em;
+    }
+
+    form.modify ul + div, form.search ul + div {
+        position: absolute;
+        right: 4em;
+        top: 0.7em;
+    }
+
+    form[action="TFrmInitSystem"].search ul + div {
+        top: 0.5em;
+    }
+
+    form.modify ul + div button.revoke, form.search ul + div button {
+        margin: 0 0.5em !important;
     }
 
     form.upload ul li {
@@ -327,13 +302,20 @@
 
     body {
         position: relative;
-        max-width: 1366px;
+        max-width: 100%;
         min-width: 980px;
         overflow: hidden;
+        padding-top: 4.175em;
+        height: 100vh;
     }
 
     table {
         border: 1px solid #e6e6e6;
+    }
+
+    .dbgrid {
+        width: 100%;
+        margin: 0;
     }
 
     .inputGroup {
@@ -361,13 +343,13 @@
         position: absolute;
         top: 0;
         left: 0;
-        max-width: 1366px;
+        max-width: 100%;
         width: 100%;
         min-width: 980px;
-        min-height: 2.2em;
+        min-height: 3.819em;
         z-index: 101;
+        background: #eeeeee;
     }
-
 
     section[role="advertisement"] {
         width: 100%;
@@ -375,6 +357,7 @@
         padding: 0 10px 10px;
         background: #b0d8ef;
         position: relative;
+        display: none;
     }
 
     section[role="advertisement"]:after {
@@ -399,18 +382,17 @@
 
     nav[role="mainMenu"] {
         width: 100%;
-        height: 2.2em;
-        padding: 0 10px;
+        height: 3.819em;
+        padding: 0 1.5em;
         color: #0f6cb4;
-        background: #fff;
-        border-bottom: 1px solid #e6e6e6;
-        padding-right: 310px;
+        background: #F2F3F8;
+        padding-left: 19em;
     }
 
     nav[role="mainMenu"] section[role="leftMenu"] {
-        width: 70%;
-        height: 2.2em;
-        line-height: 2.2em;
+        width: auto;
+        height: 3.819em;
+        line-height: 3.819em;
         float: left;
         position: relative;
     }
@@ -421,14 +403,15 @@
 
     nav[role="mainMenu"] section[role="leftMenu"] > ul {
         width: auto;
-        min-height: 2.2em;
+        height: 3.819em;
         display: inline-block;
         float: left;
+        padding-left: 1em;
     }
 
     nav[role="mainMenu"] section[role="leftMenu"] div[role="headerButtons"] {
         width: auto;
-        min-height: 2.2em;
+        min-height: 3.819em;
         display: inline-block;
         float: left;
     }
@@ -445,16 +428,21 @@
         margin-top: -0.2em;
     }
 
+    section[role="leftMenu"] > ul li img {
+        width: 0.8em;
+        height: 1em;
+    }
+
     section[role="leftMenu"] > ul li {
         float: left;
-        height: 2.2em;
-        line-height: 2.2em;
+        height: 3.819em;
+        line-height: 3.819em;
         padding-right: 0.5em;
-        color: #0f6cb4;
+        color: #666666;
     }
 
     section[role="leftMenu"] > ul li a {
-        color: #0f6cb4;
+        color: #666666;
     }
 
     section[role="leftMenu"] > ul li span {
@@ -463,34 +451,37 @@
 
     nav[role="mainMenu"] section[role="rightMenu"] {
         width: 100%;
-        min-height: 2.2em;
     }
 
     section[role="rightMenu"] > ul {
-        float: right;
+
     }
 
     section[role="rightMenu"] > ul li {
-        float: left;
-        height: 2.2em;
-        line-height: 2.2em;
-        padding: 0 .5em 0 0.5em;
+        display: inline-block;
+        height: 3.819em;
+        line-height: 3.819em;
+        padding: 0 0.2em 0 0.5em;
         color: #0f6cb4;
     }
 
+    section[role="rightMenu"] > ul li:nth-child(2) {
+
+    }
+
     section[role="rightMenu"] > ul li a {
-        color: #0f6cb4;
+        color: #666666;
+    }
+
+    span[role="shopNums"] {
+        margin-left: 0.5em;
     }
 
     section[role="rightMenu"] > ul li img {
         width: 1.2em;
         height: 1.2em;
         margin-top: -0.4em;
-        /*vertical-align: baseline;*/
-    }
-
-    nav[role="mainMenu"] section[role="rightMenu"] a {
-        color: #0f6cb4;
+        margin-right: 0.5em;
     }
 
     nav[role="mainMenu"] section[role="leftMenu"] .menu {
@@ -500,10 +491,10 @@
     }
 
     nav[role="mainMenu"] section[role="rightMenu"] {
-        width: 30%;
-        height: 2.2em;
-        line-height: 2.2em;
-        float: left;
+        width: auto;
+        height: 3.819em;
+        line-height: 3.819em;
+        float: right;
         text-align: right;
     }
 
@@ -513,28 +504,133 @@
         margin-top: -.4em;
     }
 
-    /*主体部分*/
-    article[role="document"] {
-        max-width: 1366px;
-        width: 100%;
-        min-width: 980px;
-        min-height: 10em;
-        padding-right: 320px;
-        overflow: auto;
+    .titel_top {
+        background-color: #ffffff;
+        color: #333333;
+        height: 4.5em;
+        line-height: 4.5em;
+        overflow: hidden;
+        display: none;
+    }
+
+    .titel_top > span {
+        font-size: 1.3em;
+        font-weight: bold;
+        color: #009307;
+    }
+
+    .titel_top img {
+        margin-left: 4.5em;
+    }
+
+    .titel_top span:nth-child(2) {
+        margin-left: 0.7em;
+    }
+
+    .logo_box {
+        float: left;
+        width: 19em;
+        height: 100%;
+        background: #EAE8E7;
+    }
+
+    .user_right {
+        float: right;
+        font-size: 1em;
+        margin-right: 1.7em;
+    }
+
+    .user_right a {
+        margin-left: 1em;
+        color: #333333;
+    }
+
+    .user_right > a {
+        color: #ffffff;
         position: relative;
     }
 
+    .user_right > a:after {
+        display: inline-block;
+        content: '';
+        width: 1em;
+        height: 1em;
+        background: url(../images/default/out.png);
+        background-size: cover;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        margin: auto;
+    }
+
+    .titel_top span i {
+        margin-left: 0.5em;
+    }
+
+    /*主体部分*/
+    article[role="document"] {
+        max-width: 100%;
+        width: 100%;
+        min-width: 980px;
+        min-height: 10em;
+        padding-left: 19em;
+        overflow: auto;
+        position: relative;
+        background-color: #F2F3F8;
+    }
+
     article[role="document"] section[role="control"] {
-        padding: 0.5em;
+        padding: 0 1.1em 0em 1.1em;
         background: transparent;
         clear: both;
-        padding-right: 0;
     }
 
     article[role="document"] section[role="content"] {
         min-height: 5em;
         overflow-y: auto;
-        padding-bottom: 0.7em;
+        margin: 0 1.1em 0.7em 1.1em;
+    }
+
+    .infoList span {
+        color: #666666;
+        font-size: 1em;
+    }
+
+    .infoList span[role="title"] {
+        color: #009307;
+        vertical-align: middle;
+        font-weight: bold;
+    }
+
+    .infoList li:not(:first-child) {
+        padding-left: 2.2em;
+    }
+
+    .user_name {
+        overflow: hidden;
+        margin-top: 0 !important;
+    }
+
+    .user_name li:not(:first-child) {
+        float: left;
+    }
+
+    .user_name li:nth-child(2) {
+        margin-right: 1.5em;
+    }
+
+    .user_name li:not(:first-child), .systemState li:not(:first-child), .systemNotice li:not(:first-child) {
+        margin: 0.8em 0;
+    }
+
+    .unreadMessage li:nth-child(2) {
+        margin-top: 0.8em;
+    }
+
+    .unreadMessage li:last-child {
+        margin-bottom: 0.8em;
     }
 
     /*leftSide区内的样式*/
@@ -571,23 +667,35 @@
     /*工具栏部分*/
     aside[role="toolBar"] {
         position: absolute;
-        top: 110px;
-        right: 0;
-        width: 310px;
-        height: 100%;
-        background: #b0d8ef;
+        top: 0;
+        left: 0;
+        width: 19em;
+        background: #EAE8E7;
         z-index: 102;
-        padding: 0.5em .3em 3.3em .3em;
+        height: 100vh;
+        padding: 0.5em 0em .3em;
+    }
+
+    .toolBar-pc {
+        top: 4.175em !important;
+        padding-top: 0 !important;
+    }
+
+    .body-pc {
+        height: calc(100vh - 4.175em);
+        padding-top: 8.5em;
+        box-sizing: content-box;
+        -webkit-box-sizing: content-box;
     }
 
     .leftAside {
         position: absolute;
         top: 0;
-        right: 310px;
+        right: 0;
         width: 0.7em;
         height: 100%;
         display: inline-block;
-        background-image: url(../images/handle-right.png);
+        background-image: url(../images/handle-left.png);
         background-repeat: no-repeat;
         background-size: .7em 4.5em;
         background-position: 0px center;
@@ -597,18 +705,19 @@
         cursor: pointer;
     }
 
-
     /*底部*/
     footer[role="footer"] {
         position: absolute;
-        bottom: 0;
+        top: calc(100vh - 2.5em);
         left: 0;
-        max-width: 1366px;
+        max-width: 100%;
         width: 100%;
         min-width: 980px;
         height: 2.5em;
-        background: #ececec;
+        background: #ffffff;
         z-index: 101;
+        padding-left: 19em;
+        border-top: 1px solid #eeeeee;
     }
 
     footer[role="footer"] section[role="footerTools"], footer[role="footer"] section[role="footerButtons"] {
@@ -622,7 +731,7 @@
         min-width: 4em;
         height: 1.75em;
         line-height: 1.75em;
-        background: #0f6bb3;
+        background: #009307;
         color: #fff;
         text-align: center;
         padding: 0 0.8em;
@@ -671,13 +780,12 @@
     table.dbgrid tr[id*=_] {
         background-color: #fff;
         font-size: 0.9em;
-        color: #979797;
+        color: #6a6a6a;
     }
 
     table.dbgrid {
-        color: #333333;
+        color: #ffffff;
         border-width: 1px;
-        border-color: #729ea5;
         border-collapse: collapse;
     }
 
@@ -690,30 +798,41 @@
         width: 95%;
     }
 
-    section[role="content"] ul.info li {
-        margin: 0 auto;
-    }
-
     section[role="content"] ul.info li input[type='text'],
     section[role="content"] ul.info li input[type='file'],
     select, textarea {
-        width: 14em;
+        width: 12em;
     }
 
     section[role="content"] ul.info li label {
         max-width: none;
+        text-align: left;
+    }
+
+    li[role="Discount_"] {
+        margin-left: 1em;
     }
 
     section[role="content"] ul.info li img {
         float: right;
-        padding-top: 0.25em;
+        margin-top: 0.6em;
     }
 
     /*卡片样式 用于基本资料、帐号权限管理等*/
     section[role="content"] section[role="sheetCard"] {
         width: 32%;
-        margin: 0.66%;
+        margin: 1.3%;
+        margin-top: 0;
+        margin-left: 0;
         min-height: 13em;
+    }
+
+    section[role="content"] ul.info li p {
+        margin: 0.5em 0 !important;
+    }
+
+    .dbgrid td {
+        line-height: 1.6em;
     }
 }
 
@@ -722,43 +841,83 @@
     width: 95%;
 }
 
-.relational-box {
-    width: 80%;
-    height: auto;
-    margin: 1em auto;
-    display: flex;
-    display: -webkit-flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    align-content: flex-start;
+/* 订单保存，删除 */
+#search button[name="opera"] {
+    border-radius: 0.5em;
+    margin-left: 3em;
+    border-radius: 0.5em;
+    margin: 1.5em;
+    margin-left: 3em;
+    width: 6em;
+    height: 2.5em;
 }
 
-.relational-box > div {
-    width: 45%;
+section[role="content"] form#search button[name="opera"]:last-child {
+    background-color: #E60012;
+    margin-left: 0.5em;
 }
 
-.body-relational > label {
-    border-left: 3px solid #0f6cb4;
-    padding-left: 0.7em;
-    margin-bottom: 1em;
+/* pc版ul列表布局 */
+section[role="content"] ul.info {
+    width: 75%;
+    overflow: hidden;
 }
 
-.relational-box .payment {
-    width: 100%;
-    height: 4.5em;
-    line-height: 4.5em;
-    border-bottom: 1px solid #e6e6e6;
+section[role="content"] ul.info li {
+    list-style-type: none;
+    min-width: 24em;
+    line-height: 3.5em;
+    padding: 0.25em 0.5em 0.25em 0.1em;
+    float: left;
 }
 
-.relational-box .block_Img_Div {
-    display: flex;
-    display: -webkit-flex;
-    justify-content: flex-start;
-    align-items: center;
+/* 控制li换行 */
+.line_feed {
+    clear: both;
 }
 
-.relational-box .block_Img_Div > img {
-    width: 3.5em;
-    height: 3.5em;
-    margin-right: 0.7em;
+.block104 {
+    border-bottom: none !important;
+}
+
+.block902 {
+    background: #ffffff;
+}
+
+.block902 div[role="title"] {
+    text-indent: 0 !important;
+}
+
+@media only screen and (max-height: 768px) {
+    body {
+        padding-top: 2.5em;
+    }
+
+    header[role="header"] {
+        height: 2.5em !important;
+        min-height: 2.5em !important;
+    }
+
+    .titel_top {
+        display: none;
+    }
+
+    nav[role="mainMenu"] {
+        height: 2.5em !important;
+    }
+
+    nav[role="mainMenu"] section, nav[role="mainMenu"] section ul, nav[role="mainMenu"] section ul li {
+        height: 2.5em !important;
+        line-height: 2.5em !important;
+    }
+
+    aside[role="toolBar"] {
+        top: 0 !important;
+    }
+}
+span[role="salesStatus"]{
+    border: 1px solid red;
+    color: red;
+    padding: 0px 0.125em !important;
+    margin-right: 0.25em;
 }

@@ -8,10 +8,6 @@ figcaption, menu, button {
     padding: 0;
 }
 
-html {
-    background: #f7f7f7;
-}
-
 * {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -41,12 +37,13 @@ table {
 table tr {
     width: 100%;
     height: 2em;
-    line-height: 2em;
+    line-height: 2.5em;
     cursor: pointer;
+    font-size: 1.032em;
 }
 
 table tr:hover {
-    background: #1E2235;
+    background: #baddec;
 }
 
 img {
@@ -90,11 +87,7 @@ a:active {
 
 nav[role="mainMenu"] a:hover {
     background-size: cover;
-    color: #7A98F7;
-}
-
-#selBusiness .block117 {
-    padding: 0 0.75em;
+    color: yellow;
 }
 
 button, input[type="submit"], input[type="button"] {
@@ -103,13 +96,14 @@ button, input[type="submit"], input[type="button"] {
     line-height: 1.75em;
     border-radius: .4em;
     -webkit-border-radius: .4em;
-    background: #30aaff;
+    background: #058FCA;
     color: #FFFFFF;
     text-align: center;
     padding: 0 1em;
     border: none;
     outline: none;
     cursor: pointer;
+    font-size: 1em;
 }
 
 input[type="text"], input[type="number"], input[type="tel"], input[type="email"],
@@ -121,29 +115,44 @@ select, input[type="password"] {
     -webkit-border-radius: .4em;
     border: none;
     outline: none;
-    background-color: #1E2235;
-    border: 1px solid #30aaff;
+    border: 1px solid #C2CAD8;
     padding-left: .6em;
-    color: #C6CBE6;
+    color: #333;
+    font-size: 0.9em;
+}
+.body-iphone{
+    font-size: 17px !important;
+}
+.body-android{
+    font-size: 15px !important;
+}
+.dbgrid input[type="text"],.dbgrid  input[type="number"],.dbgrid  input[type="tel"],.dbgrid  input[type="email"],
+.dbgrid select, .dbgrid input[type="password"] {
+    width: 100%;
 }
 
 select {
     min-height: 1.75em;
     height: auto;
-    background-color: #1E2235;
 }
 
 input[type="text"]:focus, input[type="number"]:focus, input[type="tel"]:focus,
 input[type="email"]:focus {
-    border: 1px solid #7b9af4;
+    border: 1px solid #058FCA;
 }
 
 button:hover, input[type="submit"]:hover, input[type="button"]:hover {
-    background: rgba(33, 168, 203, 0.1);
+    background: #63a8e6;
 }
 
-button[disabled="disabled"] {
-    background: #63a8e6 !important;
+button[disabled="disabled"], button:disabled {
+    background: #8cb58e !important;
+    -webkit-appearance: none;
+    color: #fff;
+}
+
+html {
+    background: #f5f5f5;
 }
 
 body {
@@ -152,94 +161,6 @@ body {
     line-height: 1.75em;
     padding-top: 2.2em;
     font-size: 0.9em;
-}
-
-.title-date {
-    width: 100%;
-    height: 2.86em;
-    padding: 0 0.7em;
-    background: transparent;
-    margin-top: 0.5em;
-}
-
-.title-date .block109 {
-    width: 100%;
-    height: 2.86em;
-    line-height: 2.86em;
-    text-align: right;
-}
-
-.title-date .block109 span {
-    display: none;
-}
-
-.title-date .block109 img {
-    width: 1.3em;
-}
-
-.title-date .block109 input {
-    color: #22acd0;
-    padding: 0 0.5em 0 0;
-    text-align: right;
-}
-
-.scrollArea {
-    position: relative;
-    width: 100%;
-    padding: 0.7em;
-    background: #fff;
-}
-
-.scrollArea ol.context li {
-    padding: 0.5em 0;
-    border-bottom: 1px solid #e6e6e6;
-}
-
-.scrollArea ol.context li:last-child {
-    border-bottom: 0;
-}
-
-.scrollArea ol.context li section {
-    font-size: 0.9em;
-}
-
-.scrollArea ol.context li section:first-child {
-    color: #333;
-    font-size: 1em;
-}
-
-.scrollArea ol.context li section span.right a {
-    color: #fff;
-}
-
-.selBusiness {
-    width: 100%;
-    height: auto;
-    padding: 1em;
-    border-bottom: 1px solid #323547;
-    position: relative;
-}
-
-.selBusiness .block101 > a {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: inline-block;
-    width: 100%;
-    height: 6.5em;
-}
-
-.selBusiness .block101 > a > img {
-    float: right;
-    margin: 3em 1em 0 0;
-}
-
-.selBusiness .block117 {
-    padding: 0;
-}
-
-.selBusiness .block117 span {
-    margin-right: 1em;
 }
 
 /*选择弹窗的样式*/
@@ -257,7 +178,7 @@ body {
 }
 
 .dialogClose a {
-    color: white;
+    color: red !important;
     padding: 0.15em 0.5em;
 }
 
@@ -284,7 +205,7 @@ body {
     border-collapse: collapse;
     border-image: none;
     border: 1px solid #eeeeee;
-    margin: 0 0.5%;
+    margin: 0 0.5em;
 }
 
 .dbgrid tr {
@@ -295,27 +216,29 @@ body {
     font-weight: normal;
     border: 1px solid #eeeeee;
     padding: 0.25em;
-    background: #e4e4e4;
+    background: #D5D5D5;
+    line-height: 1.2em;
 }
 
 .dbgrid td {
-    border: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
     cursor: pointer;
-    padding: 0 4px;
+    padding: 0 0.2em;
+}
+
+.dbgrid tr:not(:first-child) {
+    color: #666666;
+    background-color: #ffffff;
+    font-size: 1em;
 }
 
 .dbgrid td input {
     border: 0;
     border-radius: 0;
-    width: 100%;
 }
 
 .dbgrid td input[type="checkbox"] {
     height: 1em;
-}
-
-.dbgrid tr:hover {
-    background-color: #1E2235;
 }
 
 /* 搜索form专用 */
@@ -367,7 +290,6 @@ form.search ul {
 
 form.search ul li {
     min-width: 6em;
-    padding-top: 0.25em;
 }
 
 form.search ul li input, form.search ul li select {
@@ -387,13 +309,18 @@ form.search ul li span {
 
 form.search ul li label {
     display: inline-block;
-    text-align: right;
     min-width: 5em;
     max-width: 7em;
+    text-align: left;
+}
+
+form.search ul li[role="hidden"] label {
+    max-width: none;
 }
 
 form.search ul li a img {
     vertical-align: middle;
+    border: 1px solid #bebebe;
     border-radius: 0.2em;
 }
 
@@ -407,6 +334,7 @@ form.search ul li input[type=checkbox] {
     width: 2em;
     display: inline-block;
     vertical-align: middle;
+    margin-left: -0.5em;
 }
 
 form.search ul li input[type=checkbox] + label {
@@ -428,7 +356,7 @@ form.search p input {
 }
 
 [readonly=readonly] {
-    background-color: #dcdbdb;
+    background-color: #f7f7f7;
 }
 
 [readonly=readonly]:focus {
@@ -515,7 +443,8 @@ form.modify ul li span {
 form.modify ul li label {
     display: inline-block;
     text-align: right;
-    width: 5em;
+    width: 5.1em;
+    text-align: left;
 }
 
 form.modify ul li a img {
@@ -559,49 +488,103 @@ ul.select-line {
 }
 
 /*新框架样式*/
-section[role="content"] ul.info {
-    padding-top: 16px;
+
+article[role="document"] form {
+    background-color: #ffffff;
+    margin-bottom: 0.5em;
+    line-height: 2em;
+    border-radius: 0.35em;
+    overflow: hidden;
+    /*position: relative;*/
 }
 
-section[role="content"] ul.info li {
-    list-style-type: none;
-    max-width: 25em;
-    padding: 0.25em 0.5em 0.25em 0.1em;
+section[role="content"] ul.info {
+    padding-top: 16px;
+    padding-left: 1.5em;
+    padding-bottom: 0.5em;
+    background-color: #ffffff;
+    border-radius: 0.5em;
+    overflow: hidden;
+}
+
+@media only screen and (min-width: 768px) {
+
+    section[role="content"] ul.info {
+        width: 80%;
+    }
+
+    section[role="content"] ul.info li {
+        list-style-type: none;
+        min-width: 24em;
+        line-height: 3.5em;
+        padding: 0.25em 0.5em 0.25em 0.1em;
+        float: left;
+    }
+
+    section[role="content"] .scrollArea section {
+        line-height: 3em;
+    }
+}
+
+section[role="content"] ul.info li a {
+    display: inline-block;
+    vertical-align: middle;
 }
 
 section[role="content"] ul.info li font {
     color: red;
-}
-
-section[role="content"] ul.info li img {
-    padding-top: 0.25em;
+    vertical-align: middle;
 }
 
 section[role="content"] ul.info li label {
     display: inline-block;
-    text-align: right;
-    min-width: 6em;
-    max-width: 10em;
-    margin-left: 1em;
+    text-align: left;
+    min-width: 7em;
+    max-width: 11em;
+    vertical-align: middle;
+}
+
+section[role="content"] ul.info li input {
+    vertical-align: middle;
 }
 
 section[role="content"] ul.info li input[type='text'], li input[type='number'], li input[type='tel'], li input[type='file'] {
     min-width: 12em;
     width: 55%;
     height: 1.75em;
+    vertical-align: middle;
+}
+
+section[role="content"] ul.info li img {
+    margin-top: 0 !important;
+    margin-left: 0.5em;
 }
 
 section[role="content"] ul.info li input[type='checkbox'] {
-    margin-left: 6em;
+    vertical-align: middle;
+}
+
+section[role="content"] ul.info li select, li textarea {
+    width: 12em;
+    vertical-align: middle;
+}
+
+section[role="content"] ul.info li textarea {
+    border: 1px solid #e6e6e6;
+    outline: none;
+    border-radius: 0.4em;
+    -webkit-border-radius: 0.4em;
+    padding: 0.3em 0.6em 0em 0.6em;
+    vertical-align: middle;
 }
 
 /*卡片样式 用于基本资料、帐号权限管理等*/
 section[role="content"] section[role="sheetCard"] {
-    background: #eee;
+    background: #ffffff;
     width: 90%;
     float: left;
     margin: 0.25em 5%;
-    height: 11em;
+    height: auto;
 }
 
 section[role="content"] section[role="sheetCard"] div {
@@ -628,32 +611,10 @@ section[role="content"] section[role="sheetCard"] label a {
 }
 
 /*首页图标样式*/
-.menuList {
-    padding: .625em;
-    margin-top: 2em;
-}
-
-.menuList .block_Img_Div {
-    display: inline-block;
-    padding-top: 0.5em;
-    width: 25%;
-    max-width: 8.5em;
-    min-height: 8.5em;
-    overflow: hidden;
-    float: left;
-    min-width: 3em;
-    text-align: center;
-    cursor: pointer;
-}
-
-.menuList .block_Img_Div img {
-    height: 4.5em;
-    width: auto;
-    margin-bottom: 0.5em;
-}
-
 section[role="content"] ul[role="menuList"] {
     padding: .625em;
+    background: #ffffff;
+    margin-bottom: 0.5em;
 }
 
 section[role="content"] ul[role="menuList"] li {
@@ -671,21 +632,40 @@ section[role="content"] ul[role="menuList"] li a {
     color: #333;
 }
 
+section[role="content"] ul[role="menuList"] li div[role="menuName"] {
+    line-height: 1.2em;
+    margin-top: 0.5em;
+}
+
+/*rightSide区内的样式*/
 aside[role="toolBar"] section {
-    margin: 5px;
-    border: 1px solid #dedede;
-    background: #fff;
-    border-radius: 4px;
-    padding: 0.5em;
+    border: 1px solid #DDDDDD;
+    background: #ffffff;
+    margin: 0 0.5em 1em;
+    padding: 0 0.5em;
+    border-radius: 0.35em;
 }
 
 aside[role="toolBar"] section ul {
-    width: 95%;
+    width: auto;
+    margin: auto;
+}
+
+aside[role="toolBar"] section .contents ul {
+    width: auto;
+}
+
+aside[role="toolBar"] section .contents ul li {
+    padding: 0 0 0 0.5em;
+    min-height: 2em;
+    line-height: 2em;
+    margin: 0;
 }
 
 aside[role="toolBar"] section ul li {
     list-style-type: none;
-    padding: 0 0.5em;
+    padding: 0 0 0 3.5em;
+    margin: 1em 0;
 }
 
 aside[role="toolBar"] section ul li a {
@@ -694,11 +674,13 @@ aside[role="toolBar"] section ul li a {
 }
 
 aside[role="toolBar"] section div.title {
-    border-bottom: 1px dotted #dedede;
+    height: 2em;
+    line-height: 2em;
+    border-bottom: 1px solid #DDDDDD;
     display: block;
     padding: 0.05em 1.5em;
-    box-shadow: 0 2px white;
-    color: #4d4d4d;
+    box-shadow: unset;
+    color: #999999;
     font-weight: bold;
     border-radius: 8px 0 0 0;
     position: relative;
@@ -706,7 +688,7 @@ aside[role="toolBar"] section div.title {
 
 aside[role="toolBar"] section div.title:before {
     position: absolute;
-    top: 0.45em;
+    top: 0.5em;
     left: 0;
     content: "";
     display: inline-block;
@@ -718,12 +700,17 @@ aside[role="toolBar"] section div.title:before {
     background-size: 1em 1em;
 }
 
+aside[role="toolBar"] section div.contents {
+    padding: 0.5em 0;
+}
+
 aside[role="toolBar"] section div.contents a {
     padding: 0.01em 0.5em;
+    line-height: 2em;
 }
 
 aside[role="toolBar"] section div.contents p {
-    color: #848484;
+    color: #999999;
     margin: 0;
     padding: 0 0.25em;
     text-indent: 0em;
@@ -732,10 +719,12 @@ aside[role="toolBar"] section div.contents p {
 aside[role="toolBar"] div.contents a {
     display: inline-block;
     padding: 0 0.4em;
+    color: #009307;
 }
 
 /*工具栏选项卡*/
 aside[role="toolBar"] ul[role="toolGroup"] {
+    display: none;
     width: 100%;
 }
 
@@ -759,7 +748,6 @@ aside[role="toolBar"] ul[role="toolGroup"] ui.active {
 }
 
 aside[role="toolBar"] div[role="toolSheet"] {
-    display: none;
     clear: both;
     height: auto;
     color: #fff;
@@ -768,6 +756,8 @@ aside[role="toolBar"] div[role="toolSheet"] {
 
 aside[role="toolBar"] div[role="toolSheet"]#group0 {
     display: block;
+    position: absolute;
+    top: 16em;
 }
 
 footer[role="footer"] section[role="footerOperation"] {
@@ -775,14 +765,59 @@ footer[role="footer"] section[role="footerOperation"] {
     margin-left: 1em;
 }
 
-footer[role="footer"] section[role="footerOperation"] input[type="checkbox"] {
-    margin-top: -0.1em;
+footer[role="footer"] section[role="footerOperation"] input[type="checkbox"], footer[role="footer"] section[role="footerOperation"] label {
     vertical-align: middle;
 }
 
-section[role="leftMenu"] > ul li img {
-    margin-top: -0.2em;
-    width: 1.6em;
+/** 左侧菜单栏**/
+aside[role="toolBar"] section.menuList {
+    border: inherit;
+}
+
+aside[role="toolBar"] section.menuList > div > img {
+    width: 2.8em;
+    vertical-align: baseline;
+    margin-right: 0.84em;
+    margin-left: 1.5em;
+}
+
+aside[role="toolBar"] section.menuList > div > ul > li > a {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 60%;
+    display: inline-block;
+    font-size: 1.1em;
+}
+
+aside[role="toolBar"] section.menuList > div > ul > li {
+    height: 2.5em;
+    line-height: 2.5em;
+}
+
+aside[role="toolBar"] section.menuList > div > ul > li:hover img[role="icon"] {
+    filter: initial;
+}
+
+aside[role="toolBar"] section.menuList > div > ul > li > img[role="icon"] {
+    width: 2em;
+    margin-right: 1.152em;
+    float: left;
+    top: 50%;
+    position: relative;
+    transform: translateY(-43%);
+    -ms-transform: translateY(-43%);
+    -moz-transform: translateY(-43%);
+    -webkit-transform: translateY(-43%);
+    -o-transform: translateY(-43%);
+}
+
+aside[role="toolBar"] section.menuList > div > ul > li > img[role="arrow"] {
+    width: 0.463em;
+    float: right;
+    top: 50%;
+    position: relative;
+    transform: translateY(-50%);
 }
 
 /*操作提示信息*/
@@ -794,17 +829,18 @@ section[role="message"] {
     left: 0;
     bottom: 0;
     display: none;
-    color: #fff;
-    padding: 0.5em 1em;
+    color: red;
+    padding: 5px 5px 0;
+}
+
+/*设置导航栏左部分图标大小*/
+section[role="leftMenu"] > ul li img {
+    margin-top: -0.2em;
 }
 
 @media only screen and (max-width: 768px) {
-    html {
-        width: 100%;
-        height: 100%;
-        /* background: #011221 url(../images/bg-img.png) no-repeat fixed center; */
-        background: #f5f5f5;
-        background-size: 100% 100%;
+    .ui-title {
+        display: none;
     }
 
     img {
@@ -896,12 +932,6 @@ section[role="message"] {
         color: #FFFFFF;
     }
 
-    section[role="leftMenu"] > ul li img {
-        width: 1.25em;
-        height: 1.1em;
-        margin-top: -0.4em;
-    }
-
     span[role="shopNums"] {
         top: -0.6em !important;
         font-size: 11px !important;
@@ -957,13 +987,11 @@ section[role="message"] {
         background-color: #058FCA;
     }
 
-
     /*主体部分*/
     article[role="document"] {
         width: 100%;
         min-height: 10em;
         position: relative;
-        padding-bottom: 2.5em;
     }
 
     article[role="document"] section[role="control"] {
@@ -995,8 +1023,8 @@ section[role="message"] {
         height: 100%;
         background: #fff;
         border: 1px solid #e6e6e6;
-        z-index: 100;
-        padding: 3.2em 2.625em 3.3em .625em;
+        z-index: 999;
+        padding: 1em 2.625em 1em .625em;
     }
 
     .leftAside {
@@ -1006,6 +1034,7 @@ section[role="message"] {
         cursor: pointer;
         display: block;
         height: 100%;
+        top: 0;
         left: 0;
         position: fixed;
         right: initial;
@@ -1067,16 +1096,17 @@ section[role="message"] {
     footer[role="footer"] {
         width: 100%;
         height: 2.5em;
+        line-height: 2.5em;
         position: fixed;
         bottom: 0;
         left: 0;
         background: #f7f7f7;
         z-index: 101;
+        border-top: 1px solid #dedede;
     }
 
     footer[role="footer"] section[role="footerTools"] {
         display: inline-block;
-        height: 2.5em;
     }
 
     section[role="footerTools"] > a {
@@ -1087,48 +1117,60 @@ section[role="message"] {
         border-radius: .4em;
         -webkit-border-radius: .4em;
         text-align: center;
-        padding: 0 0.8em;
+        padding: 0 0.5em;
         border: none;
         outline: none;
         cursor: pointer;
-        margin-left: 1em;
+        margin-left: 0.5em;
         background: #fcfcfc;
         color: #333;
         border: 1px solid #dedede;
         margin-top: 0.35em;
+        font-size: 1em;
     }
 
     footer[role="footer"] section[role="footerButtons"] {
         width: 100%;
         height: 2.5em;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: -moz-box;
+        display: -moz-flex;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
     }
 
     section[role="footerButtons"] a {
         display: inline-block;
-        width: auto;
+        width: 100%;
         height: 2.5em;
         line-height: 2.5em;
         text-align: center;
-        border-left: 1px solid #dedede;
-        border-top: 1px solid #dedede;
         color: #333;
         float: left;
+        border-right: 1px solid #dedede;
+    }
+
+    section[role="footerButtons"] a:last-child {
+        border-right: none;
     }
 
     section[role="message"] {
-        padding: 0.5em 1em;
+        padding: 5px 5px 0;
     }
 
     /*内容区样式（手机版段落式排版）*/
     ol.context li {
-        padding: 0.5em 0.75em;
+        padding: 0.5em 0.5em 0.5em 0.75em;
         border-bottom: 1px solid #8c8c8c;
     }
 
     ol.context {
         list-style-type: none;
-        padding: 0.25em;
         margin-top: 0;
+        background: #fff;
     }
 
     ol.context li table {
@@ -1144,10 +1186,6 @@ section[role="message"] {
 
     ol.context li table tr td {
         text-align: left;
-    }
-
-    ol.context li table tr td:last-child {
-        text-align: right;
     }
 
     ol.context li table tr input {
@@ -1167,23 +1205,37 @@ section[role="message"] {
 
     ol.context li section span.right {
         float: right;
-        color: #ca0000;
-        font-size: 1.6em;
-    }
-
-    ol.context li section span.right a {
-        color: #22acd0 !important;
-        text-decoration: underline;
     }
 
     ol.context li section span img {
         vertical-align: middle;
     }
+
+    /* table订单列表 */
+    button[name="opera"] {
+        margin-left: 2.5em;
+    }
+
+    table tr {
+        font-size: 0.9em;
+    }
+
+    section[role="content"] ul.info li input[type='text'] {
+        width: auto;
+    }
+
+    input[name="file1"]#file1 {
+        display: block;
+    }
+    
+    article[role="document"] form#component1 {
+        padding: 1em;
+    }    
 }
 
 .dialogClose {
     width: 100%;
-    background-color: #5e6a8f;
+    background-color: #058fca;
     color: white;
     padding: 0.3em;
     position: absolute;
@@ -1191,7 +1243,7 @@ section[role="message"] {
 
 /*选中行时整行变色*/
 .trColor {
-    /* background-color: transparent !important; */
+    background-color: #c4f1b8 !important;
 }
 
 /*长条色块**/
@@ -1220,7 +1272,7 @@ section[role="message"] {
     height: 10px;
     width: 50%;
     left: 0px;
-    background-color: lawngreen;
+    background-color: #009944;
 }
 
 .progress3 {
@@ -1235,7 +1287,7 @@ section[role="message"] {
     display: block;
     height: 10px;
     width: 100%;
-    background-color: lawngreen;
+    background-color: #009944;
 }
 
 .progress4 {
@@ -1250,7 +1302,7 @@ section[role="message"] {
     display: block;
     height: 10px;
     width: 100%;
-    background-color: #ff8000;
+    background-color: #EC6941;
 }
 
 /*多选框开关样式*/
@@ -1311,87 +1363,345 @@ section[role="message"] {
     filter: gray;
 }
 
-.treeGrid tr {
+/*时间色管理样式*/
+em.oneMonth {
+    background: #00c462;
+    margin-right: 0.5em;
+}
+
+em.threeMonth {
+    background: #fb0035;
+    margin-right: 0.5em;
+}
+
+em.overThreeMonth {
+    background: #82001a;
+    margin-right: 0.5em;
+}
+
+em.overOneYear {
+    background: black;
+    margin-right: 0.5em;
+}
+
+/** 去掉IE10文本框带有叉叉和眼睛**/
+::-ms-clear, ::-ms-reveal {
+    display: none;
+}
+
+.fieldsetGroup {
+    border: 1px solid #e5e5e5;
+    padding: 1em;
+    margin-top: 1em;
+    width: 100%;
+    border-radius: 0.5em;
+    min-height: 7em;
+    background-color: #ffffff;
+}
+
+.fieldsetGroup > legend {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.trBorder td {
+    border-top: 2px solid red;
+    border-bottom: 2px solid red;
+}
+
+.trBorder td:first-child {
+    border-left: 2px solid red;
+}
+
+.trBorder td:last-child {
+    border-right: 2px solid red;
+}
+
+.inquiry-list {
+    width: 100%;
+    height: auto;
+    background: #f5f5f5;
+}
+
+.inquiry-list .inquiry-item {
+    width: 100%;
+    height: 11em;
+    background: #fff;
+    margin-top: 0.7em;
+    padding: 0 1em;
+}
+
+.inquiry-item .block112 {
+    width: 100%;
+    height: 2.5em;
+    line-height: 2.5em;
+    border-bottom: 1px dotted #e6e6e6;
+    color: #058FCA;
+}
+
+.inquiry-item .block112 span[role=right] {
+    float: right;
+    color: #333;
+}
+
+.inquiry-item .block_Img_Div {
+    width: 100%;
+    height: 8.5em;
     display: flex;
     display: -webkit-flex;
-    /* display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox; */
-    justify-content: space-around;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inquiry-item .block_Img_Div div[role=image] {
+    width: 10em;
+    height: 8.5em;
+    line-height: 8.5em;
+    margin-right: 0.7em;
+    text-align: center;
+}
+
+.inquiry-item .block_Img_Div div[role=image] img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: 6em;
+}
+
+.inquiry-item .block_Img_Div .blockRight {
+    width: 70%;
+}
+
+.inquiry-item .block_Img_Div span {
+    display: block;
+}
+
+.inquiry-item .block_Img_Div span em {
+    float: right;
+}
+
+.inquiry-item .block_Img_Div span i {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #000;
+}
+
+.inquiry-item .block_Img_Div span font {
+    color: #e90000;
+}
+
+.goods-list {
+    width: 100%;
     height: auto;
-}
-
-.treeGrid tr:hover {
-    background: transparent;
-}
-
-.treeGrid td {
-    text-align: center !important;
-    border: 1px solid #21a8cb;
-    width: 25%;
-    margin: 0 0.2em 2em;
-    position: relative;
-    font-size: 0.9em;
-    border-radius: 0.3em;
-    -webkit-border-radius: 0.3em;
-    min-height: 2em;
-}
-
-.treeGrid td a {
-    display: inline-block;
-    width: 100%;
-    min-height: 2em;
-    color: #fff;
-    padding: 0.3em 0;
-    line-height: 1.4em;
-}
-
-.treeGrid td:before {
-    position: absolute;
-    bottom: -1.6em;
-    left: -0.6em;
-    display: inline-block;
-    width: 8em;
-    height: 0.8em;
-    content: "";
-    border-top: 1px solid #fff;
-    border-left: 1px solid #fff;
-    border-right: 1px solid #fff;
-}
-
-.treeGrid td:after {
-    position: absolute;
-    bottom: -0.75em;
-    left: 50%;
-    display: inline-block;
-    width: 1px;
-    height: 0.7em;
-    content: "";
     background: #fff;
+    padding: 0.5em;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.treeGrid tr:first-child td:before {
-    left: -3.7em;
-    width: 14em;
+.goods-list .goods-item {
+    width: 50%;
+    height: 20em;
+    padding: 0.5em;
 }
 
-.treeGrid tr:last-child td:before {
-    border: none;
-    width: 0;
-    height: 0;
-}
-
-.treeGrid tr:last-child td:after {
-    background: transparent;
-    width: 0;
-    height: 0;
-}
-
-.treeGrid td span {
-    display: inline-block;
+.goods-list .goods-item .block_Img_Div {
     width: 100%;
+    height: 100%;
+    border: 1px solid #e6e6e6;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.goods-item .block_Img_Div > div {
+    height: 50%;
+    width: 100%;
+    text-align: center;
+}
+
+.goods-item .block_Img_Div div[role=image] {
+    background: #f5f5f5;
+}
+
+.goods-item .block_Img_Div div[role=image] img {
+    height: 100%;
+    width: auto;
+}
+
+.goods-item .block_Img_Div .blockRight {
+    text-align: left;
+    padding: 0.5em;
+}
+
+.goods-item .block_Img_Div .blockRight span {
+    display: block;
+    color: #666;
+    font-size: 0.9em;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: #21a8cb;
+}
+
+.goods-item .block_Img_Div .blockRight span i {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #000;
+}
+
+.goods-item .block_Img_Div .blockRight span font {
+    color: #e90000;
+}
+
+/* 二级页面导航样式 */
+
+.nowpage {
+    width: 100%;
+    line-height: 3em;
+    background: #D5D5D5;
+    color: #404047; 
+    text-align: center;
+    margin: auto;
+    position: relative;
+}
+
+.nowpage img {
+    width: 1.5em !important;
+    height: 1.1em;
+    position: absolute;
+    left: 4.3em;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.nowpage span {
+    vertical-align: middle !important;
+    font-size: 1.05em;
+    font-weight: bold;
+}
+
+aside[role="toolBar"] section.twoMenuList {
+    border: inherit;
+    background: #EAE8E7;
+    margin: 0;
+    padding: 0;
+}
+
+aside[role="toolBar"] section.twoMenuList > div > ul > li {
+    height: 2.5em;
+    line-height: 2.5em;
+}
+
+aside[role="toolBar"] section.twoMenuList > div > ul > li > img[role="icon"] {
+    width: 1.2em;
+    margin-right: 1.152em;
+    float: left;
+    top: 50%;
+    position: relative;
+    transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+}
+
+aside[role="toolBar"] section.twoMenuList > div > ul > li > a {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 75%;
+    display: inline-block;
+    font-size: 1.1em;
+    color: #666666;
+}
+
+aside[role="toolBar"] section.twoMenuList > div > ul > li > img[role="arrow"] {
+    width: 0.463em;
+    float: right;
+    top: 50%;
+    position: relative;
+    transform: translateY(-50%);
+}
+
+.twoMenuList > div > ul > li:hover {
+    background: #D5D5D5;
+}
+
+section[role="content"] .scrollArea {
+    background: #ffffff;
+}
+
+section[role="content"] .scrollArea table {
+    margin-top: 0;
+    border-right: none;
+    border-left: none;
+}
+
+input[name="file1"]#file1 {
+    margin: 0.5em 0;
+}
+
+article[role="document"] section[role="content"] button[name="importFile"] {
+    margin-left: 1.5em;
+}
+
+/* 问号提示框 */
+mark {
+    display: inline-block;
+    padding: 0.5em;
+    border: 1px solid #c0c0c0;
+    background-color: #fff;
+    color: #848484;
+}
+.security-code-search ul li{
+    display: block !important;
+    margin: 0 auto;
+}
+
+form.search ul li div {
+    display: inline-block;
+    position: relative;
+    width: 52%;
+}
+form.search ul li div select {
+    width: 97%;
+}
+form.search ul li div input {
+    position: absolute;
+    left: 1px;
+    width: 82%;
+    border: none;
+    height: 1.4em;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+}
+form.search ul li div input:focus {
+    outline:none;
+    border: none;
+}
+
+.search.partPrinciple {
+    position: relative;
+}
+/*文本超过一行出现省略号*/
+.text-omit{
+    display: block;
+    height: 1.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.menu-icon {
+    width: 1.5em;
+    float: left;
+    margin-left: 0.8em;
+    transform: translateY(0.5em);
+    height: 1.1em;
 }
