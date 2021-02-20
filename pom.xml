@@ -10,7 +10,11 @@
     <url>https://github.com/cn-cerc/summer-sample</url>
 
     <properties>
-        <cn.cerc.summer.version>2.3.0</cn.cerc.summer.version>
+        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>8</maven.compiler.source>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <cn.cerc.summer.version>3.0.0</cn.cerc.summer.version>
     </properties>
     <build>
         <plugins>
@@ -42,7 +46,7 @@
     <dependencies>
         <dependency>
             <groupId>cn.cerc</groupId>
-            <artifactId>summer-mis</artifactId>
+            <artifactId>summer-mis-cn</artifactId>
             <version>${cn.cerc.summer.version}</version>
         </dependency>
         <dependency>
