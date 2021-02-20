@@ -1,6 +1,6 @@
-# summer-traing
+# summer-sample
 
-[![Build Status](https://travis-ci.org/cn-cerc/summer-training.svg)](https://travis-ci.org/cn-cerc/summer-training)
+[![Build Status](https://travis-ci.org/cn-cerc/summer-sample.svg)](https://travis-ci.org/cn-cerc/summer-sample)
 
 # 简易进销存开发说明
 

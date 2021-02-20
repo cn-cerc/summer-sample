@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.cerc</groupId>
-    <artifactId>summer-training</artifactId>
+    <artifactId>summer-sample</artifactId>
     <version>1.0.0</version>
     <packaging>war</packaging>
 
-    <url>https://github.com/cn-cerc/summer-training</url>
+    <url>https://github.com/cn-cerc/summer-sample</url>
 
     <properties>
         <cn.cerc.summer.version>2.3.0</cn.cerc.summer.version>
