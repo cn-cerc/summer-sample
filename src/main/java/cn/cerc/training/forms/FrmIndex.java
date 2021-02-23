@@ -2,7 +2,7 @@ package cn.cerc.training.forms;
 
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
-import cn.cerc.mis.page.JspPage;
+import cn.cerc.ui.page.JspPage;
 
 public class FrmIndex extends AbstractForm {
 
