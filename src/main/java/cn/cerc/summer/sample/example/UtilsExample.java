@@ -1,4 +1,4 @@
-package cn.cerc.training.example;
+package cn.cerc.summer.sample.example;
 
 import cn.cerc.core.DataSet;
 import cn.cerc.core.Record;

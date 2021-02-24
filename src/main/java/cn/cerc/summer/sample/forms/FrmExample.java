@@ -1,4 +1,4 @@
-package cn.cerc.training.forms;
+package cn.cerc.summer.sample.forms;
 
 import cn.cerc.core.DataSet;
 import cn.cerc.core.Record;
