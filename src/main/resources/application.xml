@@ -14,8 +14,6 @@
 
     <!-- 载入所有的Form -->
     <import resource="classpath:app-forms.xml"/>
-    <!-- 载入所有的 Service -->
-    <import resource="classpath:app-services.xml"/>
 
     <!-- 启动 springmvc -->
     <mvc:default-servlet-handler/>
