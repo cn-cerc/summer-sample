@@ -1,7 +1,3 @@
-# summer-sample
-
-[![Build Status](https://travis-ci.org/cn-cerc/summer-sample.svg)](https://travis-ci.org/cn-cerc/summer-sample)
-
 # 简易进销存开发说明
 
 ## 一、搭建环境
@@ -312,3 +308,12 @@ mvn -v
 6. ***所有页面传值不允许使用uid做参数***
 7. 更多说明文件请访问 `source`文件夹
 
+## 四、镜像加速
+
+### github
+
+`https://github.com/cn-cerc/summer-sample.git`
+
+### gitee
+
+`https://gitee.com/mimrc/summer-sample.git`
