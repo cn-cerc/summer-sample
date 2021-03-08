@@ -16,11 +16,12 @@ public class SvrExample extends CustomService {
         Record headIn = getDataIn().getHead();
         log.info("headIn {}", headIn);
 
+        String code = headIn.getString("Code_");
         // SqlQuery 用于操作数据库，可对数据进行增删改查，在使用增删改功能前，必须查询表。
         SqlQuery cdsTmp = new SqlQuery(this);
         // add方法追加sql语句
         cdsTmp.add("select * from %s", AppDB.Table_Example);
-        cdsTmp.add("where 1=1 ");
+        cdsTmp.add("where code_='%s'", code);
 
         // 判断传进来的值，存在code_并且不为空
         if (headIn.hasValue("code_")) {

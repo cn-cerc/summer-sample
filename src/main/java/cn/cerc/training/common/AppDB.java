@@ -7,4 +7,6 @@ public class AppDB {
      **/
     public static final String Table_Example = "s_example";
 
+    public static final String CorpNo = "0636";
+    
 }
