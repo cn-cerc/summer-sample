@@ -15,11 +15,6 @@ public class FrmProduct extends AbstractForm {
     }
 
     @Override
-    public IPage execute() throws Exception {
-        return null;
-    }
-    
-    @Override
     public boolean logon() {
         return true;
     }

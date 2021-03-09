@@ -17,7 +17,7 @@ public class StartSample {
     @RequestMapping("")
     public ModelAndView index() {
         log.info("start");
-        return new ModelAndView("redirect:/public/FrmIndex");
+        return new ModelAndView("redirect:/public/welcome");
     }
 
 }
