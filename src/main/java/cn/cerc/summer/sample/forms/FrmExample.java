@@ -251,9 +251,4 @@ public class FrmExample extends AbstractForm {
         return jspPage;
     }
 
-    @Override
-    public boolean logon() {
-        return true;
-    }
-
 }

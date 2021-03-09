@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 	<bean id="welcome" class="cn.cerc.summer.sample.forms.FrmWelcome" scope="prototype">
-		<property name="name" value="欢迎" />
+		<property name="name" value="欢迎使用summer-sample" />
 	</bean>
 	<bean id="FrmIndex" class="cn.cerc.summer.sample.forms.FrmIndex" scope="prototype">
 		<property name="name" value="首页" />

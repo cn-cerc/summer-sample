@@ -17,9 +17,5 @@ public class FrmIndex extends AbstractForm {
         page.put("code", "name");
         return page;
     }
-    
-    @Override
-    public boolean logon() {
-        return true;
-    }
+
 }
