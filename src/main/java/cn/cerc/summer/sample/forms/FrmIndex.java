@@ -17,9 +17,10 @@ public class FrmIndex extends AbstractForm {
         page.put("code", "name");
         return page;
     }
-    
+
     @Override
     public boolean logon() {
-        return true;
+        // false:此页面需要登录才能查看
+        return false;
     }
 }
