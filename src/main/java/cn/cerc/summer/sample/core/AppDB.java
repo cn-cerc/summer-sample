@@ -1,4 +1,4 @@
-package cn.cerc.training.common;
+package cn.cerc.summer.sample.core;
 
 public class AppDB {
 

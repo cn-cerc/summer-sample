@@ -2,8 +2,9 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
-    <bean id="FrmIndex" class="cn.cerc.training.forms.FrmIndex" scope="prototype"/>
-    <bean id="FrmExample" class="cn.cerc.training.forms.FrmExample" scope="prototype">
+    <bean id="FrmIndex" class="cn.cerc.summer.sample.forms.FrmIndex" scope="prototype"/>
+    <bean id="FrmProduct" class="cn.cerc.summer.sample.forms.FrmProduct" scope="prototype"/>
+    <bean id="FrmExample" class="cn.cerc.summer.sample.forms.FrmExample" scope="prototype">
         <property name="name" value="范例"/>
     </bean>
 </beans>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:task="http://www.springframework.org/schema/task"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:task="http://www.springframework.org/schema/task" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
@@ -19,14 +18,15 @@
     <mvc:default-servlet-handler/>
     <!-- 开启注解 -->
     <mvc:annotation-driven/>
-    <context:annotation-config/>
+    <!-- <context:annotation-config/> -->
     <!-- 启动定时器 -->
     <task:annotation-driven/>
 
     <context:component-scan base-package="cn.cerc.core"/>
     <context:component-scan base-package="cn.cerc.db"/>
     <context:component-scan base-package="cn.cerc.mis"/>
-    <context:component-scan base-package="cn.cerc.training"/>
+    <context:component-scan base-package="cn.cerc.ui"/>
+    <context:component-scan base-package="cn.cerc.summer.sample"/>
 
     <!-- Handle实体 -->
     <bean id="handle" class="cn.cerc.mis.core.HandleDefault" scope="prototype">
@@ -43,4 +43,11 @@
 
     <!-- 其它系统级通用对象定义 -->
     <bean id="RightMenus" class="cn.cerc.ui.parts.RightMenus" scope="prototype"></bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/forms/"/>
+        <property name="suffix" value=""/>
+    </bean>
+
 </beans>

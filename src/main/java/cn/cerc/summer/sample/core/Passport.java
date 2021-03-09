@@ -1,4 +1,4 @@
-package cn.cerc.training.common;
+package cn.cerc.summer.sample.core;
 
 import cn.cerc.mis.core.AbstractHandle;
 import cn.cerc.mis.core.IPassport;
