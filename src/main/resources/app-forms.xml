@@ -6,12 +6,15 @@
 		<property name="name" value="欢迎" />
 	</bean>
 	<bean id="FrmIndex" class="cn.cerc.summer.sample.forms.FrmIndex" scope="prototype">
-		<property name="name" value="首页" />
-	</bean>
-	<bean id="FrmProduct" class="cn.cerc.summer.sample.forms.FrmProduct" scope="prototype">
-		<property name="name" value="商品管理" />
+        <property name="name" value="首页" />
+        <property name="permission" value="user.base" />
 	</bean>
 	<bean id="FrmExample" class="cn.cerc.summer.sample.forms.FrmExample" scope="prototype">
 		<property name="name" value="范例" />
+        <property name="permission" value="user.base" />
+	</bean>
+	<bean id="FrmProduct" class="cn.cerc.summer.sample.forms.FrmProduct" scope="prototype">
+		<property name="name" value="商品管理" />
+        <property name="permission" value="user.base" />
 	</bean>
 </beans>
