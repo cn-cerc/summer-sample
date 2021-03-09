@@ -39,8 +39,10 @@ public class AppLogin implements IAppLogin {
     @Override
     public String checkLogin(String userCode, String password) throws IOException, ServletException {
         log.info("userCode:{}, password:{}", userCode, password);
+
+        // 此处应去数据库检验
         if ("admin".equals(userCode) && "123456".equals(password)) {
-            //验证通过后赋值token
+            // 验证通过后，创建token并记录到Session中
             form.getRequest().getSession().setAttribute(RequestData.TOKEN, TEMP_SESSIONID);
             return null;
         }
