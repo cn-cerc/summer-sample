@@ -15,9 +15,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.cerc.mis.core.Application;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 @Scope(WebApplicationContext.SCOPE_REQUEST)
 @RequestMapping("/public")
@@ -32,8 +30,6 @@ public class StartPublic implements ApplicationContextAware {
 
     @RequestMapping("/{formId}")
     public ModelAndView execute(@PathVariable String formId) {
-        log.info("uri: {}", request.getRequestURI());
-        
         String funcId = "execute";
         String[] args = request.getRequestURI().split("/");
         for(int i =0; i< args.length; i++) {
