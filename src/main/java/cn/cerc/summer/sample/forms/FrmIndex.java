@@ -13,7 +13,7 @@ public class FrmIndex extends AbstractForm {
     }
 
     public IPage json() {
-        JsonPage page = new JsonPage();
+        JsonPage page = new JsonPage(this);
         page.put("code", "name");
         return page;
     }
