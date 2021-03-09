@@ -18,9 +18,4 @@ public class FrmIndex extends AbstractForm {
         return page;
     }
 
-    @Override
-    public boolean logon() {
-        // false:此页面需要登录才能查看
-        return false;
-    }
 }
