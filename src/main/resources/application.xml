@@ -28,6 +28,9 @@
     <context:component-scan base-package="cn.cerc.ui"/>
     <context:component-scan base-package="cn.cerc.summer.sample"/>
 
+    <!-- 静态资源映射 -->
+    <mvc:resources  mapping="/static/**" location="/static/"/>
+
     <!-- Handle实体 -->
     <bean id="handle" class="cn.cerc.mis.core.HandleDefault" scope="prototype">
         <property name="connections">
