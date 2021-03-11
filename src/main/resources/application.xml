@@ -28,7 +28,7 @@
     <context:component-scan base-package="cn.cerc.ui"/>
     <context:component-scan base-package="cn.cerc.summer.sample"/>
 
-    <!-- 静态资源映射 -->
+    <!-- 静态资源映射，注意要与application.properties 的变量保持一致 app.static.path -->
     <mvc:resources  mapping="/static/**" location="/static/"/>
 
     <!-- Handle实体 -->
