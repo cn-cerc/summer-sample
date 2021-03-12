@@ -2,14 +2,15 @@ package cn.cerc.summer.sample.core;
 
 import org.springframework.stereotype.Component;
 
-import cn.cerc.mis.core.AbstractHandle;
+import cn.cerc.core.ISession;
 import cn.cerc.mis.core.IPassport;
 import cn.cerc.mis.rds.PassportRecord;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class Passport extends AbstractHandle implements IPassport {
+public class Passport implements IPassport {
+    private ISession session;
 
     @Override
     public boolean passProc(String versions, String procCode) {
@@ -34,6 +35,16 @@ public class Passport extends AbstractHandle implements IPassport {
     @Override
     public boolean passsMenu(String menuCode) {
         return true;
+    }
+
+    @Override
+    public void setSession(ISession session) {
+        this.session = session;
+    }
+
+    @Override
+    public ISession getSession() {
+        return this.session;
     }
 
 }
