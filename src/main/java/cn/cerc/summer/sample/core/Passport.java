@@ -3,7 +3,6 @@ package cn.cerc.summer.sample.core;
 import org.springframework.stereotype.Component;
 
 import cn.cerc.core.ISession;
-import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.mis.core.IPassport;
 import cn.cerc.mis.rds.PassportRecord;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +17,6 @@ public class Passport implements IPassport {
         log.info("versions:{}, procCode: {}", versions, procCode);
         // 根据当前token，去数据库检查是否拥有指定的 procCode
         // 例如"user.base".equals(procCode);
-        SqlQuery query = new SqlQuery(session);
         return true;
     }
 
