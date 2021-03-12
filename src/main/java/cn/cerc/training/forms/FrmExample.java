@@ -48,10 +48,11 @@ public class FrmExample extends AbstractForm {
         }
 
         SqlQuery cdsTmp = new SqlQuery(this);
-        cdsTmp.add("select * from %s", AppDB.Table_Example);
+        cdsTmp.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        cdsTmp.add("where corpNo_='%s'", AppDB.MY_CORP_NO);
         DataSet dataSet = cdsTmp.open();
-        log.info("sql指令 {}", cdsTmp.getSqlText().getText());
-        log.info("sql数据 {}", dataSet.getJSON());
+        log.debug("sql指令 {}", cdsTmp.getSqlText().getText());
+        log.debug("sql数据 {}", dataSet.getJSON());
         while (dataSet.fetch()) {
             // 将性别根据编码转为汉字
             String sex = dataSet.getInt("sex_") == 0 ? "男" : "女";
@@ -66,7 +67,7 @@ public class FrmExample extends AbstractForm {
     public IPage append() {
         JspPage jspPage = new JspPage(this, "common/FrmExample_append.jsp");
         String submit = getRequest().getParameter("submit");
-        if (submit == null || "".equals(submit)) {
+        if (Utils.isEmpty(submit)) {
             return jspPage;
         }
 
@@ -85,8 +86,9 @@ public class FrmExample extends AbstractForm {
 
         // 打开数据库连接，判断当前学号是否已存在
         SqlQuery cdsTmp = new SqlQuery(this);
-        cdsTmp.add("select * from %s", AppDB.Table_Example);
-        cdsTmp.add("where code_='%s'", code);
+        cdsTmp.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        cdsTmp.add("where corpNo_='%s'", AppDB.MY_CORP_NO);
+        cdsTmp.add("and code_='%s'", code);
         cdsTmp.open();
         if (!cdsTmp.eof()) {
             jspPage.setMessage("该学号已经存在，不允许重复登记");
@@ -94,6 +96,7 @@ public class FrmExample extends AbstractForm {
         }
         // 将数据添加到数据库
         cdsTmp.append();
+        cdsTmp.setField("corpNo_", AppDB.MY_CORP_NO);
         cdsTmp.setField("code_", code);
         cdsTmp.setField("name_", name);
         cdsTmp.setField("sex_", sex);
@@ -123,8 +126,9 @@ public class FrmExample extends AbstractForm {
         }
 
         SqlQuery cdsTmp = new SqlQuery(this);
-        cdsTmp.add("select * from %s", AppDB.Table_Example);
-        cdsTmp.add("where code_='%s'", code);
+        cdsTmp.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        cdsTmp.add("where corpNo_='%s'", AppDB.MY_CORP_NO);
+        cdsTmp.add("and code_='%s'", code);
         cdsTmp.open();
         if (cdsTmp.eof()) {
             jspPage.setMessage("指定的学号数据记录不存在");
@@ -134,7 +138,7 @@ public class FrmExample extends AbstractForm {
         jspPage.add("record", record);
 
         String submit = getRequest().getParameter("submit");
-        if (submit != null && !"".equals(submit)) {
+        if (Utils.isNotEmpty(submit)) {
             String sex = getRequest().getParameter("sex");
             if (sex == null || "".equals(sex)) {
                 jspPage.setMessage("sex 代码不允许为空");
@@ -166,8 +170,9 @@ public class FrmExample extends AbstractForm {
         }
 
         SqlQuery cdsTmp = new SqlQuery(this);
-        cdsTmp.add("select * from %s", AppDB.Table_Example);
-        cdsTmp.add("where code_='%s'", code);
+        cdsTmp.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        cdsTmp.add("where corpNo_='%s'", AppDB.MY_CORP_NO);
+        cdsTmp.add("and code_='%s'", code);
         cdsTmp.open();
         if (cdsTmp.eof()) {
             url.putParam("message", String.format("%s 记录不存在", code));
