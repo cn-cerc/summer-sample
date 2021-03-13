@@ -31,19 +31,6 @@
     <!-- 静态资源映射，注意要与application.properties 的变量保持一致 app.static.path -->
     <mvc:resources  mapping="/static/**" location="/static/"/>
 
-    <!-- Handle实体 -->
-    <bean id="handle" class="cn.cerc.mis.core.HandleDefault" scope="prototype">
-        <property name="connections">
-            <map>
-                <!-- key定义于SqlQuery -->
-                <entry key="sqlSession" value-ref="mysqlConnection"/>
-                <entry key="slaveSqlSession" value-ref="slaveMysqlConnection"/>
-                <entry key="ossSession" value-ref="ossConnection"/>
-                <entry key="aliyunQueueSession" value-ref="aliyunQueueConnection"/>
-            </map>
-        </property>
-    </bean>
-
     <!-- 其它系统级通用对象定义 -->
     <bean id="RightMenus" class="cn.cerc.ui.parts.RightMenus" scope="prototype"></bean>
 
