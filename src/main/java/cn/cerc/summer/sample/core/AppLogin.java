@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 
 import org.springframework.stereotype.Component;
 
+import cn.cerc.core.ISession;
 import cn.cerc.mis.core.IAppLogin;
 import cn.cerc.mis.core.IForm;
 import cn.cerc.mis.core.RequestData;
@@ -17,6 +18,7 @@ public class AppLogin implements IAppLogin {
     private static String LOGIN_JSPFILE = "login.jsp";
     private static String TEMP_SESSIONID = "88888888";
     private IForm form;
+    private ISession session;
 
     @Override
     public void init(IForm form) {
@@ -49,6 +51,16 @@ public class AppLogin implements IAppLogin {
 
         // 显示登录页面的jsp文件名
         return LOGIN_JSPFILE;
+    }
+
+    @Override
+    public ISession getSession() {
+        return session;
+    }
+
+    @Override
+    public void setSession(ISession session) {
+        this.session = session;
     }
 
 }
