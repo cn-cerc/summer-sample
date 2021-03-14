@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import cn.cerc.core.ISession;
@@ -12,8 +14,9 @@ import cn.cerc.mis.core.IForm;
 import cn.cerc.mis.core.RequestData;
 import lombok.extern.slf4j.Slf4j;
 
-@Component
 @Slf4j
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class AppLogin implements IAppLogin {
     private static String LOGIN_JSPFILE = "login.jsp";
     private static String TEMP_SESSIONID = "88888888";
@@ -23,6 +26,7 @@ public class AppLogin implements IAppLogin {
     @Override
     public void init(IForm form) {
         this.form = form;
+        this.setSession(form.getHandle().getSession());
     }
 
     @Override
