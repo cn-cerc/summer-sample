@@ -1,10 +1,10 @@
 package cn.cerc.summer.sample.forms;
 
-import cn.cerc.mis.core.AbstractForm;
+import cn.cerc.mis.core.CustomForm;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.JsonPage;
 
-public class FrmProduct extends AbstractForm {
+public class FrmProduct extends CustomForm {
 
     public IPage show(String bookNo, String partCode, String childCode) throws Exception {
         JsonPage page = new JsonPage(this);
