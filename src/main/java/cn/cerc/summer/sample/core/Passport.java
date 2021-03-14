@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 import cn.cerc.core.ISession;
 import cn.cerc.mis.core.IPassport;
-import cn.cerc.mis.core.PassportResult;
 import cn.cerc.mis.rds.PassportRecord;
 import lombok.extern.slf4j.Slf4j;
 
