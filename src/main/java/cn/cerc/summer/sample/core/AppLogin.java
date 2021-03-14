@@ -67,4 +67,14 @@ public class AppLogin implements IAppLogin {
         this.session = session;
     }
 
+    @Override
+    public void setJspFile(String loginJspFile) {
+        
+    }
+
+    @Override
+    public String getJspFile() {
+        return LOGIN_JSPFILE;
+    }
+
 }
