@@ -12,12 +12,13 @@ import cn.cerc.core.ISession;
 import cn.cerc.mis.core.IAppLogin;
 import cn.cerc.mis.core.IForm;
 import cn.cerc.mis.core.RequestData;
+import cn.cerc.ui.page.JspPage;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class AppLogin implements IAppLogin {
+public class AppLogin extends JspPage implements IAppLogin {
     private static String LOGIN_JSPFILE = "login.jsp";
     private static String TEMP_SESSIONID = "88888888";
     private IForm form;
