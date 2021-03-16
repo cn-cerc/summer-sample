@@ -30,7 +30,7 @@ public class FrmBuildCode extends AbstractForm {
         UIInput input = new UIInput(form);
         input.setCaption("请输入表名: ");
         input.setValue(reader.getString(input, ""));
-
+        
         UIButtonSubmit submit = new UIButtonSubmit(form);
         submit.setText("确认");
 
@@ -38,6 +38,7 @@ public class FrmBuildCode extends AbstractForm {
             String tableName = reader.getString(input, "");
 
             new UILine(form);
+            
             UITextArea memo = new UITextArea(form);
             memo.setCols(160);
             memo.setRows(5);
