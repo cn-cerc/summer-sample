@@ -4,14 +4,36 @@ import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.JsonPage;
 import cn.cerc.ui.page.JspPage;
+import cn.cerc.ui.page.UIPageView;
+import cn.cerc.ui.parts.UIContent;
+import cn.cerc.ui.vcl.UIDiv;
+import cn.cerc.ui.vcl.UILabel;
+import cn.cerc.ui.vcl.UILine;
 
 public class FrmIndex extends AbstractForm {
 
     @Override
     public IPage execute() {
-        return new JspPage(this, "common/FrmIndex.jsp");
+        UIPageView page = new UIPageView(this);
+        page.setCaption("欢迎体验 summer 框架");
+
+        UIContent content = page.getContent();
+
+        new UIDiv(content).setText("请根据需求文档，自行建立相关菜单文件");
+        new UILine(content);
+        new UILabel(content).setText("1、增删改查参考编写范例").setUrl("FrmExample");
+        new UILine(content);
+        new UILabel(content).setText("2、使用 jspfile 编写范例").setUrl("FrmIndex.html");
+        new UILine(content);
+        new UILabel(content).setText("3、查询窗体范例").setUrl("frmBuildCode");
+
+        return page;
     }
 
+    public IPage html() {
+        return new JspPage(this, "common/FrmIndex.jsp");
+    }
+    
     public IPage json() {
         JsonPage page = new JsonPage(this);
         page.put("code", "name");
