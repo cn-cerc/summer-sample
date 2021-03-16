@@ -25,7 +25,7 @@ public class FrmIndex extends AbstractForm {
         new UILine(content);
         new UILabel(content).setText("2、使用 jspfile 编写范例").setUrl("FrmIndex.html");
         new UILine(content);
-        new UILabel(content).setText("3、查询窗体范例").setUrl("frmBuildCode");
+        new UILabel(content).setText("3、根据表名自动生成服务代码").setUrl("frmBuildCode");
 
         return page;
     }

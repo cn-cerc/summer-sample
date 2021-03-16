@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="Database.xsl"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Database.xsd">
+	<caption>系统数据库结构</caption>
+	<name>trainingdb</name>
+	<tables>
+		<table code="s_applogs">
+			<comment>服务调用记录表</comment>
+			<columns>
+				<column code="UID_" type="bigint(19)" auto_increment="true" null="false" default="">
+					<comment>UID</comment>
+				</column>
+				<column code="CorpNo_" type="varchar(10)" null="true" default="">
+					<comment>帐套代码</comment>
+				</column>
+				<column code="Service_" type="varchar(80)" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="Trans_" type="bit(1)" null="false" default="b'0'">
+					<comment></comment>
+				</column>
+				<column code="TickCount_" type="decimal(18,6)" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="AppUser_" type="varchar(100)" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="AppDate_" type="datetime" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="Client_" type="bit(1)" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="DataIn_" type="text" null="true" default="">
+					<comment></comment>
+				</column>
+			</columns>
+			<indexs>
+				<index type="primary" code="PRIMARY">
+					<field sort="ASC" code="UID_" />
+				</index>
+			</indexs>
+		</table>
+		<table code="s_example">
+			<comment>演示范例表</comment>
+			<columns>
+				<column code="UID_" type="bigint(11)" auto_increment="true" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="corpNo_" type="varchar(11)" null="true" default="">
+					<comment>帐套</comment>
+				</column>
+				<column code="code_" type="varchar(16)" null="false" default="">
+					<comment>学号</comment>
+				</column>
+				<column code="name_" type="varchar(16)" null="false" default="">
+					<comment>姓名</comment>
+				</column>
+				<column code="sex_" type="int(1)" null="true" default="">
+					<comment>性别</comment>
+				</column>
+				<column code="age_" type="int(3)" null="true" default="">
+					<comment>年龄</comment>
+				</column>
+				<column code="createTime_" type="datetime" null="false" default="">
+					<comment>创建时间</comment>
+				</column>
+				<column code="updateTime_" type="datetime" null="false" default="">
+					<comment>更新时间</comment>
+				</column>
+			</columns>
+			<indexs>
+				<index type="primary" code="PRIMARY">
+					<field sort="ASC" code="UID_" />
+				</index>
+				<index type="unique" code="uk_code_">
+					<field sort="ASC" code="code_" />
+				</index>
+			</indexs>
+		</table>
+		<table code="s_pagelogs">
+			<comment>页面调用记录表</comment>
+			<columns>
+				<column code="UID_" type="int(11)" auto_increment="true" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="corpNo_" type="varchar(10)" null="true" default="">
+					<comment>帐套</comment>
+				</column>
+				<column code="page_" type="varchar(80)" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="dataIn_" type="text" null="true" default="">
+					<comment></comment>
+				</column>
+				<column code="tickCount_" type="double" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="AppUser_" type="varchar(100)" null="true" default="">
+					<comment></comment>
+				</column>
+				<column code="createTime_" type="datetime" null="false" default="CURRENT_TIMESTAMP">
+					<comment></comment>
+				</column>
+			</columns>
+			<indexs>
+				<index type="primary" code="PRIMARY">
+					<field sort="ASC" code="UID_" />
+				</index>
+				<index type="normal" code="Page_CorpNo">
+					<field sort="ASC" code="page_" />
+					<field sort="ASC" code="corpNo_" />
+					<field sort="ASC" code="tickCount_" />
+				</index>
+			</indexs>
+		</table>
+		<table code="s_partinfo">
+			<comment>商品基本信息表</comment>
+			<columns>
+				<column code="UID_" type="bigint(11)" auto_increment="true" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="corpNo_" type="varchar(11)" null="false" default="">
+					<comment>帐套</comment>
+				</column>
+				<column code="code_" type="varchar(30)" null="false" default="">
+					<comment>编号</comment>
+				</column>
+				<column code="desc_" type="varchar(32)" null="false" default="">
+					<comment>名称</comment>
+				</column>
+				<column code="spec_" type="varchar(64)" null="false" default="">
+					<comment>规格</comment>
+				</column>
+				<column code="unit_" type="varchar(10)" null="false" default="">
+					<comment>单位</comment>
+				</column>
+				<column code="stock_" type="decimal(18,4)" null="true" default="">
+					<comment>库存</comment>
+				</column>
+				<column code="remark_" type="varchar(128)" null="true" default="">
+					<comment>备注</comment>
+				</column>
+			</columns>
+			<indexs>
+				<index type="primary" code="PRIMARY">
+					<field sort="ASC" code="UID_" />
+				</index>
+				<index type="unique" code="uk_corpNo_code">
+					<field sort="ASC" code="corpNo_" />
+					<field sort="ASC" code="code_" />
+				</index>
+			</indexs>
+		</table>
+		<table code="s_tranb">
+			<comment>单身表</comment>
+			<columns>
+				<column code="UID_" type="bigint(11)" auto_increment="true" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="corpNo_" type="varchar(11)" null="false" default="">
+					<comment>帐套代码</comment>
+				</column>
+				<column code="tbNo_" type="varchar(20)" null="false" default="">
+					<comment>单据编号</comment>
+				</column>
+				<column code="it_" type="int(11)" null="true" default="">
+					<comment>单序</comment>
+				</column>
+				<column code="code_" type="varchar(32)" null="false" default="">
+					<comment>商品编号</comment>
+				</column>
+				<column code="num_" type="decimal(18,4)" null="true" default="">
+					<comment>商品数量</comment>
+				</column>
+			</columns>
+			<indexs>
+				<index type="primary" code="PRIMARY">
+					<field sort="ASC" code="UID_" />
+				</index>
+			</indexs>
+		</table>
+		<table code="s_tranh">
+			<comment>单头表</comment>
+			<columns>
+				<column code="UID_" type="bigint(11)" auto_increment="true" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="corpNo_" type="varchar(11)" null="false" default="">
+					<comment>帐套代码</comment>
+				</column>
+				<column code="tb_" type="varchar(10)" null="false" default="">
+					<comment>单别</comment>
+				</column>
+				<column code="tbNo_" type="varchar(20)" null="false" default="">
+					<comment>单号</comment>
+				</column>
+				<column code="tbDate_" type="date" null="false" default="">
+					<comment>日期</comment>
+				</column>
+				<column code="remark_" type="varchar(128)" null="true" default="">
+					<comment>备注</comment>
+				</column>
+				<column code="createUser_" type="varchar(10)" null="false" default="">
+					<comment>建档人员</comment>
+				</column>
+				<column code="createDate_" type="datetime" null="false" default="">
+					<comment>建档日期</comment>
+				</column>
+				<column code="total_" type="decimal(11,0)" null="true" default="">
+					<comment>数量</comment>
+				</column>
+			</columns>
+			<indexs>
+				<index type="primary" code="PRIMARY">
+					<field sort="ASC" code="UID_" />
+				</index>
+				<index type="unique" code="uk_corpNo_tb_tbNo_">
+					<field sort="ASC" code="corpNo_" />
+					<field sort="ASC" code="tb_" />
+					<field sort="ASC" code="tbNo_" />
+				</index>
+			</indexs>
+		</table>
+		<table code="useroptions">
+			<comment>地藤用户设置档</comment>
+			<columns>
+				<column code="UID_" type="int(11)" auto_increment="true" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="UserCode_" type="varchar(10)" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="Code_" type="varchar(30)" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="Name_" type="varchar(80)" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="Value_" type="varchar(255)" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="UpdateUser_" type="varchar(10)" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="UpdateDate_" type="datetime" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="AppUser_" type="varchar(10)" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="AppDate_" type="datetime" null="false" default="">
+					<comment></comment>
+				</column>
+				<column code="UpdateKey_" type="varchar(38)" null="false" default="">
+					<comment></comment>
+				</column>
+			</columns>
+			<indexs>
+				<index type="primary" code="PRIMARY">
+					<field sort="ASC" code="UID_" />
+					<field sort="ASC" code="UserCode_" />
+					<field sort="ASC" code="Code_" />
+				</index>
+			</indexs>
+		</table>
+	</tables>
+</database>
