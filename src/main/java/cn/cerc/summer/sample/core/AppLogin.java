@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class AppLogin extends JspPage implements IAppLogin {
+public class AppLogin implements IAppLogin {
     private static String LOGIN_JSPFILE = "login.jsp";
     private static String TEMP_SESSIONID = "88888888";
     private IForm form;
