@@ -1,4 +1,4 @@
-package com.tieke.business.forms;
+package cn.cerc.summer.sample.forms;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,10 +15,9 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.tieke.business.db.Field;
-
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
+import cn.cerc.summer.sample.core.db.Field;
 import cn.cerc.ui.core.RequestReader;
 import cn.cerc.ui.page.UIPageView;
 import cn.cerc.ui.vcl.UIButtonSubmit;

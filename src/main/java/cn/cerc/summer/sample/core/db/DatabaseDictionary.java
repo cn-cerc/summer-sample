@@ -1,4 +1,4 @@
-package cn.cerc.summer.sample.db;
+package cn.cerc.summer.sample.core.db;
 
 import java.io.BufferedWriter;
 import java.io.File;

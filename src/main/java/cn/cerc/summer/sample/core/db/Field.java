@@ -1,4 +1,4 @@
-package com.tieke.business.db;
+package cn.cerc.summer.sample.core.db;
 
 public class Field {
     private String code;
