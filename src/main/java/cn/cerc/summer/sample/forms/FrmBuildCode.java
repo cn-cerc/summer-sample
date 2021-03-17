@@ -1,14 +1,12 @@
-package cn.cerc.summer.sample.forms;
+package com.tieke.business.forms;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -17,9 +15,10 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.tieke.business.db.Field;
+
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
-import cn.cerc.summer.sample.db.Field;
 import cn.cerc.ui.core.RequestReader;
 import cn.cerc.ui.page.UIPageView;
 import cn.cerc.ui.vcl.UIButtonSubmit;
@@ -74,8 +73,7 @@ public class FrmBuildCode extends AbstractForm {
             memo.append("import cn.cerc.mis.core.CustomService;");
             memo.append("import cn.cerc.mis.core.DataValidateException;");
             memo.append("");
-            memo.append("public class Svr%s extends CustomService {",
-                    tableId.substring(0, 1).toUpperCase() + tableId.substring(1, tableId.length()));
+            memo.append("public class Svr%s extends CustomService {", tableId.substring(0, 1).toUpperCase() + tableId.substring(1, tableId.length()));
 
             memo.append("");
             buildSearch(tableId, memo, fields);
@@ -100,27 +98,34 @@ public class FrmBuildCode extends AbstractForm {
         memo.append("    // 增加服务");
         memo.append("    public boolean append() throws DataValidateException {");
         memo.append("        Record headIn = getDataIn().getHead();");
-        for (Field field : fields)
-            memo.append("        DataValidateException.stopRun(\"%s不允许为空！\", !headIn.hasValue(\"%s\"));",
-                    field.getName(), field.getCode());
+        for (Field field : fields) {
+            memo.append("        DataValidateException.stopRun(\"%s不允许为空！\", !headIn.hasValue(\"%s\"));", field.getName(), field.getCode());
+        }
         memo.append("");
         for (Field field : fields) {
-            memo.append("        %s %s = headIn.getString(\"%s\"); // %s", field.getType(), field.getVariantCode(),
-                    field.getCode(), field.getName());
+            memo.append("        %s %s = headIn.getString(\"%s\"); // %s", field.getType(), field.getVariantCode(), field.getCode(), field.getName());
         }
         memo.append("");
         memo.append("        String tableId = \"%s\";", tableId);
         memo.append("        SqlQuery query = new SqlQuery(this);");
         memo.append("        query.add(\"select * from %s\", tableId);");
-        for (Field field : fields)
-            memo.append("        query.add(\"where %s='%%s'\", %s);", field.getCode(), field.getVariantCode());
+        int count = 0;
+        for (Field field : fields) {
+            if (count == 0) {
+                memo.append("        query.add(\"where %s='%%s'\", %s);", field.getCode(), field.getVariantCode());
+            } else {
+                memo.append("        query.add(\"and %s='%%s'\", %s);", field.getCode(), field.getVariantCode());
+            }
+            count++;
+        }
         memo.append("        query.open();");
         memo.append("        DataValidateException.stopRun(\"该记录已经存在\", !query.eof());");
         memo.append("");
         memo.append("        query.append();");
         memo.append("        query.setField(\"id_\", Utils.newGuid());");
-        for (Field field : fields)
+        for (Field field : fields) {
             memo.append("        query.setField(\"%s\", %s);", field.getCode(), field.getVariantCode());
+        }
         memo.append("        query.setField(\"create_user_\", this.getUserCode());");
         memo.append("        query.setField(\"create_time_\", TDateTime.now());");
         memo.append("        query.setField(\"update_user_\", this.getUserCode());");
@@ -148,8 +153,7 @@ public class FrmBuildCode extends AbstractForm {
         }
 
         memo.append("        if (headIn.hasValue(\"searchText_\")) {");
-        memo.append("            f.byLink(new String[] { \"%s\" }, headIn.getString(\"searchText_\"));",
-                fields.get(0).getCode());
+        memo.append("            f.byLink(new String[] { \"%s\" }, headIn.getString(\"searchText_\"));", fields.get(0).getCode());
         memo.append("        }");
         memo.append("        f.open();");
         memo.append("        getDataOut().appendDataSet(f.getDataSet());");
@@ -162,12 +166,10 @@ public class FrmBuildCode extends AbstractForm {
         memo.append("    public boolean modify() throws DataValidateException {");
         memo.append("        Record headIn = getDataIn().getHead();");
         for (Field field : fields)
-            memo.append("        DataValidateException.stopRun(\"%s不允许为空！\", !headIn.hasValue(\"%s\"));",
-                    field.getName(), field.getCode());
+            memo.append("        DataValidateException.stopRun(\"%s不允许为空！\", !headIn.hasValue(\"%s\"));", field.getName(), field.getCode());
         memo.append("");
         for (Field field : fields)
-            memo.append("        %s %s = headIn.getString(\"%s\");", field.getType(), field.getVariantCode(),
-                    field.getCode());
+            memo.append("        %s %s = headIn.getString(\"%s\");", field.getType(), field.getVariantCode(), field.getCode());
         memo.append("");
         memo.append("        String tableId = \"%s\";", tableId);
         memo.append("        SqlQuery query = new SqlQuery(this);");
@@ -191,8 +193,7 @@ public class FrmBuildCode extends AbstractForm {
         memo.append("    public boolean download() throws DataValidateException {");
         memo.append("        Record headIn = getDataIn().getHead();");
         for (Field field : fields)
-            memo.append("        DataValidateException.stopRun(\"%s不允许为空！\", !headIn.hasValue(\"%s\"));",
-                    field.getName(), field.getCode());
+            memo.append("        DataValidateException.stopRun(\"%s不允许为空！\", !headIn.hasValue(\"%s\"));", field.getName(), field.getCode());
         memo.append("        String userCode = headIn.getString(\"user_code_\");");
         memo.append("");
         memo.append("        String tableId = \"%s\";", tableId);
@@ -217,7 +218,7 @@ public class FrmBuildCode extends AbstractForm {
                     String fieldType = column.getAttributeValue("type");
                     String fieldName = "";
                     Element comment = column.getChild("comment");
-                    if(comment != null)
+                    if (comment != null)
                         fieldName = comment.getText();
                     System.out.println(String.format("code: %s, name: %s, type: %s", fieldCode, fieldName, fieldType));
                     fields.add(new Field(fieldCode, fieldName, fieldType));
@@ -234,7 +235,9 @@ public class FrmBuildCode extends AbstractForm {
         // 1.创建SAXBuilder对象
         SAXBuilder saxBuilder = new SAXBuilder();
         // 2.创建输入流
-        InputStream is = new FileInputStream(new File("d:\\database.xml"));
+
+        String path = FrmBuildCode.class.getClassLoader().getResource("database.xml").getPath();
+        InputStream is = new FileInputStream(new File(path));
         // 3.将输入流加载到build中
         Document document = saxBuilder.build(is);
         // 4.获取根节点
@@ -242,7 +245,6 @@ public class FrmBuildCode extends AbstractForm {
         // 5.获取子节点
         List<Element> children = rootElement.getChildren();
         for (Element child : children) {
-            List<Attribute> attributes = child.getAttributes();
             if ("tables".equals(child.getName())) {
                 List<Element> childrenList = child.getChildren();
                 for (Element o : childrenList) {
@@ -258,5 +260,9 @@ public class FrmBuildCode extends AbstractForm {
         return null;
     }
 
-    public static void main(String[] args) throws Exception {}
+    public static void main(String[] args) throws IOException {
+        String path = FrmBuildCode.class.getClassLoader().getResource("database.xml").getPath();
+        System.out.println(path);
+    }
+
 }

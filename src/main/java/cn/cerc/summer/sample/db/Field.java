@@ -1,4 +1,4 @@
-package cn.cerc.summer.sample.db;
+package com.tieke.business.db;
 
 public class Field {
     private String code;
@@ -35,7 +35,20 @@ public class Field {
     }
 
     public String getType() {
-        return type;
+        if (type.startsWith("int("))
+            return "int";
+        else if (type.startsWith("bigint("))
+            return "long";
+        else if (type.startsWith("decimal("))
+            return "double";
+        else if (type.startsWith("varchar("))
+            return "String";
+        else if (type.startsWith("datetime"))
+            return "TDateTime";
+        else if (type.startsWith("date"))
+            return "TDateTime";
+        else
+            return type;
     }
 
     public void setType(String type) {
