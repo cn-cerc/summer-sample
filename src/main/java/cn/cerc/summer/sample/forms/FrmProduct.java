@@ -1,8 +1,8 @@
 package cn.cerc.summer.sample.forms;
 
-import cn.cerc.mis.core.CustomForm;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.JsonPage;
+import cn.cerc.summer.sample.core.CustomForm;
 
 public class FrmProduct extends CustomForm {
 
