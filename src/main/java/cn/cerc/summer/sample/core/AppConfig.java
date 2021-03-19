@@ -1,9 +1,10 @@
 package cn.cerc.summer.sample.core;
 
-import cn.cerc.mis.config.AppConfigDefault;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import cn.cerc.mis.config.AppConfigDefault;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
