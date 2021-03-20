@@ -92,7 +92,7 @@ public class FrmExample extends AbstractForm {
         String sex = getRequest().getParameter("sex");
         String age = getRequest().getParameter("age");
 
-        LocalService svr = new LocalService(this, "svrExample.append");
+        LocalService svr = new LocalService(this, "SvrExample.append");
         Record headIn = svr.getDataIn().getHead();
         headIn.setField("code_", code);
         headIn.setField("name_", name);
@@ -123,7 +123,7 @@ public class FrmExample extends AbstractForm {
             jspPage.setMessage(message);
         }
 
-        LocalService svr1 = new LocalService(this, "svrExample.download");
+        LocalService svr1 = new LocalService(this, "SvrExample.download");
         Record headIn1 = svr1.getDataIn().getHead();
         headIn1.setField("code_", code);
         if (!svr1.exec()) {
@@ -141,7 +141,7 @@ public class FrmExample extends AbstractForm {
                 return jspPage;
             }
 
-            LocalService svr2 = new LocalService(this, "svrExample.modify");
+            LocalService svr2 = new LocalService(this, "SvrExample.modify");
             Record headIn2 = svr2.getDataIn().getHead();
             headIn2.setField("code_", code);
             headIn2.setField("sex_", sex);

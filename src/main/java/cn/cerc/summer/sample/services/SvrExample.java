@@ -26,6 +26,7 @@ public class SvrExample extends CustomService {
         SqlQuery cdsTmp = new SqlQuery(this);
         // add方法追加sql语句
         cdsTmp.add("select * from %s", AppDB.Table_Example);
+        cdsTmp.add("where 1=1 ");
         // 判断传进来的值，存在code_并且不为空
         if (headIn.hasValue("code_")) {
             cdsTmp.add("and code_='%s'", headIn.getString("code_"));
