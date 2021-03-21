@@ -4,6 +4,7 @@ import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.summer.sample.core.ui.UICopyright;
 import cn.cerc.summer.sample.core.ui.UICustomPage;
+import cn.cerc.summer.sample.core.ui.UIMenuBar;
 import cn.cerc.ui.vcl.UIDiv;
 import cn.cerc.ui.vcl.UILabel;
 import cn.cerc.ui.vcl.UILine;
@@ -13,7 +14,7 @@ public class FrmWelcome extends AbstractForm {
 
     public IPage execute() {
         UICustomPage page = new UICustomPage(this);
-        
+
         new UILine(page.getContent());
 
         UIText text = new UIText(page.getContent());
@@ -28,10 +29,11 @@ public class FrmWelcome extends AbstractForm {
 
         UILabel label3 = new UILabel(new UIDiv(page.getContent()));
         label3.setUrl("FrmIndex?sid=88888888").setText("进入首页(免登录)");
-        
+
         new UILine(page.getContent());
-        
-        new UICopyright(page.getFooter());
+
+        if (!this.getClient().isPhone())
+            new UICopyright(page.getFooter());
 
         return page;
     }

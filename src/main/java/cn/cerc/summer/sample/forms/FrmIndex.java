@@ -3,7 +3,9 @@ package cn.cerc.summer.sample.forms;
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.JsonPage;
+import cn.cerc.summer.sample.core.ui.UICopyright;
 import cn.cerc.summer.sample.core.ui.UICustomPage;
+import cn.cerc.summer.sample.core.ui.UIMenuBar;
 import cn.cerc.ui.page.JspPage;
 import cn.cerc.ui.parts.UIComponent;
 import cn.cerc.ui.vcl.UIDiv;
@@ -25,6 +27,11 @@ public class FrmIndex extends AbstractForm {
         new UILabel(content).setText("2、使用 jspfile 编写范例").setUrl("FrmIndex.html");
         new UILine(content);
         new UILabel(content).setText("3、根据表名自动生成服务代码").setUrl("frmBuildCode");
+
+        if (this.getClient().isPhone())
+            new UIMenuBar(page.getFooter());
+        else
+            new UICopyright(page.getFooter());
 
         return page;
     }
