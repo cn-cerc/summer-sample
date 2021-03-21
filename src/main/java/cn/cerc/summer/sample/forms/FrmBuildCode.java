@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
 
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
-import cn.cerc.summer.sample.core.UICustomPage;
 import cn.cerc.summer.sample.core.db.Field;
+import cn.cerc.summer.sample.core.ui.UICustomPage;
 import cn.cerc.ui.core.RequestReader;
 import cn.cerc.ui.page.UIPageView;
 import cn.cerc.ui.vcl.UIButtonSubmit;

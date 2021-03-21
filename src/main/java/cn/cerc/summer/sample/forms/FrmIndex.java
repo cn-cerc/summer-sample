@@ -3,7 +3,7 @@ package cn.cerc.summer.sample.forms;
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.JsonPage;
-import cn.cerc.summer.sample.core.UICustomPage;
+import cn.cerc.summer.sample.core.ui.UICustomPage;
 import cn.cerc.ui.page.JspPage;
 import cn.cerc.ui.parts.UIComponent;
 import cn.cerc.ui.vcl.UIDiv;
