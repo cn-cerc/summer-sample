@@ -3,9 +3,9 @@ package cn.cerc.summer.sample.forms;
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.JsonPage;
+import cn.cerc.summer.sample.core.UICustomPage;
 import cn.cerc.ui.page.JspPage;
-import cn.cerc.ui.page.UIPageView;
-import cn.cerc.ui.parts.UIContent;
+import cn.cerc.ui.parts.UIComponent;
 import cn.cerc.ui.vcl.UIDiv;
 import cn.cerc.ui.vcl.UILabel;
 import cn.cerc.ui.vcl.UILine;
@@ -14,10 +14,9 @@ public class FrmIndex extends AbstractForm {
 
     @Override
     public IPage execute() {
-        UIPageView page = new UIPageView(this);
-        page.setCaption("欢迎体验 summer 框架");
+        UICustomPage page = new UICustomPage(this);
 
-        UIContent content = page.getContent();
+        UIComponent content = page.getContent();
 
         new UIDiv(content).setText("请根据需求文档，自行建立相关菜单文件");
         new UILine(content);
@@ -33,11 +32,15 @@ public class FrmIndex extends AbstractForm {
     public IPage html() {
         return new JspPage(this, "common/FrmIndex.jsp");
     }
-    
+
     public IPage json() {
         JsonPage page = new JsonPage(this);
         page.put("code", "name");
         return page;
     }
 
+    @Override
+    public String getName() {
+        return "欢迎体验 summer 框架";
+    }
 }

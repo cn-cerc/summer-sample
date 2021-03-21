@@ -2,7 +2,7 @@ package cn.cerc.summer.sample.forms;
 
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
-import cn.cerc.ui.page.UIPageWelcome;
+import cn.cerc.summer.sample.core.UICustomPage;
 import cn.cerc.ui.vcl.UIDiv;
 import cn.cerc.ui.vcl.UILabel;
 import cn.cerc.ui.vcl.UIText;
@@ -10,7 +10,7 @@ import cn.cerc.ui.vcl.UIText;
 public class FrmWelcome extends AbstractForm {
 
     public IPage execute() {
-        UIPageWelcome page = new UIPageWelcome(this);
+        UICustomPage page = new UICustomPage(this);
 
         UIText text = new UIText(page.getContent());
         text.add("欢迎使用summer-sample");

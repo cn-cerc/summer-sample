@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
+import cn.cerc.summer.sample.core.UICustomPage;
 import cn.cerc.summer.sample.core.db.Field;
 import cn.cerc.ui.core.RequestReader;
 import cn.cerc.ui.page.UIPageView;
@@ -35,8 +36,7 @@ public class FrmBuildCode extends AbstractForm {
 
         ArrayList<Field> fields = new ArrayList<>();
 
-        UIPageView page = new UIPageView(this);
-        page.setCaption("欢迎体验 summer 框架");
+        UICustomPage page = new UICustomPage(this);
 
         RequestReader reader = new RequestReader(this);
 
