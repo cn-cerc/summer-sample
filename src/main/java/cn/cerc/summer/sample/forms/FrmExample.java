@@ -36,7 +36,8 @@ public class FrmExample extends AbstractForm {
     @Override
     public IPage execute() {
         // JspPage用于加载jsp页面
-        JspPage jspPage = new JspPage(this, "common/FrmExample.jsp");
+        JspPage jspPage = new JspPage(this);
+        jspPage.setJspFile("common/FrmExample.jsp");
 
         String message = getRequest().getParameter("message");
         if (message != null) {
@@ -73,7 +74,8 @@ public class FrmExample extends AbstractForm {
     }
 
     public IPage append() {
-        JspPage jspPage = new JspPage(this, "common/FrmExample_append.jsp");
+        JspPage jspPage = new JspPage(this);
+        jspPage.setJspFile("common/FrmExample_append.jsp");
         String submit = getRequest().getParameter("submit");
         if (submit == null || "".equals(submit)) {
             return jspPage;
@@ -111,7 +113,8 @@ public class FrmExample extends AbstractForm {
     }
 
     public IPage modify() {
-        JspPage jspPage = new JspPage(this, "common/FrmExample_modify.jsp");
+        JspPage jspPage = new JspPage(this);
+        jspPage.setJspFile("common/FrmExample_modify.jsp");
         String code = getRequest().getParameter("code");
         if (Utils.isEmpty(code)) {
             jspPage.setMessage("code 不允许为空");
