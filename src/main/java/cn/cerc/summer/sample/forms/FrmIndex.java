@@ -3,12 +3,12 @@ package cn.cerc.summer.sample.forms;
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.JsonPage;
-import cn.cerc.summer.sample.core.ui.UICopyright;
 import cn.cerc.summer.sample.core.ui.UICustomPage;
 import cn.cerc.summer.sample.core.ui.UIMenuBar;
 import cn.cerc.ui.page.JspPage;
 import cn.cerc.ui.parts.UIComponent;
 import cn.cerc.ui.vcl.UIDiv;
+import cn.cerc.ui.vcl.UIHtmlFile;
 import cn.cerc.ui.vcl.UILabel;
 import cn.cerc.ui.vcl.UILine;
 
@@ -31,7 +31,7 @@ public class FrmIndex extends AbstractForm {
         if (this.getClient().isPhone())
             new UIMenuBar(page.getFooter());
         else
-            new UICopyright(page.getFooter());
+            new UIHtmlFile(page.getFooter()).setFileName("/html/copyright.html");
 
         return page;
     }

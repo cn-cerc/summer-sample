@@ -2,10 +2,9 @@ package cn.cerc.summer.sample.forms;
 
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
-import cn.cerc.summer.sample.core.ui.UICopyright;
 import cn.cerc.summer.sample.core.ui.UICustomPage;
-import cn.cerc.summer.sample.core.ui.UIMenuBar;
 import cn.cerc.ui.vcl.UIDiv;
+import cn.cerc.ui.vcl.UIHtmlFile;
 import cn.cerc.ui.vcl.UILabel;
 import cn.cerc.ui.vcl.UILine;
 import cn.cerc.ui.vcl.UIText;
@@ -32,9 +31,10 @@ public class FrmWelcome extends AbstractForm {
 
         new UILine(page.getContent());
 
-        if (!this.getClient().isPhone())
-            new UICopyright(page.getFooter());
-
+        if (!this.getClient().isPhone()) {
+            new UIHtmlFile(page.getFooter()).setFileName("/html/copyright.html");
+        }
+        
         return page;
     }
 
