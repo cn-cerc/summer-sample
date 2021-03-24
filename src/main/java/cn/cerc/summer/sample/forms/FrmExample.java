@@ -198,10 +198,11 @@ public class FrmExample extends AbstractForm {
 
             // 添加搜索框
             UIFormHorizontal search = jspPage.createSearch(buff);
-            new StringField(search, "条件", "searchText_").setPlaceholder(R.asString(this, "请输姓名或者年龄"));
+            new StringField(search, "查询条件", "searchText_").setPlaceholder(R.asString(this, "请输入查询条件"));
 
             new ButtonField(search.getButtons(), R.asString(this, "查询"), "submit", "search");
             search.readAll();
+
             // 获取统计列表
             LocalService svr = new LocalService(this);
             svr.setService("SvrExample.search");
@@ -211,16 +212,18 @@ public class FrmExample extends AbstractForm {
                 return jspPage;
             }
             DataSet dataOut = svr.getDataOut();
+
             // 页面显示数据
             AbstractGrid grid = jspPage.createGrid(jspPage.getContent(), dataOut);
             if (getClient().isPhone()) {
-                grid.getPages().setPageSize(10000);
+                grid.getPages().setPageSize(300);
             }
+
             new ItField(grid);
             StringField col1 = new StringField(grid, "姓名", "name_", 5);
             StringField col2 = new StringField(grid, "性别", "sex_", 5);
-            col2.createText((ds, html) -> {
-                html.print(ds.getInt("sex_") == 0 ? "男" : "女");
+            col2.createText((record, html) -> {
+                html.print(record.getInt("sex_") == 0 ? "男" : "女");
             });
             StringField col3 = new StringField(grid, "年龄", "age_", 5);
             OperaField opera = new OperaField(grid);
@@ -243,6 +246,7 @@ public class FrmExample extends AbstractForm {
                 UISpan span = new UISpan(box);
                 span.setText(R.asString(this, "暂无数据"));
             }
+
             String msg = buff.getString("msg");
             if (!"".equals(msg)) {
                 jspPage.setMessage(msg);
