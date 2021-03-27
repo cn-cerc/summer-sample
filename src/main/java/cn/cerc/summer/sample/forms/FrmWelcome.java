@@ -11,6 +11,7 @@ import cn.cerc.ui.vcl.UIText;
 
 public class FrmWelcome extends AbstractForm {
 
+    @Override
     public IPage execute() {
         UICustomPage page = new UICustomPage(this);
 
@@ -34,7 +35,7 @@ public class FrmWelcome extends AbstractForm {
         if (!this.getClient().isPhone()) {
             new UIHtmlFile(page.getFooter()).setFileName("/html/copyright.html");
         }
-        
+
         return page;
     }
 

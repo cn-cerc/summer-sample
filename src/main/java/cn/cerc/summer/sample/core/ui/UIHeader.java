@@ -1,6 +1,5 @@
 package cn.cerc.summer.sample.core.ui;
 
-import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.IForm;
 import cn.cerc.ui.core.UIOriginComponent;
 import cn.cerc.ui.parts.UIComponent;
@@ -17,7 +16,7 @@ public class UIHeader extends UIOriginComponent {
             this.form = (IForm) this.getOrigin();
         }
         UIImage logo = new UIImage(this);
-        logo.setSrc(Application.getStaticPath() + "images/logo.png");
+        logo.setSrc("images/home.png");
 
         UILabel label = new UILabel(this);
         label.setText(form.getName());

@@ -26,5 +26,5 @@ public class UIMenuBar extends UICustomMenuBar {
         setDefaultItem(getItems().get(index));
         return this;
     }
-    
+
 }

@@ -31,9 +31,6 @@
     <!-- 静态资源映射，注意要与application.properties 的变量保持一致 app.static.path -->
     <mvc:resources  mapping="/static/**" location="/static/"/>
 
-    <!-- 其它系统级通用对象定义 -->
-    <bean id="RightMenus" class="cn.cerc.ui.parts.RightMenus" scope="prototype"></bean>
-
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
         <property name="prefix" value="/WEB-INF/forms/"/>

@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
-	<bean id="welcome" class="cn.cerc.summer.sample.forms.FrmWelcome" scope="prototype">
-		<property name="name" value="欢迎使用summer-sample" />
-	</bean>
-	<bean id="FrmIndex" class="cn.cerc.summer.sample.forms.FrmIndex" scope="prototype">
+    <bean id="welcome" class="cn.cerc.summer.sample.forms.FrmWelcome" scope="prototype">
+        <property name="name" value="欢迎使用 summer-sample" />
+    </bean>
+    <bean id="FrmIndex" class="cn.cerc.summer.sample.forms.FrmIndex" scope="prototype">
         <property name="name" value="首页" />
         <property name="permission" value="user.base" />
-	</bean>
-	<bean id="FrmExample" class="cn.cerc.summer.sample.forms.FrmExample" scope="prototype">
-		<property name="name" value="范例" />
+    </bean>
+    <bean id="FrmExample" class="cn.cerc.summer.sample.forms.FrmExample" scope="prototype">
+        <property name="name" value="范例" />
         <property name="permission" value="user.base" />
-	</bean>
-	<bean id="FrmProduct" class="cn.cerc.summer.sample.forms.FrmProduct" scope="prototype">
-		<property name="name" value="商品管理" />
+    </bean>
+    <bean id="FrmProduct" class="cn.cerc.summer.sample.forms.FrmProduct" scope="prototype">
+        <property name="name" value="商品管理" />
         <property name="permission" value="user.base" />
-	</bean>
+    </bean>
 </beans>
