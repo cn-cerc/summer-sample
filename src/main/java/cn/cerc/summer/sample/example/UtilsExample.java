@@ -8,18 +8,17 @@ import cn.cerc.core.Utils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 框架自带工具简述
+ * 框架自带工具简单的使用范例
  */
 @Slf4j
 public class UtilsExample {
 
     public static void main(String[] args) {
-
         // 时间工具类 TDateTime
         log.info("当前时间 {}", TDateTime.now());
         log.info("今日日期 {}", TDate.today());
 
-        // 数学工具类 utils
+        // 数学工具类 Utils
         log.info("随机数字 {}", Utils.getNumRandom(12));
         log.info("随机字符 {}", Utils.getStrRandom(32));
 

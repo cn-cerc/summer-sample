@@ -20,7 +20,6 @@ import cn.cerc.mis.core.IPage;
 import cn.cerc.summer.sample.core.db.Field;
 import cn.cerc.summer.sample.core.ui.UICustomPage;
 import cn.cerc.ui.core.RequestReader;
-import cn.cerc.ui.page.UIPageView;
 import cn.cerc.ui.vcl.UIButtonSubmit;
 import cn.cerc.ui.vcl.UIForm;
 import cn.cerc.ui.vcl.UIInput;
@@ -33,22 +32,20 @@ public class FrmBuildCode extends AbstractForm {
 
     @Override
     public IPage execute() throws Exception {
-
-        ArrayList<Field> fields = new ArrayList<>();
-
         UICustomPage page = new UICustomPage(this);
+        this.setName("自动生成范例代码");
 
         RequestReader reader = new RequestReader(this);
-
         UIForm form = new UIForm(page.getContent());
 
         UIInput input = new UIInput(form);
-        input.setCaption("请输入表名: ");
+        input.setName("请输入表名: ");
         input.setValue(reader.getString(input, "s_example"));
 
         UIButtonSubmit submit = new UIButtonSubmit(form);
         submit.setText("确认");
 
+        ArrayList<Field> fields = new ArrayList<>();
         if (reader.hasValue(submit)) {
             String tableId = reader.getString(input, "");
             loadTableFields(tableId, fields);
@@ -63,7 +60,6 @@ public class FrmBuildCode extends AbstractForm {
 
             memo.append("package cn.cerc.summer.sample.forms;");
             memo.append("");
-            memo.append("import cn.cerc.core.MD5;");
             memo.append("import cn.cerc.core.Record;");
             memo.append("import cn.cerc.core.TDateTime;");
             memo.append("import cn.cerc.core.Utils;");
@@ -72,7 +68,9 @@ public class FrmBuildCode extends AbstractForm {
             memo.append("import cn.cerc.mis.core.CustomService;");
             memo.append("import cn.cerc.mis.core.DataValidateException;");
             memo.append("");
-            memo.append("public class Svr%s extends CustomService {", tableId.substring(0, 1).toUpperCase() + tableId.substring(1, tableId.length()));
+            String className = tableId.substring(0, 1).toUpperCase() + tableId.substring(1, tableId.length());
+            className = className.replaceAll("_", "");
+            memo.append("public class Svr%s extends CustomService {", className);
 
             memo.append("");
             buildSearch(tableId, memo, fields);
@@ -98,11 +96,13 @@ public class FrmBuildCode extends AbstractForm {
         memo.append("    public boolean append() throws DataValidateException {");
         memo.append("        Record headIn = getDataIn().getHead();");
         for (Field field : fields) {
-            memo.append("        DataValidateException.stopRun(\"%s不允许为空！\", !headIn.hasValue(\"%s\"));", field.getName(), field.getCode());
+            memo.append("        DataValidateException.stopRun(\"%s不允许为空！\", !headIn.hasValue(\"%s\"));",
+                    field.getName(), field.getCode());
         }
         memo.append("");
         for (Field field : fields) {
-            memo.append("        %s %s = headIn.getString(\"%s\"); // %s", field.getType(), field.getVariantCode(), field.getCode(), field.getName());
+            memo.append("        %s %s = headIn.getString(\"%s\"); // %s", field.getType(), field.getVariantCode(),
+                    field.getCode(), field.getName());
         }
         memo.append("");
         memo.append("        String tableId = \"%s\";", tableId);
@@ -152,7 +152,8 @@ public class FrmBuildCode extends AbstractForm {
         }
 
         memo.append("        if (headIn.hasValue(\"searchText_\")) {");
-        memo.append("            f.byLink(new String[] { \"%s\" }, headIn.getString(\"searchText_\"));", fields.get(0).getCode());
+        memo.append("            f.byLink(new String[] { \"%s\" }, headIn.getString(\"searchText_\"));",
+                fields.get(0).getCode());
         memo.append("        }");
         memo.append("        f.open();");
         memo.append("        getDataOut().appendDataSet(f.getDataSet());");
@@ -165,10 +166,12 @@ public class FrmBuildCode extends AbstractForm {
         memo.append("    public boolean modify() throws DataValidateException {");
         memo.append("        Record headIn = getDataIn().getHead();");
         for (Field field : fields)
-            memo.append("        DataValidateException.stopRun(\"%s不允许为空！\", !headIn.hasValue(\"%s\"));", field.getName(), field.getCode());
+            memo.append("        DataValidateException.stopRun(\"%s不允许为空！\", !headIn.hasValue(\"%s\"));",
+                    field.getName(), field.getCode());
         memo.append("");
         for (Field field : fields)
-            memo.append("        %s %s = headIn.getString(\"%s\");", field.getType(), field.getVariantCode(), field.getCode());
+            memo.append("        %s %s = headIn.getString(\"%s\");", field.getType(), field.getVariantCode(),
+                    field.getCode());
         memo.append("");
         memo.append("        String tableId = \"%s\";", tableId);
         memo.append("        SqlQuery query = new SqlQuery(this);");
@@ -192,7 +195,8 @@ public class FrmBuildCode extends AbstractForm {
         memo.append("    public boolean download() throws DataValidateException {");
         memo.append("        Record headIn = getDataIn().getHead();");
         for (Field field : fields)
-            memo.append("        DataValidateException.stopRun(\"%s不允许为空！\", !headIn.hasValue(\"%s\"));", field.getName(), field.getCode());
+            memo.append("        DataValidateException.stopRun(\"%s不允许为空！\", !headIn.hasValue(\"%s\"));",
+                    field.getName(), field.getCode());
         memo.append("        String userCode = headIn.getString(\"user_code_\");");
         memo.append("");
         memo.append("        String tableId = \"%s\";", tableId);

@@ -29,7 +29,6 @@ public class Session implements ISession {
         params.put(Application.clientIP, "0.0.0.0");
         params.put(Application.userCode, "");
         params.put(Application.userName, "");
-        params.put(Application.roleCode, "");
         params.put(Application.bookNo, "");
         params.put(Application.deviceLanguage, Application.App_Language);
         log.debug("new SessionDefault");

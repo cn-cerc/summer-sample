@@ -11,7 +11,7 @@ import cn.cerc.ui.vcl.UILabel;
 public class UICustomMenuBar extends UIComponent {
     private List<UIComponent> items = new ArrayList<>();
     private UIComponent defaultItem;
-    
+
     public UICustomMenuBar() {
         super();
     }
