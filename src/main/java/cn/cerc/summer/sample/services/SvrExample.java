@@ -25,7 +25,7 @@ public class SvrExample extends CustomService {
         // SqlQuery 用于操作数据库，可对数据进行增删改查，在使用增删改功能前，必须查询表。
         SqlQuery cdsTmp = new SqlQuery(this);
         // add方法追加sql语句
-        cdsTmp.add("select * from %s", AppDB.Table_Example);
+        cdsTmp.add("select * from %s", AppDB.TABLE_EXAMPLE);
         cdsTmp.add("where 1=1 ");
         // 判断传进来的值，存在code_并且不为空
         if (headIn.hasValue("code_")) {
@@ -56,7 +56,7 @@ public class SvrExample extends CustomService {
         DataValidateException.stopRun("年龄不允许为空", !headIn.hasValue("age_"));
 
         SqlQuery cdsTmp = new SqlQuery(this);
-        cdsTmp.add("select * from %s", AppDB.Table_Example);
+        cdsTmp.add("select * from %s", AppDB.TABLE_EXAMPLE);
         cdsTmp.add("where code_='%s'", code);
         cdsTmp.open();
         DataValidateException.stopRun("该学号已经存在，不允许重复登记", !cdsTmp.eof());
@@ -79,7 +79,7 @@ public class SvrExample extends CustomService {
         String code = headIn.getString("code_");
 
         SqlQuery cdsTmp = new SqlQuery(this);
-        cdsTmp.add("select * from %s", AppDB.Table_Example);
+        cdsTmp.add("select * from %s", AppDB.TABLE_EXAMPLE);
         cdsTmp.add("where code_='%s'", code);
         cdsTmp.open();
         DataValidateException.stopRun("记录不存在", cdsTmp.eof());
@@ -100,7 +100,7 @@ public class SvrExample extends CustomService {
         DataValidateException.stopRun("年龄不允许小于0", age <= 0);
 
         SqlQuery cdsTmp = new SqlQuery(this);
-        cdsTmp.add("select * from %s", AppDB.Table_Example);
+        cdsTmp.add("select * from %s", AppDB.TABLE_EXAMPLE);
         cdsTmp.add("where code_='%s'", code);
         cdsTmp.open();
         DataValidateException.stopRun("记录不存在", cdsTmp.eof());
@@ -119,7 +119,7 @@ public class SvrExample extends CustomService {
         String code = headIn.getString("code_");
 
         SqlQuery cdsTmp = new SqlQuery(this);
-        cdsTmp.add("select * from %s", AppDB.Table_Example);
+        cdsTmp.add("select * from %s", AppDB.TABLE_EXAMPLE);
         cdsTmp.add("where code_='%s'", code);
         cdsTmp.open();
         DataValidateException.stopRun("记录不存在", cdsTmp.eof());

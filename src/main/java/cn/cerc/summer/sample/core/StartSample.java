@@ -20,6 +20,7 @@ import cn.cerc.mis.core.Application;
 @Scope(WebApplicationContext.SCOPE_REQUEST)
 @RequestMapping("/")
 public class StartSample implements ApplicationContextAware {
+
     private ApplicationContext context;
 
     @Autowired
@@ -55,4 +56,5 @@ public class StartSample implements ApplicationContextAware {
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.context = applicationContext;
     }
+
 }

@@ -3,46 +3,30 @@ package cn.cerc.summer.sample.forms;
 import cn.cerc.core.DataSet;
 import cn.cerc.core.Record;
 import cn.cerc.core.Utils;
-import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.LocalService;
 import cn.cerc.mis.core.RedirectPage;
-import cn.cerc.mis.language.R;
-import cn.cerc.mis.other.BufferType;
-import cn.cerc.mis.other.MemoryBuffer;
+import cn.cerc.summer.sample.core.CustomForm;
+import cn.cerc.ui.core.JspFile;
 import cn.cerc.ui.core.UrlRecord;
-import cn.cerc.ui.fields.ButtonField;
-import cn.cerc.ui.fields.ItField;
-import cn.cerc.ui.fields.OperaField;
-import cn.cerc.ui.fields.StringField;
-import cn.cerc.ui.grid.AbstractGrid;
-import cn.cerc.ui.grid.PhoneGrid;
-import cn.cerc.ui.page.JspPage;
-import cn.cerc.ui.page.UIPageSearch;
-import cn.cerc.ui.parts.UIFormHorizontal;
-import cn.cerc.ui.parts.UIHeader;
-import cn.cerc.ui.parts.UISheetHelp;
-import cn.cerc.ui.parts.UIToolbar;
-import cn.cerc.ui.vcl.UIGroupBox;
-import cn.cerc.ui.vcl.ext.UISpan;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * 新建的Frm类请重写 logon() 函数（详见底部），否则会被过滤器拦截
  */
 @Slf4j
-public class FrmExample extends AbstractForm {
+public class FrmExample extends CustomForm {
 
     @Override
     public IPage execute() {
-        // JspPage用于加载jsp页面
-        JspPage jspPage = new JspPage(this);
-        jspPage.setJspFile("common/FrmExample.jsp");
+        // JspFile 用于加载jsp页面
+        JspFile page = new JspFile(this);
+        page.setJspFile("common/FrmExample.jsp");
 
         String message = getRequest().getParameter("message");
         if (message != null) {
             // 将消息设置到页面
-            jspPage.setMessage(message);
+            page.setMessage(message);
         }
 
         // 本地服务，用于加载指定服务，使用指定服务功能，例如：加载服务ID：SvrExample.search，是查询功能
@@ -54,8 +38,8 @@ public class FrmExample extends AbstractForm {
         headIn.setField("searchText_", getRequest().getParameter("searchText"));
         // 执行服务，返回结果为boolean类型，失败将失败信息返回到页面给，服务执行正常，服务将数据存放至服务出口
         if (!svr.exec()) {
-            jspPage.setMessage(svr.getMessage());
-            return jspPage;
+            page.setMessage(svr.getMessage());
+            return page;
         }
 
         // 获取服务出口数据，DataSet类可存储一对多关系的数据，DataSet可装载二维表数据
@@ -68,28 +52,28 @@ public class FrmExample extends AbstractForm {
             dataSet.setField("sex_", sex);
         }
         // 将数据添加到页面对象，提供给页面使用
-        jspPage.add("dataSet", dataSet);
+        page.add("dataSet", dataSet);
         // 返回页面对象，显示页面对象加载的jsp页面
-        return jspPage;
+        return page;
     }
 
     public IPage append() {
-        JspPage jspPage = new JspPage(this);
-        jspPage.setJspFile("common/FrmExample_append.jsp");
+        JspFile page = new JspFile(this);
+        page.setJspFile("common/FrmExample_append.jsp");
         String submit = getRequest().getParameter("submit");
         if (submit == null || "".equals(submit)) {
-            return jspPage;
+            return page;
         }
 
         String code = getRequest().getParameter("code");
         if (Utils.isEmpty(code)) {
-            jspPage.setMessage("学号不允许为空");
-            return jspPage;
+            page.setMessage("学号不允许为空");
+            return page;
         }
         String name = getRequest().getParameter("name");
         if (Utils.isEmpty(name)) {
-            jspPage.setMessage("姓名不允许为空");
-            return jspPage;
+            page.setMessage("姓名不允许为空");
+            return page;
         }
         String sex = getRequest().getParameter("sex");
         String age = getRequest().getParameter("age");
@@ -101,8 +85,8 @@ public class FrmExample extends AbstractForm {
         headIn.setField("sex_", sex);
         headIn.setField("age_", age);
         if (!svr.exec()) {
-            jspPage.setMessage(svr.getMessage());
-            return jspPage;
+            page.setMessage(svr.getMessage());
+            return page;
         }
 
         // 数据添加成功，重定向到查询页面
@@ -113,35 +97,35 @@ public class FrmExample extends AbstractForm {
     }
 
     public IPage modify() {
-        JspPage jspPage = new JspPage(this);
-        jspPage.setJspFile("common/FrmExample_modify.jsp");
+        JspFile page = new JspFile(this);
+        page.setJspFile("common/FrmExample_modify.jsp");
         String code = getRequest().getParameter("code");
         if (Utils.isEmpty(code)) {
-            jspPage.setMessage("code 不允许为空");
-            return jspPage;
+            page.setMessage("code 不允许为空");
+            return page;
         }
 
         String message = getRequest().getParameter("message");
         if (message != null) {
-            jspPage.setMessage(message);
+            page.setMessage(message);
         }
 
         LocalService svr1 = new LocalService(this, "SvrExample.download");
         Record headIn1 = svr1.getDataIn().getHead();
         headIn1.setField("code_", code);
         if (!svr1.exec()) {
-            jspPage.setMessage(svr1.getMessage());
-            return jspPage;
+            page.setMessage(svr1.getMessage());
+            return page;
         }
         Record record = svr1.getDataOut().getHead();
-        jspPage.add("record", record);
+        page.add("record", record);
 
         String submit = getRequest().getParameter("submit");
         if (submit != null && !"".equals(submit)) {
             String sex = getRequest().getParameter("sex");
             if (sex == null || "".equals(sex)) {
-                jspPage.setMessage("sex 代码不允许为空");
-                return jspPage;
+                page.setMessage("sex 代码不允许为空");
+                return page;
             }
 
             LocalService svr2 = new LocalService(this, "SvrExample.modify");
@@ -150,8 +134,8 @@ public class FrmExample extends AbstractForm {
             headIn2.setField("sex_", sex);
             headIn2.setField("age_", getRequest().getParameter("age"));
             if (!svr2.exec()) {
-                jspPage.setMessage(svr2.getMessage());
-                return jspPage;
+                page.setMessage(svr2.getMessage());
+                return page;
             }
 
             UrlRecord url = new UrlRecord();
@@ -160,7 +144,7 @@ public class FrmExample extends AbstractForm {
             url.putParam("message", "修改成功");
             return new RedirectPage(this, url.getUrl());
         }
-        return jspPage;
+        return page;
     }
 
     public IPage delete() {
@@ -180,80 +164,6 @@ public class FrmExample extends AbstractForm {
 
         url.putParam("message", String.format("%s 删除成功", code));
         return new RedirectPage(this, url.getUrl());
-    }
-
-    public IPage search() throws Exception {
-        UIPageSearch jspPage = new UIPageSearch(this);
-        UIHeader menu = jspPage.getHeader();
-        menu.setPageTitle("人员维护");
-
-        UIToolbar toolBar = jspPage.getToolBar();
-        UISheetHelp section = new UISheetHelp(toolBar);
-        section.addLine("人员维护");
-
-        try (MemoryBuffer buff = new MemoryBuffer(BufferType.getUserForm, this.getUserCode(), "FrmExample")) {
-            jspPage.addScriptCode((html) -> {
-                html.print("clearNearHidden();");
-            });
-
-            // 添加搜索框
-            UIFormHorizontal search = jspPage.createSearch(buff);
-            new StringField(search, "查询条件", "searchText_").setPlaceholder(R.asString(this, "请输入查询条件"));
-
-            new ButtonField(search.getButtons(), R.asString(this, "查询"), "submit", "search");
-            search.readAll();
-
-            // 获取统计列表
-            LocalService svr = new LocalService(this);
-            svr.setService("SvrExample.search");
-            svr.getDataIn().getHead().copyValues(search.getRecord());
-            if (!svr.exec()) {
-                jspPage.setMessage(svr.getMessage());
-                return jspPage;
-            }
-            DataSet dataOut = svr.getDataOut();
-
-            // 页面显示数据
-            AbstractGrid grid = jspPage.createGrid(jspPage.getContent(), dataOut);
-            if (getClient().isPhone()) {
-                grid.getPages().setPageSize(300);
-            }
-
-            new ItField(grid);
-            StringField col1 = new StringField(grid, "姓名", "name_", 5);
-            StringField col2 = new StringField(grid, "性别", "sex_", 5);
-            col2.createText((record, html) -> {
-                html.print(record.getInt("sex_") == 0 ? "男" : "女");
-            });
-            StringField col3 = new StringField(grid, "年龄", "age_", 5);
-            OperaField opera = new OperaField(grid);
-            opera.setShortName("");
-            opera.setName("内容");
-            opera.setValue("编辑");
-            opera.createUrl((ds, url) -> {
-                url.setSite("FrmExample.modify");
-                url.putParam("uid", ds.getString("UID_"));
-            });
-
-            if (grid instanceof PhoneGrid) {
-                PhoneGrid phoneGrid = (PhoneGrid) grid;
-                phoneGrid.addLine().addItem(col1, opera);
-                phoneGrid.addLine().addItem(col2, col3);
-            }
-
-            if (dataOut.eof()) {
-                UIGroupBox box = new UIGroupBox(jspPage.getContent());
-                UISpan span = new UISpan(box);
-                span.setText(R.asString(this, "暂无数据"));
-            }
-
-            String msg = buff.getString("msg");
-            if (!"".equals(msg)) {
-                jspPage.setMessage(msg);
-                buff.setField("msg", "");
-            }
-        }
-        return jspPage;
     }
 
 }
