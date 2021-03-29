@@ -23,26 +23,26 @@ public class SvrExample extends CustomService {
         log.debug("headIn {}", headIn);
 
         // SqlQuery 用于操作数据库，可对数据进行增删改查，在使用增删改功能前，必须查询表。
-        SqlQuery cdsTmp = new SqlQuery(this);
+        SqlQuery query = new SqlQuery(this);
         // add方法追加sql语句
-        cdsTmp.add("select * from %s", AppDB.TABLE_EXAMPLE);
-        cdsTmp.add("where 1=1 ");
+        query.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        query.add("where 1=1 ");
         // 判断传进来的值，存在code_并且不为空
         if (headIn.hasValue("code_")) {
-            cdsTmp.add("and code_='%s'", headIn.getString("code_"));
+            query.add("and code_='%s'", headIn.getString("code_"));
         }
 
         if (headIn.hasValue("searchText_")) {
             String searchText = headIn.getString("searchText_");
             // 此处使用占位符进行%占位
-            cdsTmp.add("and (name_ like '%%%s%%' or age_ like '%%%s%%')", searchText, searchText);
+            query.add("and (name_ like '%%%s%%' or age_ like '%%%s%%')", searchText, searchText);
         }
-        log.debug("sql {}", cdsTmp.getSqlText().getText());
+        log.debug("sql {}", query.getSqlText().getText());
 
         // 将准备好的sql语句执行，并将结果存放于cdsTmp对象。
-        cdsTmp.open();
+        query.open();
         // 将sql查询出来的结果存放到服务出口返回给调用者
-        getDataOut().appendDataSet(cdsTmp);
+        getDataOut().appendDataSet(query);
         return true;
     }
 
@@ -55,20 +55,20 @@ public class SvrExample extends CustomService {
         DataValidateException.stopRun("性别不允许为空", !headIn.hasValue("sex_"));
         DataValidateException.stopRun("年龄不允许为空", !headIn.hasValue("age_"));
 
-        SqlQuery cdsTmp = new SqlQuery(this);
-        cdsTmp.add("select * from %s", AppDB.TABLE_EXAMPLE);
-        cdsTmp.add("where code_='%s'", code);
-        cdsTmp.open();
-        DataValidateException.stopRun("该学号已经存在，不允许重复登记", !cdsTmp.eof());
+        SqlQuery cdquery = new SqlQuery(this);
+        cdquery.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        cdquery.add("where code_='%s'", code);
+        cdquery.open();
+        DataValidateException.stopRun("该学号已经存在，不允许重复登记", !cdquery.eof());
 
-        cdsTmp.append();
-        cdsTmp.setField("code_", code);
-        cdsTmp.setField("name_", headIn.getString("name_"));
-        cdsTmp.setField("sex_", headIn.getString("sex_"));
-        cdsTmp.setField("age_", headIn.getString("age_"));
-        cdsTmp.setField("createTime_", TDateTime.now());
-        cdsTmp.setField("updateTime_", TDateTime.now());
-        cdsTmp.post();
+        cdquery.append();
+        cdquery.setField("code_", code);
+        cdquery.setField("name_", headIn.getString("name_"));
+        cdquery.setField("sex_", headIn.getString("sex_"));
+        cdquery.setField("age_", headIn.getString("age_"));
+        cdquery.setField("createTime_", TDateTime.now());
+        cdquery.setField("updateTime_", TDateTime.now());
+        cdquery.post();
 
         return true;
     }
@@ -78,13 +78,13 @@ public class SvrExample extends CustomService {
         DataValidateException.stopRun("code_不允许为空", !headIn.hasValue("code_"));
         String code = headIn.getString("code_");
 
-        SqlQuery cdsTmp = new SqlQuery(this);
-        cdsTmp.add("select * from %s", AppDB.TABLE_EXAMPLE);
-        cdsTmp.add("where code_='%s'", code);
-        cdsTmp.open();
-        DataValidateException.stopRun("记录不存在", cdsTmp.eof());
+        SqlQuery query = new SqlQuery(this);
+        query.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        query.add("where code_='%s'", code);
+        query.open();
+        DataValidateException.stopRun("记录不存在", query.eof());
 
-        getDataOut().getHead().copyValues(cdsTmp.getCurrent());
+        getDataOut().getHead().copyValues(query.getCurrent());
         return true;
     }
 
@@ -99,17 +99,17 @@ public class SvrExample extends CustomService {
         int age = headIn.getInt("age_");
         DataValidateException.stopRun("年龄不允许小于0", age <= 0);
 
-        SqlQuery cdsTmp = new SqlQuery(this);
-        cdsTmp.add("select * from %s", AppDB.TABLE_EXAMPLE);
-        cdsTmp.add("where code_='%s'", code);
-        cdsTmp.open();
-        DataValidateException.stopRun("记录不存在", cdsTmp.eof());
+        SqlQuery query = new SqlQuery(this);
+        query.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        query.add("where code_='%s'", code);
+        query.open();
+        DataValidateException.stopRun("记录不存在", query.eof());
 
-        cdsTmp.edit();
-        cdsTmp.setField("age_", age);
-        cdsTmp.setField("sex_", sex);
-        cdsTmp.setField("updateTime_", TDateTime.now());
-        cdsTmp.post();
+        query.edit();
+        query.setField("age_", age);
+        query.setField("sex_", sex);
+        query.setField("updateTime_", TDateTime.now());
+        query.post();
         return true;
     }
 
@@ -118,13 +118,13 @@ public class SvrExample extends CustomService {
         DataValidateException.stopRun("code_ 不允许为空", !headIn.hasValue("code_"));
         String code = headIn.getString("code_");
 
-        SqlQuery cdsTmp = new SqlQuery(this);
-        cdsTmp.add("select * from %s", AppDB.TABLE_EXAMPLE);
-        cdsTmp.add("where code_='%s'", code);
-        cdsTmp.open();
-        DataValidateException.stopRun("记录不存在", cdsTmp.eof());
+        SqlQuery query = new SqlQuery(this);
+        query.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        query.add("where code_='%s'", code);
+        query.open();
+        DataValidateException.stopRun("记录不存在", query.eof());
 
-        cdsTmp.delete();
+        query.delete();
         return true;
     }
 }
