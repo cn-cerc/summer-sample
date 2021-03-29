@@ -26,7 +26,7 @@ import cn.cerc.ui.vcl.UIInput;
 import cn.cerc.ui.vcl.UILine;
 import cn.cerc.ui.vcl.UITextArea;
 
-@Component("build-code")
+@Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class FrmBuildCode extends AbstractForm {
 
