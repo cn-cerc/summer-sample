@@ -101,7 +101,7 @@ public class FrmBuildCode extends AbstractForm {
         }
         memo.append("");
         for (Field field : fields) {
-            memo.append("        %s %s = headIn.getString(\"%s\"); // %s", field.getType(), field.getVariantCode(),
+            memo.append("        %s %s = headIn.getString(\"%s\"); // %s", field.getVarType(), field.getVarCode(),
                     field.getCode(), field.getName());
         }
         memo.append("");
@@ -111,9 +111,9 @@ public class FrmBuildCode extends AbstractForm {
         int count = 0;
         for (Field field : fields) {
             if (count == 0) {
-                memo.append("        query.add(\"where %s='%%s'\", %s);", field.getCode(), field.getVariantCode());
+                memo.append("        query.add(\"where %s='%%s'\", %s);", field.getCode(), field.getVarCode());
             } else {
-                memo.append("        query.add(\"and %s='%%s'\", %s);", field.getCode(), field.getVariantCode());
+                memo.append("        query.add(\"and %s='%%s'\", %s);", field.getCode(), field.getVarCode());
             }
             count++;
         }
@@ -123,7 +123,7 @@ public class FrmBuildCode extends AbstractForm {
         memo.append("        query.append();");
         memo.append("        query.setField(\"id_\", Utils.newGuid());");
         for (Field field : fields) {
-            memo.append("        query.setField(\"%s\", %s);", field.getCode(), field.getVariantCode());
+            memo.append("        query.setField(\"%s\", %s);", field.getCode(), field.getVarCode());
         }
         memo.append("        query.setField(\"create_user_\", this.getUserCode());");
         memo.append("        query.setField(\"create_time_\", TDateTime.now());");
@@ -170,7 +170,7 @@ public class FrmBuildCode extends AbstractForm {
                     field.getName(), field.getCode());
         memo.append("");
         for (Field field : fields)
-            memo.append("        %s %s = headIn.getString(\"%s\");", field.getType(), field.getVariantCode(),
+            memo.append("        %s %s = headIn.getString(\"%s\");", field.getVarType(), field.getVarCode(),
                     field.getCode());
         memo.append("");
         memo.append("        String tableId = \"%s\";", tableId);
@@ -182,7 +182,7 @@ public class FrmBuildCode extends AbstractForm {
         memo.append("");
         memo.append("        query.edit();");
         for (Field field : fields)
-            memo.append("        query.setField(\"%s\", %s);", field.getCode(), field.getVariantCode());
+            memo.append("        query.setField(\"%s\", %s);", field.getCode(), field.getVarCode());
         memo.append("        query.setField(\"update_user_\", this.getUserCode());");
         memo.append("        query.setField(\"update_time_\", TDateTime.now());");
         memo.append("        query.post();");

@@ -27,14 +27,14 @@ public class Field {
         this.code = code;
     }
 
-    public String getVariantCode() {
+    public String getVarCode() {
         String ss = code;
         if (code.endsWith("_"))
             ss = code.substring(0, code.length() - 1);
         return ss;
     }
 
-    public String getType() {
+    public String getVarType() {
         if (type.startsWith("int("))
             return "int";
         else if (type.startsWith("bigint("))
