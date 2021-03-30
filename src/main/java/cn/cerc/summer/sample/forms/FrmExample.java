@@ -1,5 +1,8 @@
 package cn.cerc.summer.sample.forms;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cn.cerc.core.DataSet;
 import cn.cerc.core.Record;
 import cn.cerc.core.Utils;
@@ -9,13 +12,12 @@ import cn.cerc.mis.core.RedirectPage;
 import cn.cerc.summer.sample.core.CustomForm;
 import cn.cerc.ui.core.JspFile;
 import cn.cerc.ui.core.UrlRecord;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 新建的Frm类请重写 logon() 函数（详见底部），否则会被过滤器拦截
  */
-@Slf4j
 public class FrmExample extends CustomForm {
+    private static final Logger log = LoggerFactory.getLogger(FrmExample.class);
 
     @Override
     public IPage execute() {

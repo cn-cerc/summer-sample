@@ -1,5 +1,7 @@
 package cn.cerc.summer.sample.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -10,12 +12,11 @@ import cn.cerc.db.mysql.SqlQuery;
 import cn.cerc.mis.core.CustomService;
 import cn.cerc.mis.core.DataValidateException;
 import cn.cerc.summer.sample.core.AppDB;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class SvrExample extends CustomService {
+    private static final Logger log = LoggerFactory.getLogger(SvrExample.class);
 
     public boolean search() {
         // 获取外部传进来的数据

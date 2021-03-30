@@ -1,17 +1,19 @@
 package cn.cerc.summer.sample;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cn.cerc.core.DataSet;
 import cn.cerc.core.Record;
 import cn.cerc.core.TDate;
 import cn.cerc.core.TDateTime;
 import cn.cerc.core.Utils;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 框架自带工具简单的使用范例
  */
-@Slf4j
 public class UtilsExample {
+    private static final Logger log = LoggerFactory.getLogger(UtilsExample.class);
 
     public static void main(String[] args) {
         // 时间工具类 TDateTime
