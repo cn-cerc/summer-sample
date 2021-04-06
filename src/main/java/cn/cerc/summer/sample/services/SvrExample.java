@@ -56,20 +56,20 @@ public class SvrExample extends CustomService {
         DataValidateException.stopRun("性别不允许为空", !headIn.hasValue("sex_"));
         DataValidateException.stopRun("年龄不允许为空", !headIn.hasValue("age_"));
 
-        SqlQuery cdquery = new SqlQuery(this);
-        cdquery.add("select * from %s", AppDB.TABLE_EXAMPLE);
-        cdquery.add("where code_='%s'", code);
-        cdquery.open();
-        DataValidateException.stopRun("该学号已经存在，不允许重复登记", !cdquery.eof());
+        SqlQuery query = new SqlQuery(this);
+        query.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        query.add("where code_='%s'", code);
+        query.open();
+        DataValidateException.stopRun("该学号已经存在，不允许重复登记", !query.eof());
 
-        cdquery.append();
-        cdquery.setField("code_", code);
-        cdquery.setField("name_", headIn.getString("name_"));
-        cdquery.setField("sex_", headIn.getString("sex_"));
-        cdquery.setField("age_", headIn.getString("age_"));
-        cdquery.setField("createTime_", TDateTime.now());
-        cdquery.setField("updateTime_", TDateTime.now());
-        cdquery.post();
+        query.append();
+        query.setField("code_", code);
+        query.setField("name_", headIn.getString("name_"));
+        query.setField("sex_", headIn.getString("sex_"));
+        query.setField("age_", headIn.getString("age_"));
+        query.setField("createTime_", TDateTime.now());
+        query.setField("updateTime_", TDateTime.now());
+        query.post();
 
         return true;
     }
