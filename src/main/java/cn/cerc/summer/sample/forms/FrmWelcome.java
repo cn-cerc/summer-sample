@@ -30,6 +30,9 @@ public class FrmWelcome extends AbstractForm {
         UILabel label3 = new UILabel(new UIDiv(page.getContent()));
         label3.setUrl("FrmIndex?sid=88888888").setText("进入首页(免登录)");
 
+        UILabel label4 = new UILabel(new UIDiv(page.getContent()));
+        label4.setUrl("FrmUiExample?sid=88888888").setText("进入范例UI(免登录)");
+
         new UILine(page.getContent());
 
         if (!this.getClient().isPhone()) {
