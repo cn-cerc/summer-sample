@@ -24,9 +24,9 @@ public class Session implements ISession {
     private Map<String, Object> params = new HashMap<>();
 
     public Session() {
-        params.put(Application.sessionId, "");
+        params.put(Application.SessionId, "");
         params.put(Application.ProxyUsers, "");
-        params.put(Application.clientIP, "0.0.0.0");
+        params.put(Application.ClientIP, "0.0.0.0");
         params.put(ISession.USER_CODE, "");
         params.put(ISession.USER_NAME, "");
         params.put(ISession.CORP_NO, "");
