@@ -26,21 +26,21 @@ public class Session implements ISession {
         params.put(Application.sessionId, "");
         params.put(Application.ProxyUsers, "");
         params.put(Application.clientIP, "0.0.0.0");
-        params.put(Application.userCode, "");
-        params.put(Application.userName, "");
-        params.put(Application.bookNo, "");
+        params.put(ISession.USER_CODE, "");
+        params.put(ISession.USER_NAME, "");
+        params.put(ISession.CORP_NO, "");
         params.put(ISession.LANGUAGE_ID, Application.App_Language);
         log.debug("new SessionDefault");
     }
 
     @Override
     public String getCorpNo() {
-        return (String) this.getProperty(Application.bookNo);
+        return (String) this.getProperty(ISession.CORP_NO);
     }
 
     @Override
     public boolean logon() {
-        if (this.getProperty(Application.TOKEN) == null) {
+        if (this.getProperty(ISession.TOKEN) == null) {
             return false;
         }
         String corpNo = this.getCorpNo();
@@ -77,7 +77,7 @@ public class Session implements ISession {
 
     @Override
     public void setProperty(String key, Object value) {
-        if (Application.TOKEN.equals(key)) {
+        if (ISession.TOKEN.equals(key)) {
             if ("{}".equals(value)) {
                 params.put(key, null);
             } else {
@@ -90,12 +90,12 @@ public class Session implements ISession {
 
     @Override
     public String getUserName() {
-        return (String) this.getProperty(Application.userName);
+        return (String) this.getProperty(ISession.USER_NAME);
     }
 
     @Override
     public String getUserCode() {
-        return (String) this.getProperty(Application.userCode);
+        return (String) this.getProperty(ISession.USER_CODE);
     }
 
     @Override
