@@ -16,7 +16,7 @@ public class UIMenuBar extends UICustomMenuBar {
     }
 
     private void init() {
-        add(Application.getHomePage(), "首页");
+        add(Application.getConfig().getHomePage(), "首页");
         add("frmMenus", "菜单");
         add("frmReport", "报表");
         add("frmMyProfile", "我的");
