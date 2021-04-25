@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import cn.cerc.core.IConnection;
 import cn.cerc.core.ISession;
+import cn.cerc.core.LanguageResource;
 import cn.cerc.db.mysql.MysqlConnection;
 import cn.cerc.db.oss.OssConnection;
 import cn.cerc.mis.core.Application;
@@ -29,7 +30,7 @@ public class Session implements ISession {
         params.put(ISession.USER_CODE, "");
         params.put(ISession.USER_NAME, "");
         params.put(ISession.CORP_NO, "");
-        params.put(ISession.LANGUAGE_ID, Application.App_Language);
+        params.put(ISession.LANGUAGE_ID, LanguageResource.appLanguage);
         log.debug("new SessionDefault");
     }
 
