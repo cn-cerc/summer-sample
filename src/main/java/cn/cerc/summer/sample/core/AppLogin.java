@@ -27,7 +27,7 @@ public class AppLogin implements IAppLogin {
     @Override
     public void init(IForm form) {
         this.form = form;
-        this.setSession(form.getHandle().getSession());
+        this.setSession(form.getSession());
     }
 
     @Override
