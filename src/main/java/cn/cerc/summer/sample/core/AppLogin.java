@@ -31,21 +31,6 @@ public class AppLogin implements IAppLogin {
     }
 
     @Override
-    public String checkToken(String token) throws IOException, ServletException {
-        if (token == null) {
-            return LOGIN_JSPFILE;
-        }
-
-        // 此处应去数据库检验
-        if (TEMP_SESSIONID.equals(token)) {
-            return null;
-        }
-
-        // 显示登录页面的jsp文件名
-        return LOGIN_JSPFILE;
-    }
-
-    @Override
     public String checkLogin(String userCode, String password) throws IOException, ServletException {
         log.info("userCode:{}, password:{}", userCode, password);
 
@@ -77,6 +62,11 @@ public class AppLogin implements IAppLogin {
 
     @Override
     public String getJspFile() {
+        return LOGIN_JSPFILE;
+    }
+
+    @Override
+    public String getLoginPage() throws IOException, ServletException {
         return LOGIN_JSPFILE;
     }
 
