@@ -17,7 +17,7 @@
         <property name="name" value="商品管理" />
         <property name="permission" value="user.base" />
     </bean>
-    <bean id="FrmUiExample" class="cn.cerc.summer.sample.ui.FrmUiExample" scope="prototype">
+    <bean id="FrmUiExample" class="cn.cerc.summer.sample.forms.FrmUiExample" scope="prototype">
         <property name="name" value="范例Ui" />
         <property name="permission" value="user.base" />
     </bean>

@@ -1,4 +1,4 @@
-package cn.cerc.summer.sample.ui;
+package cn.cerc.summer.sample.forms;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
