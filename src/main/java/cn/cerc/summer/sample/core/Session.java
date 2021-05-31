@@ -6,21 +6,22 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import cn.cerc.core.IConnection;
 import cn.cerc.core.ISession;
 import cn.cerc.core.LanguageResource;
-import cn.cerc.db.mysql.MysqlConnection;
+import cn.cerc.db.mysql.MysqlServerMaster;
 import cn.cerc.db.oss.OssConnection;
 import cn.cerc.mis.core.Application;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@Primary
 public class Session implements ISession {
     private static final Logger log = LoggerFactory.getLogger(Session.class);
-    private Map<String, IConnection> connections = new HashMap<>();
+    private Map<String, Object> connections = new HashMap<>();
     private Map<String, Object> params = new HashMap<>();
 
     public Session() {
@@ -60,9 +61,9 @@ public class Session implements ISession {
                 return connections.get(key);
             }
 
-            if (MysqlConnection.sessionId.equals(key)) {
-                MysqlConnection obj = new MysqlConnection();
-                connections.put(MysqlConnection.sessionId, obj);
+            if (MysqlServerMaster.SessionId.equals(key)) {
+                MysqlServerMaster obj = new MysqlServerMaster();
+                connections.put(MysqlServerMaster.SessionId, obj);
                 return connections.get(key);
             }
 
@@ -113,15 +114,4 @@ public class Session implements ISession {
         }
     }
 
-    public MysqlConnection getConnection() {
-        return (MysqlConnection) getProperty(MysqlConnection.sessionId);
-    }
-
-    public Map<String, IConnection> getConnections() {
-        return connections;
-    }
-
-    public void setConnections(Map<String, IConnection> connections) {
-        this.connections = connections;
-    }
 }
