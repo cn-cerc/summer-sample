@@ -65,13 +65,9 @@ public class AppLogin implements IAppLogin {
         return LOGIN_JSPFILE;
     }
 
+    @Override
     public String getLoginPage() throws IOException, ServletException {
         return LOGIN_JSPFILE;
-    }
-
-    @Override
-    public String checkToken(String token) throws IOException, ServletException {
-        return null;
     }
 
 }
