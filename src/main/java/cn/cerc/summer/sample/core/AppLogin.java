@@ -56,11 +56,6 @@ public class AppLogin implements IAppLogin {
     }
 
     @Override
-    public void setJspFile(String loginJspFile) {
-
-    }
-
-    @Override
     public String getJspFile() {
         return LOGIN_JSPFILE;
     }
