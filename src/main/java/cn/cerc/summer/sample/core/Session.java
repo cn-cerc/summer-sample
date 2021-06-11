@@ -15,6 +15,7 @@ import cn.cerc.core.LanguageResource;
 import cn.cerc.db.mysql.MysqlServerMaster;
 import cn.cerc.db.oss.OssConnection;
 import cn.cerc.mis.core.Application;
+import cn.cerc.mis.custom.SessionDefault;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -83,7 +84,13 @@ public class Session implements ISession {
             if ("{}".equals(value)) {
                 params.put(key, null);
             } else {
-                params.put(key, value);
+                if (value == null || "".equals(value))
+                    params.clear();
+                else {
+                    params.put(key, value);
+//                    if (params.get(SessionDefault.TOKEN_CREATE_STATUS) != null)
+//                    init((String) value);
+                }
             }
             return;
         }
