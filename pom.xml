@@ -4,7 +4,7 @@
 
     <groupId>cn.cerc</groupId>
     <artifactId>summer-sample</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <packaging>war</packaging>
 
     <url>https://github.com/cn-cerc/summer-sample</url>
@@ -14,7 +14,7 @@
         <maven.compiler.source>8</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <cn.cerc.summer.version>3.4.0-SNAPSHOT</cn.cerc.summer.version>
+        <cn.cerc.summer.version>3.5.0-SNAPSHOT</cn.cerc.summer.version>
     </properties>
     <build>
         <plugins>
