@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import cn.cerc.core.Record;
 import cn.cerc.core.TDateTime;
-import cn.cerc.db.mysql.SqlQuery;
+import cn.cerc.db.mysql.MysqlQuery;
 import cn.cerc.mis.core.CustomService;
 import cn.cerc.mis.core.DataValidateException;
 import cn.cerc.summer.sample.core.AppDB;
@@ -23,8 +23,8 @@ public class SvrExample extends CustomService {
         Record headIn = getDataIn().getHead();
         log.debug("headIn {}", headIn);
 
-        // SqlQuery 用于操作数据库，可对数据进行增删改查，在使用增删改功能前，必须查询表。
-        SqlQuery query = new SqlQuery(this);
+        // MysqlQuery 用于操作数据库，可对数据进行增删改查，在使用增删改功能前，必须查询表。
+        MysqlQuery query = new MysqlQuery(this);
         // add方法追加sql语句
         query.add("select * from %s", AppDB.TABLE_EXAMPLE);
         query.add("where 1=1 ");
@@ -56,7 +56,7 @@ public class SvrExample extends CustomService {
         DataValidateException.stopRun("性别不允许为空", !headIn.hasValue("sex_"));
         DataValidateException.stopRun("年龄不允许为空", !headIn.hasValue("age_"));
 
-        SqlQuery query = new SqlQuery(this);
+        MysqlQuery query = new MysqlQuery(this);
         query.add("select * from %s", AppDB.TABLE_EXAMPLE);
         query.add("where code_='%s'", code);
         query.open();
@@ -79,7 +79,7 @@ public class SvrExample extends CustomService {
         DataValidateException.stopRun("code_不允许为空", !headIn.hasValue("code_"));
         String code = headIn.getString("code_");
 
-        SqlQuery query = new SqlQuery(this);
+        MysqlQuery query = new MysqlQuery(this);
         query.add("select * from %s", AppDB.TABLE_EXAMPLE);
         query.add("where code_='%s'", code);
         query.open();
@@ -100,7 +100,7 @@ public class SvrExample extends CustomService {
         int age = headIn.getInt("age_");
         DataValidateException.stopRun("年龄不允许小于0", age <= 0);
 
-        SqlQuery query = new SqlQuery(this);
+        MysqlQuery query = new MysqlQuery(this);
         query.add("select * from %s", AppDB.TABLE_EXAMPLE);
         query.add("where code_='%s'", code);
         query.open();
@@ -119,7 +119,7 @@ public class SvrExample extends CustomService {
         DataValidateException.stopRun("code_ 不允许为空", !headIn.hasValue("code_"));
         String code = headIn.getString("code_");
 
-        SqlQuery query = new SqlQuery(this);
+        MysqlQuery query = new MysqlQuery(this);
         query.add("select * from %s", AppDB.TABLE_EXAMPLE);
         query.add("where code_='%s'", code);
         query.open();

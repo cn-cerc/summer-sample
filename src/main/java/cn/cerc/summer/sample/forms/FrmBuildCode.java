@@ -64,7 +64,7 @@ public class FrmBuildCode extends AbstractForm {
             memo.append("import cn.cerc.core.TDateTime;");
             memo.append("import cn.cerc.core.Utils;");
             memo.append("import cn.cerc.db.mysql.BuildQuery;");
-            memo.append("import cn.cerc.db.mysql.SqlQuery;");
+            memo.append("import cn.cerc.db.mysql.MysqlQuery;");
             memo.append("import cn.cerc.mis.core.CustomService;");
             memo.append("import cn.cerc.mis.core.DataValidateException;");
             memo.append("");
@@ -106,7 +106,7 @@ public class FrmBuildCode extends AbstractForm {
         }
         memo.append("");
         memo.append("        String tableId = \"%s\";", tableId);
-        memo.append("        SqlQuery query = new SqlQuery(this);");
+        memo.append("        MysqlQuery query = new MysqlQuery(this);");
         memo.append("        query.add(\"select * from %s\", tableId);");
         int count = 0;
         for (Field field : fields) {
@@ -174,7 +174,7 @@ public class FrmBuildCode extends AbstractForm {
                     field.getCode());
         memo.append("");
         memo.append("        String tableId = \"%s\";", tableId);
-        memo.append("        SqlQuery query = new SqlQuery(this);");
+        memo.append("        MysqlQuery query = new MysqlQuery(this);");
         memo.append("        query.add(\"select * from %s\", tableId);");
         memo.append("        query.add(\"where materKey_='%s'\", materKey);");
         memo.append("        query.open();");
@@ -200,7 +200,7 @@ public class FrmBuildCode extends AbstractForm {
         memo.append("        String userCode = headIn.getString(\"user_code_\");");
         memo.append("");
         memo.append("        String tableId = \"%s\";", tableId);
-        memo.append("        SqlQuery query = new SqlQuery(this);");
+        memo.append("        MysqlQuery query = new MysqlQuery(this);");
         memo.append("        query.add(\"select * from %s\", tableId);");
         memo.append("        query.add(\"where materKey_='%s'\", materKey);");
         memo.append("        query.open();");
