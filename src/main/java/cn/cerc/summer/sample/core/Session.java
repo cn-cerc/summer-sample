@@ -15,7 +15,6 @@ import cn.cerc.core.LanguageResource;
 import cn.cerc.db.mysql.MysqlServerMaster;
 import cn.cerc.db.oss.OssConnection;
 import cn.cerc.mis.core.Application;
-import cn.cerc.mis.custom.SessionDefault;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -120,5 +119,10 @@ public class Session implements ISession {
             }
         }
     }
+
+	@Override
+	public void loadToken(String token) {
+        this.setProperty(TOKEN, token);
+	}
 
 }
