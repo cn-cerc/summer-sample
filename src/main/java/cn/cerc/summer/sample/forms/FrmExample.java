@@ -46,7 +46,7 @@ public class FrmExample extends CustomForm {
 
         // 获取服务出口数据，DataSet类可存储一对多关系的数据，DataSet可装载二维表数据
         DataSet dataSet = svr.getDataOut();
-        log.info("sql数据 {}", dataSet.getJSON());
+        log.info("sql数据 {}", dataSet.toJson());
 
         while (dataSet.fetch()) {
             // 将性别根据编码转为汉字
