@@ -1,14 +1,9 @@
 package cn.cerc.summer.sample.core.ui;
 
 import cn.cerc.mis.core.Application;
-import cn.cerc.ui.parts.UIComponent;
+import cn.cerc.ui.core.UIComponent;
 
 public class UIMenuBar extends UICustomMenuBar {
-
-    public UIMenuBar() {
-        super();
-        init();
-    }
 
     public UIMenuBar(UIComponent owner) {
         super(owner);

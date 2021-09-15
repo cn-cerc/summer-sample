@@ -22,8 +22,8 @@ import cn.cerc.ui.core.UrlRecord;
 import cn.cerc.ui.panels.UIAppendPanel;
 import cn.cerc.ui.panels.UIModifyPanel;
 import cn.cerc.ui.panels.UISearchPanel;
+import cn.cerc.ui.vcl.UISpan;
 import cn.cerc.ui.vcl.UIUrl;
-import cn.cerc.ui.vcl.ext.UISpan;
 
 public class FrmUiExample extends CustomForm {
     @Override

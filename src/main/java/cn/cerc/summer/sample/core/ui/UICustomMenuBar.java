@@ -1,20 +1,16 @@
 package cn.cerc.summer.sample.core.ui;
 
+import cn.cerc.ui.core.HtmlWriter;
+import cn.cerc.ui.core.UIComponent;
+import cn.cerc.ui.vcl.UIA;
+import cn.cerc.ui.vcl.UILabel;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.cerc.ui.core.HtmlWriter;
-import cn.cerc.ui.parts.UIComponent;
-import cn.cerc.ui.parts.UICssComponent;
-import cn.cerc.ui.vcl.UILabel;
 
 public class UICustomMenuBar extends UIComponent {
     private List<UIComponent> items = new ArrayList<>();
     private UIComponent defaultItem;
-
-    public UICustomMenuBar() {
-        super();
-    }
 
     public UICustomMenuBar(UIComponent owner) {
         super(owner);
@@ -29,7 +25,7 @@ public class UICustomMenuBar extends UIComponent {
             } else {
                 html.print("<li>");
             }
-            html.print("<span class='iconfont icon-%s'></span>", ((UICssComponent) item).getCssClass());
+            html.print("<span class='iconfont icon-%s'></span>", item.getCssClass());
             item.output(html);
             html.print("</li>");
         }
@@ -37,9 +33,9 @@ public class UICustomMenuBar extends UIComponent {
     }
 
     public UIComponent add(String menuCode, String menuName) {
-        UILabel label = new UILabel();
+        UIA label = new UIA(this);
         label.setText(menuName);
-        label.setUrl(menuCode);
+        label.setSite(menuCode);
         label.setCssClass(menuCode);
         items.add(label);
         return label;

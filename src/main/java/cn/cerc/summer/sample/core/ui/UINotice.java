@@ -5,18 +5,13 @@ import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.summer.sample.core.BufferUser;
 import cn.cerc.ui.core.HtmlWriter;
-import cn.cerc.ui.parts.UIComponent;
+import cn.cerc.ui.core.UIComponent;
 import cn.cerc.ui.vcl.UIImage;
 
 public class UINotice extends UIComponent {
     private String cssClass = "info";
     private String text;
     private UIImage icon;
-
-    public UINotice() {
-        super();
-        icon = new UIImage(this);
-    }
 
     public UINotice(UIComponent owner) {
         super(owner);
@@ -89,18 +84,9 @@ public class UINotice extends UIComponent {
         return result;
     }
 
-    public String getCssClass() {
-        return cssClass;
-    }
 
     public String getText() {
         return text;
-    }
-
-    private void setCssClass(String cssClass) {
-        if ("error".equals(cssClass) || "warn".equals(cssClass)) {
-            this.cssClass = cssClass;
-        }
     }
 
 }

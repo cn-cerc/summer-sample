@@ -7,6 +7,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.cerc.ui.vcl.ext.UIButtonSubmit;
+import cn.cerc.ui.vcl.ext.UILine;
+import cn.cerc.ui.vcl.ext.UITextArea;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -20,11 +23,8 @@ import cn.cerc.mis.core.IPage;
 import cn.cerc.summer.sample.core.db.Field;
 import cn.cerc.summer.sample.core.ui.UICustomPage;
 import cn.cerc.ui.core.RequestReader;
-import cn.cerc.ui.vcl.UIButtonSubmit;
 import cn.cerc.ui.vcl.UIForm;
 import cn.cerc.ui.vcl.UIInput;
-import cn.cerc.ui.vcl.UILine;
-import cn.cerc.ui.vcl.UITextArea;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
