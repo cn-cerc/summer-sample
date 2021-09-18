@@ -3,10 +3,6 @@
  */
 
 class DataSet {
-	constructor(def) {
-		if (def) this.setJson(def)
-	}
-
 	recNo = 0;
 	fetchNo = -1;
 	state = 0;
@@ -18,6 +14,10 @@ class DataSet {
 	head = new Record();
 	records = new Set();
 	search;
+
+	constructor(def) {
+		if (def) this.setJson(def)
+	}
 
 	newRecord = () => {
 		var record = new Record(this.fieldDefs)
