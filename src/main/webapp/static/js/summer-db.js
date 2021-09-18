@@ -4,7 +4,7 @@
 
 class DataSet {
 	constructor(def) {
-		if (def) this.setJSON(def)
+		if (def) this.setJson(def)
 	}
 
 	recNo = 0;
@@ -206,7 +206,7 @@ class DataSet {
 					json.head.push(this.head.getField(field))
 				})
 			} else {
-				json.head = this.head.getJSON()
+				json.head = this.head.getJson()
 			}
 		}
 		if (this.size() > 0) {
@@ -230,7 +230,7 @@ class DataSet {
 		}
 		return JSON.stringify(json);
 	}
-	setJSON = (jsonObj) => {
+	setJson(jsonObj) {
 		if (!jsonObj) {
 			this.close()
 			return this
@@ -296,6 +296,7 @@ class DataSet {
 
 	setMetaInfo(metaInfo) {
 		this.metaInfo = metaInfo;
+		return this;
 	}
 
 	getMetaInfo() {
@@ -430,7 +431,7 @@ class Record {
 		})
 	}
 
-	getJSON = () => {
+	getJson = () => {
 		var obj = {}
 		this.items.forEach((v, k) => {
 			obj[k] = v
@@ -438,7 +439,7 @@ class Record {
 		return obj
 	}
 
-	setJSON = (jsonObj) => {
+	setJson(jsonObj) {
 		if (!jsonObj) {
 			throw new Error('field is null!')
 		}
@@ -459,12 +460,20 @@ class Record {
 	}
 }
 
-let ds = new DataSet();
-ds.getHead().setField('id', 100);
-ds.append();
-ds.setField('code', 'a');
-ds.setField('name', 'jason');
-console.log(ds.getJson());
+// let ds = new DataSet();
+// ds.getHead().setField('id', 100);
+// ds.append();
+// ds.setField('code', 'a');
+// ds.setField('name', 'jason');
+// ds.append();
+// ds.setField('code', 'b');
+// ds.setField('name', 'bade');
+// console.log(ds.getJson());
 
-ds.setMetaInfo(true);
-console.log(ds.getJson());
+// console.log(ds.setMetaInfo(true).getJson());
+// console.log(ds.setMetaInfo(false).getJson());
+
+// let ds2 = new DataSet();
+// ds2.setJson('{"meta":{"head":[{"id":[null]}],"body":[{"code":[null]},{"name":[null]}]},"head":[100],"body":[["a","jason"],["b","bade"]]}');
+// console.log(ds2.getJson())
+// console.log(ds.setMetaInfo(true).getJson());
