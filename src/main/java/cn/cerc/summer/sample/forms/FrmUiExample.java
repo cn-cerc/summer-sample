@@ -93,7 +93,7 @@ public class FrmUiExample extends CustomForm {
         new OptionColumn(uiform, "性别", "sex_", 6).setOptions(sexMap);
         new StringColumn(uiform, "年龄", "age_", 2).setRequired(true);
 
-        if (Utils.isNotEmpty(uiform.readAll())) {
+        if (!Utils.isEmpty(uiform.readAll())) {
             // 调用SvrCorpInfo.modify服务
             LocalService svr = new LocalService(this, "SvrExample.append");
             // 传参
@@ -139,7 +139,7 @@ public class FrmUiExample extends CustomForm {
         new OptionColumn(uiform, "性别", "sex_", 6).setOptions(sexMap);
         new StringColumn(uiform, "年龄", "age_", 2).setRequired(true);
 
-        if (Utils.isNotEmpty(uiform.readAll())) {
+        if (!Utils.isEmpty(uiform.readAll())) {
             // 调用SvrCorpInfo.modify服务
             LocalService svr = new LocalService(this, "SvrExample.modify");
             // 传参

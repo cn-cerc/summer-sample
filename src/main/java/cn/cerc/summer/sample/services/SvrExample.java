@@ -6,8 +6,8 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import cn.cerc.core.Datetime;
 import cn.cerc.core.Record;
-import cn.cerc.core.TDateTime;
 import cn.cerc.db.mysql.MysqlQuery;
 import cn.cerc.mis.core.CustomService;
 import cn.cerc.mis.core.DataValidateException;
@@ -67,8 +67,8 @@ public class SvrExample extends CustomService {
         query.setField("name_", headIn.getString("name_"));
         query.setField("sex_", headIn.getString("sex_"));
         query.setField("age_", headIn.getString("age_"));
-        query.setField("createTime_", TDateTime.now());
-        query.setField("updateTime_", TDateTime.now());
+        query.setField("createTime_", new Datetime());
+        query.setField("updateTime_", new Datetime());
         query.post();
 
         return true;
@@ -109,7 +109,7 @@ public class SvrExample extends CustomService {
         query.edit();
         query.setField("age_", age);
         query.setField("sex_", sex);
-        query.setField("updateTime_", TDateTime.now());
+        query.setField("updateTime_", new Datetime());
         query.post();
         return true;
     }

@@ -4,9 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.cerc.core.DataSet;
+import cn.cerc.core.Datetime;
+import cn.cerc.core.FastDate;
 import cn.cerc.core.Record;
-import cn.cerc.core.TDate;
-import cn.cerc.core.TDateTime;
 import cn.cerc.core.Utils;
 
 /**
@@ -17,8 +17,8 @@ public class UtilsExample {
 
     public static void main(String[] args) {
         // 时间工具类 TDateTime
-        log.info("当前时间 {}", TDateTime.now());
-        log.info("今日日期 {}", TDate.today());
+        log.info("当前时间 {}", new Datetime());
+        log.info("今日日期 {}", new FastDate());
 
         // 数学工具类 Utils
         log.info("随机数字 {}", Utils.getNumRandom(12));
@@ -28,7 +28,7 @@ public class UtilsExample {
         DataSet dataSet = new DataSet();
         Record head = dataSet.getHead();
         head.setField("tbNo", "AB201903270001");
-        head.setField("tDate", TDateTime.now());
+        head.setField("tDate", new Datetime());
         log.info("dataSet 头部信息 {}", head);
 
         for (int i = 0; i < 2; i++) {

@@ -1,12 +1,11 @@
 package cn.cerc.summer.sample.core.ui;
 
-import cn.cerc.ui.core.HtmlWriter;
-import cn.cerc.ui.core.UIComponent;
-import cn.cerc.ui.vcl.UIA;
-import cn.cerc.ui.vcl.UILabel;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.cerc.ui.core.HtmlWriter;
+import cn.cerc.ui.core.UIComponent;
+import cn.cerc.ui.vcl.UIUrl;
 
 public class UICustomMenuBar extends UIComponent {
     private List<UIComponent> items = new ArrayList<>();
@@ -33,7 +32,7 @@ public class UICustomMenuBar extends UIComponent {
     }
 
     public UIComponent add(String menuCode, String menuName) {
-        UIA label = new UIA(this);
+        UIUrl label = new UIUrl(this);
         label.setText(menuName);
         label.setSite(menuCode);
         label.setCssClass(menuCode);

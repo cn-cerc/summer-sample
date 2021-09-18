@@ -7,9 +7,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.cerc.ui.vcl.ext.UIButtonSubmit;
-import cn.cerc.ui.vcl.ext.UILine;
-import cn.cerc.ui.vcl.ext.UITextArea;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -25,6 +22,9 @@ import cn.cerc.summer.sample.core.ui.UICustomPage;
 import cn.cerc.ui.core.RequestReader;
 import cn.cerc.ui.vcl.UIForm;
 import cn.cerc.ui.vcl.UIInput;
+import cn.cerc.ui.vcl.UITextarea;
+import cn.cerc.ui.vcl.ext.UIButtonSubmit;
+import cn.cerc.ui.vcl.ext.UILine;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -52,7 +52,7 @@ public class FrmBuildCode extends AbstractForm {
 
             new UILine(form);
 
-            UITextArea memo = new UITextArea(form);
+            UITextarea memo = new UITextarea(form);
             memo.setCols(800);
             memo.setRows(50);
             memo.append(String.format("//tableName: %s", tableId));
@@ -91,7 +91,7 @@ public class FrmBuildCode extends AbstractForm {
         return page;
     }
 
-    private void buildAppend(String tableId, UITextArea memo, ArrayList<Field> fields) {
+    private void buildAppend(String tableId, UITextarea memo, ArrayList<Field> fields) {
         memo.append("    // 增加服务");
         memo.append("    public boolean append() throws DataValidateException {");
         memo.append("        Record headIn = getDataIn().getHead();");
@@ -136,7 +136,7 @@ public class FrmBuildCode extends AbstractForm {
         memo.append("    }");
     }
 
-    private void buildSearch(String tableId, UITextArea memo, ArrayList<Field> fields) {
+    private void buildSearch(String tableId, UITextarea memo, ArrayList<Field> fields) {
         memo.append("    // 查询服务");
         memo.append("    public boolean search() {");
         memo.append("        String tableId = \"%s\";", tableId);
@@ -161,7 +161,7 @@ public class FrmBuildCode extends AbstractForm {
         memo.append("    }");
     }
 
-    private void buildModify(String tableId, UITextArea memo, ArrayList<Field> fields) {
+    private void buildModify(String tableId, UITextarea memo, ArrayList<Field> fields) {
         memo.append("    // 修改");
         memo.append("    public boolean modify() throws DataValidateException {");
         memo.append("        Record headIn = getDataIn().getHead();");
@@ -190,7 +190,7 @@ public class FrmBuildCode extends AbstractForm {
         memo.append("    }");
     }
 
-    private void buildDownload(String tableId, UITextArea memo, ArrayList<Field> fields) {
+    private void buildDownload(String tableId, UITextarea memo, ArrayList<Field> fields) {
         memo.append("    // 下载");
         memo.append("    public boolean download() throws DataValidateException {");
         memo.append("        Record headIn = getDataIn().getHead();");

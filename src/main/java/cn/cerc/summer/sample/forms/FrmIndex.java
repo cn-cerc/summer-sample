@@ -7,9 +7,8 @@ import cn.cerc.summer.sample.core.ui.UICustomPage;
 import cn.cerc.summer.sample.core.ui.UIMenuBar;
 import cn.cerc.ui.core.JspFile;
 import cn.cerc.ui.core.UIComponent;
-import cn.cerc.ui.vcl.UIA;
 import cn.cerc.ui.vcl.UIDiv;
-import cn.cerc.ui.vcl.UILabel;
+import cn.cerc.ui.vcl.UIUrl;
 import cn.cerc.ui.vcl.ext.UIHtmlFile;
 import cn.cerc.ui.vcl.ext.UILine;
 
@@ -22,13 +21,13 @@ public class FrmIndex extends AbstractForm {
         new UIDiv(content).setText("请根据需求文档，自行建立相关菜单文件");
         new UILine(content);
 
-        new UIA(content).setText("1、增删改查参考编写范例").setSite("FrmExample");
+        new UIUrl(content).setText("1、增删改查参考编写范例").setSite("FrmExample");
         new UILine(content);
 
-        new UIA(content).setText("2、使用 jspfile 编写范例").setSite("FrmIndex.html");
+        new UIUrl(content).setText("2、使用 jspfile 编写范例").setSite("FrmIndex.html");
         new UILine(content);
 
-        new UIA(content).setText("3、根据表名自动生成服务代码").setSite("FrmBuildCode");
+        new UIUrl(content).setText("3、根据表名自动生成服务代码").setSite("FrmBuildCode");
 
         if (this.getClient().isPhone())
             new UIMenuBar(page.getFooter());

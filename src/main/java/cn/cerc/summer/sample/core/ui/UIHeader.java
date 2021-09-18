@@ -2,11 +2,10 @@ package cn.cerc.summer.sample.core.ui;
 
 import cn.cerc.mis.core.IForm;
 import cn.cerc.ui.core.UIComponent;
-import cn.cerc.ui.core.UIOriginComponent;
 import cn.cerc.ui.vcl.UIImage;
 import cn.cerc.ui.vcl.UILabel;
 
-public class UIHeader extends UIOriginComponent {
+public class UIHeader extends UIComponent {
 
     private IForm form;
 
