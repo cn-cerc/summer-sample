@@ -2,8 +2,8 @@
  * 
  */
 
- import DataRow from '@./DataRow.js';
- import SearchDataSet from '@./SearchDataSet.js';
+ import DataRow from './DataRow.js';
+ import SearchDataSet from './SearchDataSet.js';
 
 class DataSet {
 	recNo = 0;
@@ -119,7 +119,7 @@ class DataSet {
 	}
 	getHead() {
 		if (this.head == null) {
-			this.head = new Record(Array.form(this.headDefs))
+			this.head = new DataRow(Array.form(this.headDefs))
 		}
 		return this.head
 	}
@@ -255,7 +255,7 @@ class DataSet {
 		if (jsonObj.hasOwnProperty('meta')) {
 			this.meta = jsonObj.meta;
 			if (this.meta.head) {
-				this.head = new Record();
+				this.head = new DataRow();
 				var i = 0;
 				this.meta.head.forEach((map) => {
 					for (let key in map) {

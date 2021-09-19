@@ -2,7 +2,8 @@
  * 
  */
 
-import * as all from './DataSet.js'
+ import DataSet from './DataSet.js'
+ import UIComponent from './UIComponent.js'
 
 class UIDiv extends UIComponent {
     constructor(owner) {

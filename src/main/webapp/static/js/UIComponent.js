@@ -57,8 +57,8 @@ class UIComponent {
 
 }
 
-let item = new UIComponent();
-item.setRootLabel('div');
-let html = new HtmlWriter();
-item.output(html);
-console.log(html.getText());
+// let item = new UIComponent();
+// item.setRootLabel('div');
+// let html = new HtmlWriter();
+// item.output(html);
+// console.log(html.getText());
