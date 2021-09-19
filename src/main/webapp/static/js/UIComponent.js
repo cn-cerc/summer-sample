@@ -1,6 +1,6 @@
 import HtmlWriter from "./HtmlWriter.js";
 
-class UIComponent {
+export default class UIComponent {
     owner;
     origin;
     components = [];

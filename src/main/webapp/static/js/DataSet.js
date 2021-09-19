@@ -2,46 +2,45 @@
  * 
  */
 
- import DataRow from './DataRow.js';
- import SearchDataSet from './SearchDataSet.js';
+import DataRow from './DataRow.js';
+import FieldDefs from './FieldDefs.js';
+import SearchDataSet from './SearchDataSet.js';
 
-class DataSet {
+export default class DataSet {
 	recNo = 0;
 	fetchNo = -1;
 	state = 0;
 	message = '';
-	fieldDefs = new Set();
-	headDefs = new Set();
+	fieldDefs = new FieldDefs();
 	metaInfo = false;
 	meta;
 	head = new DataRow();
-	records = new Set();
+	records = [];
 	search;
 
 	constructor(def) {
 		if (def) this.setJson(def)
 	}
 
-	newRecord = () => {
-		var record = new DataRow(this.fieldDefs)
-		record.setDataSet(this)
-		return record
+	newRecord(){
+		return new DataRow(this);
 	}
 
-	getCurrent = () => {
+	getCurrent() {
 		if (this.eof()) {
 			throw new Error('eof == true')
 		} else if (this.bof()) {
 			throw new Error('bof == true')
 		} else {
-			return Array.from(this.records)[this.recNo - 1]
+			let i = this.recNo - 1;
+			return this.records[i];
 		}
 	}
 
-	append = () => {
+	append() {
 		var record = this.newRecord()
-		this.records.add(record)
-		this.recNo = this.records.size
+		this.records.push(record)
+		this.recNo = this.records.length;
 		return this
 	}
 
@@ -50,7 +49,7 @@ class DataSet {
 	}
 
 	first = () => {
-		if (this.records.size > 0) {
+		if (this.records.length > 0) {
 			this.recNo = 1
 		} else {
 			this.recNo = 0
@@ -59,13 +58,13 @@ class DataSet {
 		return this.recNo > 0
 	}
 
-	last = () => {
-		this.recNo = this.records.size
+	last() {
+		this.recNo = this.records.length;
 		return this.recNo > 0
 	}
 
 	next = () => {
-		if (this.records.size > 0 && this.recNo <= this.records.size) {
+		if (this.records.length > 0 && this.recNo <= this.records.length) {
 			this.recNo++
 			return true
 		} else {
@@ -78,25 +77,25 @@ class DataSet {
 	}
 
 	eof = () => {
-		return this.records.size === 0 || this.recNo > this.records.size
+		return this.records.length === 0 || this.recNo > this.records.length
 	}
 
 	size = () => {
-		return this.records.size
+		return this.records.length
 	}
-	getRecNo = () => {
+	getRecNo() {
 		return this.recNo
 	}
-	setRecNo = (currentRecNo = 0) => {
-		if (currentRecNo > this.records.size) {
-			throw new Error(`RecNo ${this.recNo} 大于总长度 ${this.records.size}`)
+	setRecNo(recNo) {
+		if (recNo > this.records.length) {
+			throw new Error(`RecNo ${this.recNo} 大于总长度 ${this.records.length}`)
 		} else {
-			this.recNo = currentRecNo
+			this.recNo = recNo
 		}
 	}
 	fetch = () => {
 		var result = false
-		if (this.fetchNo < (this.records.size - 1)) {
+		if (this.fetchNo < (this.records.length - 1)) {
 			this.fetchNo++
 			this.setRecNo(this.fetchNo + 1)
 			result = true
@@ -119,7 +118,7 @@ class DataSet {
 	}
 	getHead() {
 		if (this.head == null) {
-			this.head = new DataRow(Array.form(this.headDefs))
+			this.head = new DataRow();
 		}
 		return this.head
 	}
@@ -128,11 +127,11 @@ class DataSet {
 		return this.records
 	}
 
-	getFieldDefs = () => {
+	getFieldDefs() {
 		return this.fieldDefs
 	}
 
-	setField = (field, value) => {
+	setField(field, value) {
 		this.getCurrent().setField(field, value)
 		return this
 	}
@@ -192,7 +191,7 @@ class DataSet {
 				json.meta.head = head;
 			}
 
-			if (this.records.size > 0) {
+			if (this.records.length > 0) {
 				let body = [];
 				this.getFieldDefs().forEach((field) => {
 					let item = {};
@@ -223,9 +222,9 @@ class DataSet {
 				json.body.push(item);
 			};
 
-			this.records.forEach((record) => {
+			this.forEach((record) => {
 				var item = []
-				this.fieldDefs.forEach((field) => {
+				this.getFieldDefs().forEach((field) => {
 					item.push(record.getField(field))
 				})
 				json.body.push(item)
@@ -233,6 +232,7 @@ class DataSet {
 		}
 		return JSON.stringify(json);
 	}
+
 	setJson(jsonObj) {
 		if (!jsonObj) {
 			this.close()
@@ -306,6 +306,13 @@ class DataSet {
 		return this.metaInfo;
 	}
 
+}
+
+DataSet.prototype.forEach = function (callback) {
+    var arr = this.records;
+    for (var i = 0; i < arr.length; i++)
+        callback(arr[i], i);
+    return;
 }
 
 // let ds = new DataSet();

@@ -8,7 +8,7 @@ export default class HtmlWriter {
     getText() {
         let text = "";
         this.lines.forEach((line) => {
-            text = text + line + "\n";
+            text = text + line;
         })
         return text;
     }

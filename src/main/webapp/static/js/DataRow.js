@@ -2,35 +2,22 @@
  * 
  */
 
+import FieldDefs from "./FieldDefs.js";
+
 export default class DataRow {
-	defs = new Set()
+	dataSet;
+	fieldDefs;
 	items = new Map()
-	dataSet
 
-	constructor(defs) {
-		(defs || []).forEach((value) => {
-			this.addDefs(value)
-		})
+	constructor(dataSet) {
+		this.dataSet = dataSet;
 	}
 
-	addDefs = (field) => {
-		if (!this.defs.has(field)) {
-			this.defs.add(field)
-			if (this.dataSet) {
-				this.dataSet.getFieldDefs().add(field)
-			}
-		}
-	}
-
-	setDataSet = (ds) => {
-		this.dataSet = ds
-	}
-
-	setField = (field, value) => {
+	setField(field, value) {
 		if (!field) {
 			throw new Error('field is null!')
 		}
-		this.addDefs(field)
+		this.getFieldDefs().add(field)
 		if (Number(value)) {
 			this.items.set(field, Number(value))
 		} else {
@@ -38,27 +25,27 @@ export default class DataRow {
 		}
 	}
 
-	getField = (field) => {
+	getField(field) {
 		if (!field) {
 			throw new Error('field is null!')
 		}
 		return this.items.get(field)
 	}
 
-	size = () => {
+	size() {
 		return this.items.size
 	}
 
 	copyValues = (source, fields) => {
 		if (!fields) {
-			fields = source.defs
+			fields = source.getFieldDefs();
 		}
 		fields.forEach((k) => {
 			this.items.set(k, source.getField(k))
 		})
 	}
 
-	getJson = () => {
+	getJson() {
 		var obj = {}
 		this.items.forEach((v, k) => {
 			obj[k] = v
@@ -78,16 +65,33 @@ export default class DataRow {
 		}
 	}
 
-	getFieldDefs = () => {
-		return this.defs
+	getFieldDefs() {
+		if (this.dataSet) {
+			return this.dataSet.getFieldDefs();
+		} else {
+			if (!this.fieldDefs)
+				this.fieldDefs = new FieldDefs();
+			return this.fieldDefs;
+		}
 	}
 
-	getItems = () => {
+	getItems() {
 		return this.items;
 	}
+}
+
+DataRow.prototype.forEach = function (callback) {
+	var arr = this.items;
+	for (var i = 0; i < arr.length; i++)
+		callback(arr[i], i);
+	return;
 }
 
 // let row = new DataRow();
 // row.setField('code', 'a');
 // row.setField('name', 'jason');
 // console.log(row.getJson())
+
+// row.getItems().forEach((k, v) => {
+// 	console.log(k + "=" + v);
+// })
