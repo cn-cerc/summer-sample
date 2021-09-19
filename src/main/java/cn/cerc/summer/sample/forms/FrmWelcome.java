@@ -44,9 +44,10 @@ public class FrmWelcome extends AbstractForm {
         ds.setField("code", "b");
         ds.setField("name", "bade");
         
-        new UIText(content).setText("summer_ui.js使用范例");
+        new UIText(content).setText("summer_ui.js使用范例\n");
         UIScript script = new UIScript(content);
-        script.writeProperty("src", "/static/js/DataSet.js");
+        script.writeProperty("type", "module");
+        script.add("import DataSet from \"/static/js/DataSet.js\";");
         script.add("\nlet ds = new DataSet('%s');", ds.toString());
         script.add("alert(ds.getJson());");
         
