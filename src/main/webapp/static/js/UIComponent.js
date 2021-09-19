@@ -1,4 +1,4 @@
-import HtmlWriter from "./HtmlWriter";
+import HtmlWriter from "./HtmlWriter.js";
 
 class UIComponent {
     owner;
