@@ -1,9 +1,11 @@
 package cn.cerc.summer.sample.forms;
 
+import cn.cerc.core.DataSet;
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.summer.sample.core.ui.UICustomPage;
 import cn.cerc.ui.core.UIComponent;
+import cn.cerc.ui.vcl.UIScript;
 import cn.cerc.ui.vcl.UIText;
 import cn.cerc.ui.vcl.UIUrl;
 import cn.cerc.ui.vcl.ext.UIHtmlFile;
@@ -14,6 +16,7 @@ public class FrmWelcome extends AbstractForm {
     @Override
     public IPage execute() {
         UICustomPage page = new UICustomPage(this);
+//        page.addScriptFile("js/DataSet.js");
         UIComponent content = page.getContent();
         new UILine(content);
 
@@ -32,9 +35,26 @@ public class FrmWelcome extends AbstractForm {
 
         new UIUrl(content).setText("进入范例UI(免登录)").setSite("FrmUiExample?sid=88888888");
         new UILine(content);
+        
+        DataSet ds = new DataSet();
+        ds.append();
+        ds.setField("code", "a");
+        ds.setField("name", "jason");
+        ds.append();
+        ds.setField("code", "b");
+        ds.setField("name", "bade");
+        
+        new UIText(content).setText("summer_ui.js使用范例");
+        UIScript script = new UIScript(content);
+        script.writeProperty("src", "/static/js/DataSet.js");
+        script.add("\nlet ds = new DataSet('%s');", ds.toString());
+        script.add("alert(ds.getJson());");
+        
+        new UILine(content);
         if (!this.getClient().isPhone()) {
             new UIHtmlFile(page.getFooter()).setFileName("/html/copyright.html");
         }
+        
         return page;
     }
 
