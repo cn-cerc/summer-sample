@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\DataSet.js"
+            "program": "${workspaceFolder}\\HtmlWriter.js"
         }
     ]
 }

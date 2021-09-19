@@ -22,4 +22,5 @@ class FieldMeta {
     getType() {
         return this.type;
     }
+    
 }
