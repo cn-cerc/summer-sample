@@ -6,8 +6,8 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import cn.cerc.core.DataRow;
 import cn.cerc.core.Datetime;
-import cn.cerc.core.Record;
 import cn.cerc.db.mysql.MysqlQuery;
 import cn.cerc.mis.core.CustomService;
 import cn.cerc.mis.core.DataValidateException;
@@ -20,7 +20,7 @@ public class SvrExample extends CustomService {
 
     public boolean search() {
         // 获取外部传进来的数据
-        Record headIn = getDataIn().getHead();
+        DataRow headIn = getDataIn().getHead();
         log.debug("headIn {}", headIn);
 
         // MysqlQuery 用于操作数据库，可对数据进行增删改查，在使用增删改功能前，必须查询表。
@@ -48,7 +48,7 @@ public class SvrExample extends CustomService {
     }
 
     public boolean append() throws DataValidateException {
-        Record headIn = getDataIn().getHead();
+        DataRow headIn = getDataIn().getHead();
         DataValidateException.stopRun("学号不允许为空", !headIn.hasValue("code_"));
         String code = headIn.getString("code_");
 
@@ -75,7 +75,7 @@ public class SvrExample extends CustomService {
     }
 
     public boolean download() throws DataValidateException {
-        Record headIn = getDataIn().getHead();
+        DataRow headIn = getDataIn().getHead();
         DataValidateException.stopRun("code_不允许为空", !headIn.hasValue("code_"));
         String code = headIn.getString("code_");
 
@@ -90,7 +90,7 @@ public class SvrExample extends CustomService {
     }
 
     public boolean modify() throws DataValidateException {
-        Record headIn = getDataIn().getHead();
+        DataRow headIn = getDataIn().getHead();
         DataValidateException.stopRun("code_ 不允许为空", !headIn.hasValue("code_"));
         String code = headIn.getString("code_");
 
@@ -115,7 +115,7 @@ public class SvrExample extends CustomService {
     }
 
     public boolean delete() throws DataValidateException {
-        Record headIn = getDataIn().getHead();
+        DataRow headIn = getDataIn().getHead();
         DataValidateException.stopRun("code_ 不允许为空", !headIn.hasValue("code_"));
         String code = headIn.getString("code_");
 

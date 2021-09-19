@@ -3,10 +3,10 @@ package cn.cerc.summer.sample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cn.cerc.core.DataRow;
 import cn.cerc.core.DataSet;
 import cn.cerc.core.Datetime;
 import cn.cerc.core.FastDate;
-import cn.cerc.core.Record;
 import cn.cerc.core.Utils;
 
 /**
@@ -26,7 +26,7 @@ public class UtilsExample {
 
         // DataSet 范例说明
         DataSet dataSet = new DataSet();
-        Record head = dataSet.getHead();
+        DataRow head = dataSet.getHead();
         head.setField("tbNo", "AB201903270001");
         head.setField("tDate", new Datetime());
         log.info("dataSet 头部信息 {}", head);

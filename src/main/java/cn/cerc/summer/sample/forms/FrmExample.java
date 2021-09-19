@@ -3,8 +3,8 @@ package cn.cerc.summer.sample.forms;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cn.cerc.core.DataRow;
 import cn.cerc.core.DataSet;
-import cn.cerc.core.Record;
 import cn.cerc.core.Utils;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.LocalService;
@@ -34,7 +34,7 @@ public class FrmExample extends CustomForm {
         // 本地服务，用于加载指定服务，使用指定服务功能，例如：加载服务ID：SvrExample.search，是查询功能
         LocalService svr = new LocalService(this, "SvrExample.search");
         // 获取服务的入口，用于外部专递数据给服务
-        Record headIn = svr.getDataIn().getHead();
+        DataRow headIn = svr.getDataIn().getHead();
         // 设置专递给服务的数据
         headIn.setField("code_", getRequest().getParameter("code"));
         headIn.setField("searchText_", getRequest().getParameter("searchText"));
@@ -81,7 +81,7 @@ public class FrmExample extends CustomForm {
         String age = getRequest().getParameter("age");
 
         LocalService svr = new LocalService(this, "SvrExample.append");
-        Record headIn = svr.getDataIn().getHead();
+        DataRow headIn = svr.getDataIn().getHead();
         headIn.setField("code_", code);
         headIn.setField("name_", name);
         headIn.setField("sex_", sex);
@@ -113,13 +113,13 @@ public class FrmExample extends CustomForm {
         }
 
         LocalService svr1 = new LocalService(this, "SvrExample.download");
-        Record headIn1 = svr1.getDataIn().getHead();
+        DataRow headIn1 = svr1.getDataIn().getHead();
         headIn1.setField("code_", code);
         if (!svr1.exec()) {
             page.setMessage(svr1.getMessage());
             return page;
         }
-        Record record = svr1.getDataOut().getHead();
+        DataRow record = svr1.getDataOut().getHead();
         page.add("record", record);
 
         String submit = getRequest().getParameter("submit");
@@ -131,7 +131,7 @@ public class FrmExample extends CustomForm {
             }
 
             LocalService svr2 = new LocalService(this, "SvrExample.modify");
-            Record headIn2 = svr2.getDataIn().getHead();
+            DataRow headIn2 = svr2.getDataIn().getHead();
             headIn2.setField("code_", code);
             headIn2.setField("sex_", sex);
             headIn2.setField("age_", getRequest().getParameter("age"));
@@ -155,7 +155,7 @@ public class FrmExample extends CustomForm {
         String code = getRequest().getParameter("code");
 
         LocalService svr = new LocalService(this, "svrExample.delete");
-        Record headIn2 = svr.getDataIn().getHead();
+        DataRow headIn2 = svr.getDataIn().getHead();
         headIn2.setField("code_", code);
         if (!svr.exec()) {
             url.setSite("FrmExample.modify");

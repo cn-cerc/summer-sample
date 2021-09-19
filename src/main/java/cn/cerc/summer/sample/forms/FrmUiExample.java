@@ -3,8 +3,8 @@ package cn.cerc.summer.sample.forms;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import cn.cerc.core.DataRow;
 import cn.cerc.core.DataSet;
-import cn.cerc.core.Record;
 import cn.cerc.core.Utils;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.LocalService;
@@ -41,7 +41,7 @@ public class FrmUiExample extends CustomForm {
 
         LocalService svr = new LocalService(this, "SvrExample.search");
         // 获取服务的入口，用于外部专递数据给服务
-        Record headIn = svr.getDataIn().getHead();
+        DataRow headIn = svr.getDataIn().getHead();
         // 设置专递给服务的数据
         headIn.copyValues(search.getRecord());
         // 执行服务，返回结果为boolean类型，失败将失败信息返回到页面给，服务执行正常，服务将数据存放至服务出口
@@ -97,7 +97,7 @@ public class FrmUiExample extends CustomForm {
             // 调用SvrCorpInfo.modify服务
             LocalService svr = new LocalService(this, "SvrExample.append");
             // 传参
-            Record headIn = svr.getDataIn().getHead();
+            DataRow headIn = svr.getDataIn().getHead();
             headIn.copyValues(uiform.getRecord());
             // 执行
             if (!svr.exec()) {
@@ -120,7 +120,7 @@ public class FrmUiExample extends CustomForm {
         }
 
         LocalService svr1 = new LocalService(this, "SvrExample.download");
-        Record headIn1 = svr1.getDataIn().getHead();
+        DataRow headIn1 = svr1.getDataIn().getHead();
         headIn1.setField("code_", code);
         if (!svr1.exec()) {
             page.setMessage(svr1.getMessage());
@@ -158,7 +158,7 @@ public class FrmUiExample extends CustomForm {
     public IPage delete() {
         String code = getRequest().getParameter("code");
         LocalService svr = new LocalService(this, "SvrExample.delete");
-        Record headIn = svr.getDataIn().getHead();
+        DataRow headIn = svr.getDataIn().getHead();
         headIn.setField("code_", code);
 
         UrlRecord url = new UrlRecord();
