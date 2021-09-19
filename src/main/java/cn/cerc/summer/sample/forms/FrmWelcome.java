@@ -6,6 +6,7 @@ import cn.cerc.mis.core.IPage;
 import cn.cerc.summer.sample.core.ui.UICustomPage;
 import cn.cerc.ui.core.UIComponent;
 import cn.cerc.ui.vcl.UIScript;
+import cn.cerc.ui.vcl.UISpan;
 import cn.cerc.ui.vcl.UIText;
 import cn.cerc.ui.vcl.UIUrl;
 import cn.cerc.ui.vcl.ext.UIHtmlFile;
@@ -44,12 +45,20 @@ public class FrmWelcome extends AbstractForm {
         ds.setField("code", "b");
         ds.setField("name", "bade");
         
-        new UIText(content).setText("summer_ui.js使用范例\n");
+        UISpan item = new UISpan(content).setText("summer_ui.js使用范例\n");
+        item.setId("content");
+        
         UIScript script = new UIScript(content);
-        script.writeProperty("type", "module");
-        script.add("import DataSet from \"/static/js/DataSet.js\";");
-        script.add("\nlet ds = new DataSet('%s');", ds.toString());
-        script.add("alert(ds.getJson());");
+        script.setModulePath("/static/js");
+        script.importModule("UIPage", "UIPage.js");
+        script.importModule("UIGrid", "UIGrid.js");
+        script.importModule("DataSet", "DataSet.js");
+        script.add("let page = new UIPage();");
+        script.add("page.bind('%s');", item.getId());
+        script.add("let ds = new DataSet('%s');", ds.toString());
+        script.add("let grid = new UIGrid(page);");
+        script.add("grid.setDataSet(ds);");
+        script.add("page.repaint();");
         
         new UILine(content);
         if (!this.getClient().isPhone()) {
