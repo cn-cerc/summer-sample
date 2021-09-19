@@ -19,7 +19,7 @@ export default class HtmlWriter {
 
 }
 
-let html = new HtmlWriter();
-html.print('one');
-html.print('two');
-console.log(html.getText())
+// let html = new HtmlWriter();
+// html.print('one');
+// html.print('two');
+// console.log(html.getText())

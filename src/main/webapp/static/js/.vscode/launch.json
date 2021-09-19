@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\HtmlWriter.js"
+            "program": "${workspaceFolder}\\UIComponent.js"
         }
     ]
 }
