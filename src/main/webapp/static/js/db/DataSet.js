@@ -22,10 +22,6 @@ export default class DataSet {
 		if (def) this.setJson(def)
 	}
 
-	newRecord(){
-		return new DataRow(this);
-	}
-
 	getCurrent() {
 		if (this.eof()) {
 			throw new Error('eof == true')
@@ -38,17 +34,21 @@ export default class DataSet {
 	}
 
 	append() {
-		var record = this.newRecord()
+		var record = new DataRow(this);
 		this.records.push(record)
 		this.recNo = this.records.length;
 		return this
 	}
 
-	delete = () => {
-		this.records.delete(this.getCurrent())
+	delete() {
+		let row = this.getCurrent;
+		if (row) {
+			this.setRecNo(this.getRecNo() - 1);
+			this.records.pop(row);
+		}
 	}
 
-	first = () => {
+	first() {
 		if (this.records.length > 0) {
 			this.recNo = 1
 		} else {
@@ -63,7 +63,7 @@ export default class DataSet {
 		return this.recNo > 0
 	}
 
-	next = () => {
+	next() {
 		if (this.records.length > 0 && this.recNo <= this.records.length) {
 			this.recNo++
 			return true
@@ -72,15 +72,15 @@ export default class DataSet {
 		}
 	}
 
-	bof = () => {
+	bof() {
 		return this.recNo === 0
 	}
 
-	eof = () => {
+	eof() {
 		return this.records.length === 0 || this.recNo > this.records.length
 	}
 
-	size = () => {
+	size() {
 		return this.records.length
 	}
 	getRecNo() {
@@ -90,10 +90,11 @@ export default class DataSet {
 		if (recNo > this.records.length) {
 			throw new Error(`RecNo ${this.recNo} 大于总长度 ${this.records.length}`)
 		} else {
-			this.recNo = recNo
+			if (recNo > -1)
+				this.recNo = recNo;
 		}
 	}
-	fetch = () => {
+	fetch() {
 		var result = false
 		if (this.fetchNo < (this.records.length - 1)) {
 			this.fetchNo++
@@ -123,7 +124,7 @@ export default class DataSet {
 		return this.head
 	}
 
-	getRecords = () => {
+	getRecords() {
 		return this.records
 	}
 
@@ -138,7 +139,7 @@ export default class DataSet {
 	getField = (field) => {
 		return this.getCurrent().getField(field)
 	}
-	close = () => {
+	close() {
 		if (this.head !== null) {
 			this.head.clear()
 		}
@@ -309,10 +310,10 @@ export default class DataSet {
 }
 
 DataSet.prototype.forEach = function (callback) {
-    var arr = this.records;
-    for (var i = 0; i < arr.length; i++)
-        callback(arr[i], i);
-    return;
+	var arr = this.records;
+	for (var i = 0; i < arr.length; i++)
+		callback(arr[i], i);
+	return;
 }
 
 // let ds = new DataSet();
@@ -332,3 +333,8 @@ DataSet.prototype.forEach = function (callback) {
 // ds2.setJson('{"meta":{"head":[{"id":[null]}],"body":[{"code":[null]},{"name":[null]}]},"head":[100],"body":[["a","jason"],["b","bade"]]}');
 // console.log(ds2.getJson())
 // console.log(ds.setMetaInfo(true).getJson());
+
+// ds2.delete();
+// console.log(ds2.getJson())
+// ds2.delete();
+// console.log(ds2.getJson())
