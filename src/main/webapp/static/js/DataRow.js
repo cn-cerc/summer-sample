@@ -29,7 +29,8 @@ export default class DataRow {
 		if (!field) {
 			throw new Error('field is null!')
 		}
-		return this.items.get(field)
+		let value = this.items.get(field);
+		return value == undefined ? null : value;
 	}
 
 	size() {
@@ -95,3 +96,5 @@ DataRow.prototype.forEach = function (callback) {
 // row.getItems().forEach((k, v) => {
 // 	console.log(k + "=" + v);
 // })
+
+// console.log(row.getField('value'));

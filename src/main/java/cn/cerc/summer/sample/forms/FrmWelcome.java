@@ -57,25 +57,18 @@ public class FrmWelcome extends AbstractForm {
         script.importModule("UIGrid", "UIGrid.js");
         script.importModule("DataSet", "DataSet.js");
         script.add("let ds = new DataSet('%s');", ds.toString());
-        script.add("export let page = new UIPage();");
+        script.add("let page = new UIPage();");
         script.add("page.setId('%s');", item.getId());
         script.add("let grid = new UIGrid(page);");
         script.add("grid.setDataSet(ds);");
         script.add("page.repaint();");
 
-        script.add("page['btnAppendClick'] = () => {");
-        script.add("alert('ok？');");
-        script.add("};");
-        
-        UIScript sp2 = new UIScript(content);
-        sp2.add("test = () => {page.btnAppendClick();};");
-
-//        script.add("page.btnAppendClick();");
-        
         UIButton button = new UIButton(content);
         button.setId("btnAppend");
         button.setText("增加一条记录");
-        button.setOnclick("test();");
+
+        script.add("document.getElementById('%s')", button.getId()).add(".addEventListener('click', ()=> {")
+                .add("ds.append();").add("page.repaint();").add("});");
 
         new UILine(content);
         if (!this.getClient().isPhone()) {

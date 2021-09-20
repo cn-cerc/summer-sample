@@ -16,14 +16,15 @@ export default class UIGrid extends UITable {
     }
 
     output(html){
+        this.components = [];
         let tr = new UITr(this);
         this.dataSet.getFieldDefs().forEach((meta) => {
             new UIText(new UITh(tr)).setText(meta);
         });
         this.dataSet.forEach((row) => {
             let tr = new UITr(this);
-            row.getItems().forEach((v, k)=>{
-                new UIText(new UITd(tr)).setText(v);
+            this.dataSet.getFieldDefs().forEach((meta)=>{
+                new UIText(new UITd(tr)).setText(row.getField(meta));
             });
         });
         super.output(html);        
