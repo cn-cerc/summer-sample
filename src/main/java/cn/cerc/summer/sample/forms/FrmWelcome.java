@@ -1,10 +1,12 @@
 package cn.cerc.summer.sample.forms;
 
 import cn.cerc.core.DataSet;
+import cn.cerc.core.Datetime;
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.summer.sample.core.ui.UICustomPage;
 import cn.cerc.ui.core.UIComponent;
+import cn.cerc.ui.vcl.UIButton;
 import cn.cerc.ui.vcl.UIScript;
 import cn.cerc.ui.vcl.UISpan;
 import cn.cerc.ui.vcl.UIText;
@@ -36,35 +38,50 @@ public class FrmWelcome extends AbstractForm {
 
         new UIUrl(content).setText("进入范例UI(免登录)").setSite("FrmUiExample?sid=88888888");
         new UILine(content);
-        
+
         DataSet ds = new DataSet();
         ds.append();
         ds.setField("code", "a");
         ds.setField("name", "jason");
+        ds.setField("appDate", new Datetime());
         ds.append();
         ds.setField("code", "b");
         ds.setField("name", "bade");
-        
+
         UISpan item = new UISpan(content).setText("summer_ui.js使用范例\n");
         item.setId("content");
-        
+
         UIScript script = new UIScript(content);
         script.setModulePath("/static/js");
         script.importModule("UIPage", "UIPage.js");
         script.importModule("UIGrid", "UIGrid.js");
         script.importModule("DataSet", "DataSet.js");
-        script.add("let page = new UIPage();");
-        script.add("page.bind('%s');", item.getId());
         script.add("let ds = new DataSet('%s');", ds.toString());
+        script.add("export let page = new UIPage();");
+        script.add("page.setId('%s');", item.getId());
         script.add("let grid = new UIGrid(page);");
         script.add("grid.setDataSet(ds);");
         script.add("page.repaint();");
+
+        script.add("page['btnAppendClick'] = () => {");
+        script.add("alert('ok？');");
+        script.add("};");
         
+        UIScript sp2 = new UIScript(content);
+        sp2.add("test = () => {page.btnAppendClick();};");
+
+//        script.add("page.btnAppendClick();");
+        
+        UIButton button = new UIButton(content);
+        button.setId("btnAppend");
+        button.setText("增加一条记录");
+        button.setOnclick("test();");
+
         new UILine(content);
         if (!this.getClient().isPhone()) {
             new UIHtmlFile(page.getFooter()).setFileName("/html/copyright.html");
         }
-        
+
         return page;
     }
 

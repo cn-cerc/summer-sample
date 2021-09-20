@@ -5,6 +5,10 @@ export default class HtmlWriter {
         this.lines.push(text);
     }
 
+    println(text) {
+        this.lines.push(text + "\n");
+    }
+
     getText() {
         let text = "";
         this.lines.forEach((line) => {
