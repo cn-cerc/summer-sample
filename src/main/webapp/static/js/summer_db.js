@@ -2,5 +2,5 @@
  * 
  */
 
-import DataRow from './DataRow.js';
-import DataSet from './DataSet.js';
+import DataRow from './db/DataRow.js';
+import DataSet from './db/DataSet.js';

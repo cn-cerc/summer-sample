@@ -1,4 +1,4 @@
-import UITable  from './UITable.js';
+import UITable from './UITable.js';
 import UITr from './UITr.js';
 import UITh from './UITh.js';
 import UITd from './UITd.js';
@@ -15,7 +15,7 @@ export default class UIGrid extends UITable {
         this.dataSet = dataSet;
     }
 
-    output(html){
+    output(html) {
         this.components = [];
         let tr = new UITr(this);
         this.dataSet.getFieldDefs().forEach((meta) => {
@@ -23,11 +23,12 @@ export default class UIGrid extends UITable {
         });
         this.dataSet.forEach((row) => {
             let tr = new UITr(this);
-            this.dataSet.getFieldDefs().forEach((meta)=>{
-                new UIText(new UITd(tr)).setText(row.getField(meta));
+            this.dataSet.getFieldDefs().forEach((meta) => {
+                let value = row.getField(meta);
+                new UIText(new UITd(tr)).setText(value == null ? "" : value);
             });
         });
-        super.output(html);        
+        super.output(html);
     }
 
 }

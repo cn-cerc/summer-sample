@@ -2,7 +2,7 @@
  * 
  */
 
-class FieldMeta {
+export default class FieldMeta {
     code;
     name;
     type;

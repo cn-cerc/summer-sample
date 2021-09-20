@@ -2,10 +2,10 @@
  * 
  */
 
-import DataSet from './DataSet.js'
-import UIPage from './UIPage.js'
-import HtmlWriter from './HtmlWriter.js'
-import UIGrid from './UIGrid.js';
+import DataSet from './db/DataSet.js'
+import UIPage from './ui/UIPage.js'
+import HtmlWriter from './ui/HtmlWriter.js'
+import UIGrid from './ui/UIGrid.js';
 
 let page = new UIPage();
 page.setRootLabel('body');

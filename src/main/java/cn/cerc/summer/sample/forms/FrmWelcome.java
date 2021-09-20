@@ -19,7 +19,7 @@ public class FrmWelcome extends AbstractForm {
     @Override
     public IPage execute() {
         UICustomPage page = new UICustomPage(this);
-//        page.addScriptFile("js/DataSet.js");
+//        page.addScriptFile("js/FrmWelcome.js", "");
         UIComponent content = page.getContent();
         new UILine(content);
 
@@ -47,28 +47,22 @@ public class FrmWelcome extends AbstractForm {
         ds.append();
         ds.setField("code", "b");
         ds.setField("name", "bade");
+        ds.append();
+        ds.setField("code", "c");
+        ds.setField("name", "owen");
 
         UISpan item = new UISpan(content).setText("summer_ui.js使用范例\n");
         item.setId("content");
 
         UIScript script = new UIScript(content);
         script.setModulePath("/static/js");
-        script.importModule("UIPage", "UIPage.js");
-        script.importModule("UIGrid", "UIGrid.js");
-        script.importModule("DataSet", "DataSet.js");
-        script.add("let ds = new DataSet('%s');", ds.toString());
-        script.add("let page = new UIPage();");
-        script.add("page.setId('%s');", item.getId());
-        script.add("let grid = new UIGrid(page);");
-        script.add("grid.setDataSet(ds);");
-        script.add("page.repaint();");
+        script.importModule("* as my", "FrmWelcome.js");
+        script.add("my.ds.setJson('%s');", ds.toJson());
+        script.add("my.page.repaint();");
 
         UIButton button = new UIButton(content);
         button.setId("btnAppend");
         button.setText("增加一条记录");
-
-        script.add("document.getElementById('%s')", button.getId()).add(".addEventListener('click', ()=> {")
-                .add("ds.append();").add("page.repaint();").add("});");
 
         new UILine(content);
         if (!this.getClient().isPhone()) {
