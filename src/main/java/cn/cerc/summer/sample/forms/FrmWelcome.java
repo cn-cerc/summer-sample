@@ -6,7 +6,6 @@ import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.summer.sample.core.ui.UICustomPage;
 import cn.cerc.ui.core.UIComponent;
-import cn.cerc.ui.vcl.UIButton;
 import cn.cerc.ui.vcl.UIScript;
 import cn.cerc.ui.vcl.UISpan;
 import cn.cerc.ui.vcl.UIText;
@@ -58,11 +57,6 @@ public class FrmWelcome extends AbstractForm {
         script.setModulePath("/static/js");
         script.importModule("* as my", "FrmWelcome.js");
         script.add("my.ds.setJson('%s');", ds.toJson());
-        script.add("my.page.repaint();");
-
-        UIButton button = new UIButton(content);
-        button.setId("btnAppend");
-        button.setText("增加一条记录");
 
         new UILine(content);
         if (!this.getClient().isPhone()) {

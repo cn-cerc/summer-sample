@@ -46,7 +46,7 @@ export default class UIComponent {
             this.propertys.forEach((v, k) => {
                 html.print(' ' + k + '="' + v + '"')
             });
-            html.println(">");
+            html.print(">");
         }
     }
 
