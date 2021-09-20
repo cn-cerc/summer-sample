@@ -298,6 +298,24 @@ export default class DataSet {
 		}
 	}
 
+	getState() {
+		return this.state;
+	}
+
+	setState(state) {
+		this.state = state;
+		return this;
+	}
+
+	getMessage() {
+		return this.message;
+	}
+
+	setMessage(message) {
+		this.message = message;
+		return this;
+	}
+
 	setMetaInfo(metaInfo) {
 		this.metaInfo = metaInfo;
 		return this;

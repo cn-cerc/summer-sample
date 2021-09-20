@@ -11,10 +11,12 @@ import cn.cerc.core.Datetime;
 import cn.cerc.db.mysql.MysqlQuery;
 import cn.cerc.mis.core.CustomService;
 import cn.cerc.mis.core.DataValidateException;
+import cn.cerc.mis.core.Permission;
 import cn.cerc.summer.sample.core.AppDB;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@Permission(Permission.GUEST)
 public class SvrExample extends CustomService {
     private static final Logger log = LoggerFactory.getLogger(SvrExample.class);
 
