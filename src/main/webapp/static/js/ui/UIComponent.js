@@ -95,6 +95,10 @@ export default class UIComponent {
             console.log("repaint error: id is null")
     }
 
+    addEventListener(htmlId, event, func) {
+        document.getElementById(htmlId).addEventListener(event, func);
+    }
+
 }
 
 // let item = new UIComponent();

@@ -44,9 +44,9 @@ export default class UIPage extends UICustomPage {
 
     repaint = () => {
         super.repaint();
-        document.getElementById('btnShow').addEventListener('click', this.btnShow);
-        document.getElementById('btnAppend').addEventListener('click', this.btnAppend);
-        document.getElementById('btnDelete').addEventListener('click', this.btnDelete);
+        this.addEventListener('btnShow', 'click', this.btnShow);
+        this.addEventListener('btnAppend', 'click', this.btnAppend);
+        this.addEventListener('btnDelete', 'click', this.btnDelete);
     }
 
 }
