@@ -9,6 +9,7 @@ export let ds = new DataSet();
 export default class UIPage extends UICustomPage {
     constructor(owner) {
         super(owner);
+        
         let btnShow = new UIButton(this);
         btnShow.setId('btnShow');
         btnShow.setText("显示");
@@ -56,6 +57,7 @@ page.setId('content');
 
 let grid = new UIGrid(page);
 grid.setDataSet(ds);
+grid.setBorder('1px');
 
 page.repaint();
 

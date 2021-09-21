@@ -19,7 +19,7 @@ export default class UIGrid extends UITable {
         this.components = [];
         let tr = new UITr(this);
         this.dataSet.getFieldDefs().forEach((meta) => {
-            new UIText(new UITh(tr)).setText(meta.getCode());
+            new UIText(new UITh(tr)).setText(meta.getName() ? meta.getName() : meta.getCode());
         });
         this.dataSet.forEach((row) => {
             let tr = new UITr(this);

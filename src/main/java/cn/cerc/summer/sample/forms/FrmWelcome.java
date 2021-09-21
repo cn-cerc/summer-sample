@@ -49,6 +49,9 @@ public class FrmWelcome extends AbstractForm {
         ds.append();
         ds.setField("code", "c");
         ds.setField("name", "owen");
+        ds.getFieldDefs().get("code").setName("代码");
+        ds.getFieldDefs().get("name").setName("名称");
+        ds.getFieldDefs().get("appDate").setName("日期");
 
         UISpan item = new UISpan(content).setText("summer_ui.js使用范例\n");
         item.setId("content");
@@ -56,7 +59,7 @@ public class FrmWelcome extends AbstractForm {
         UIScript script = new UIScript(content);
         script.setModulePath("/static/js");
         script.importModule("* as my", "FrmWelcome.js");
-        script.add("my.ds.setJson('%s');", ds.toJson());
+        script.add("my.ds.setJson('%s');", ds.setMetaInfo(true).toJson());
 
         new UILine(content);
         if (!this.getClient().isPhone()) {
