@@ -28,7 +28,7 @@ export default class UIPage extends ui.UICustomPage {
         svr.setService('SvrExample.search');
         //svr.exec(() => {
         //    ds.setJson(svr.getDataOut().getJson());
-            page.repaint();
+        this.repaint();
         //});
     };
 
