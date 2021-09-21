@@ -1,17 +1,16 @@
 
-export function assertEquals(flag, source, target) {
-    let src = null;
-    let tar = null;
+export function assertEquals(one, two, three) {
+    let flag = one;
+    let src = two;
+    let tar = three;
     switch (arguments.length) {
         case 2: {
-            src = flag;
-            tar = source;
             flag = '';
+            src = one;
+            tar = two;
             break;
         }
         case 3: {
-            src = source;
-            tar = target;
             break;
         }
         default:

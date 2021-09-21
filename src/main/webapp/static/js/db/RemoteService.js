@@ -32,15 +32,15 @@ export default class RemoteService {
         return this.dataOut;
     }
 
-    getMessage(){
+    getMessage() {
         return this.dataOut.getMessage();
     }
 
-    setHost(host){
+    setHost(host) {
         this.host = host;
     }
 
-    setService(service){
+    setService(service) {
         this.service = service;
     }
 }

@@ -5,6 +5,7 @@
 import DataRow from './DataRow.js';
 import FieldDefs from './FieldDefs.js';
 import SearchDataSet from './SearchDataSet.js';
+import * as JUnit from '../junit/JUnit.js';
 
 export default class DataSet {
 	recNo = 0;
@@ -182,11 +183,17 @@ export default class DataSet {
 		if (this.metaInfo) {
 			json.meta = {};
 
-			if (this.getHead().size() > 0) {
+			if (this.getHead().getFieldDefs().size() > 0) {
 				let head = [];
-				this.getHead().getItems().forEach((v, k) => {
+				this.getHead().getFieldDefs().forEach(meta => {
 					let item = {};
-					item[k] = [null];
+					if (meta.getRemark()) {
+						item[meta.getCode()] = [meta.getType(), meta.getName(), meta.getRemark()];
+					} else if (meta.getName()) {
+						item[meta.getCode()] = [meta.getType(), meta.getName()];
+					} else {
+						item[meta.getCode()] = [meta.getType()];
+					}
 					head.push(item);
 				})
 				json.meta.head = head;
@@ -194,9 +201,15 @@ export default class DataSet {
 
 			if (this.records.length > 0) {
 				let body = [];
-				this.getFieldDefs().forEach((field) => {
+				this.getFieldDefs().forEach((meta) => {
 					let item = {};
-					item[field] = [null];
+					if (meta.getRemark()) {
+						item[meta.getCode()] = [meta.getType(), meta.getName(), meta.getRemark()];
+					} else if (meta.getName()) {
+						item[meta.getCode()] = [meta.getType(), meta.getName()];
+					} else {
+						item[meta.getCode()] = [meta.getType()];
+					}
 					body.push(item);
 				});
 				json.meta.body = body;
@@ -206,7 +219,7 @@ export default class DataSet {
 			if (this.metaInfo) {
 				json.head = []
 				this.head.getFieldDefs().forEach((field) => {
-					json.head.push(this.head.getField(field))
+					json.head.push(this.head.getField(field.getCode()))
 				})
 			} else {
 				json.head = this.head.getJson()
@@ -218,7 +231,7 @@ export default class DataSet {
 			if (!this.metaInfo) {
 				let item = [];
 				this.getFieldDefs().forEach((field) => {
-					item.push(field);
+					item.push(field.getCode());
 				});
 				json.body.push(item);
 			};
@@ -226,7 +239,7 @@ export default class DataSet {
 			this.forEach((record) => {
 				var item = []
 				this.getFieldDefs().forEach((field) => {
-					item.push(record.getField(field))
+					item.push(record.getField(field.getCode()))
 				})
 				json.body.push(item)
 			});
@@ -254,12 +267,21 @@ export default class DataSet {
 
 		var fields = [];
 		if (jsonObj.hasOwnProperty('meta')) {
+			this.setMetaInfo(true);
 			this.meta = jsonObj.meta;
 			if (this.meta.head) {
 				this.head = new DataRow();
 				var i = 0;
 				this.meta.head.forEach((map) => {
 					for (let key in map) {
+						let values = map[key];
+						let meta = this.head.getFieldDefs().add(key);
+						if (values.length > 2)
+							meta.setRemark(values[2]);
+						if (values.length > 1)
+							meta.setName(values[1]);
+						if (values.length > 0)
+							meta.setType(values[0]);
 						this.head.setField(key, jsonObj.head[i]);
 						i = i + 1;
 					}
@@ -269,12 +291,21 @@ export default class DataSet {
 				var i = 0;
 				this.meta.body.forEach((map) => {
 					for (let key in map) {
+						let values = map[key];
+						let meta = this.getFieldDefs().add(key);
+						if (values.length > 2)
+							meta.setRemark(values[2]);
+						if (values.length > 1)
+							meta.setName(values[1]);
+						if (values.length > 0)
+							meta.setType(values[0]);
 						fields[i] = key;
 						i = i + 1;
 					}
 				});
 			}
 		} else {
+			this.setMetaInfo(false);
 			if (jsonObj.hasOwnProperty('head'))
 				this.head = jsonObj.head;
 		}
@@ -296,6 +327,7 @@ export default class DataSet {
 			}
 			this.first()
 		}
+		return this;
 	}
 
 	getState() {
@@ -342,17 +374,18 @@ DataSet.prototype.forEach = function (callback) {
 // ds.append();
 // ds.setField('code', 'b');
 // ds.setField('name', 'bade');
-// console.log(ds.getJson());
+// ds.getFieldDefs().get("code").setName("代码");
+// JUnit.assertEquals(1, ds.getJson(), '{"head":{"id":100},"body":[["code","name"],["a","jason"],["b","bade"]]}');
+// JUnit.assertEquals(2, ds.setMetaInfo(true).getJson(), '{"meta":{"head":[{"id":[null]}],"body":[{"code":[null,"代码"]},{"name":[null]}]},"head":[100],"body":[["a","jason"],["b","bade"]]}')
+// JUnit.assertEquals(3, ds.setMetaInfo(false).getJson(), '{"head":{"id":100},"body":[["code","name"],["a","jason"],["b","bade"]]}');
+// JUnit.assertEquals(4, ds.setMetaInfo(false).getJson(), '{"head":{"id":100},"body":[["code","name"],["a","jason"],["b","bade"]]}');
 
-// console.log(ds.setMetaInfo(true).getJson());
-// console.log(ds.setMetaInfo(false).getJson());
+// let json = '{"meta":{"head":[{"id":["n1","ID","DataID"]}],"body":[{"code":[null]},{"name":["s10","代码"]}]},"head":[100],"body":[["a","jason"],["b","bade"]]}';
+// let ds2 = new DataSet().setJson(json);
+// JUnit.assertEquals(11, ds2.getJson(), json);
 
-// let ds2 = new DataSet();
-// ds2.setJson('{"meta":{"head":[{"id":[null]}],"body":[{"code":[null]},{"name":[null]}]},"head":[100],"body":[["a","jason"],["b","bade"]]}');
-// console.log(ds2.getJson())
-// console.log(ds.setMetaInfo(true).getJson());
-
+// ds2.setMetaInfo(false);
 // ds2.delete();
-// console.log(ds2.getJson())
+// JUnit.assertEquals(13, ds2.getJson(), '{"head":{"id":100},"body":[["code","name"],["a","jason"]]}');
 // ds2.delete();
-// console.log(ds2.getJson())
+// JUnit.assertEquals(14, ds2.getJson(), '{"head":{"id":100}}');
