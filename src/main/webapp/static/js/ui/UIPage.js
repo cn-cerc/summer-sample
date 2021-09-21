@@ -1,6 +1,6 @@
 import UIComponent  from "./UIComponent.js";
 
-export default class UICustomPage extends UIComponent {
+export default class UIPage extends UIComponent {
 
     constructor(owner) {
         super(owner);

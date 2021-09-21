@@ -1,67 +1,63 @@
 import * as db from "./SummerDB.js";
 import * as ui from "./SummerUI.js";
 
-export let ds = new db.DataSet();
+export default class FrmWelcome extends ui.UIPage {
+    ds = new db.DataSet();
+    grid = new ui.UIGrid().setId('grid').setDataSet(this.ds).setBorder('1px');
+    edtCode = new ui.UIInput().setId('edtCode').setName('edtCode');
+    btnDelete = new ui.UIButton().setId('btnDelete').setText("删除");
+    btnShow = new ui.UIButton().setId('btnShow').setText("远程");
+    btnAppend = new ui.UIButton().setId('btnAppend').setText("增加");
 
-export default class UIPage extends ui.UICustomPage {
     constructor(owner) {
         super(owner);
 
-        let btnShow = new ui.UIButton(this);
-        btnShow.setId('btnShow');
-        btnShow.setText("显示");
-
+        this.btnDelete.setOwner(this);
         new ui.UISpan(this).setText(' ');
-        let btnAppend = new ui.UIButton(this);
-        btnAppend.setId('btnAppend');
-        btnAppend.setText("增加");
+        this.btnShow.setOwner(this);
+        new ui.UILine(this);
 
-        new ui.UISpan(this).setText(' ');
-        let btnDelete = new ui.UIButton(this);
-        btnDelete.setId('btnDelete');
-        btnDelete.setText("删除");
+        this.grid.setOwner(this);
+        
+        let form = new ui.UIDiv(this);
+        this.edtCode.setOwner(form).writerProperty('value', 'hello');
+        new ui.UISpan(form).setText(' ');
+        this.btnAppend.setOwner(form);
     }
 
-    btnShow = () => {
+    bindEvent() {
+        this.addEventListener('btnShow', 'click', this.btnShowClick);
+        this.addEventListener('btnAppend', 'click', this.btnAppendClick);
+        this.addEventListener('btnDelete', 'click', this.btnDeleteClick);
+    }
+
+    getDataSet() {
+        return this.ds;
+    }
+
+    btnShowClick = () => {
         let svr = new db.RemoteService(this);
         svr.setHost('http://127.0.0.1/services/');
         svr.setService('SvrExample.search');
         //svr.exec(() => {
         //    ds.setJson(svr.getDataOut().getJson());
-        this.repaint();
+        this.grid.paint();
         //});
     };
 
-    btnAppend = () => {
-        ds.append();
-        ds.setField('code', 'd');
-        ds.setField('name', 'abcd');
-        ds.setField('size', ds.size());
-        this.repaint();
+    btnAppendClick = () => {
+        this.ds.append();
+        this.ds.setField('code', 'd');
+        this.ds.setField('name', this.edtCode.getHtmlValue());
+        this.ds.setField('size', this.ds.size());
+        this.grid.paint();
     };
 
-    btnDelete = () => {
-        ds.delete();
-        this.repaint();
+    btnDeleteClick = () => {
+        this.ds.delete();
+        this.grid.paint();
 
     };
-
-    repaint = () => {
-        super.repaint();
-        this.addEventListener('btnShow', 'click', this.btnShow);
-        this.addEventListener('btnAppend', 'click', this.btnAppend);
-        this.addEventListener('btnDelete', 'click', this.btnDelete);
-    }
-
 }
 
-export let page = new UIPage();
-page.setId('content');
-
-let grid = new ui.UIGrid(page);
-grid.setDataSet(ds);
-grid.setBorder('1px');
-
-page.repaint();
-
-
+export let page = new FrmWelcome().setId('content');

@@ -4,22 +4,42 @@ export default class UIComponent {
     owner;
     origin;
     rootLabel;
-    components = [];
+    components = new Set();
     propertys = new Map();
 
     constructor(owner) {
         this.owner = owner;
+        this.setOwner(owner);
+    }
+
+    setOwner(owner) {
+        if (this.owner) {
+            this.owner.removeComponent(this);
+        }
         if (owner) {
-            if (owner.origin)
-                this.origin = owner.origin;
-            else
-                this.origin = owner;
             owner.addComponent(this);
         }
+        this.owner = owner;
+        return this;
     }
 
     addComponent(component) {
-        this.components.push(component);
+        if (component != null && !this.components.has(component)) {
+            component.owner = this;
+            if (component.origin == null)
+                component.origin = this.origin != null ? this.origin : this;
+            this.components.add(component);
+        }
+        return this;
+    }
+
+    removeComponent(component) {
+        if (component != null) {
+            if (component.origin == component.owner)
+                component.origin = null;
+            component.owner = null;
+            this.components.delete(component);
+        }
         return this;
     }
 
@@ -28,7 +48,7 @@ export default class UIComponent {
     }
 
     getComponentCount() {
-        return this.components.length;
+        return this.components.size();
     }
 
     setRootLabel(value) {
@@ -82,12 +102,18 @@ export default class UIComponent {
         return this;
     }
 
-    repaint() {
+    bindEvent() {
+
+    }
+
+    paint() {
         if (this.getId()) {
             let html = new HtmlWriter();
             this.output(html);
-            if (typeof document !== "undefined" && document !== null)
+            if (typeof document !== "undefined" && document !== null) {
                 document.getElementById(this.getId()).innerHTML = html.getText();
+                this.bindEvent();
+            }
             else
                 console.log(html.getText());
         }
@@ -104,4 +130,14 @@ export default class UIComponent {
 // let item = new UIComponent();
 // item.setRootLabel('div');
 // item.setId('aaaa');
-// item.repaint();
+// item.paint();
+
+
+// let child = new UIComponent();
+// child.setRootLabel('child');
+// child.setOwner(item);
+
+// item.paint();
+// console.log(child);
+
+
