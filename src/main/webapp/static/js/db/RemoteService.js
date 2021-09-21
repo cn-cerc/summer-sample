@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+//import fetch from "node-fetch";
 import DataSet from "./DataSet.js";
 
 let _this = null;
@@ -15,17 +15,17 @@ export default class RemoteService {
     }
 
     exec(func) {
-        fetch(this.host + this.service, { method: 'POST' }).then(function (response) {
-            var contentType = response.headers.get("content-type");
-            if ("application/json;charset=utf-8" == contentType)
-                return response.json();
-            else
-                throw new Error('not support: ' + contentType);
-        }).then(function (data) {
-            // console.log(data);
-            _this.dataOut = new DataSet(JSON.stringify(data));
+        // fetch(this.host + this.service, { method: 'POST' }).then(function (response) {
+        //     var contentType = response.headers.get("content-type");
+        //     if ("application/json;charset=utf-8" == contentType)
+        //         return response.json();
+        //     else
+        //         throw new Error('not support: ' + contentType);
+        // }).then(function (data) {
+        //     // console.log(data);
+        //     _this.dataOut = new DataSet(JSON.stringify(data));
             func.call();
-        });
+        // });
     }
 
     getDataSet() {

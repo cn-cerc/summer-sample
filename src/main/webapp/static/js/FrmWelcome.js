@@ -1,32 +1,35 @@
-import DataSet from "./db/DataSet.js";
-import UIGrid from "./ui/UIGrid.js";
-import UIButton from "./ui/UIButton.js";
-import UISpan from "./ui/UISpan.js";
-import UICustomPage from "./ui/UICustomPage.js";
+import * as db from "./SummerDB.js";
+import * as ui from "./SummerUI.js";
 
-export let ds = new DataSet();
+export let ds = new db.DataSet();
 
-export default class UIPage extends UICustomPage {
+export default class UIPage extends ui.UICustomPage {
     constructor(owner) {
         super(owner);
-        
-        let btnShow = new UIButton(this);
+
+        let btnShow = new ui.UIButton(this);
         btnShow.setId('btnShow');
         btnShow.setText("显示");
 
-        new UISpan(this).setText(' ');
-        let btnAppend = new UIButton(this);
+        new ui.UISpan(this).setText(' ');
+        let btnAppend = new ui.UIButton(this);
         btnAppend.setId('btnAppend');
         btnAppend.setText("增加");
 
-        new UISpan(this).setText(' ');
-        let btnDelete = new UIButton(this);
+        new ui.UISpan(this).setText(' ');
+        let btnDelete = new ui.UIButton(this);
         btnDelete.setId('btnDelete');
         btnDelete.setText("删除");
     }
 
     btnShow = () => {
-        page.repaint();
+        let svr = new db.RemoteService(this);
+        svr.setHost('http://127.0.0.1/services/');
+        svr.setService('SvrExample.search');
+        //svr.exec(() => {
+        //    ds.setJson(svr.getDataOut().getJson());
+            page.repaint();
+        //});
     };
 
     btnAppend = () => {
@@ -55,7 +58,7 @@ export default class UIPage extends UICustomPage {
 export let page = new UIPage();
 page.setId('content');
 
-let grid = new UIGrid(page);
+let grid = new ui.UIGrid(page);
 grid.setDataSet(ds);
 grid.setBorder('1px');
 
