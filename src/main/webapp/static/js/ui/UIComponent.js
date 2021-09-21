@@ -125,6 +125,14 @@ export default class UIComponent {
         document.getElementById(htmlId).addEventListener(event, func);
     }
 
+    get name(){
+        return this.readProperty('name');
+    }
+
+    set name(value){
+        this.writerProperty('name', value);
+        return this;
+    }
 }
 
 // let item = new UIComponent();
@@ -136,8 +144,7 @@ export default class UIComponent {
 // let child = new UIComponent();
 // child.setRootLabel('child');
 // child.setOwner(item);
-
 // item.paint();
-// console.log(child);
 
-
+// item.name = 'abcd';
+// console.log(item.name);
