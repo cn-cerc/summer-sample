@@ -1,6 +1,6 @@
-import UIComponent from "./UIComponent.js";
+import TComponent from "./TComponent.js";
 
-export default class UIText extends UIComponent {
+export default class TText extends TComponent {
     text;
 
     constructor(owner) {

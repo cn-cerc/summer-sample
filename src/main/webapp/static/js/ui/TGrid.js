@@ -1,10 +1,10 @@
-import UITable from './UITable.js';
-import UITr from './UITr.js';
-import UITh from './UITh.js';
-import UITd from './UITd.js';
-import UIText from './UIText.js';
+import TTable from './TTable.js';
+import TTr from './TTr.js';
+import TTh from './TTh.js';
+import TTd from './TTd.js';
+import TText from './TText.js';
 
-export default class UIGrid extends UITable {
+export default class TGrid extends TTable {
     dataSet;
 
     constructor(owner) {
@@ -18,15 +18,15 @@ export default class UIGrid extends UITable {
 
     output(html) {
         this.getComponents().clear();
-        let tr = new UITr(this);
+        let tr = new TTr(this);
         this.dataSet.getFieldDefs().forEach((meta) => {
-            new UIText(new UITh(tr)).setText(meta.getName() ? meta.getName() : meta.getCode());
+            new TText(new TTh(tr)).setText(meta.getName() ? meta.getName() : meta.getCode());
         });
         this.dataSet.forEach((row) => {
-            let tr = new UITr(this);
+            let tr = new TTr(this);
             this.dataSet.getFieldDefs().forEach((meta) => {
                 let value = row.getField(meta.getCode());
-                new UIText(new UITd(tr)).setText(value == null ? "" : value);
+                new TText(new TTd(tr)).setText(value == null ? "" : value);
             });
         });
         super.output(html);

@@ -1,7 +1,7 @@
-import UIComponent from "./UIComponent.js";
-import UIText from "./UIText.js";
+import TComponent from "./TComponent.js";
+import TText from "./TText.js";
 
-export default class UISpan extends UIComponent {
+export default class TSpan extends TComponent {
     span;
 
     constructor(owner) {
@@ -11,7 +11,7 @@ export default class UISpan extends UIComponent {
 
     setText(text) {
         if (!this.span) {
-            this.span = new UIText(this);
+            this.span = new TText(this);
         }
         this.span.setText(text);
         return this;

@@ -1,6 +1,6 @@
-import UIComponent from "./UIComponent.js";
+import TComponent from "./TComponent.js";
 
-export default class UITable extends UIComponent {
+export default class TTable extends TComponent {
 
     constructor(owner) {
         super(owner);

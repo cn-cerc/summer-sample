@@ -1,26 +1,26 @@
 import * as ci from "./SummerCI.js";
 
-export default class FrmWelcome extends ci.UIPage {
+export default class FrmWelcome extends ci.TPage {
     ds = new ci.DataSet();
-    grid = new ci.UIGrid().setId('grid').setDataSet(this.ds).setBorder('1px');
-    edtCode = new ci.UIInput().setId('edtCode').setName('edtCode');
-    btnDelete = new ci.UIButton().setId('btnDelete').setText("删除");
-    btnShow = new ci.UIButton().setId('btnShow').setText("远程");
-    btnAppend = new ci.UIButton().setId('btnAppend').setText("增加");
+    grid = new ci.TGrid().setId('grid').setDataSet(this.ds).setBorder('1px');
+    edtCode = new ci.TInput().setId('edtCode').setName('edtCode');
+    btnDelete = new ci.TButton().setId('btnDelete').setText("删除");
+    btnShow = new ci.TButton().setId('btnShow').setText("远程");
+    btnAppend = new ci.TButton().setId('btnAppend').setText("增加");
 
     constructor(owner) {
         super(owner);
 
         this.btnDelete.setOwner(this);
-        new ci.UISpan(this).setText(' ');
+        new ci.TSpan(this).setText(' ');
         this.btnShow.setOwner(this);
-        new ci.UILine(this);
+        new ci.TLine(this);
 
         this.grid.setOwner(this);
 
-        let form = new ci.UIDiv(this);
+        let form = new ci.TDiv(this);
         this.edtCode.setOwner(form).writerProperty('value', 'hello');
-        new ci.UISpan(form).setText(' ');
+        new ci.TSpan(form).setText(' ');
         this.btnAppend.setOwner(form);
     }
 

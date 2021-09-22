@@ -7,6 +7,6 @@ let ds = new ci.DataSet().setJson(json);
 
 JUnit.assertEquals(json, ds.getJson())
 
-let grid = new ci.UIGrid();
+let grid = new ci.TGrid();
 grid.setDataSet(ds);
 grid.render();

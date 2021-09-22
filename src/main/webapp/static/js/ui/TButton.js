@@ -1,6 +1,6 @@
-import UIComponent from "./UIComponent.js";
+import TComponent from "./TComponent.js";
 
-export default class UIButton extends UIComponent {
+export default class TButton extends TComponent {
     text;
 
     constructor(owner) {

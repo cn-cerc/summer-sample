@@ -1,6 +1,6 @@
 import HtmlWriter from "./HtmlWriter.js";
 
-export default class UIComponent {
+export default class TComponent {
     owner;
     origin;
     rootLabel;
@@ -150,13 +150,13 @@ export default class UIComponent {
     }
 }
 
-// let item = new UIComponent();
+// let item = new TComponent();
 // item.setRootLabel('div');
 // item.setId('aaaa');
 // item.paint();
 
 
-// let child = new UIComponent();
+// let child = new TComponent();
 // child.setRootLabel('child');
 // child.setOwner(item);
 // item.paint();

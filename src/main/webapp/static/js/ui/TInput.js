@@ -1,6 +1,6 @@
-import UIComponent from "./UIComponent.js";
+import TComponent from "./TComponent.js";
 
-export default class UIInput extends UIComponent {
+export default class TInput extends TComponent {
     
     constructor(owner) {
         super(owner);
