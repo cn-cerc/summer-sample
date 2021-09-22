@@ -32,12 +32,16 @@ export default class FieldDefs {
         return result;
     }
 
-    size(){
+    size() {
         return this.fields.length;
+    }
+
+    clear() {
+        this.fields = [];
     }
 }
 
-FieldDefs.prototype.forEach = function (callback) {
+FieldDefs.prototype.forEach = function(callback) {
     var arr = this.fields;
     for (var i = 0; i < arr.length; i++)
         callback(arr[i], i);

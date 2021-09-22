@@ -58,9 +58,11 @@ public class FrmWelcome extends AbstractForm {
 
         UIScript script = new UIScript(content);
         script.setModulePath("/static/js");
-        script.importModule("* as my", "FrmWelcome.js");
-        script.add("my.page.getDataSet().setJson('%s');", ds.setMetaInfo(true).toJson());
-        script.add("my.page.paint();");
+        script.importModule("FrmWelcome", "FrmWelcome.js");
+        script.add("let page = new FrmWelcome()");
+        script.add("page.getDataSet().setJson('%s')", ds.setMetaInfo(true).toJson());
+        script.add("page.render('%s');", item.getId());
+
         new UILine(content);
         if (!this.getClient().isPhone()) {
             new UIHtmlFile(page.getFooter()).setFileName("/html/copyright.html");

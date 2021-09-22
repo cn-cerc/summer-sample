@@ -1,7 +1,3 @@
-/**
- * 
- */
-
 import FieldDefs from "./FieldDefs.js";
 
 export default class DataRow {
@@ -12,6 +8,10 @@ export default class DataRow {
 	constructor(dataSet) {
 		this.dataSet = dataSet;
 	}
+    
+    close(){
+        this.items.clear();
+    }
 
 	setField(field, value) {
 		if (!field) {

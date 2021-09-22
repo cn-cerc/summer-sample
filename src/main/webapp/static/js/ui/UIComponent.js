@@ -4,6 +4,7 @@ export default class UIComponent {
     owner;
     origin;
     rootLabel;
+    container;
     components = new Set();
     propertys = new Map();
 
@@ -102,35 +103,49 @@ export default class UIComponent {
         return this;
     }
 
-    bindEvent() {
+    registerEvents() {
 
     }
 
-    paint() {
-        if (this.getId()) {
-            let html = new HtmlWriter();
-            this.output(html);
-            if (typeof document !== "undefined" && document !== null) {
-                document.getElementById(this.getId()).innerHTML = html.getText();
-                this.bindEvent();
-            }
-            else
-                console.log(html.getText());
+    render(container) {
+        if (container != null) {
+            this.setContainer(container);
         }
-        else
-            console.log("repaint error: id is null")
+
+        let html = new HtmlWriter();
+        this.output(html);
+        if (typeof document == "undefined" || document == null) {
+            console.log(html.getText());
+            return;
+        }
+
+        let contentId = this.container ? this.container : this.getId();
+        if (contentId) {
+            document.getElementById(contentId).innerHTML = html.getText();
+            this.registerEvents();
+        } else
+            console.log("render error: container is null")
     }
 
     addEventListener(htmlId, event, func) {
         document.getElementById(htmlId).addEventListener(event, func);
     }
 
-    get name(){
+    getName() {
         return this.readProperty('name');
     }
 
-    set name(value){
+    setName(value) {
         this.writerProperty('name', value);
+        return this;
+    }
+
+    getContainer() {
+        return this.container;
+    }
+
+    setContainer(container) {
+        this.container = container;
         return this;
     }
 }
