@@ -17,10 +17,6 @@ export default class HtmlWriter {
         return text;
     }
 
-    writeHtml(htmlId) {
-        window.document.body.innerHTML = this.getText();
-    }
-
 }
 
 // let html = new HtmlWriter();
