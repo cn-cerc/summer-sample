@@ -57,7 +57,7 @@ public class SvrExample extends CustomService {
         columns.get("createTime_").setName("创建时间");
         getDataOut().setMetaInfo(true);
         // 支持对服务结果进行过滤
-        this.setDataOut(RecordFilter.execute(getDataIn().getHead().getString("_service_filter_"), this.getDataOut()));
+        this.setDataOut(RecordFilter.execute(this.getDataOut(), getDataIn().getHead().getString("_service_filter_")));
         return true;
     }
 
