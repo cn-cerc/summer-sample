@@ -10,7 +10,7 @@ import cn.cerc.core.DataRow;
 import cn.cerc.core.Datetime;
 import cn.cerc.core.FieldDefs;
 import cn.cerc.db.mysql.MysqlQuery;
-import cn.cerc.db.other.ServiceDataFilter;
+import cn.cerc.db.other.RecordFilter;
 import cn.cerc.mis.core.CustomService;
 import cn.cerc.mis.core.DataValidateException;
 import cn.cerc.mis.core.Permission;
@@ -57,7 +57,7 @@ public class SvrExample extends CustomService {
         columns.get("createTime_").setName("创建时间");
         getDataOut().setMetaInfo(true);
         // 支持对服务结果进行过滤
-        this.setDataOut(ServiceDataFilter.execute(getDataIn().getHead().getString("_service_filter_"), this.getDataOut()));
+        this.setDataOut(RecordFilter.execute(getDataIn().getHead().getString("_service_filter_"), this.getDataOut()));
         return true;
     }
 
