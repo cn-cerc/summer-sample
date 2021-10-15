@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 
 import cn.cerc.core.DataRow;
 import cn.cerc.core.Datetime;
+import cn.cerc.core.FieldDefs;
 import cn.cerc.db.mysql.MysqlQuery;
+import cn.cerc.db.other.ServiceDataFilter;
 import cn.cerc.mis.core.CustomService;
 import cn.cerc.mis.core.DataValidateException;
 import cn.cerc.mis.core.Permission;
@@ -46,6 +48,16 @@ public class SvrExample extends CustomService {
         query.open();
         // 将sql查询出来的结果存放到服务出口返回给调用者
         getDataOut().appendDataSet(query);
+        // 返回meta讯息
+        FieldDefs columns = getDataOut().getFieldDefs();
+        columns.get("code_").setName("工号");
+        columns.get("name_").setName("姓名");
+        columns.get("sex_").setName("性别");
+        columns.get("age_").setName("年龄");
+        columns.get("createTime_").setName("创建时间");
+        getDataOut().setMetaInfo(true);
+        // 支持对服务结果进行过滤
+        this.setDataOut(ServiceDataFilter.execute(getDataIn().getHead().getString("_service_filter_"), this.getDataOut()));
         return true;
     }
 
