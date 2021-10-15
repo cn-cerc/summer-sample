@@ -77,12 +77,12 @@ public class SvrExample extends CustomService {
         DataValidateException.stopRun("该学号已经存在，不允许重复登记", !query.eof());
 
         query.append();
-        query.setField("code_", code);
-        query.setField("name_", headIn.getString("name_"));
-        query.setField("sex_", headIn.getString("sex_"));
-        query.setField("age_", headIn.getString("age_"));
-        query.setField("createTime_", new Datetime());
-        query.setField("updateTime_", new Datetime());
+        query.setValue("code_", code);
+        query.setValue("name_", headIn.getString("name_"));
+        query.setValue("sex_", headIn.getString("sex_"));
+        query.setValue("age_", headIn.getString("age_"));
+        query.setValue("createTime_", new Datetime());
+        query.setValue("updateTime_", new Datetime());
         query.post();
 
         return true;
@@ -121,9 +121,9 @@ public class SvrExample extends CustomService {
         DataValidateException.stopRun("记录不存在", query.eof());
 
         query.edit();
-        query.setField("age_", age);
-        query.setField("sex_", sex);
-        query.setField("updateTime_", new Datetime());
+        query.setValue("age_", age);
+        query.setValue("sex_", sex);
+        query.setValue("updateTime_", new Datetime());
         query.post();
         return true;
     }

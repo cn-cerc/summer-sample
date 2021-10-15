@@ -51,7 +51,7 @@ public class FrmExample extends CustomForm {
         while (dataSet.fetch()) {
             // 将性别根据编码转为汉字
             String sex = dataSet.getInt("sex_") == 0 ? "男" : "女";
-            dataSet.setField("sex_", sex);
+            dataSet.setValue("sex_", sex);
         }
         // 将数据添加到页面对象，提供给页面使用
         page.add("dataSet", dataSet);

@@ -33,8 +33,8 @@ public class UtilsExample {
 
         for (int i = 0; i < 2; i++) {
             dataSet.append();
-            dataSet.setField("code_", "code_" + i);
-            dataSet.setField("name_", "name_" + i);
+            dataSet.setValue("code_", "code_" + i);
+            dataSet.setValue("name_", "name_" + i);
         }
         log.info("dataSet 完整信息 {}", dataSet);
 

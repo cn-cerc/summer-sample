@@ -18,7 +18,7 @@ public class FrmWelcome extends AbstractForm {
     @Override
     public IPage execute() {
         UICustomPage page = new UICustomPage(this);
-//        page.addScriptFile("js/FrmWelcome.js", "");
+        page.addScriptFile("js/summer-ci.js", "");
         UIComponent content = page.getContent();
         new UILine(content);
 
@@ -40,15 +40,15 @@ public class FrmWelcome extends AbstractForm {
 
         DataSet ds = new DataSet();
         ds.append();
-        ds.setField("code", "a");
-        ds.setField("name", "jason");
-        ds.setField("appDate", new Datetime());
+        ds.setValue("code", "a");
+        ds.setValue("name", "jason");
+        ds.setValue("appDate", new Datetime());
         ds.append();
-        ds.setField("code", "b");
-        ds.setField("name", "bade");
+        ds.setValue("code", "b");
+        ds.setValue("name", "bade");
         ds.append();
-        ds.setField("code", "c");
-        ds.setField("name", "owen");
+        ds.setValue("code", "c");
+        ds.setValue("name", "owen");
         ds.getFieldDefs().get("code").setName("代码");
         ds.getFieldDefs().get("name").setName("名称");
         ds.getFieldDefs().get("appDate").setName("日期");
