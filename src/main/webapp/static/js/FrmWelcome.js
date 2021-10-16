@@ -1,4 +1,5 @@
 let page = new sci.TPage();
+page.setId("page");
 
 let form = new sci.TDiv(page);
 let edtCode = new sci.TEditText(page).setId('edtCode').setLabel("查询条件：");
@@ -46,4 +47,4 @@ window.deleteRecord = (recNo) => {
 
 let grid = new sci.TGrid(page).setId('grid').setBorder('1px');
 
-page.render("sci");
+page.render();

@@ -37,7 +37,7 @@ public class FrmWelcome extends AbstractForm {
         new UILine(content);
 
         /** sci.js使用范例 */
-        new UIDiv(content).setId("sci");
+        new UIDiv(content).setId("page");
         UIScript script = new UIScript(content);
         script.setSrc("js/FrmWelcome.js");
         /** end */
