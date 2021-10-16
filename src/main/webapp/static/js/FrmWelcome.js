@@ -1,61 +1,49 @@
-export default class FrmWelcome extends sci.TPage {
-    ds = new sci.DataSet();
-    grid = new sci.TGrid().setId('grid').setDataSet(this.ds).setBorder('1px');
-    edtCode = new sci.TInput().setId('edtCode').setName('edtCode');
-    btnDelete = new sci.TButton().setId('btnDelete').setText("删除");
-    btnShow = new sci.TButton().setId('btnShow').setText("远程");
-    btnAppend = new sci.TButton().setId('btnAppend').setText("增加");
+let page = new sci.TPage();
 
-    constructor(owner) {
-        super(owner);
+let form = new sci.TDiv(page);
+let edtCode = new sci.TEditText(page).setId('edtCode').setLabel("查询条件：");
+new sci.TSpan(form).setText(' ');
 
-        this.btnDelete.setOwner(this);
-        new sci.TSpan(this).setText(' ');
-        this.btnShow.setOwner(this);
-        new sci.TLine(this);
+let btnAppend = null;
+let btnShow = new sci.TButton(page).setId('btnShow').setText("查询");
+btnShow.addEventListener('click', () => {
+    let query = new sci.ServiceQuery();
+    query.getDataIn().getHead().setValue('code_', edtCode.getValue());
+    query.add('select code_,name_,sex_,age_,createTime_ from SvrExample.search');
+    query.open((dataOut) => {
+        grid.setDataSet(dataOut);
+        dataOut.getFieldDefs().add("opera").setName('操作').onGetText = (row, meta) => {
+            let recNo = row.getDataSet().getRecNo();
+            let a = new sci.TButton();
+            a.writeProperty("onclick", `deleteRecord(${recNo})`);
+            a.setText('删除');
+            return a.toString();
+        };
+        grid.addColumns(dataOut.getFieldDefs());
 
-        this.grid.setOwner(this);
+        if (btnAppend == null) {
+            btnAppend = new sci.TButton(page).setId('btnAppend').setText("增加");
+            btnAppend.addEventListener('click', () => {
+                let ds = grid.getDataSet();
+                ds.append();
+                ds.setValue('code_', 'd');
+                ds.setValue('name_', edtCode.getValue());
+                ds.setValue('age_', ds.size());
+                page.render();
+            });
+        }
 
-        let form = new sci.TDiv(this);
-        this.edtCode.setOwner(form).writerProperty('value', 'hello');
-        new sci.TSpan(form).setText(' ');
-        this.btnAppend.setOwner(form);
+        page.render();
+    });
+});
 
-        this.btnShow.addEventListener('click', this.btnShowClick);
-        this.btnAppend.addEventListener('click', this.btnAppendClick);
-        this.btnDelete.addEventListener('click', this.btnDeleteClick);
-    }
-
-    getDataSet() {
-        return this.ds;
-    }
-
-    btnShowClick = () => {
-        let svr = new sci.RemoteService(this);
-        svr.setService('SvrExample.search');
-        svr.exec((dataOut) => {
-            this.ds = dataOut;
-            this.grid.setDataSet(dataOut).addColumns(dataOut.getFieldDefs());
-            this.grid.render();
-        });
-    };
-
-    btnAppendClick = () => {
-        this.ds.append();
-        this.ds.setValue('corpNo_', 'd');
-        this.ds.setValue('name_', this.edtCode.getHtmlValue());
-        this.ds.setValue('size', this.ds.size());
-        this.grid.render();
-    };
-
-    btnDeleteClick = () => {
-        this.ds.last();
-        if (!this.ds.eof())
-            this.ds.delete();
-        this.grid.render();
-
-    };
+window.deleteRecord = (recNo) => {
+    let ds = grid.getDataSet();
+    ds.setRecNo(recNo);
+    ds.delete();
+    page.render();
 }
 
-// export let page = new FrmWelcome();
-// page.render();
+let grid = new sci.TGrid(page).setId('grid').setBorder('1px');
+
+page.render("sci");

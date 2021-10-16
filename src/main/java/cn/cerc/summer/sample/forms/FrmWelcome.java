@@ -1,13 +1,11 @@
 package cn.cerc.summer.sample.forms;
 
-import cn.cerc.core.DataSet;
-import cn.cerc.core.Datetime;
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.summer.sample.core.ui.UICustomPage;
 import cn.cerc.ui.core.UIComponent;
+import cn.cerc.ui.vcl.UIDiv;
 import cn.cerc.ui.vcl.UIScript;
-import cn.cerc.ui.vcl.UISpan;
 import cn.cerc.ui.vcl.UIText;
 import cn.cerc.ui.vcl.UIUrl;
 import cn.cerc.ui.vcl.ext.UIHtmlFile;
@@ -18,7 +16,7 @@ public class FrmWelcome extends AbstractForm {
     @Override
     public IPage execute() {
         UICustomPage page = new UICustomPage(this);
-        page.addScriptFile("js/summer-ci.js", "");
+        page.addScriptFile("js/sci.js", "");
         UIComponent content = page.getContent();
         new UILine(content);
 
@@ -38,30 +36,11 @@ public class FrmWelcome extends AbstractForm {
         new UIUrl(content).setText("进入范例UI(免登录)").setSite("FrmUiExample?sid=88888888");
         new UILine(content);
 
-        DataSet ds = new DataSet();
-        ds.append();
-        ds.setValue("code", "a");
-        ds.setValue("name", "jason");
-        ds.setValue("appDate", new Datetime());
-        ds.append();
-        ds.setValue("code", "b");
-        ds.setValue("name", "bade");
-        ds.append();
-        ds.setValue("code", "c");
-        ds.setValue("name", "owen");
-        ds.getFieldDefs().get("code").setName("代码");
-        ds.getFieldDefs().get("name").setName("名称");
-        ds.getFieldDefs().get("appDate").setName("日期");
-
-        UISpan item = new UISpan(content).setText("summer_ui.js使用范例\n");
-        item.setId("content");
-
+        /** sci.js使用范例 */
+        new UIDiv(content).setId("sci");
         UIScript script = new UIScript(content);
-        script.setModulePath("/static/js");
-        script.importModule("FrmWelcome", "FrmWelcome.js");
-        script.add("let page = new FrmWelcome()");
-        script.add("page.getDataSet().setJson('%s')", ds.setMetaInfo(true).toJson());
-        script.add("page.render('%s');", item.getId());
+        script.setSrc("js/FrmWelcome.js");
+        /** end */
 
         new UILine(content);
         if (!this.getClient().isPhone()) {
