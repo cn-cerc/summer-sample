@@ -10,7 +10,6 @@ import cn.cerc.core.DataRow;
 import cn.cerc.core.Datetime;
 import cn.cerc.core.FieldDefs;
 import cn.cerc.db.mysql.MysqlQuery;
-import cn.cerc.db.other.RecordFilter;
 import cn.cerc.mis.core.CustomService;
 import cn.cerc.mis.core.DataValidateException;
 import cn.cerc.mis.core.Permission;
@@ -56,8 +55,6 @@ public class SvrExample extends CustomService {
         columns.get("age_").setName("年龄");
         columns.get("createTime_").setName("创建时间");
         getDataOut().setMetaInfo(true);
-        // 支持对服务结果进行过滤
-        this.setDataOut(RecordFilter.execute(this.getDataOut(), getDataIn().getHead().getString("_service_filter_")));
         return true;
     }
 
