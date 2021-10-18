@@ -36,7 +36,7 @@ public class FrmWelcome extends AbstractForm {
         new UIUrl(content).setText("进入范例UI(免登录)").setSite("FrmUiExample?sid=88888888");
         new UILine(content);
 
-        /** sci.js使用范例 */
+        /** sci.js 使用范例 */
         new UIDiv(content).setId("page");
         UIScript script = new UIScript(content);
         script.setSrc("js/FrmWelcome.js");
