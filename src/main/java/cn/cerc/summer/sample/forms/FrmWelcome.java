@@ -16,7 +16,7 @@ public class FrmWelcome extends AbstractForm {
     @Override
     public IPage execute() {
         UICustomPage page = new UICustomPage(this);
-        page.addScriptFile("js/aui.js", "");
+        page.addScriptFile("js/autumn-ui.js", "");
         UIComponent content = page.getContent();
         new UILine(content);
 
