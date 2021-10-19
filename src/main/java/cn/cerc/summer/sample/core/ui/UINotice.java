@@ -49,24 +49,24 @@ public class UINotice extends UIComponent {
 
     public static void sendInfo(ISession session, Class<?> clazz, String key, String value) {
         try (MemoryBuffer buff = new MemoryBuffer(BufferUser.Notice_UserCode, session.getUserCode(), clazz.getName(), key)) {
-            buff.setField("level", "info");
-            buff.setField("message", value);
+            buff.setValue("level", "info");
+            buff.setValue("message", value);
             buff.setExpires(60); // 60秒过期
         }
     }
 
     public static void sendWarn(ISession session, Class<?> clazz, String key, String value) {
         try (MemoryBuffer buff = new MemoryBuffer(BufferUser.Notice_UserCode, session.getUserCode(), clazz.getName(), key)) {
-            buff.setField("level", "warn");
-            buff.setField("message", value);
+            buff.setValue("level", "warn");
+            buff.setValue("message", value);
             buff.setExpires(60); // 60秒过期
         }
     }
 
     public static void sendError(ISession session, Class<?> clazz, String key, String value) {
         try (MemoryBuffer buff = new MemoryBuffer(BufferUser.Notice_UserCode, session.getUserCode(), clazz.getName(), key)) {
-            buff.setField("level", "error");
-            buff.setField("message", value);
+            buff.setValue("level", "error");
+            buff.setValue("message", value);
             buff.setExpires(60); // 60秒过期
         }
     }

@@ -121,7 +121,7 @@ public class FrmUiExample extends CustomForm {
 
         LocalService svr1 = new LocalService(this, "SvrExample.download");
         DataRow headIn1 = svr1.getDataIn().getHead();
-        headIn1.setField("code_", code);
+        headIn1.setValue("code_", code);
         if (!svr1.exec()) {
             page.setMessage(svr1.getMessage());
             return page;
@@ -159,7 +159,7 @@ public class FrmUiExample extends CustomForm {
         String code = getRequest().getParameter("code");
         LocalService svr = new LocalService(this, "SvrExample.delete");
         DataRow headIn = svr.getDataIn().getHead();
-        headIn.setField("code_", code);
+        headIn.setValue("code_", code);
 
         UrlRecord url = new UrlRecord();
         url.setSite("FrmUiExample");

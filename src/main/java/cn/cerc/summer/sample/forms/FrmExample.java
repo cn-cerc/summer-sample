@@ -36,8 +36,8 @@ public class FrmExample extends CustomForm {
         // 获取服务的入口，用于外部专递数据给服务
         DataRow headIn = svr.getDataIn().getHead();
         // 设置专递给服务的数据
-        headIn.setField("code_", getRequest().getParameter("code"));
-        headIn.setField("searchText_", getRequest().getParameter("searchText"));
+        headIn.setValue("code_", getRequest().getParameter("code"));
+        headIn.setValue("searchText_", getRequest().getParameter("searchText"));
         // 执行服务，返回结果为boolean类型，失败将失败信息返回到页面给，服务执行正常，服务将数据存放至服务出口
         if (!svr.exec()) {
             page.setMessage(svr.getMessage());
@@ -82,10 +82,10 @@ public class FrmExample extends CustomForm {
 
         LocalService svr = new LocalService(this, "SvrExample.append");
         DataRow headIn = svr.getDataIn().getHead();
-        headIn.setField("code_", code);
-        headIn.setField("name_", name);
-        headIn.setField("sex_", sex);
-        headIn.setField("age_", age);
+        headIn.setValue("code_", code);
+        headIn.setValue("name_", name);
+        headIn.setValue("sex_", sex);
+        headIn.setValue("age_", age);
         if (!svr.exec()) {
             page.setMessage(svr.getMessage());
             return page;
@@ -114,7 +114,7 @@ public class FrmExample extends CustomForm {
 
         LocalService svr1 = new LocalService(this, "SvrExample.download");
         DataRow headIn1 = svr1.getDataIn().getHead();
-        headIn1.setField("code_", code);
+        headIn1.setValue("code_", code);
         if (!svr1.exec()) {
             page.setMessage(svr1.getMessage());
             return page;
@@ -132,9 +132,9 @@ public class FrmExample extends CustomForm {
 
             LocalService svr2 = new LocalService(this, "SvrExample.modify");
             DataRow headIn2 = svr2.getDataIn().getHead();
-            headIn2.setField("code_", code);
-            headIn2.setField("sex_", sex);
-            headIn2.setField("age_", getRequest().getParameter("age"));
+            headIn2.setValue("code_", code);
+            headIn2.setValue("sex_", sex);
+            headIn2.setValue("age_", getRequest().getParameter("age"));
             if (!svr2.exec()) {
                 page.setMessage(svr2.getMessage());
                 return page;
@@ -156,7 +156,7 @@ public class FrmExample extends CustomForm {
 
         LocalService svr = new LocalService(this, "svrExample.delete");
         DataRow headIn2 = svr.getDataIn().getHead();
-        headIn2.setField("code_", code);
+        headIn2.setValue("code_", code);
         if (!svr.exec()) {
             url.setSite("FrmExample.modify");
             url.putParam("code_", code);

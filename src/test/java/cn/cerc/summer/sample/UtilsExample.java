@@ -27,8 +27,8 @@ public class UtilsExample {
         // DataSet 范例说明
         DataSet dataSet = new DataSet();
         DataRow head = dataSet.getHead();
-        head.setField("tbNo", "AB201903270001");
-        head.setField("tDate", new Datetime());
+        head.setValue("tbNo", "AB201903270001");
+        head.setValue("tDate", new Datetime());
         log.info("dataSet 头部信息 {}", head);
 
         for (int i = 0; i < 2; i++) {
