@@ -578,13 +578,16 @@ var DataSet = /** @class */ (function () {
                     this.head.fieldDefs.forEach(function (meta) {
                         var item = {};
                         if (meta.remark) {
-                            item[meta.code] = [meta.type, meta.name, meta.remark];
+                            item[meta.code] = [meta.name, meta.type, meta.remark];
+                        }
+                        else if (meta.type) {
+                            item[meta.code] = [meta.name, meta.type];
                         }
                         else if (meta.name) {
-                            item[meta.code] = [meta.type, meta.name];
+                            item[meta.code] = [meta.name];
                         }
                         else {
-                            item[meta.code] = [meta.type];
+                            item[meta.code] = [];
                         }
                         head_1.push(item);
                     });
@@ -595,13 +598,16 @@ var DataSet = /** @class */ (function () {
                     this._fieldDefs.forEach(function (meta) {
                         var item = {};
                         if (meta.remark) {
-                            item[meta.code] = [meta.type, meta.name, meta.remark];
+                            item[meta.code] = [meta.name, meta.type, meta.remark];
+                        }
+                        else if (meta.type) {
+                            item[meta.code] = [meta.name, meta.type];
                         }
                         else if (meta.name) {
-                            item[meta.code] = [meta.type, meta.name];
+                            item[meta.code] = [meta.name];
                         }
                         else {
-                            item[meta.code] = [meta.type];
+                            item[meta.code] = [];
                         }
                         body_1.push(item);
                     });
@@ -676,9 +682,9 @@ var DataSet = /** @class */ (function () {
                             if (values.length > 2)
                                 meta.remark = values[2];
                             if (values.length > 1)
-                                meta.name = values[1];
+                                meta.type = values[1];
                             if (values.length > 0)
-                                meta.type = values[0];
+                                meta.name = values[0];
                             _this._head.setValue(key, jsonObj.head[i_1]);
                             i_1 = i_1 + 1;
                         }
@@ -693,9 +699,9 @@ var DataSet = /** @class */ (function () {
                             if (values.length > 2)
                                 meta.remark = values[2];
                             if (values.length > 1)
-                                meta.name = values[1];
+                                meta.type = values[1];
                             if (values.length > 0)
-                                meta.type = values[0];
+                                meta.name = values[0];
                             fields[i_2] = key;
                             i_2 = i_2 + 1;
                         }
@@ -1233,7 +1239,7 @@ var RemoteService = /** @class */ (function () {
             },
         }).then(function (response) {
             var contentType = response.headers.get("content-type");
-            if ("application/json;charset=utf-8" == contentType) {
+            if ("application/json;charset=utf-8".toUpperCase() == contentType.toUpperCase()) {
                 return response.json();
             }
             else {
