@@ -12,7 +12,6 @@ import cn.cerc.mis.security.SecurityService;
 @Permission(Permission.GUEST)
 public class LoginSystem implements SecurityService {
 
-    @Override
     public DataSet execute(IHandle handle, DataSet dataIn) throws ServiceException {
         DataSet out = new DataSet();
         out.getHead().setValue("token", "1234567890");
