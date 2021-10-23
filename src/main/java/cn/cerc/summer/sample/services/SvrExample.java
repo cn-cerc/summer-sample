@@ -12,7 +12,7 @@ import cn.cerc.core.FieldDefs;
 import cn.cerc.db.mysql.MysqlQuery;
 import cn.cerc.mis.core.CustomService;
 import cn.cerc.mis.core.DataValidateException;
-import cn.cerc.mis.core.Permission;
+import cn.cerc.mis.security.Permission;
 import cn.cerc.summer.sample.core.AppDB;
 
 @Component

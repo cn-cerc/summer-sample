@@ -2,10 +2,11 @@ package cn.cerc.summer.sample.services;
 
 import cn.cerc.core.DataSet;
 import cn.cerc.core.ISession;
+import cn.cerc.core.KeyValue;
 import cn.cerc.db.core.IHandle;
-import cn.cerc.mis.core.Permission;
 import cn.cerc.mis.core.ServiceException;
 import cn.cerc.mis.core.WebService;
+import cn.cerc.mis.security.Permission;
 import cn.cerc.mis.security.SecurityService;
 
 @WebService(describe = "用户登录服务")
@@ -27,6 +28,11 @@ public class LoginSystem implements SecurityService {
     @Override
     public String getPermissions(ISession session) {
         return null;
+    }
+
+    @Override
+    public void loadPermission(IHandle handle, KeyValue outParam) {
+        
     }
 
 }
