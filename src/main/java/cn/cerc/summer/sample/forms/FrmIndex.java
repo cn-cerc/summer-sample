@@ -1,5 +1,9 @@
 package cn.cerc.summer.sample.forms;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.JsonPage;
@@ -12,6 +16,8 @@ import cn.cerc.ui.vcl.UIUrl;
 import cn.cerc.ui.vcl.ext.UIHtmlFile;
 import cn.cerc.ui.vcl.ext.UILine;
 
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class FrmIndex extends AbstractForm {
 
     @Override

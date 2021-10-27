@@ -34,7 +34,7 @@ public class StartProduct implements ApplicationContextAware {
             @PathVariable String childCode) {
         FormFactory factory = context.getBean(FormFactory.class);
         try (BasicHandle handle = new BasicHandle()) {
-            String viewId = factory.getFormView(handle, request, response, "FrmProduct", "show", bookNo, partCode,
+            String viewId = factory.getView(handle, request, response, "FrmProduct", "show", bookNo, partCode,
                     childCode);
             return viewId != null ? new ModelAndView(viewId) : null;
         }

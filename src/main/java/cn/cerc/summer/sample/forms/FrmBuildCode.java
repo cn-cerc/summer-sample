@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import cn.cerc.mis.core.AbstractForm;
+import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.summer.sample.core.db.Field;
 import cn.cerc.summer.sample.core.ui.UICustomPage;
@@ -35,7 +36,7 @@ public class FrmBuildCode extends AbstractForm {
         UICustomPage page = new UICustomPage(this);
         this.setName("自动生成范例代码");
 
-        RequestReader reader = new RequestReader(this);
+        RequestReader reader = Application.getBean(RequestReader.class);
         UIForm form = new UIForm(page.getContent());
 
         UIInput input = new UIInput(form);

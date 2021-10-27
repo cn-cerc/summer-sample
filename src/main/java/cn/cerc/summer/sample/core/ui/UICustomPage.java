@@ -1,6 +1,6 @@
 package cn.cerc.summer.sample.core.ui;
 
-import cn.cerc.mis.core.IClient;
+import cn.cerc.mis.core.AppClient;
 import cn.cerc.mis.core.IForm;
 import cn.cerc.ui.page.UIAbstractPage;
 
@@ -13,7 +13,7 @@ public class UICustomPage extends UIAbstractPage {
     }
 
     @Override
-    public void initComponents(IClient client) {
+    public void initComponents(AppClient client) {
         new UIHeader(this.getHeader());
     }
 

@@ -1,14 +1,16 @@
 package cn.cerc.summer.sample.core;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.JsonPage;
 
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class CustomForm extends AbstractForm {
-
-    public void init(CustomForm owner) {
-        super.init(owner);
-    }
 
     @Override
     public IPage execute() throws Exception {

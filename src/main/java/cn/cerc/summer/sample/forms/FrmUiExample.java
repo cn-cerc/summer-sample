@@ -3,6 +3,10 @@ package cn.cerc.summer.sample.forms;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import cn.cerc.core.DataRow;
 import cn.cerc.core.DataSet;
 import cn.cerc.core.Utils;
@@ -25,6 +29,8 @@ import cn.cerc.ui.panels.UISearchPanel;
 import cn.cerc.ui.vcl.UISpan;
 import cn.cerc.ui.vcl.UIUrl;
 
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class FrmUiExample extends CustomForm {
     @Override
     public IPage execute() {

@@ -1,9 +1,15 @@
 package cn.cerc.summer.sample.forms;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.JsonPage;
 import cn.cerc.summer.sample.core.CustomForm;
 
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class FrmProduct extends CustomForm {
 
     public IPage show(String bookNo, String partCode, String childCode) throws Exception {

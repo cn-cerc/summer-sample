@@ -50,7 +50,7 @@ public class StartSample implements ApplicationContextAware {
 
         FormFactory factory = context.getBean(FormFactory.class);
         try (BasicHandle handle = new BasicHandle()) {
-            String viewId = factory.getFormView(handle, request, response, formId, funcId);
+            String viewId = factory.getView(handle, request, response, formId, funcId);
             return viewId != null ? new ModelAndView(viewId) : null;
         }
     }
