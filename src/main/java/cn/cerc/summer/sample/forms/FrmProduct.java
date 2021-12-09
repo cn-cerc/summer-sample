@@ -6,8 +6,10 @@ import org.springframework.stereotype.Component;
 
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.JsonPage;
+import cn.cerc.mis.security.Permission;
 import cn.cerc.summer.sample.core.CustomForm;
 
+@Permission(Permission.GUEST)
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class FrmProduct extends CustomForm {
@@ -20,8 +22,4 @@ public class FrmProduct extends CustomForm {
         return page.setResultMessage(true, "ok");
     }
 
-    @Override
-    public boolean logon() {
-        return true;
-    }
 }

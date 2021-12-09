@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
+import cn.cerc.mis.security.Permission;
 import cn.cerc.summer.sample.core.ui.UICustomPage;
 import cn.cerc.ui.core.UIComponent;
 import cn.cerc.ui.vcl.UIDiv;
@@ -15,6 +16,7 @@ import cn.cerc.ui.vcl.UIUrl;
 import cn.cerc.ui.vcl.ext.UIHtmlFile;
 import cn.cerc.ui.vcl.ext.UILine;
 
+@Permission(Permission.GUEST)
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class FrmWelcome extends AbstractForm {
@@ -54,12 +56,6 @@ public class FrmWelcome extends AbstractForm {
         }
 
         return page;
-    }
-
-    @Override
-    public boolean logon() {
-        // true: 此页面不需要登录即可使用
-        return true;
     }
 
 }
