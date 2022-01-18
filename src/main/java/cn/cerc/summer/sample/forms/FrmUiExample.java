@@ -7,9 +7,9 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import cn.cerc.core.DataRow;
-import cn.cerc.core.DataSet;
-import cn.cerc.core.Utils;
+import cn.cerc.db.core.DataRow;
+import cn.cerc.db.core.DataSet;
+import cn.cerc.db.core.Utils;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.LocalService;
 import cn.cerc.mis.core.RedirectPage;

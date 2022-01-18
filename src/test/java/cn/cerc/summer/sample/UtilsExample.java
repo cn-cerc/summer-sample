@@ -3,11 +3,11 @@ package cn.cerc.summer.sample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.cerc.core.DataRow;
-import cn.cerc.core.DataSet;
-import cn.cerc.core.Datetime;
-import cn.cerc.core.FastDate;
-import cn.cerc.core.Utils;
+import cn.cerc.db.core.DataRow;
+import cn.cerc.db.core.DataSet;
+import cn.cerc.db.core.Datetime;
+import cn.cerc.db.core.FastDate;
+import cn.cerc.db.core.Utils;
 
 /**
  * 框架自带工具简单的使用范例

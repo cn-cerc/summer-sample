@@ -10,7 +10,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import cn.cerc.core.ISession;
+import cn.cerc.db.core.ISession;
 import cn.cerc.mis.core.IAppLogin;
 import cn.cerc.mis.core.IForm;
 

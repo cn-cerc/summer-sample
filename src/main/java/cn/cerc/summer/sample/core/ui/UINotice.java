@@ -1,6 +1,6 @@
 package cn.cerc.summer.sample.core.ui;
 
-import cn.cerc.core.ISession;
+import cn.cerc.db.core.ISession;
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.summer.sample.core.BufferUser;

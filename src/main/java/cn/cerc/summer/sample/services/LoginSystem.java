@@ -1,10 +1,10 @@
 package cn.cerc.summer.sample.services;
 
-import cn.cerc.core.DataSet;
-import cn.cerc.core.ISession;
-import cn.cerc.core.KeyValue;
+import cn.cerc.db.core.DataSet;
 import cn.cerc.db.core.IHandle;
-import cn.cerc.mis.core.ServiceException;
+import cn.cerc.db.core.ISession;
+import cn.cerc.db.core.ServiceException;
+import cn.cerc.db.core.Variant;
 import cn.cerc.mis.core.WebService;
 import cn.cerc.mis.security.Permission;
 import cn.cerc.mis.security.SecurityService;
@@ -31,7 +31,7 @@ public class LoginSystem implements SecurityService {
     }
 
     @Override
-    public void loadPermission(IHandle handle, KeyValue outParam) {
+    public void loadPermission(IHandle handle, Variant outParam) {
         
     }
 

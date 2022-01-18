@@ -34,9 +34,9 @@ public class DitengServer implements IServiceServer {
             svr.setServer(diteng);
             svr.setService("TAppDept.Download");
             if (svr.exec())
-                System.out.println(svr.getDataOut());
+                System.out.println(svr.dataOut());
             else
-                System.out.println(svr.getDataOut());
+                System.out.println(svr.dataOut());
         }
     }
 }
