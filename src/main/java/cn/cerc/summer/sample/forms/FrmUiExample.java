@@ -47,16 +47,16 @@ public class FrmUiExample extends CustomForm {
 
         LocalService svr = new LocalService(this, "SvrExample.search");
         // 获取服务的入口，用于外部专递数据给服务
-        DataRow headIn = svr.getDataIn().getHead();
+        DataRow headIn = svr.dataIn().head();
         // 设置专递给服务的数据
         headIn.copyValues(search.getRecord());
         // 执行服务，返回结果为boolean类型，失败将失败信息返回到页面给，服务执行正常，服务将数据存放至服务出口
         if (!svr.exec()) {
-            page.setMessage(svr.getMessage());
+            page.setMessage(svr.message());
             return page;
         }
 
-        DataSet dataOut = svr.getDataOut();
+        DataSet dataOut = svr.dataOut();
 
         UIGrid grid = new UIGrid(page.getContent());
         grid.setDataSet(dataOut);
@@ -103,11 +103,11 @@ public class FrmUiExample extends CustomForm {
             // 调用SvrCorpInfo.modify服务
             LocalService svr = new LocalService(this, "SvrExample.append");
             // 传参
-            DataRow headIn = svr.getDataIn().getHead();
+            DataRow headIn = svr.dataIn().head();
             headIn.copyValues(uiform.getRecord());
             // 执行
             if (!svr.exec()) {
-                page.setMessage(svr.getMessage());
+                page.setMessage(svr.message());
                 return page;
             }
             UINotice.sendInfo(getSession(), this.getClass(), "execute", "修改成功");
@@ -126,16 +126,16 @@ public class FrmUiExample extends CustomForm {
         }
 
         LocalService svr1 = new LocalService(this, "SvrExample.download");
-        DataRow headIn1 = svr1.getDataIn().getHead();
+        DataRow headIn1 = svr1.dataIn().head();
         headIn1.setValue("code_", code);
         if (!svr1.exec()) {
-            page.setMessage(svr1.getMessage());
+            page.setMessage(svr1.message());
             return page;
         }
 
-        DataSet dataOut = svr1.getDataOut();
+        DataSet dataOut = svr1.dataOut();
         UIModifyPanel uiform = new UIModifyPanel(page.getContent());
-        uiform.setRecord(dataOut.getHead());
+        uiform.setRecord(dataOut.head());
 
         new StringColumn(uiform, "学号", "code_", 4).setReadonly(true);
         new StringColumn(uiform, "姓名", "name_", 4).setReadonly(true);
@@ -149,10 +149,10 @@ public class FrmUiExample extends CustomForm {
             // 调用SvrCorpInfo.modify服务
             LocalService svr = new LocalService(this, "SvrExample.modify");
             // 传参
-            svr.getDataIn().getHead().copyValues(uiform.getRecord());
+            svr.dataIn().head().copyValues(uiform.getRecord());
             // 执行
             if (!svr.exec()) {
-                page.setMessage(svr.getMessage());
+                page.setMessage(svr.message());
                 return page;
             }
             UINotice.sendInfo(getSession(), this.getClass(), "execute", "修改成功");
@@ -164,13 +164,13 @@ public class FrmUiExample extends CustomForm {
     public IPage delete() {
         String code = getRequest().getParameter("code");
         LocalService svr = new LocalService(this, "SvrExample.delete");
-        DataRow headIn = svr.getDataIn().getHead();
+        DataRow headIn = svr.dataIn().head();
         headIn.setValue("code_", code);
 
         UrlRecord url = new UrlRecord();
         url.setSite("FrmUiExample");
         if (!svr.exec()) {
-            UINotice.sendInfo(getSession(), this.getClass(), "execute", svr.getMessage());
+            UINotice.sendInfo(getSession(), this.getClass(), "execute", svr.message());
             return new RedirectPage(this, url.getUrl());
         }
         UINotice.sendInfo(getSession(), this.getClass(), "execute", String.format("%s 删除成功", code));

@@ -23,7 +23,7 @@ public class SvrExample extends CustomService {
 
     public boolean search() {
         // 获取外部传进来的数据
-        DataRow headIn = getDataIn().getHead();
+        DataRow headIn = dataIn().head();
         log.debug("headIn {}", headIn);
 
         // MysqlQuery 用于操作数据库，可对数据进行增删改查，在使用增删改功能前，必须查询表。
@@ -32,40 +32,40 @@ public class SvrExample extends CustomService {
         query.add("select * from %s", AppDB.TABLE_EXAMPLE);
         query.add("where 1=1 ");
         // 判断传进来的值，存在code_并且不为空
-        if (headIn.hasValue("code_")) {
+        if (headIn.has("code_")) {
             query.add("and code_='%s'", headIn.getString("code_"));
         }
 
-        if (headIn.hasValue("searchText_")) {
+        if (headIn.has("searchText_")) {
             String searchText = headIn.getString("searchText_");
             // 此处使用占位符进行%占位
             query.add("and (name_ like '%%%s%%' or age_ like '%%%s%%')", searchText, searchText);
         }
-        log.debug("sql {}", query.getSqlText().getText());
+        log.debug("sql {}", query.sql().text());
 
         // 将准备好的sql语句执行，并将结果存放于cdsTmp对象。
         query.open();
         // 将sql查询出来的结果存放到服务出口返回给调用者
-        getDataOut().appendDataSet(query);
+        dataOut().appendDataSet(query);
         // 返回meta讯息
-        FieldDefs columns = getDataOut().getFieldDefs();
+        FieldDefs columns = dataOut().fields();
         columns.get("code_").setName("工号");
         columns.get("name_").setName("姓名");
         columns.get("sex_").setName("性别");
         columns.get("age_").setName("年龄");
         columns.get("createTime_").setName("创建时间");
-        getDataOut().setMetaInfo(true);
+        dataOut().setMeta(true);
         return true;
     }
 
     public boolean append() throws DataValidateException {
-        DataRow headIn = getDataIn().getHead();
-        DataValidateException.stopRun("学号不允许为空", !headIn.hasValue("code_"));
+        DataRow headIn = dataIn().head();
+        DataValidateException.stopRun("学号不允许为空", !headIn.has("code_"));
         String code = headIn.getString("code_");
 
-        DataValidateException.stopRun("姓名不允许为空", !headIn.hasValue("name_"));
-        DataValidateException.stopRun("性别不允许为空", !headIn.hasValue("sex_"));
-        DataValidateException.stopRun("年龄不允许为空", !headIn.hasValue("age_"));
+        DataValidateException.stopRun("姓名不允许为空", !headIn.has("name_"));
+        DataValidateException.stopRun("性别不允许为空", !headIn.has("sex_"));
+        DataValidateException.stopRun("年龄不允许为空", !headIn.has("age_"));
 
         MysqlQuery query = new MysqlQuery(this);
         query.add("select * from %s", AppDB.TABLE_EXAMPLE);
@@ -86,8 +86,8 @@ public class SvrExample extends CustomService {
     }
 
     public boolean download() throws DataValidateException {
-        DataRow headIn = getDataIn().getHead();
-        DataValidateException.stopRun("code_不允许为空", !headIn.hasValue("code_"));
+        DataRow headIn = dataIn().head();
+        DataValidateException.stopRun("code_不允许为空", !headIn.has("code_"));
         String code = headIn.getString("code_");
 
         MysqlQuery query = new MysqlQuery(this);
@@ -96,16 +96,16 @@ public class SvrExample extends CustomService {
         query.open();
         DataValidateException.stopRun("记录不存在", query.eof());
 
-        getDataOut().getHead().copyValues(query.getCurrent());
+        dataOut().head().copyValues(query.current());
         return true;
     }
 
     public boolean modify() throws DataValidateException {
-        DataRow headIn = getDataIn().getHead();
-        DataValidateException.stopRun("code_ 不允许为空", !headIn.hasValue("code_"));
+        DataRow headIn = dataIn().head();
+        DataValidateException.stopRun("code_ 不允许为空", !headIn.has("code_"));
         String code = headIn.getString("code_");
 
-        DataValidateException.stopRun("sex_ 不允许为空", !headIn.hasValue("sex_"));
+        DataValidateException.stopRun("sex_ 不允许为空", !headIn.has("sex_"));
         String sex = headIn.getString("sex_");
 
         int age = headIn.getInt("age_");
@@ -126,8 +126,8 @@ public class SvrExample extends CustomService {
     }
 
     public boolean delete() throws DataValidateException {
-        DataRow headIn = getDataIn().getHead();
-        DataValidateException.stopRun("code_ 不允许为空", !headIn.hasValue("code_"));
+        DataRow headIn = dataIn().head();
+        DataValidateException.stopRun("code_ 不允许为空", !headIn.has("code_"));
         String code = headIn.getString("code_");
 
         MysqlQuery query = new MysqlQuery(this);

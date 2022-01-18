@@ -39,19 +39,19 @@ public class FrmExample extends CustomForm {
         // 本地服务，用于加载指定服务，使用指定服务功能，例如：加载服务ID：SvrExample.search，是查询功能
         LocalService svr = new LocalService(this, "SvrExample.search");
         // 获取服务的入口，用于外部专递数据给服务
-        DataRow headIn = svr.getDataIn().getHead();
+        DataRow headIn = svr.dataIn().head();
         // 设置专递给服务的数据
         headIn.setValue("code_", getRequest().getParameter("code"));
         headIn.setValue("searchText_", getRequest().getParameter("searchText"));
         // 执行服务，返回结果为boolean类型，失败将失败信息返回到页面给，服务执行正常，服务将数据存放至服务出口
         if (!svr.exec()) {
-            page.setMessage(svr.getMessage());
+            page.setMessage(svr.message());
             return page;
         }
 
         // 获取服务出口数据，DataSet类可存储一对多关系的数据，DataSet可装载二维表数据
-        DataSet dataSet = svr.getDataOut();
-        log.info("sql数据 {}", dataSet.toJson());
+        DataSet dataSet = svr.dataOut();
+        log.info("sql数据 {}", dataSet.json());
 
         while (dataSet.fetch()) {
             // 将性别根据编码转为汉字
@@ -86,13 +86,13 @@ public class FrmExample extends CustomForm {
         String age = getRequest().getParameter("age");
 
         LocalService svr = new LocalService(this, "SvrExample.append");
-        DataRow headIn = svr.getDataIn().getHead();
+        DataRow headIn = svr.dataIn().head();
         headIn.setValue("code_", code);
         headIn.setValue("name_", name);
         headIn.setValue("sex_", sex);
         headIn.setValue("age_", age);
         if (!svr.exec()) {
-            page.setMessage(svr.getMessage());
+            page.setMessage(svr.message());
             return page;
         }
 
@@ -118,13 +118,13 @@ public class FrmExample extends CustomForm {
         }
 
         LocalService svr1 = new LocalService(this, "SvrExample.download");
-        DataRow headIn1 = svr1.getDataIn().getHead();
+        DataRow headIn1 = svr1.dataIn().head();
         headIn1.setValue("code_", code);
         if (!svr1.exec()) {
-            page.setMessage(svr1.getMessage());
+            page.setMessage(svr1.message());
             return page;
         }
-        DataRow record = svr1.getDataOut().getHead();
+        DataRow record = svr1.dataOut().head();
         page.add("record", record);
 
         String submit = getRequest().getParameter("submit");
@@ -136,12 +136,12 @@ public class FrmExample extends CustomForm {
             }
 
             LocalService svr2 = new LocalService(this, "SvrExample.modify");
-            DataRow headIn2 = svr2.getDataIn().getHead();
+            DataRow headIn2 = svr2.dataIn().head();
             headIn2.setValue("code_", code);
             headIn2.setValue("sex_", sex);
             headIn2.setValue("age_", getRequest().getParameter("age"));
             if (!svr2.exec()) {
-                page.setMessage(svr2.getMessage());
+                page.setMessage(svr2.message());
                 return page;
             }
 
@@ -160,12 +160,12 @@ public class FrmExample extends CustomForm {
         String code = getRequest().getParameter("code");
 
         LocalService svr = new LocalService(this, "svrExample.delete");
-        DataRow headIn2 = svr.getDataIn().getHead();
+        DataRow headIn2 = svr.dataIn().head();
         headIn2.setValue("code_", code);
         if (!svr.exec()) {
             url.setSite("FrmExample.modify");
             url.putParam("code_", code);
-            url.putParam("message", svr.getMessage());
+            url.putParam("message", svr.message());
             return new RedirectPage(this, url.getUrl());
         }
 
