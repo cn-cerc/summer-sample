@@ -12,6 +12,8 @@ import cn.cerc.db.core.Utils;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.RedirectPage;
 import cn.cerc.mis.core.ServiceQuery;
+import cn.cerc.mis.security.Permission;
+import cn.cerc.mis.security.Webform;
 import cn.cerc.summer.sample.core.CustomForm;
 import cn.cerc.summer.sample.core.ui.UICustomPage;
 import cn.cerc.summer.sample.core.ui.UINotice;
@@ -29,6 +31,8 @@ import cn.cerc.ui.panels.UISearchPanel;
 import cn.cerc.ui.vcl.UISpan;
 import cn.cerc.ui.vcl.UIUrl;
 
+@Webform(module = "", name = "范例Ui", parent = "")
+@Permission("user.base")
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class FrmUiExample extends CustomForm {
@@ -39,6 +43,7 @@ public class FrmUiExample extends CustomForm {
         new UIUrl(page.getFrontPanel()).setText("返回").setSite("welcome");
         new UINotice(page.getFrontPanel()).receive(this, "execute");
         new UIUrl(page.getFooter()).setText("新增").setSite("FrmUiExample.append");
+
 
         UISearchPanel search = new UISearchPanel(page.getContent());
         new StringColumn(search, "编号", "code_").setPlaceholder("请输入商品编号");

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.JsonPage;
+import cn.cerc.mis.security.Permission;
+import cn.cerc.mis.security.Webform;
 import cn.cerc.summer.sample.core.ui.UICustomPage;
 import cn.cerc.summer.sample.core.ui.UIMenuBar;
 import cn.cerc.ui.core.JspFile;
@@ -16,6 +18,8 @@ import cn.cerc.ui.vcl.UIUrl;
 import cn.cerc.ui.vcl.ext.UIHtmlFile;
 import cn.cerc.ui.vcl.ext.UILine;
 
+@Webform(module = "", name = "首页", parent = "")
+@Permission("user.base")
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class FrmIndex extends AbstractForm {

@@ -7,9 +7,11 @@ import org.springframework.stereotype.Component;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.JsonPage;
 import cn.cerc.mis.security.Permission;
+import cn.cerc.mis.security.Webform;
 import cn.cerc.summer.sample.core.CustomForm;
 
-@Permission(Permission.GUEST)
+@Webform(module = "", name = "商品管理", parent = "")
+@Permission("user.base")
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class FrmProduct extends CustomForm {

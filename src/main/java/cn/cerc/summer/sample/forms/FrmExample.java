@@ -14,6 +14,8 @@ import cn.cerc.db.core.Utils;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.RedirectPage;
 import cn.cerc.mis.core.ServiceQuery;
+import cn.cerc.mis.security.Permission;
+import cn.cerc.mis.security.Webform;
 import cn.cerc.summer.sample.core.CustomForm;
 import cn.cerc.summer.sample.services.SampleServices.SvrExample;
 import cn.cerc.ui.core.JspFile;
@@ -22,6 +24,8 @@ import cn.cerc.ui.core.UrlRecord;
 /**
  * 新建的Frm类请重写 logon() 函数（详见底部），否则会被过滤器拦截
  */
+@Webform(module = "", name = "范例", parent = "")
+@Permission("user.base")
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class FrmExample extends CustomForm {

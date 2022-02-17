@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.security.Permission;
+import cn.cerc.mis.security.Webform;
 import cn.cerc.summer.sample.core.ui.UICustomPage;
 import cn.cerc.ui.core.UIComponent;
 import cn.cerc.ui.vcl.UIDiv;
@@ -16,8 +17,9 @@ import cn.cerc.ui.vcl.UIUrl;
 import cn.cerc.ui.vcl.ext.UIHtmlFile;
 import cn.cerc.ui.vcl.ext.UILine;
 
+@Webform(module = "", name = "欢迎使用 summer-sample", parent = "")
 @Permission(Permission.GUEST)
-@Component
+@Component("welcome")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class FrmWelcome extends AbstractForm {
 
