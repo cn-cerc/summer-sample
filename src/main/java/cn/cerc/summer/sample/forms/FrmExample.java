@@ -1,5 +1,7 @@
 package cn.cerc.summer.sample.forms;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -12,7 +14,9 @@ import cn.cerc.db.core.Utils;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.LocalService;
 import cn.cerc.mis.core.RedirectPage;
+import cn.cerc.mis.core.ServiceQuery;
 import cn.cerc.summer.sample.core.CustomForm;
+import cn.cerc.summer.sample.services.SampleServices.SvrExample;
 import cn.cerc.ui.core.JspFile;
 import cn.cerc.ui.core.UrlRecord;
 
@@ -36,16 +40,16 @@ public class FrmExample extends CustomForm {
             page.setMessage(message);
         }
 
-        // 本地服务，用于加载指定服务，使用指定服务功能，例如：加载服务ID：SvrExample.search，是查询功能
-        LocalService svr = new LocalService(this, "SvrExample.search");
-        // 获取服务的入口，用于外部专递数据给服务
-        DataRow headIn = svr.dataIn().head();
+        // 创建数据传输对象，用于外部专递数据给服务
+        DataRow headIn = new DataRow();
         // 设置专递给服务的数据
         headIn.setValue("code_", getRequest().getParameter("code"));
         headIn.setValue("searchText_", getRequest().getParameter("searchText"));
+        // 服务查询用于执行服务(本地或者远程)
+        ServiceQuery svr = ServiceQuery.open(this, SvrExample.search, headIn);
         // 执行服务，返回结果为boolean类型，失败将失败信息返回到页面给，服务执行正常，服务将数据存放至服务出口
-        if (!svr.exec()) {
-            page.setMessage(svr.message());
+        if (svr.isFail()) {
+            page.setMessage(svr.dataOut().message());
             return page;
         }
 
@@ -85,14 +89,14 @@ public class FrmExample extends CustomForm {
         String sex = getRequest().getParameter("sex");
         String age = getRequest().getParameter("age");
 
-        LocalService svr = new LocalService(this, "SvrExample.append");
-        DataRow headIn = svr.dataIn().head();
+        DataRow headIn = new DataRow();
         headIn.setValue("code_", code);
         headIn.setValue("name_", name);
         headIn.setValue("sex_", sex);
         headIn.setValue("age_", age);
-        if (!svr.exec()) {
-            page.setMessage(svr.message());
+        ServiceQuery svr = ServiceQuery.open(this, SvrExample.append, headIn);
+        if (svr.isFail()) {
+            page.setMessage(svr.dataOut().message());
             return page;
         }
 
@@ -117,11 +121,9 @@ public class FrmExample extends CustomForm {
             page.setMessage(message);
         }
 
-        LocalService svr1 = new LocalService(this, "SvrExample.download");
-        DataRow headIn1 = svr1.dataIn().head();
-        headIn1.setValue("code_", code);
-        if (!svr1.exec()) {
-            page.setMessage(svr1.message());
+        ServiceQuery svr1 = ServiceQuery.open(this, SvrExample.download, Map.of("code_", code));
+        if (svr1.isFail()) {
+            page.setMessage(svr1.dataOut().message());
             return page;
         }
         DataRow record = svr1.dataOut().head();
@@ -135,13 +137,13 @@ public class FrmExample extends CustomForm {
                 return page;
             }
 
-            LocalService svr2 = new LocalService(this, "SvrExample.modify");
-            DataRow headIn2 = svr2.dataIn().head();
+            DataRow headIn2 = new DataRow();
             headIn2.setValue("code_", code);
             headIn2.setValue("sex_", sex);
             headIn2.setValue("age_", getRequest().getParameter("age"));
-            if (!svr2.exec()) {
-                page.setMessage(svr2.message());
+            ServiceQuery svr2 = ServiceQuery.open(this, SvrExample.modify, headIn2);
+            if (svr2.isFail()) {
+                page.setMessage(svr2.dataOut().message());
                 return page;
             }
 
@@ -159,13 +161,11 @@ public class FrmExample extends CustomForm {
         url.setSite("FrmExample");
         String code = getRequest().getParameter("code");
 
-        LocalService svr = new LocalService(this, "svrExample.delete");
-        DataRow headIn2 = svr.dataIn().head();
-        headIn2.setValue("code_", code);
-        if (!svr.exec()) {
+        ServiceQuery svr = ServiceQuery.open(this, SvrExample.delete, Map.of("code_", code));
+        if (svr.isFail()) {
             url.setSite("FrmExample.modify");
             url.putParam("code_", code);
-            url.putParam("message", svr.message());
+            url.putParam("message", svr.dataOut().message());
             return new RedirectPage(this, url.getUrl());
         }
 

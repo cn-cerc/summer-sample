@@ -3,18 +3,21 @@ package cn.cerc.summer.sample.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Description;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import cn.cerc.db.core.DataRow;
-import cn.cerc.db.core.Datetime;
 import cn.cerc.db.core.FieldDefs;
 import cn.cerc.db.core.SqlWhere;
 import cn.cerc.db.mysql.MysqlQuery;
+import cn.cerc.mis.ado.EntityOne;
 import cn.cerc.mis.core.CustomService;
+import cn.cerc.mis.core.DataValidate;
 import cn.cerc.mis.core.DataValidateException;
 import cn.cerc.mis.security.Permission;
 import cn.cerc.summer.sample.core.AppDB;
+import cn.cerc.summer.sample.entity.Example;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -22,6 +25,7 @@ import cn.cerc.summer.sample.core.AppDB;
 public class SvrExample extends CustomService {
     private static final Logger log = LoggerFactory.getLogger(SvrExample.class);
 
+    @Description("根据条件查询人员信息")
     public boolean search() {
         // 获取外部传进来的数据
         DataRow headIn = dataIn().head();
@@ -58,37 +62,29 @@ public class SvrExample extends CustomService {
         return true;
     }
 
+    @DataValidate(value = "code_", name = "学号")
+    @DataValidate(value = "name_", name = "姓名")
+    @DataValidate(value = "sex_", name = "性别")
+    @DataValidate(value = "age_", name = "年龄")
+    @Description("新增人员信息")
     public boolean append() throws DataValidateException {
         DataRow headIn = dataIn().head();
-        DataValidateException.stopRun("学号不允许为空", !headIn.has("code_"));
         String code = headIn.getString("code_");
 
-        DataValidateException.stopRun("姓名不允许为空", !headIn.has("name_"));
-        DataValidateException.stopRun("性别不允许为空", !headIn.has("sex_"));
-        DataValidateException.stopRun("年龄不允许为空", !headIn.has("age_"));
-
-        
-        MysqlQuery query = new MysqlQuery(this);
-        query.add("select * from %s", AppDB.TABLE_EXAMPLE);
-        query.add("where code_='%s'", code);
-        query.open();
-        DataValidateException.stopRun("该学号已经存在，不允许重复登记", !query.eof());
-
-        query.append();
-        query.setValue("code_", code);
-        query.setValue("name_", headIn.getString("name_"));
-        query.setValue("sex_", headIn.getString("sex_"));
-        query.setValue("age_", headIn.getString("age_"));
-        query.setValue("createTime_", new Datetime());
-        query.setValue("updateTime_", new Datetime());
-        query.post();
+        EntityOne.open(this, Example.class, code).isPresentThrow(() -> new RuntimeException("该学号已经存在，不允许重复登记"))
+                .orElseInsert(item -> {
+                    item.setName_(headIn.getString("name_"));
+                    item.setSex_(headIn.getInt("sex_"));
+                    item.setAge_(headIn.getInt("age_"));
+                });
 
         return true;
     }
 
+    @DataValidate(value = "code_", name = "学号")
+    @Description("获取人员信息")
     public boolean download() throws DataValidateException {
         DataRow headIn = dataIn().head();
-        DataValidateException.stopRun("code_不允许为空", !headIn.has("code_"));
         String code = headIn.getString("code_");
 
         MysqlQuery query = new MysqlQuery(this);
@@ -101,43 +97,30 @@ public class SvrExample extends CustomService {
         return true;
     }
 
+    @DataValidate(value = "code_", name = "学号")
+    @DataValidate(value = "sex_", name = "性别")
+    @Description("修改人员信息")
     public boolean modify() throws DataValidateException {
         DataRow headIn = dataIn().head();
-        DataValidateException.stopRun("code_ 不允许为空", !headIn.has("code_"));
         String code = headIn.getString("code_");
-
-        DataValidateException.stopRun("sex_ 不允许为空", !headIn.has("sex_"));
-        String sex = headIn.getString("sex_");
 
         int age = headIn.getInt("age_");
         DataValidateException.stopRun("年龄不允许小于0", age <= 0);
 
-        MysqlQuery query = new MysqlQuery(this);
-        query.add("select * from %s", AppDB.TABLE_EXAMPLE);
-        query.add("where code_='%s'", code);
-        query.open();
-        DataValidateException.stopRun("记录不存在", query.eof());
-
-        query.edit();
-        query.setValue("age_", age);
-        query.setValue("sex_", sex);
-        query.setValue("updateTime_", new Datetime());
-        query.post();
+        EntityOne.open(this, Example.class, code).isEmptyThrow(() -> new RuntimeException("记录不存在")).update(item -> {
+            item.setSex_(headIn.getInt("sex_"));
+            item.setAge_(headIn.getInt("age_"));
+        });
         return true;
     }
 
+    @DataValidate(value = "code_", name = "学号")
+    @Description("删除人员信息")
     public boolean delete() throws DataValidateException {
         DataRow headIn = dataIn().head();
-        DataValidateException.stopRun("code_ 不允许为空", !headIn.has("code_"));
         String code = headIn.getString("code_");
 
-        MysqlQuery query = new MysqlQuery(this);
-        query.add("select * from %s", AppDB.TABLE_EXAMPLE);
-        query.add("where code_='%s'", code);
-        query.open();
-        DataValidateException.stopRun("记录不存在", query.eof());
-
-        query.delete();
+        EntityOne.open(this, Example.class, code).isEmptyThrow(() -> new RuntimeException("记录不存在")).delete();
         return true;
     }
 }
