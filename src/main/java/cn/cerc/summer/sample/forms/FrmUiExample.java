@@ -7,15 +7,15 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import cn.cerc.db.core.DataRow;
 import cn.cerc.db.core.DataSet;
 import cn.cerc.db.core.Utils;
 import cn.cerc.mis.core.IPage;
-import cn.cerc.mis.core.LocalService;
 import cn.cerc.mis.core.RedirectPage;
+import cn.cerc.mis.core.ServiceQuery;
 import cn.cerc.summer.sample.core.CustomForm;
 import cn.cerc.summer.sample.core.ui.UICustomPage;
 import cn.cerc.summer.sample.core.ui.UINotice;
+import cn.cerc.summer.sample.services.SampleServices.SvrExample;
 import cn.cerc.ui.columns.CustomColumn;
 import cn.cerc.ui.columns.ItColumn;
 import cn.cerc.ui.columns.OptionColumn;
@@ -45,14 +45,11 @@ public class FrmUiExample extends CustomForm {
         new StringColumn(search, "条件", "searchText_").setPlaceholder("请输入企业名称");
         search.readAll();
 
-        LocalService svr = new LocalService(this, "SvrExample.search");
-        // 获取服务的入口，用于外部专递数据给服务
-        DataRow headIn = svr.dataIn().head();
-        // 设置专递给服务的数据
-        headIn.copyValues(search.getRecord());
+        // 服务查询用于执行服务(本地或者远程)
+        ServiceQuery svr = ServiceQuery.open(this, SvrExample.search, search.getRecord());
         // 执行服务，返回结果为boolean类型，失败将失败信息返回到页面给，服务执行正常，服务将数据存放至服务出口
-        if (!svr.exec()) {
-            page.setMessage(svr.message());
+        if (svr.isFail()) {
+            page.setMessage(svr.dataOut().message());
             return page;
         }
 
@@ -69,10 +66,7 @@ public class FrmUiExample extends CustomForm {
         new ItColumn(line1.cell(0));
         new StringColumn(line1.cell(1), "学号", "code_", 4);
         new StringColumn(line2.cell(0), "姓名", "name_", 4);
-        Map<String, String> sexMap = new LinkedHashMap<String, String>();
-        sexMap.put("0", "男");
-        sexMap.put("1", "女");
-        new OptionColumn(line2.cell(1), "性别", "sex_", 6).setOptions(sexMap);
+        new OptionColumn(line2.cell(1), "性别", "sex_", 6).setOptions(Map.of("0", "男", "1", "女"));
         new StringColumn(line3.cell(0), "年龄", "age_", 2);
 
         CustomColumn customColumn = new CustomColumn(line4.cell(0));
@@ -93,21 +87,14 @@ public class FrmUiExample extends CustomForm {
 
         new StringColumn(uiform, "学号", "code_", 4).setRequired(true);
         new StringColumn(uiform, "姓名", "name_", 4).setRequired(true);
-        Map<String, String> sexMap = new LinkedHashMap<String, String>();
-        sexMap.put("0", "男");
-        sexMap.put("1", "女");
-        new OptionColumn(uiform, "性别", "sex_", 6).setOptions(sexMap);
+        new OptionColumn(uiform, "性别", "sex_", 6).setOptions(Map.of("0", "男", "1", "女"));
         new StringColumn(uiform, "年龄", "age_", 2).setRequired(true);
 
         if (!Utils.isEmpty(uiform.readAll())) {
             // 调用SvrCorpInfo.modify服务
-            LocalService svr = new LocalService(this, "SvrExample.append");
-            // 传参
-            DataRow headIn = svr.dataIn().head();
-            headIn.copyValues(uiform.getRecord());
-            // 执行
-            if (!svr.exec()) {
-                page.setMessage(svr.message());
+            ServiceQuery svr = ServiceQuery.open(this, SvrExample.append, uiform.getRecord());
+            if (svr.isFail()) {
+                page.setMessage(svr.dataOut().message());
                 return page;
             }
             UINotice.sendInfo(getSession(), this.getClass(), "execute", "修改成功");
@@ -124,12 +111,9 @@ public class FrmUiExample extends CustomForm {
             page.setMessage("code 不允许为空");
             return page;
         }
-
-        LocalService svr1 = new LocalService(this, "SvrExample.download");
-        DataRow headIn1 = svr1.dataIn().head();
-        headIn1.setValue("code_", code);
-        if (!svr1.exec()) {
-            page.setMessage(svr1.message());
+        ServiceQuery svr1 = ServiceQuery.open(this, SvrExample.download, Map.of("code_", code));
+        if (svr1.isFail()) {
+            page.setMessage(svr1.dataOut().message());
             return page;
         }
 
@@ -139,20 +123,14 @@ public class FrmUiExample extends CustomForm {
 
         new StringColumn(uiform, "学号", "code_", 4).setReadonly(true);
         new StringColumn(uiform, "姓名", "name_", 4).setReadonly(true);
-        Map<String, String> sexMap = new LinkedHashMap<String, String>();
-        sexMap.put("0", "男");
-        sexMap.put("1", "女");
-        new OptionColumn(uiform, "性别", "sex_", 6).setOptions(sexMap);
+        new OptionColumn(uiform, "性别", "sex_", 6).setOptions(Map.of("0", "男", "1", "女"));
         new StringColumn(uiform, "年龄", "age_", 2).setRequired(true);
 
         if (!Utils.isEmpty(uiform.readAll())) {
             // 调用SvrCorpInfo.modify服务
-            LocalService svr = new LocalService(this, "SvrExample.modify");
-            // 传参
-            svr.dataIn().head().copyValues(uiform.getRecord());
-            // 执行
-            if (!svr.exec()) {
-                page.setMessage(svr.message());
+            ServiceQuery svr = ServiceQuery.open(this, SvrExample.modify, uiform.getRecord());
+            if (svr.isFail()) {
+                page.setMessage(svr.dataOut().message());
                 return page;
             }
             UINotice.sendInfo(getSession(), this.getClass(), "execute", "修改成功");
@@ -163,14 +141,12 @@ public class FrmUiExample extends CustomForm {
 
     public IPage delete() {
         String code = getRequest().getParameter("code");
-        LocalService svr = new LocalService(this, "SvrExample.delete");
-        DataRow headIn = svr.dataIn().head();
-        headIn.setValue("code_", code);
-
         UrlRecord url = new UrlRecord();
         url.setSite("FrmUiExample");
-        if (!svr.exec()) {
-            UINotice.sendInfo(getSession(), this.getClass(), "execute", svr.message());
+
+        ServiceQuery svr = ServiceQuery.open(this, SvrExample.delete, Map.of("code_", code));
+        if (svr.isFail()) {
+            UINotice.sendInfo(getSession(), this.getClass(), "execute", svr.dataOut().message());
             return new RedirectPage(this, url.getUrl());
         }
         UINotice.sendInfo(getSession(), this.getClass(), "execute", String.format("%s 删除成功", code));
