@@ -66,7 +66,10 @@ public class FrmUiExample extends CustomForm {
         new ItColumn(line1.cell(0));
         new StringColumn(line1.cell(1), "学号", "code_", 4);
         new StringColumn(line2.cell(0), "姓名", "name_", 4);
-        new OptionColumn(line2.cell(1), "性别", "sex_", 6).setOptions(Map.of("0", "男", "1", "女"));
+        Map<String, String> sexMap = new LinkedHashMap<String, String>();
+        sexMap.put("0", "男");
+        sexMap.put("1", "女");
+        new OptionColumn(line2.cell(1), "性别", "sex_", 6).setOptions(sexMap);
         new StringColumn(line3.cell(0), "年龄", "age_", 2);
 
         CustomColumn customColumn = new CustomColumn(line4.cell(0));
@@ -87,7 +90,10 @@ public class FrmUiExample extends CustomForm {
 
         new StringColumn(uiform, "学号", "code_", 4).setRequired(true);
         new StringColumn(uiform, "姓名", "name_", 4).setRequired(true);
-        new OptionColumn(uiform, "性别", "sex_", 6).setOptions(Map.of("0", "男", "1", "女"));
+        Map<String, String> sexMap = new LinkedHashMap<String, String>();
+        sexMap.put("0", "男");
+        sexMap.put("1", "女");
+        new OptionColumn(uiform, "性别", "sex_", 6).setOptions(sexMap);
         new StringColumn(uiform, "年龄", "age_", 2).setRequired(true);
 
         if (!Utils.isEmpty(uiform.readAll())) {
@@ -123,7 +129,10 @@ public class FrmUiExample extends CustomForm {
 
         new StringColumn(uiform, "学号", "code_", 4).setReadonly(true);
         new StringColumn(uiform, "姓名", "name_", 4).setReadonly(true);
-        new OptionColumn(uiform, "性别", "sex_", 6).setOptions(Map.of("0", "男", "1", "女"));
+        Map<String, String> sexMap = new LinkedHashMap<String, String>();
+        sexMap.put("0", "男");
+        sexMap.put("1", "女");
+        new OptionColumn(uiform, "性别", "sex_", 6).setOptions(sexMap);
         new StringColumn(uiform, "年龄", "age_", 2).setRequired(true);
 
         if (!Utils.isEmpty(uiform.readAll())) {
