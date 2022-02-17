@@ -3,7 +3,7 @@ package cn.cerc.summer.sample.core.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.cerc.ui.core.HtmlWriter;
+import cn.cerc.mis.core.HtmlWriter;
 import cn.cerc.ui.core.UIComponent;
 import cn.cerc.ui.vcl.UIUrl;
 

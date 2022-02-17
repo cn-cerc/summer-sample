@@ -12,8 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.cerc.db.core.Handle;
+import cn.cerc.db.core.IHandle;
+import cn.cerc.db.core.ISession;
+import cn.cerc.mis.core.AppClient;
+import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.BasicHandle;
 import cn.cerc.mis.core.FormFactory;
 
@@ -37,6 +43,10 @@ public class StartSample implements ApplicationContextAware {
 
     @RequestMapping("/public/{formId}")
     public ModelAndView execute(@PathVariable String formId) {
+        HttpServletRequest req = (HttpServletRequest) request;
+
+        HttpServletResponse resp = (HttpServletResponse) response;
+        resp.setCharacterEncoding("utf-8");
         String funcId = "execute";
         String[] args = request.getRequestURI().split("/");
         for (int i = 0; i < args.length; i++) {
@@ -47,12 +57,15 @@ public class StartSample implements ApplicationContextAware {
                 break;
             }
         }
+        ISession session = context.getBean(ISession.class);
+        session.setRequest(req);
+        session.setResponse(resp);
+        context.getBean(AppClient.class).setRequest(req);
 
         FormFactory factory = context.getBean(FormFactory.class);
-        try (BasicHandle handle = new BasicHandle()) {
-            String viewId = factory.getView(handle, request, response, formId, funcId);
-            return viewId != null ? new ModelAndView(viewId) : null;
-        }
+        IHandle handle = new Handle(session);
+        String viewId = factory.getView(handle, request, response, formId, funcId);
+        return viewId != null ? new ModelAndView(viewId) : null;
     }
 
     @Override

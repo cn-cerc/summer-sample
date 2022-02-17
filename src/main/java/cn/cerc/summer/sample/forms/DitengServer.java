@@ -1,12 +1,16 @@
 package cn.cerc.summer.sample.forms;
 
+import java.util.Map;
+
 import cn.cerc.db.core.IHandle;
-import cn.cerc.mis.client.IServiceServer;
-import cn.cerc.mis.client.RemoteService;
+import cn.cerc.mis.client.ServiceExecuteException;
+import cn.cerc.mis.client.ServiceServerImpl;
 import cn.cerc.mis.core.Application;
 import cn.cerc.mis.core.BasicHandle;
+import cn.cerc.mis.core.ServiceQuery;
+import cn.cerc.summer.sample.forms.AdminServices.TAppUserInfo;
 
-public class DitengServer implements IServiceServer {
+public class DitengServer implements ServiceServerImpl {
     private final static String SITE = "http://127.0.0.1:81";
     private final static String PATH = "services";
     private String token;
@@ -21,22 +25,19 @@ public class DitengServer implements IServiceServer {
         return token;
     }
 
-    public void setToken(String token) {
+    public DitengServer setToken(String token) {
         this.token = token;
+        return this;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ServiceExecuteException {
         Application.initOnlyFramework();
         try (BasicHandle handle = new BasicHandle()) {
-            DitengServer diteng = new DitengServer();
-            diteng.setToken("257d0225506d4c17b671e5b5a5256775");
-            RemoteService svr = new RemoteService(handle);
-            svr.setServer(diteng);
-            svr.setService("TAppDept.Download");
-            if (svr.exec())
-                System.out.println(svr.dataOut());
+            ServiceQuery open = ServiceQuery.open(handle, TAppUserInfo.getUserInfo, Map.of("Code", "91100116"));
+            if (open.isOk())
+                System.out.println(open.getDataOutElseThrow());
             else
-                System.out.println(svr.dataOut());
+                System.out.println(open.getDataOutElseThrow());
         }
     }
 }

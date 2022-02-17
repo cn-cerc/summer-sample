@@ -2,9 +2,9 @@ package cn.cerc.summer.sample.core.ui;
 
 import cn.cerc.db.core.ISession;
 import cn.cerc.mis.core.AbstractForm;
+import cn.cerc.mis.core.HtmlWriter;
 import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.summer.sample.core.BufferUser;
-import cn.cerc.ui.core.HtmlWriter;
 import cn.cerc.ui.core.UIComponent;
 import cn.cerc.ui.vcl.UIImage;
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import cn.cerc.db.core.DataRow;
 import cn.cerc.db.core.Datetime;
 import cn.cerc.db.core.FieldDefs;
+import cn.cerc.db.core.SqlWhere;
 import cn.cerc.db.mysql.MysqlQuery;
 import cn.cerc.mis.core.CustomService;
 import cn.cerc.mis.core.DataValidateException;
@@ -30,17 +31,16 @@ public class SvrExample extends CustomService {
         MysqlQuery query = new MysqlQuery(this);
         // add方法追加sql语句
         query.add("select * from %s", AppDB.TABLE_EXAMPLE);
-        query.add("where 1=1 ");
+        SqlWhere where = query.addWhere();
         // 判断传进来的值，存在code_并且不为空
         if (headIn.has("code_")) {
-            query.add("and code_='%s'", headIn.getString("code_"));
+            where.eq("code_", headIn.getString("code_"));
         }
 
         if (headIn.has("searchText_")) {
-            String searchText = headIn.getString("searchText_");
-            // 此处使用占位符进行%占位
-            query.add("and (name_ like '%%%s%%' or age_ like '%%%s%%')", searchText, searchText);
+            where.like("name_", headIn.getString("searchText_"));
         }
+        where.build();
         log.debug("sql {}", query.sql().text());
 
         // 将准备好的sql语句执行，并将结果存放于cdsTmp对象。
@@ -67,6 +67,7 @@ public class SvrExample extends CustomService {
         DataValidateException.stopRun("性别不允许为空", !headIn.has("sex_"));
         DataValidateException.stopRun("年龄不允许为空", !headIn.has("age_"));
 
+        
         MysqlQuery query = new MysqlQuery(this);
         query.add("select * from %s", AppDB.TABLE_EXAMPLE);
         query.add("where code_='%s'", code);

@@ -22,17 +22,23 @@ public class LoginSystem implements SecurityService {
     @Override
     public boolean initSession(ISession session, String token) {
         session.setProperty(ISession.TOKEN, token);
+        if (token == null)
+            return false;
         return true;
     }
 
     @Override
     public String getPermissions(ISession session) {
-        return null;
+        String token = session.getToken();
+        if (token == null)
+            return null;
+        else
+            return Permission.ADMIN;
     }
 
     @Override
     public void loadPermission(IHandle handle, Variant outParam) {
-        
+
     }
 
 }
