@@ -73,6 +73,7 @@ public class SvrExample extends CustomService {
 
         EntityOne.open(this, Example.class, code).isPresentThrow(() -> new RuntimeException("该学号已经存在，不允许重复登记"))
                 .orElseInsert(item -> {
+                    item.setCode_(code);
                     item.setName_(headIn.getString("name_"));
                     item.setSex_(headIn.getInt("sex_"));
                     item.setAge_(headIn.getInt("age_"));

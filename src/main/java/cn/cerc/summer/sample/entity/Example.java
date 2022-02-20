@@ -1,7 +1,5 @@
 package cn.cerc.summer.sample.entity;
 
-import java.math.BigInteger;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,7 +35,7 @@ public class Example extends CustomEntity {
     @GeneratedValue
     @Column(length = 11, nullable = false)
     @Describe(name = "")
-    private BigInteger UID_;
+    private Integer UID_;
 
     @Column(length = 11)
     @Describe(name = "帐套")
