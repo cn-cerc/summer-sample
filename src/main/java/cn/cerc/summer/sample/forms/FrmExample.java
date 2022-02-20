@@ -129,7 +129,7 @@ public class FrmExample extends CustomForm {
             page.setMessage(svr1.dataOut().message());
             return page;
         }
-        DataRow record = svr1.dataOut().head();
+        DataRow record = svr1.dataOut().current();
         page.add("record", record);
 
         String submit = getRequest().getParameter("submit");

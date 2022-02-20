@@ -108,7 +108,7 @@ public class FrmUiExample extends CustomForm {
                 page.setMessage(svr.dataOut().message());
                 return page;
             }
-            UINotice.sendInfo(getSession(), this.getClass(), "execute", "修改成功");
+            UINotice.sendInfo(getSession(), this.getClass(), "execute", "新增成功");
             return new RedirectPage(this, "FrmUiExample");
         }
         return page;
@@ -130,7 +130,7 @@ public class FrmUiExample extends CustomForm {
 
         DataSet dataOut = svr1.dataOut();
         UIModifyPanel uiform = new UIModifyPanel(page.getContent());
-        uiform.setRecord(dataOut.head());
+        uiform.setRecord(dataOut.current());
 
         new StringColumn(uiform, "学号", "code_", 4).setReadonly(true);
         new StringColumn(uiform, "姓名", "name_", 4).setReadonly(true);
