@@ -17,7 +17,7 @@ import cn.cerc.mis.security.Webform;
 import cn.cerc.summer.sample.core.CustomForm;
 import cn.cerc.summer.sample.core.ui.UICustomPage;
 import cn.cerc.summer.sample.core.ui.UINotice;
-import cn.cerc.summer.sample.services.SampleServices.SvrExample;
+import cn.cerc.summer.sample.services.SampleServices.SvrUiExample;
 import cn.cerc.ui.columns.CustomColumn;
 import cn.cerc.ui.columns.ItColumn;
 import cn.cerc.ui.columns.OptionColumn;
@@ -44,14 +44,13 @@ public class FrmUiExample extends CustomForm {
         new UINotice(page.getFrontPanel()).receive(this, "execute");
         new UIUrl(page.getFooter()).setText("新增").setSite("FrmUiExample.append");
 
-
         UISearchPanel search = new UISearchPanel(page.getContent());
         new StringColumn(search, "编号", "code_").setPlaceholder("请输入商品编号");
         new StringColumn(search, "条件", "searchText_").setPlaceholder("请输入企业名称");
         search.readAll();
 
         // 服务查询用于执行服务(本地或者远程)
-        ServiceQuery svr = ServiceQuery.open(this, SvrExample.search, search.getRecord());
+        ServiceQuery svr = ServiceQuery.open(this, SvrUiExample.search, search.getRecord());
         // 执行服务，返回结果为boolean类型，失败将失败信息返回到页面给，服务执行正常，服务将数据存放至服务出口
         if (svr.isFail()) {
             page.setMessage(svr.dataOut().message());
@@ -103,7 +102,7 @@ public class FrmUiExample extends CustomForm {
 
         if (!Utils.isEmpty(uiform.readAll())) {
             // 调用SvrCorpInfo.modify服务
-            ServiceQuery svr = ServiceQuery.open(this, SvrExample.append, uiform.getRecord());
+            ServiceQuery svr = ServiceQuery.open(this, SvrUiExample.append, uiform.getRecord());
             if (svr.isFail()) {
                 page.setMessage(svr.dataOut().message());
                 return page;
@@ -122,7 +121,7 @@ public class FrmUiExample extends CustomForm {
             page.setMessage("code 不允许为空");
             return page;
         }
-        ServiceQuery svr1 = ServiceQuery.open(this, SvrExample.download, Map.of("code_", code));
+        ServiceQuery svr1 = ServiceQuery.open(this, SvrUiExample.download, Map.of("code_", code));
         if (svr1.isFail()) {
             page.setMessage(svr1.dataOut().message());
             return page;
@@ -142,7 +141,7 @@ public class FrmUiExample extends CustomForm {
 
         if (!Utils.isEmpty(uiform.readAll())) {
             // 调用SvrCorpInfo.modify服务
-            ServiceQuery svr = ServiceQuery.open(this, SvrExample.modify, uiform.getRecord());
+            ServiceQuery svr = ServiceQuery.open(this, SvrUiExample.modify, uiform.getRecord());
             if (svr.isFail()) {
                 page.setMessage(svr.dataOut().message());
                 return page;
@@ -158,7 +157,7 @@ public class FrmUiExample extends CustomForm {
         UrlRecord url = new UrlRecord();
         url.setSite("FrmUiExample");
 
-        ServiceQuery svr = ServiceQuery.open(this, SvrExample.delete, Map.of("code_", code));
+        ServiceQuery svr = ServiceQuery.open(this, SvrUiExample.delete, Map.of("code_", code));
         if (svr.isFail()) {
             UINotice.sendInfo(getSession(), this.getClass(), "execute", svr.dataOut().message());
             return new RedirectPage(this, url.getUrl());

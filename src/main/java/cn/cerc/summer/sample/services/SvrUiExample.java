@@ -9,23 +9,24 @@ import org.springframework.stereotype.Component;
 
 import cn.cerc.db.core.DataRow;
 import cn.cerc.db.core.DataSet;
-import cn.cerc.db.core.Datetime;
 import cn.cerc.db.core.FieldDefs;
 import cn.cerc.db.core.IHandle;
 import cn.cerc.db.core.SqlWhere;
 import cn.cerc.db.mysql.MysqlQuery;
+import cn.cerc.mis.ado.EntityOne;
 import cn.cerc.mis.core.DataValidate;
 import cn.cerc.mis.core.DataValidateException;
 import cn.cerc.mis.core.IService;
 import cn.cerc.mis.core.ServiceState;
 import cn.cerc.mis.security.Permission;
 import cn.cerc.summer.sample.core.AppDB;
+import cn.cerc.summer.sample.entity.Example;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Permission(Permission.GUEST)
-public class SvrExample implements IService {
-    private static final Logger log = LoggerFactory.getLogger(SvrExample.class);
+public class SvrUiExample implements IService {
+    private static final Logger log = LoggerFactory.getLogger(SvrUiExample.class);
 
     @Description("根据条件查询人员信息")
     public DataSet search(IHandle handle, DataRow headIn) {
@@ -70,22 +71,13 @@ public class SvrExample implements IService {
     public boolean append(IHandle handle, DataRow headIn) throws DataValidateException {
         String code = headIn.getString("code_");
 
-        MysqlQuery ds = new MysqlQuery(handle);
-        ds.add("select * from %s", AppDB.TABLE_EXAMPLE);
-        ds.add("where code_='%s'", code);
-        ds.open();
-
-        if (!ds.eof())
-            new RuntimeException("该学号已经存在，不允许重复登记");
-
-        ds.append();
-        ds.setValue("code_", code);
-        ds.setValue("name_", headIn.getString("name_"));
-        ds.setValue("sex_", headIn.getInt("sex_"));
-        ds.setValue("age_", headIn.getInt("age_"));
-        ds.setValue("createTime_", new Datetime());
-        ds.setValue("updateTime_", new Datetime());
-        ds.post();
+        EntityOne.open(handle, Example.class, code).isPresentThrow(() -> new RuntimeException("该学号已经存在，不允许重复登记"))
+                .orElseInsert(item -> {
+                    item.setCode_(code);
+                    item.setName_(headIn.getString("name_"));
+                    item.setSex_(headIn.getInt("sex_"));
+                    item.setAge_(headIn.getInt("age_"));
+                });
         return true;
     }
 
@@ -112,19 +104,10 @@ public class SvrExample implements IService {
         int age = headIn.getInt("age_");
         DataValidateException.stopRun("年龄不允许小于0", age <= 0);
 
-        MysqlQuery ds = new MysqlQuery(handle);
-        ds.add("select * from %s", AppDB.TABLE_EXAMPLE);
-        ds.add("where code_='%s'", code);
-        ds.open();
-
-        if (ds.eof())
-            new RuntimeException("记录不存在");
-
-        ds.edit();
-        ds.setValue("sex_", headIn.getInt("sex_"));
-        ds.setValue("age_", headIn.getInt("age_"));
-        ds.setValue("updateTime_", new Datetime());
-        ds.post();
+        EntityOne.open(handle, Example.class, code).isEmptyThrow(() -> new RuntimeException("记录不存在")).update(item -> {
+            item.setSex_(headIn.getInt("sex_"));
+            item.setAge_(headIn.getInt("age_"));
+        });
         return true;
     }
 
@@ -133,14 +116,7 @@ public class SvrExample implements IService {
     public boolean delete(IHandle handle, DataRow headIn) throws DataValidateException {
         String code = headIn.getString("code_");
 
-        MysqlQuery ds = new MysqlQuery(handle);
-        ds.add("select * from %s", AppDB.TABLE_EXAMPLE);
-        ds.add("where code_='%s'", code);
-        ds.open();
-
-        if (ds.eof())
-            new RuntimeException("记录不存在");
-        ds.delete();
+        EntityOne.open(handle, Example.class, code).isEmptyThrow(() -> new RuntimeException("记录不存在")).delete();
         return true;
     }
 }

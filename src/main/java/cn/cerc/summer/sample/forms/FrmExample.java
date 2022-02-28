@@ -40,9 +40,8 @@ public class FrmExample extends CustomForm {
         String message = getRequest().getParameter("message");
         if (message != null) {
             // 将消息设置到页面
-            page.setMessage(message);
+            page.getRequest().setAttribute("message", message);
         }
-
         // 创建数据传输对象，用于外部专递数据给服务
         DataRow headIn = new DataRow();
         // 设置专递给服务的数据
@@ -121,7 +120,7 @@ public class FrmExample extends CustomForm {
 
         String message = getRequest().getParameter("message");
         if (message != null) {
-            page.setMessage(message);
+            page.getRequest().setAttribute("message", message);
         }
 
         ServiceQuery svr1 = ServiceQuery.open(this, SvrExample.download, Map.of("code_", code));
