@@ -53,7 +53,7 @@ public class SvrUiExample implements IService {
         query.open();
         // 返回meta讯息
         FieldDefs columns = query.fields();
-        columns.get("code_").setName("工号");
+        columns.get("code_").setName("学号");
         columns.get("name_").setName("姓名");
         columns.get("sex_").setName("性别");
         columns.get("age_").setName("年龄");
@@ -88,7 +88,7 @@ public class SvrUiExample implements IService {
 
         MysqlQuery query = new MysqlQuery(handle);
         query.add("select * from %s", AppDB.TABLE_EXAMPLE);
-        query.add("where code_='%s'", code);
+        query.addWhere().eq("code_", code).build();
         query.open();
         DataValidateException.stopRun("记录不存在", query.eof());
         query.setStorage(false);
