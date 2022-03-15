@@ -12,4 +12,14 @@ import cn.cerc.mis.security.CustomSession;
 @Scope(WebApplicationContext.SCOPE_REQUEST)
 public class Session extends CustomSession {
 
+    @Override
+    public String getCorpNo() {
+        return "000000"; // 公司别
+    }
+
+    @Override
+    public String getUserCode() {
+        return "13700010001";// 用户代码
+    }
+
 }

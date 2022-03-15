@@ -39,4 +39,16 @@ public class SampleServices {
         public static final ServiceSign search = new ServiceSign("SvrExample.search").setVersion(3);
     }
 
+    public static class SvrUiExampleMysql {
+        public static final ServiceSign append = new ServiceSign("SvrUiExampleMysql.append").setVersion(5)
+                .setProperties(Set.of("code_", "name_", "sex_"));
+        public static final ServiceSign delete = new ServiceSign("SvrUiExampleMysql.delete").setVersion(5)
+                .setProperties(Set.of("code_"));
+        public static final ServiceSign download = new ServiceSign("SvrUiExampleMysql.download").setVersion(3)
+                .setProperties(Set.of("code_"));
+        public static final ServiceSign modify = new ServiceSign("SvrUiExampleMysql.modify").setVersion(5)
+                .setProperties(Set.of("code_", "name_", "sex_"));
+        public static final ServiceSign search = new ServiceSign("SvrUiExampleMysql.search").setVersion(3);
+    }
+
 }
