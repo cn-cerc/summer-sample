@@ -38,6 +38,10 @@ public class SvrUiExample implements IService {
         // add方法追加sql语句
         query.add("select * from %s", AppDB.TABLE_EXAMPLE);
         SqlWhere where = query.addWhere();
+        // 公司别
+        where.eq("corpNo_", handle.getCorpNo());
+        // 用户账号
+        where.eq("userCode_", handle.getUserCode());
         // 判断传进来的值，存在code_并且不为空
         if (headIn.has("code_")) {
             where.eq("code_", headIn.getString("code_"));
@@ -71,8 +75,8 @@ public class SvrUiExample implements IService {
     public boolean append(IHandle handle, DataRow headIn) throws DataValidateException {
         String code = headIn.getString("code_");
 
-        EntityOne.open(handle, Example.class, code).isPresentThrow(() -> new RuntimeException("该学号已经存在，不允许重复登记"))
-                .orElseInsert(item -> {
+        EntityOne.open(handle, Example.class, handle.getUserCode(), code)
+                .isPresentThrow(() -> new RuntimeException("该学号已经存在，不允许重复登记")).orElseInsert(item -> {
                     item.setCode_(code);
                     item.setName_(headIn.getString("name_"));
                     item.setSex_(headIn.getInt("sex_"));
@@ -88,7 +92,10 @@ public class SvrUiExample implements IService {
 
         MysqlQuery query = new MysqlQuery(handle);
         query.add("select * from %s", AppDB.TABLE_EXAMPLE);
-        query.addWhere().eq("code_", code).build();
+        SqlWhere addWhere = query.addWhere();
+        addWhere.eq("corpNo_", handle.getCorpNo());
+        addWhere.eq("userCode_", handle.getUserCode());
+        addWhere.eq("code_", code).build();
         query.open();
         DataValidateException.stopRun("记录不存在", query.eof());
         query.setStorage(false);
@@ -104,10 +111,11 @@ public class SvrUiExample implements IService {
         int age = headIn.getInt("age_");
         DataValidateException.stopRun("年龄不允许小于0", age <= 0);
 
-        EntityOne.open(handle, Example.class, code).isEmptyThrow(() -> new RuntimeException("记录不存在")).update(item -> {
-            item.setSex_(headIn.getInt("sex_"));
-            item.setAge_(headIn.getInt("age_"));
-        });
+        EntityOne.open(handle, Example.class, handle.getUserCode(), code)
+                .isEmptyThrow(() -> new RuntimeException("记录不存在")).update(item -> {
+                    item.setSex_(headIn.getInt("sex_"));
+                    item.setAge_(headIn.getInt("age_"));
+                });
         return true;
     }
 
@@ -116,7 +124,8 @@ public class SvrUiExample implements IService {
     public boolean delete(IHandle handle, DataRow headIn) throws DataValidateException {
         String code = headIn.getString("code_");
 
-        EntityOne.open(handle, Example.class, code).isEmptyThrow(() -> new RuntimeException("记录不存在")).delete();
+        EntityOne.open(handle, Example.class, handle.getUserCode(), code)
+                .isEmptyThrow(() -> new RuntimeException("记录不存在")).delete();
         return true;
     }
 }

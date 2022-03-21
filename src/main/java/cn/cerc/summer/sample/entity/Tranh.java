@@ -1,7 +1,5 @@
 package cn.cerc.summer.sample.entity;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +22,8 @@ import lombok.Setter;
 
 @Component
 @Entity
-@EntityKey(fields = { "corpNo_", "tb_", "tbNo_" }, cache = CacheLevelEnum.RedisAndSession, smallTable = true)
+@EntityKey(fields = { "corpNo_", "createUser_",
+        "tbNo_" }, corpNo = true, cache = CacheLevelEnum.RedisAndSession, smallTable = true)
 @Table(name = "s_tranh", indexes = { @Index(name = "PRIMARY", columnList = "UID_", unique = true),
         @Index(name = "uk_corpNo_tb_tbNo_", columnList = "corpNo_,tb_,tbNo_", unique = true) })
 @SqlServer(type = SqlServerType.Mysql)
@@ -53,7 +52,7 @@ public class Tranh extends CustomEntity {
 
     @Column(length = 10, nullable = false)
     @Describe(name = "日期")
-    private Date tbDate_;
+    private Datetime tbDate_;
 
     @Column(length = 128)
     @Describe(name = "备注")
@@ -75,6 +74,8 @@ public class Tranh extends CustomEntity {
     public void onInsertPost(IHandle handle) {
         super.onInsertPost(handle);
         this.setCreateDate_(new Datetime());
+        this.setCorpNo_(handle.getCorpNo());
+        this.setCreateUser_(handle.getUserCode());
     }
 
     @Override
