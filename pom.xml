@@ -5,7 +5,7 @@
     <artifactId>summer-sample</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
-    <url>https://gitee.com/mimrc/diteng-api-order.git</url>
+    <url>https://gitee.com/mimrc/summer-sample</url>
 
     <properties>
         <maven.compiler.target>11</maven.compiler.target>
