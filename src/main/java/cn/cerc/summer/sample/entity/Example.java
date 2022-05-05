@@ -83,5 +83,7 @@ public class Example extends CustomEntity {
     public void onUpdatePost(IHandle handle) {
         super.onUpdatePost(handle);
         this.setUpdateTime_(new Datetime());
+        this.setUserCode_(handle.getUserCode());
+        this.setCorpNo_(handle.getCorpNo());
     }
 }
