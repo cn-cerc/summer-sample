@@ -30,7 +30,7 @@ public class SvrUiExampleMysql implements IService {
         // MysqlQuery 用于操作数据库，可对数据进行增删改查，在使用增删改功能前，必须查询表。
         MysqlQuery query = new MysqlQuery(handle);
         // add方法追加sql语句
-        query.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        query.add("select * from %s", AppDB.s_example);
         SqlWhere where = query.addWhere();
         where.eq("corpNo_", handle.getCorpNo());
         where.eq("userCode_", handle.getUserCode());
@@ -58,7 +58,7 @@ public class SvrUiExampleMysql implements IService {
 
         // 调用SvrCorpInfo.modify服务
         MysqlQuery ds = new MysqlQuery(handle);
-        ds.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        ds.add("select * from %s", AppDB.s_example);
         SqlWhere where = ds.addWhere();
         where.eq("corpNo_", handle.getCorpNo());
         where.eq("userCode_", handle.getUserCode());
@@ -84,7 +84,7 @@ public class SvrUiExampleMysql implements IService {
     @DataValidate(value = "code_", name = "学号")
     public DataSet download(IHandle handle, DataRow headIn) {
         MysqlQuery query = new MysqlQuery(handle);
-        query.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        query.add("select * from %s", AppDB.s_example);
         SqlWhere where = query.addWhere();
         where.eq("corpNo_", handle.getCorpNo());
         where.eq("userCode_", handle.getUserCode());
@@ -105,7 +105,7 @@ public class SvrUiExampleMysql implements IService {
             throw new RuntimeException("年龄不允许小于0");
 
         MysqlQuery ds = new MysqlQuery(handle);
-        ds.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        ds.add("select * from %s", AppDB.s_example);
         SqlWhere dsWhere = ds.addWhere();
         dsWhere.eq("corpNo_", handle.getCorpNo());
         dsWhere.eq("userCode_", handle.getUserCode());
@@ -126,7 +126,7 @@ public class SvrUiExampleMysql implements IService {
     @DataValidate(value = "code_", name = "学号", message="%s 不允许为空")
     public boolean delete(IHandle handle, DataRow headIn) {
         MysqlQuery ds = new MysqlQuery(handle);
-        ds.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        ds.add("select * from %s", AppDB.s_example);
         SqlWhere where = ds.addWhere();
         where.eq("corpNo_", handle.getCorpNo());
         where.eq("userCode_", handle.getUserCode());

@@ -36,7 +36,7 @@ public class SvrUiExample implements IService {
         // MysqlQuery 用于操作数据库，可对数据进行增删改查，在使用增删改功能前，必须查询表。
         MysqlQuery query = new MysqlQuery(handle);
         // add方法追加sql语句
-        query.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        query.add("select * from %s", AppDB.s_example);
         SqlWhere where = query.addWhere();
         // 公司别
         where.eq("corpNo_", handle.getCorpNo());
@@ -91,7 +91,7 @@ public class SvrUiExample implements IService {
         String code = headIn.getString("code_");
 
         MysqlQuery query = new MysqlQuery(handle);
-        query.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        query.add("select * from %s", AppDB.s_example);
         SqlWhere addWhere = query.addWhere();
         addWhere.eq("corpNo_", handle.getCorpNo());
         addWhere.eq("userCode_", handle.getUserCode());
