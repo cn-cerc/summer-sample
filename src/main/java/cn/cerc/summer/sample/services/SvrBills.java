@@ -25,6 +25,8 @@ import cn.cerc.summer.sample.entity.Tranb;
 import cn.cerc.summer.sample.entity.Tranh;
 import lombok.extern.slf4j.Slf4j;
 
+import java.sql.SQLException;
+
 @Slf4j
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
@@ -144,21 +146,18 @@ public class SvrBills implements IService {
 
     @DataValidate(value = "tbNo_", name = "单号", message = "%s 不允许为空")
     @Description("修改单头数据")
-    public boolean modifyHead(IHandle handle, DataRow headIn) throws DataValidateException {
-        try (Transaction tx = new Transaction(handle)) {
-
-            FastDate fastDate = headIn.getFastDate("tbDate_");
-            String tbNo = headIn.getString("tbNo_");
-            log.info("tbDate_:" + fastDate);
+    public boolean modifyHead(IHandle handle, DataRow headIn) throws DataValidateException, SQLException {
+        FastDate fastDate = headIn.getFastDate("tbDate_");
+        String tbNo = headIn.getString("tbNo_");
+        log.info("tbDate_:" + fastDate);
 //        EntityOne.open(handle, Tranh.class, handle.getUserCode(), tbNo)
 //                .isEmptyThrow(() -> new RuntimeException("记录不存在")).update(item -> {
 ////                    item.setTbDate_(fastDate);
 //                    item.setRemark_(headIn.getString("remark_"));
 //                });
-            EntityOne.open(handle, Tranh.class, handle.getUserCode(), tbNo)
-                    .isEmptyThrow(() -> new RuntimeException(tbNo)).update(item -> item.setRemark_(tbNo));
-            tx.commit();
-        }
+        EntityOne.open(handle, Tranh.class, handle.getUserCode(), tbNo)
+                .isEmptyThrow(() -> new RuntimeException(tbNo)).update(item -> item.setRemark_(tbNo));
+        log.info("auto commit {}", handle.getMysql().getClient().getConnection().getAutoCommit());
         return true;
     }
 
@@ -169,8 +168,8 @@ public class SvrBills implements IService {
     public boolean modifyBody(IHandle handle, DataRow headIn) throws DataValidateException {
         EntityOne.open(handle, Tranb.class, handle.getCorpNo(), handle.getUserCode(), headIn.getString("tbNo_"),
                 headIn.getString("it_")).isEmptyThrow(() -> new RuntimeException("记录不存在")).update(item -> {
-                    item.setNum_(headIn.getDouble("num_"));
-                });
+            item.setNum_(headIn.getDouble("num_"));
+        });
         return true;
     }
 

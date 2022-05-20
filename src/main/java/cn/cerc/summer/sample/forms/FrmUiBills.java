@@ -1,5 +1,6 @@
 package cn.cerc.summer.sample.forms;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -322,6 +323,7 @@ public class FrmUiBills extends CustomForm {
 
     public IPage modify() throws ParseException {
         try (Transaction tx = new Transaction(this)) {
+            log.info("auto commit {}", this.getMysql().getClient().getConnection().getAutoCommit());
             UICustomPage page = new UICustomPage(this);
             new UIUrl(page.getFrontPanel()).setSite("FrmUiBills").setText("返回");
 
@@ -417,8 +419,11 @@ public class FrmUiBills extends CustomForm {
                 UINotice.sendInfo(getSession(), getClass(), "execute", "修改成功成功");
                 return new RedirectPage(this, "FrmUiBills");
             }
+            log.info("auto commit {}", this.getMysql().getClient().getConnection().getAutoCommit());
             tx.commit();
             return page;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
