@@ -1,24 +1,26 @@
-package cn.cerc.summer.sample;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package cn.cerc.sample;
 
 import cn.cerc.db.core.DataRow;
 import cn.cerc.db.core.DataSet;
 import cn.cerc.db.core.Datetime;
 import cn.cerc.db.core.FastDate;
 import cn.cerc.db.core.Utils;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 框架自带工具简单的使用范例
  */
+@Slf4j
 public class UtilsExample {
-    private static final Logger log = LoggerFactory.getLogger(UtilsExample.class);
 
     public static void main(String[] args) {
         // 时间工具类 TDateTime
         log.info("当前时间 {}", new Datetime());
         log.info("今日日期 {}", new FastDate());
+
+        DataRow headIn = new DataRow();
+        headIn.setValue("entry_date_", "2022-05-20");
+        log.info("入职日期 {}", headIn.getFastDate("entry_date_"));
 
         // 数学工具类 Utils
         log.info("随机数字 {}", Utils.getNumRandom(12));
