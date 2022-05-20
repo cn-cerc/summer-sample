@@ -11,4 +11,9 @@ public class AppDB {
      */
     public static final String s_employee_total = "s_employee_total";
 
+    /**
+     * 商品基本资料
+     */
+    public static final String s_partinfo = "s_partinfo";
+
 }
