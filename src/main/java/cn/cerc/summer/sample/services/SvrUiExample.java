@@ -74,8 +74,9 @@ public class SvrUiExample implements IService {
     @Description("新增人员信息")
     public boolean append(IHandle handle, DataRow headIn) throws DataValidateException {
         String code = headIn.getString("code_");
-
-        EntityOne.open(handle, Example.class, handle.getUserCode(), code)
+        String corpNo = handle.getCorpNo();
+        String userCode = handle.getUserCode();
+        EntityOne.open(handle, Example.class, handle.getUserCode(), corpNo, userCode, code)
                 .isPresentThrow(() -> new RuntimeException("该学号已经存在，不允许重复登记")).orElseInsert(item -> {
                     item.setCode_(code);
                     item.setName_(headIn.getString("name_"));

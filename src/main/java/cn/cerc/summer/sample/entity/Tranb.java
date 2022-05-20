@@ -59,6 +59,10 @@ public class Tranb extends CustomEntity {
     @Column(precision = 18, scale = 4)
     @Describe(name = "商品数量")
     private Double num_;
+    
+    @Column(precision = 18, scale = 4)
+    @Describe(name = "当前商品数量")
+    private Double currentNum_;
 
     @Override
     public void onInsertPost(IHandle handle) {

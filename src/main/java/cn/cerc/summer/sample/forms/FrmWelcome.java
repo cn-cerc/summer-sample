@@ -33,21 +33,30 @@ public class FrmWelcome extends AbstractForm {
         UIText text = new UIText(content);
         text.add("此项目有助于您快速学习summer框架的使用方法");
         text.add("新的项目也可以以此为基础，快速建立");
-
-        new UIUrl(content).setText("进入首页(PC)").setSite("FrmIndex?device=pc");
-        new UILine(content);
-
-        new UIUrl(content).setText("进入首页(Phone)").setSite("FrmIndex?device=phone");
-        new UILine(content);
-
-        new UIUrl(content).setText("进入首页(免登录)").setSite("FrmIndex?sid=88888888");
-        new UILine(content);
-
-        new UIUrl(content).setText("进入范例UI(免登录)").setSite("FrmUiExample?sid=88888888");
+//
+//        new UIUrl(content).setText("进入首页(PC)").setSite("FrmIndex?device=pc");
+//        new UILine(content);
+//
+//        new UIUrl(content).setText("进入首页(Phone)").setSite("FrmIndex?device=phone");
+//        new UILine(content);
+//
+//        new UIUrl(content).setText("进入首页(免登录)").setSite("FrmIndex?sid=88888888");
+//        new UILine(content);
+//
+//        new UIUrl(content).setText("进入范例UI(免登录)").setSite("FrmUiExample?sid=88888888");
+//        new UILine(content);
+        
+        new UIUrl(content).setText("商品管理(免登录)").setSite("FrmUiGoods?sid=88888888");
         new UILine(content);
         
-        new UIUrl(content).setText("进入范例Mysql(免登录)").setSite("FrmUiExampleMysql?sid=88888888");
+        new UIUrl(content).setText("单据管理(免登录)").setSite("FrmUiBills?sid=88888888");
         new UILine(content);
+        
+        new UIUrl(content).setText("统计报表(免登录)").setSite("FrmUiStatistics?sid=88888888");
+        new UILine(content);
+        
+//        new UIUrl(content).setText("单据管理2(免登录)").setSite("FrmUiBills2?sid=88888888");
+//        new UILine(content);
 
         /** sci.js 使用范例 */
         new UIDiv(content).setId("page");

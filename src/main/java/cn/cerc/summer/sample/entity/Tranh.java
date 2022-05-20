@@ -22,8 +22,8 @@ import lombok.Setter;
 
 @Component
 @Entity
-@EntityKey(fields = { "corpNo_", "createUser_",
-        "tbNo_" }, corpNo = true, cache = CacheLevelEnum.RedisAndSession, smallTable = true)
+@EntityKey(fields = { "corpNo_", "userCode_",
+        "tbNo_" }, corpNo = true, cache = CacheLevelEnum.Redis, smallTable = true)
 @Table(name = "s_tranh", indexes = { @Index(name = "PRIMARY", columnList = "UID_", unique = true),
         @Index(name = "uk_corpNo_tb_tbNo_", columnList = "corpNo_,tb_,tbNo_", unique = true) })
 @SqlServer(type = SqlServerType.Mysql)
@@ -41,6 +41,10 @@ public class Tranh extends CustomEntity {
     @Column(length = 11, nullable = false)
     @Describe(name = "帐套")
     private String corpNo_;
+    
+    @Column(length = 11)
+    @Describe(name = "账号")
+    private String userCode_;
 
     @Column(length = 10, nullable = false)
     @Describe(name = "单别")
@@ -75,7 +79,9 @@ public class Tranh extends CustomEntity {
         super.onInsertPost(handle);
         this.setCreateDate_(new Datetime());
         this.setCorpNo_(handle.getCorpNo());
+        
         this.setCreateUser_(handle.getUserCode());
+        this.setUserCode_(handle.getUserCode());
     }
 
     @Override

@@ -19,7 +19,7 @@ public class Session extends CustomSession {
 
     @Override
     public String getUserCode() {
-        return "13700010001";// 用户代码
+        return "13576671418";// 用户代码
     }
 
 }
