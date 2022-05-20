@@ -38,7 +38,7 @@ import cn.cerc.ui.vcl.UIUrl;
 public class FrmEmployee extends CustomForm {
 
     enum Gender {
-        男, 女;
+        未知, 男, 女;
     }
 
     @Override

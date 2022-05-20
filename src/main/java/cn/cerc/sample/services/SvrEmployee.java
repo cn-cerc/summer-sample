@@ -49,7 +49,7 @@ public class SvrEmployee implements IService {
     @DataValidate(value = "entry_date_", name = "入职日期")
     public DataSet append(IHandle handle, DataRow headIn) {
         DataSet dataSet = new DataSet();
-        try (Transaction tx = new Transaction(handle)) {// 启用事务
+        try (Transaction tx = new Transaction(handle)) {// 启用事务管控
             String code = headIn.getString("code_");
             EntityOne<EmployeeInfoEntity> entity = EntityOne.open(handle, EmployeeInfoEntity.class, code)
                     .isPresentThrow(() -> new RuntimeException("该工号已经存在，不允许重复登记"));
@@ -78,7 +78,7 @@ public class SvrEmployee implements IService {
     public DataSet download(IHandle handle, DataRow headIn) {
         DataSet dataSet = new DataSet();
         String code = headIn.getString("code_");
-        try (Transaction tx = new Transaction(handle)) {// 启用事务
+        try (Transaction tx = new Transaction(handle)) {
             DataRow dataRow = EntityOne.open(handle, EmployeeInfoEntity.class, code)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).current();
             dataSet.append().copyRecord(dataRow);
@@ -93,7 +93,7 @@ public class SvrEmployee implements IService {
     @DataValidate(value = "entry_date_", name = "入职日期")
     public DataSet modify(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
-        try (Transaction tx = new Transaction(handle)) {// 启用事务
+        try (Transaction tx = new Transaction(handle)) {
             EntityOne.open(handle, EmployeeInfoEntity.class, code)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).update(item -> {
                         item.setName_(headIn.getString("name_"));
