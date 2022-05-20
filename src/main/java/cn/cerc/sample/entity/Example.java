@@ -73,17 +73,19 @@ public class Example extends CustomEntity {
     @Override
     public void onInsertPost(IHandle handle) {
         super.onInsertPost(handle);
-        this.setCreateTime_(new Datetime());
-        this.setUpdateTime_(new Datetime());
         this.setCorpNo_(handle.getCorpNo());
         this.setUserCode_(handle.getUserCode());
+
+        this.setCreateTime_(new Datetime());
+        this.setUpdateTime_(new Datetime());
     }
 
     @Override
     public void onUpdatePost(IHandle handle) {
         super.onUpdatePost(handle);
-        this.setUpdateTime_(new Datetime());
-        this.setUserCode_(handle.getUserCode());
         this.setCorpNo_(handle.getCorpNo());
+        this.setUserCode_(handle.getUserCode());
+
+        this.setUpdateTime_(new Datetime());
     }
 }
