@@ -28,7 +28,7 @@ public class SvrEmployee implements IService {
     @Description("根据条件查询人员信息")
     public DataSet search(IHandle handle, DataRow headIn) {
         MysqlQuery query = new MysqlQuery(handle);
-        query.add("select * from %s", AppDB.s_employee);
+        query.add("select * from %s", AppDB.s_employee_info);
         SqlWhere where = query.addWhere();
         where.eq("corp_no_", handle.getCorpNo());
         if (headIn.has("code_"))
