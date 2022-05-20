@@ -124,6 +124,8 @@ public class SvrEmployee implements IService {
     }
 
     public static void main(String[] args) {
+        // 生成当前对象的服务签名
         ServiceSign.buildSourceCode(SvrEmployee.class);
     }
+
 }
