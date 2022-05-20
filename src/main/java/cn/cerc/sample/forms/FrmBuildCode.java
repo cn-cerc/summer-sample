@@ -41,7 +41,7 @@ public class FrmBuildCode extends AbstractForm {
 
         UIInput input = new UIInput(form);
         input.setName("请输入表名: ");
-        input.setValue(reader.getString(input, "s_example"));
+        input.setValue(reader.getString(input, "s_employee"));
 
         UIButtonSubmit submit = new UIButtonSubmit(form);
         submit.setText("确认");
