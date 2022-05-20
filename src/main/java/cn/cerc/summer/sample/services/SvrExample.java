@@ -35,7 +35,7 @@ public class SvrExample implements IService {
         // MysqlQuery 用于操作数据库，可对数据进行增删改查，在使用增删改功能前，必须查询表。
         MysqlQuery query = new MysqlQuery(handle);
         // add方法追加sql语句
-        query.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        query.add("select * from %s", AppDB.s_example);
         SqlWhere where = query.addWhere();
         // 判断传进来的值，存在code_并且不为空
         if (headIn.has("code_")) {
@@ -71,7 +71,7 @@ public class SvrExample implements IService {
         String code = headIn.getString("code_");
 
         MysqlQuery ds = new MysqlQuery(handle);
-        ds.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        ds.add("select * from %s", AppDB.s_example);
         ds.add("where code_='%s'", code);
         ds.open();
 
@@ -95,7 +95,7 @@ public class SvrExample implements IService {
         String code = headIn.getString("code_");
 
         MysqlQuery query = new MysqlQuery(handle);
-        query.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        query.add("select * from %s", AppDB.s_example);
         query.add("where code_='%s'", code);
         query.open();
         DataValidateException.stopRun("记录不存在", query.eof());
@@ -113,7 +113,7 @@ public class SvrExample implements IService {
         DataValidateException.stopRun("年龄不允许小于0", age <= 0);
 
         MysqlQuery ds = new MysqlQuery(handle);
-        ds.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        ds.add("select * from %s", AppDB.s_example);
         ds.add("where code_='%s'", code);
         ds.open();
 
@@ -134,7 +134,7 @@ public class SvrExample implements IService {
         String code = headIn.getString("code_");
 
         MysqlQuery ds = new MysqlQuery(handle);
-        ds.add("select * from %s", AppDB.TABLE_EXAMPLE);
+        ds.add("select * from %s", AppDB.s_example);
         ds.add("where code_='%s'", code);
         ds.open();
 

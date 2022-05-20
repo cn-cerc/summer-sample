@@ -22,8 +22,8 @@ import lombok.Setter;
 
 @Component
 @Entity
-@EntityKey(fields = { "corpNo_", "userCode_",
-        "tbNo_" }, corpNo = true, cache = CacheLevelEnum.Redis, smallTable = true)
+@EntityKey(fields = { "corpNo_", "createUser_",
+        "tbNo_" }, corpNo = true, cache = CacheLevelEnum.Disabled, smallTable = true)
 @Table(name = "s_tranh", indexes = { @Index(name = "PRIMARY", columnList = "UID_", unique = true),
         @Index(name = "uk_corpNo_tb_tbNo_", columnList = "corpNo_,tb_,tbNo_", unique = true) })
 @SqlServer(type = SqlServerType.Mysql)

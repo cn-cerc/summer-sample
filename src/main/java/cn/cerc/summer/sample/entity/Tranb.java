@@ -22,7 +22,7 @@ import lombok.Setter;
 @Component
 @Entity
 @EntityKey(fields = { "corpNo_", "userCode_", "tbNo_",
-        "it_" }, cache = CacheLevelEnum.RedisAndSession, smallTable = true)
+        "it_" }, cache = CacheLevelEnum.Disabled, smallTable = true)
 @Table(name = "s_tranb", indexes = { @Index(name = "PRIMARY", columnList = "UID_", unique = true) })
 @SqlServer(type = SqlServerType.Mysql)
 @Getter
