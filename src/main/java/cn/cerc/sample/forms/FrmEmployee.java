@@ -25,7 +25,6 @@ import cn.cerc.ui.columns.StringColumn;
 import cn.cerc.ui.columns.UIGrid;
 import cn.cerc.ui.columns.UIPhoneLine;
 import cn.cerc.ui.core.UrlRecord;
-import cn.cerc.ui.fields.ItField;
 import cn.cerc.ui.panels.UIAppendPanel;
 import cn.cerc.ui.panels.UIModifyPanel;
 import cn.cerc.ui.panels.UISearchPanel;
@@ -62,16 +61,14 @@ public class FrmEmployee extends CustomForm {
         UIPhoneLine line3 = grid.addPhoneLine(50, 50);
         UIPhoneLine line4 = grid.addPhoneLine(100);
 
-        new ItField(grid);
-
         new ItColumn(line1.cell(0));
         new StringColumn(line1.cell(1), "员工工号", "code_", 4);
         new StringColumn(line2.cell(0), "员工姓名", "name_", 4);
-        new OptionColumn(line2.cell(1), "员工性别", "gender_", 6).setOptions(Gender.values());
-        new StringColumn(line3.cell(0), "入职日期", "entry_date_", 2);
+        new OptionColumn(line2.cell(1), "员工性别", "gender_", 3).setOptions(Gender.values());
+        new StringColumn(line3.cell(0), "入职日期", "entry_date_", 6);
 
         CustomColumn customColumn = new CustomColumn(line4.cell(0));
-        customColumn.setSpaceWidth(4);
+        customColumn.setSpaceWidth(8);
         customColumn.defineCell((content, record) -> {
             new UIUrl(content).setText("修改").setSite("FrmEmployee.modify").putParam("code", record.getString("code_"));
             new UISpan(content).setText("|");

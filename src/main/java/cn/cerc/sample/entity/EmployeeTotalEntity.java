@@ -24,14 +24,14 @@ import lombok.Setter;
 
 @Component
 @Entity
-@EntityKey(fields = { "corp_no_", "code_" }, corpNo = true, cache = CacheLevelEnum.Redis, smallTable = true)
-@Table(name = AppDB.s_employee_info, indexes = { @Index(name = "PRIMARY", columnList = "uid_", unique = true),
+@EntityKey(fields = { "corp_no_" }, corpNo = true, cache = CacheLevelEnum.Redis, smallTable = true)
+@Table(name = AppDB.s_employee_total, indexes = { @Index(name = "PRIMARY", columnList = "uid_", unique = true),
         @Index(name = "uk_corp_code", columnList = "corp_no_,code_", unique = true) })
 @SqlServer(type = SqlServerType.Mysql)
 @Getter
 @Setter
 @Describe(name = "员工信息表")
-public class EmployeeInfoEntity extends CustomEntity {
+public class EmployeeTotalEntity extends CustomEntity {
 
     @Id
     @GeneratedValue()
@@ -43,21 +43,9 @@ public class EmployeeInfoEntity extends CustomEntity {
     @Describe(name = "帐套代码")
     private String corp_no_;
 
-    @Column(length = 16, nullable = false)
-    @Describe(name = "员工工号")
-    private String code_;
-
-    @Column(length = 32, nullable = false)
-    @Describe(name = "员工姓名")
-    private String name_;
-
-    @Column(length = 1, nullable = false)
-    @Describe(name = "员工性别")
-    private Integer gender_;
-
-    @Column(columnDefinition = "datetime")
-    @Describe(name = "入职日期")
-    private Datetime entry_date_;
+    @Column(length = 11, nullable = false)
+    @Describe(name = "数量合计")
+    private Integer total_;
 
     @Version
     @Column(length = 11, nullable = false)
