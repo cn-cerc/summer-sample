@@ -18,7 +18,7 @@ import cn.cerc.mis.core.IService;
 import cn.cerc.mis.core.ServiceState;
 import cn.cerc.mis.security.Permission;
 import cn.cerc.sample.core.AppDB;
-import cn.cerc.sample.entity.EmployeeEntity;
+import cn.cerc.sample.entity.EmployeeInfoEntity;
 
 @Permission(Permission.GUEST)
 @Component
@@ -47,7 +47,7 @@ public class SvrEmployee implements IService {
     @DataValidate(value = "entry_date_", name = "入职日期")
     public DataSet append(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
-        EntityOne<EmployeeEntity> entity = EntityOne.open(handle, EmployeeEntity.class, code)
+        EntityOne<EmployeeInfoEntity> entity = EntityOne.open(handle, EmployeeInfoEntity.class, code)
                 .isPresentThrow(() -> new RuntimeException("该工号已经存在，不允许重复登记"));
         entity.orElseInsert(item -> {
             item.setCode_(code);
@@ -64,7 +64,7 @@ public class SvrEmployee implements IService {
     @DataValidate(value = "code_", name = "员工工号")
     public DataSet download(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
-        DataRow dataRow = EntityOne.open(handle, EmployeeEntity.class, code)
+        DataRow dataRow = EntityOne.open(handle, EmployeeInfoEntity.class, code)
                 .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).current();
         DataSet dataSet = new DataSet();
         dataSet.append().copyRecord(dataRow);
@@ -77,7 +77,7 @@ public class SvrEmployee implements IService {
     @DataValidate(value = "entry_date_", name = "入职日期")
     public DataSet modify(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
-        EntityOne.open(handle, EmployeeEntity.class, code)
+        EntityOne.open(handle, EmployeeInfoEntity.class, code)
                 .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).update(item -> {
                     item.setName_(headIn.getString("name_"));
                     item.setGender_(headIn.getInt("gender_"));
@@ -90,7 +90,7 @@ public class SvrEmployee implements IService {
     @Description("删除人员信息")
     public boolean delete(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
-        EntityOne.open(handle, EmployeeEntity.class, code).isEmptyThrow(() -> new RuntimeException("记录不存在")).delete();
+        EntityOne.open(handle, EmployeeInfoEntity.class, code).isEmptyThrow(() -> new RuntimeException("记录不存在")).delete();
         return true;
     }
 

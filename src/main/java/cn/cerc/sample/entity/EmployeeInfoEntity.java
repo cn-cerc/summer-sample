@@ -31,7 +31,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Describe(name = "员工信息表")
-public class EmployeeEntity extends CustomEntity {
+public class EmployeeInfoEntity extends CustomEntity {
 
     @Id
     @GeneratedValue()
