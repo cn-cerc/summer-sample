@@ -71,6 +71,7 @@ public class EmployeeTotalEntity extends CustomEntity {
     @Override
     public void onInsertPost(IHandle handle) {
         super.onInsertPost(handle);
+        this.setCorp_no_(handle.getCorpNo());
 
         this.setCreate_user_(handle.getUserCode());
         this.setCreate_time_(new Datetime());

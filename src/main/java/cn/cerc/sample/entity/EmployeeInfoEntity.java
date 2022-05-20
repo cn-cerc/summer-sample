@@ -59,6 +59,10 @@ public class EmployeeInfoEntity extends CustomEntity {
     @Describe(name = "入职日期")
     private Datetime entry_date_;
 
+    @Column(length = 1, nullable = false)
+    @Describe(name = "在职状态")
+    private Boolean enable_;
+
     @Version
     @Column(length = 11, nullable = false)
     @Describe(name = "当前版本")
@@ -83,6 +87,7 @@ public class EmployeeInfoEntity extends CustomEntity {
     @Override
     public void onInsertPost(IHandle handle) {
         super.onInsertPost(handle);
+        this.setCorp_no_(handle.getCorpNo());
 
         this.setCreate_user_(handle.getUserCode());
         this.setCreate_time_(new Datetime());

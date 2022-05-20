@@ -12,12 +12,15 @@ import cn.cerc.mis.client.ServiceExecuteException;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.RedirectPage;
 import cn.cerc.mis.core.ServiceQuery;
+import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.mis.security.Permission;
 import cn.cerc.mis.security.Webform;
 import cn.cerc.sample.SampleServices.SvrEmployee;
+import cn.cerc.sample.core.BufferUser;
 import cn.cerc.sample.core.CustomForm;
 import cn.cerc.sample.core.ui.UICustomPage;
 import cn.cerc.sample.core.ui.UINotice;
+import cn.cerc.ui.columns.BooleanColumn;
 import cn.cerc.ui.columns.CustomColumn;
 import cn.cerc.ui.columns.ItColumn;
 import cn.cerc.ui.columns.OptionColumn;
@@ -66,6 +69,7 @@ public class FrmEmployee extends CustomForm {
         new StringColumn(line2.cell(0), "员工姓名", "name_", 4);
         new OptionColumn(line2.cell(1), "员工性别", "gender_", 3).setOptions(Gender.values());
         new StringColumn(line3.cell(0), "入职日期", "entry_date_", 6);
+        new BooleanColumn(line3.cell(1), "在职状态", "enable_");
 
         CustomColumn customColumn = new CustomColumn(line4.cell(0));
         customColumn.setSpaceWidth(8);
@@ -82,10 +86,11 @@ public class FrmEmployee extends CustomForm {
         new UIUrl(page.getFrontPanel()).setText("返回").setSite("FrmEmployee");
         UIAppendPanel actionForm = new UIAppendPanel(page.getContent());
 
-        new StringColumn(actionForm, "员工工号", "code_", 4).setRequired(true);
-        new StringColumn(actionForm, "员工姓名", "name_", 4).setRequired(true);
-        new OptionColumn(actionForm, "员工性别", "gender_", 6).setOptions(Gender.values());
-        new StringColumn(actionForm, "入职日期", "entry_date_", 2).setRequired(true);
+        new StringColumn(actionForm, "员工工号", "code_").setRequired(true);
+        new StringColumn(actionForm, "员工姓名", "name_").setRequired(true);
+        new OptionColumn(actionForm, "员工性别", "gender_").setOptions(Gender.values());
+        new StringColumn(actionForm, "入职日期", "entry_date_").setRequired(true).setPlaceholder("格式 2022-05-20");
+
         if (!Utils.isEmpty(actionForm.readAll())) {
             // 调用SvrCorpInfo.modify服务
             ServiceQuery svr = ServiceQuery.open(this, SvrEmployee.append, actionForm.getRecord());
@@ -93,9 +98,9 @@ public class FrmEmployee extends CustomForm {
                 page.setMessage(svr.dataOut().message());
                 return page;
             }
-            UINotice.sendInfo(getSession(), this.getClass(), "execute", "新增成功");
-            String modifyUrl = UrlRecord.builder("FrmEmployee.modify").put("code", svr.dataOut().getString("code_"))
-                    .build().getUrl();
+            String code = svr.dataOut().getString("code_");
+            UINotice.sendInfo(getSession(), this.getClass(), "modify", String.format("新增员工 %s", code));
+            String modifyUrl = UrlRecord.builder("FrmEmployee.modify").put("code", code).build().getUrl();
             return new RedirectPage(this, modifyUrl);
         }
         return page;
@@ -104,35 +109,41 @@ public class FrmEmployee extends CustomForm {
     public IPage modify() {
         UICustomPage page = new UICustomPage(this);
         new UIUrl(page.getFrontPanel()).setText("返回").setSite("FrmEmployee");
+        new UINotice(page.getFrontPanel()).receive(this, "modify");
 
-        String code = getRequest().getParameter("code");
-        if (Utils.isEmpty(code)) {
-            page.setMessage("code 不允许为空");
-            return page;
-        }
-        ServiceQuery svr1 = ServiceQuery.open(this, SvrEmployee.download, Map.of("code_", code));
-        if (svr1.isFail()) {
-            page.setMessage(svr1.dataOut().message());
-            return page;
-        }
-        DataSet dataOut = svr1.dataOut();
-        UIModifyPanel actionForm = new UIModifyPanel(page.getContent());
-        actionForm.setRecord(dataOut.current());
-
-        new StringColumn(actionForm, "员工工号", "code_", 4).setReadonly(true);
-        new StringColumn(actionForm, "员工姓名", "name_", 4);
-        new OptionColumn(actionForm, "员工性别", "gender_", 6).setOptions(Gender.values());
-        new StringColumn(actionForm, "入职日期", "entry_date_", 2).setPlaceholder("格式 2022-05-20");
-
-        if (!Utils.isEmpty(actionForm.readAll())) {
-            // 调用SvrCorpInfo.modify服务
-            ServiceQuery svr = ServiceQuery.open(this, SvrEmployee.modify, actionForm.getRecord());
-            if (svr.isFail()) {
-                page.setMessage(svr.dataOut().message());
+        try (MemoryBuffer buff = new MemoryBuffer(BufferUser.Notice_UserCode, this.getUserCode(),
+                "FrmEmployee.modify")) {
+            String code = page.getValue(buff, "code");
+            if (Utils.isEmpty(code)) {
+                page.setMessage("code 不允许为空");
                 return page;
             }
-            UINotice.sendInfo(getSession(), this.getClass(), "execute", "修改成功");
-            return new RedirectPage(this, "FrmEmployee");
+
+            ServiceQuery svr1 = ServiceQuery.open(this, SvrEmployee.download, Map.of("code_", code));
+            if (svr1.isFail()) {
+                page.setMessage(svr1.dataOut().message());
+                return page;
+            }
+            DataSet dataOut = svr1.dataOut();
+            UIModifyPanel actionForm = new UIModifyPanel(page.getContent());
+            actionForm.setRecord(dataOut.current());
+
+            new StringColumn(actionForm, "员工工号", "code_").setReadonly(true);
+            new StringColumn(actionForm, "员工姓名", "name_");
+            new OptionColumn(actionForm, "员工性别", "gender_").setOptions(Gender.values());
+            new StringColumn(actionForm, "入职日期", "entry_date_").setPlaceholder("格式 2022-05-20");
+            new BooleanColumn(actionForm, "在职状态", "enable_");
+
+            if (!Utils.isEmpty(actionForm.readAll())) {
+                // 调用SvrCorpInfo.modify服务
+                ServiceQuery svr = ServiceQuery.open(this, SvrEmployee.modify, actionForm.getRecord());
+                if (svr.isFail()) {
+                    page.setMessage(svr.dataOut().message());
+                    return page;
+                }
+                UINotice.sendInfo(getSession(), this.getClass(), "modify", "修改成功");
+                return new RedirectPage(this, "FrmEmployee.modify");
+            }
         }
         return page;
     }

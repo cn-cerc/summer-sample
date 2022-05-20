@@ -28,4 +28,5 @@ public class UICustomPage extends UIAbstractPage {
     public void addScriptCode(HtmlContent scriptCode) {
         // TODO Auto-generated method stub
     }
+
 }

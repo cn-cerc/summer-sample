@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import cn.cerc.db.core.DataRow;
 import cn.cerc.db.core.DataSet;
-import cn.cerc.db.core.FastDate;
 import cn.cerc.db.core.IHandle;
 import cn.cerc.db.core.SqlWhere;
 import cn.cerc.db.mysql.MysqlQuery;
@@ -38,6 +37,7 @@ public class SvrEmployee implements IService {
         if (headIn.has("searchText_"))
             where.like("name_", headIn.getString("searchText_"));
         where.build();
+        query.add("order by code_ desc");
         query.openReadonly();
         return query.setState(ServiceState.OK).disableStorage();
     }
@@ -57,7 +57,8 @@ public class SvrEmployee implements IService {
                 item.setCode_(code);
                 item.setName_(headIn.getString("name_"));
                 item.setGender_(headIn.getInt("gender_"));
-                item.setEntry_date_(new FastDate());
+                item.setEntry_date_(headIn.getFastDate("entry_date_"));
+                item.setEnable_(true);// 默认状态为在职中
             });
             dataSet.append().copyRecord(entity.current());
 
@@ -99,6 +100,7 @@ public class SvrEmployee implements IService {
                         item.setName_(headIn.getString("name_"));
                         item.setGender_(headIn.getInt("gender_"));
                         item.setEntry_date_(headIn.getFastDate("entry_date_"));
+                        item.setEnable_(headIn.getBoolean("enable_"));
                     });
             tx.commit();
         }
