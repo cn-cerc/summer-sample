@@ -150,14 +150,11 @@ public class SvrBills implements IService {
         FastDate fastDate = headIn.getFastDate("tbDate_");
         String tbNo = headIn.getString("tbNo_");
         log.info("tbDate_:" + fastDate);
-//        EntityOne.open(handle, Tranh.class, handle.getUserCode(), tbNo)
-//                .isEmptyThrow(() -> new RuntimeException("记录不存在")).update(item -> {
-////                    item.setTbDate_(fastDate);
-//                    item.setRemark_(headIn.getString("remark_"));
-//                });
         EntityOne.open(handle, Tranh.class, handle.getUserCode(), tbNo)
-                .isEmptyThrow(() -> new RuntimeException(tbNo)).update(item -> item.setRemark_(tbNo));
-        log.info("auto commit {}", handle.getMysql().getClient().getConnection().getAutoCommit());
+                .isEmptyThrow(() -> new RuntimeException("记录不存在")).update(item -> {
+                    item.setTbDate_(fastDate);
+                    item.setRemark_(headIn.getString("remark_"));
+                });
         return true;
     }
 
