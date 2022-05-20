@@ -10,7 +10,6 @@ import javax.persistence.Table;
 import org.springframework.stereotype.Component;
 
 import cn.cerc.db.core.CacheLevelEnum;
-import cn.cerc.db.core.Datetime;
 import cn.cerc.db.core.Describe;
 import cn.cerc.db.core.EntityKey;
 import cn.cerc.db.core.IHandle;
@@ -22,15 +21,14 @@ import lombok.Setter;
 
 @Component
 @Entity
-@EntityKey(fields = { "corpNo_", "createUser_",
-        "tbNo_" }, corpNo = true, cache = CacheLevelEnum.Disabled, smallTable = true)
-@Table(name = "s_tranh", indexes = { @Index(name = "PRIMARY", columnList = "UID_", unique = true),
-        @Index(name = "uk_corpNo_tb_tbNo_", columnList = "corpNo_,tb_,tbNo_", unique = true) })
+@EntityKey(fields = { "corpNo_", "userCode_", "tbNo_",
+        "it_" }, cache = CacheLevelEnum.Disabled, smallTable = true)
+@Table(name = "s_tranb", indexes = { @Index(name = "PRIMARY", columnList = "UID_", unique = true) })
 @SqlServer(type = SqlServerType.Mysql)
 @Getter
 @Setter
-@Describe(name = "单头")
-public class Tranh extends CustomEntity {
+@Describe(name = "单身")
+public class TranBodyEntity extends CustomEntity {
 
     @Id
     @GeneratedValue
@@ -42,40 +40,31 @@ public class Tranh extends CustomEntity {
     @Describe(name = "帐套")
     private String corpNo_;
 
-    @Column(length = 10, nullable = false)
-    @Describe(name = "单别")
-    private String tb_;
+    @Column(length = 11)
+    @Describe(name = "账号")
+    private String userCode_;
 
     @Column(length = 10, nullable = false)
     @Describe(name = "单号")
     private String tbNo_;
 
-    @Column(length = 10, nullable = false)
-    @Describe(name = "日期")
-    private Datetime tbDate_;
+    @Column(length = 11, nullable = false)
+    @Describe(name = "单序")
+    private int it_;
 
-    @Column(length = 128)
-    @Describe(name = "备注")
-    private String remark_;
+    @Column(length = 32)
+    @Describe(name = "商品编号")
+    private String code_;
 
-    @Column(length = 10)
-    @Describe(name = "数量")
-    private int total_;
-
-    @Column(length = 10, nullable = false)
-    @Describe(name = "建档人员")
-    private String createUser_;
-
-    @Column(nullable = false, columnDefinition = "datetime")
-    @Describe(name = "创建时间")
-    private Datetime createDate_;
+    @Column(precision = 18, scale = 4)
+    @Describe(name = "商品数量")
+    private Double num_;
 
     @Override
     public void onInsertPost(IHandle handle) {
         super.onInsertPost(handle);
-        this.setCreateDate_(new Datetime());
         this.setCorpNo_(handle.getCorpNo());
-        this.setCreateUser_(handle.getUserCode());
+        this.setUserCode_(handle.getUserCode());
     }
 
     @Override
