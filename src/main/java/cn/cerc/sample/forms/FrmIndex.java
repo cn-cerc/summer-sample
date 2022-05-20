@@ -31,7 +31,7 @@ public class FrmIndex extends AbstractForm {
         new UIDiv(content).setText("请根据需求文档，自行建立相关菜单文件");
         new UILine(content);
 
-        new UIUrl(content).setText("1、增删改查参考编写范例").setSite("FrmExample");
+        new UIUrl(content).setText("1、增删改查参考编写范例").setSite("FrmEmployee");
         new UILine(content);
 
         new UIUrl(content).setText("2、使用 jspfile 编写范例").setSite("FrmIndex.html");

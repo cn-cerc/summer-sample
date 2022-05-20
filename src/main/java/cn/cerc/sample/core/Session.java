@@ -14,12 +14,12 @@ public class Session extends CustomSession {
 
     @Override
     public String getCorpNo() {
-        return "000000"; // 公司别
+        return "911001"; // 公司别
     }
 
     @Override
     public String getUserCode() {
-        return "13700010001";// 用户代码
+        return "91100101";// 用户代码
     }
 
 }

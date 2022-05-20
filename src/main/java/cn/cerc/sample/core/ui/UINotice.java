@@ -25,7 +25,7 @@ public class UINotice extends UIComponent {
         }
         html.print("<div class='notice'>");
         html.print("<div class='%s'>", cssClass);
-        icon.setSrc(String.format("images/public/notice-%s.png", this.cssClass));
+        icon.setSrc("images/notice.png");
         html.print(icon.toString());
         html.print("<span role='conent'>%s</span>", this.getText());
         html.println("</div>");

@@ -3,10 +3,10 @@ package cn.cerc.sample.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.springframework.stereotype.Component;
 
@@ -14,6 +14,7 @@ import cn.cerc.db.core.CacheLevelEnum;
 import cn.cerc.db.core.Datetime;
 import cn.cerc.db.core.Describe;
 import cn.cerc.db.core.EntityKey;
+import cn.cerc.db.core.IHandle;
 import cn.cerc.db.core.SqlServer;
 import cn.cerc.db.core.SqlServerType;
 import cn.cerc.mis.ado.CustomEntity;
@@ -32,8 +33,8 @@ import lombok.Setter;
 @Describe(name = "员工信息表")
 public class EmployeeEntity extends CustomEntity {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue()
     @Column(length = 11, nullable = false)
     @Describe(name = "自增主键")
     private Integer uid_;
@@ -58,6 +59,7 @@ public class EmployeeEntity extends CustomEntity {
     @Describe(name = "入职日期")
     private Datetime entry_date_;
 
+    @Version
     @Column(length = 11, nullable = false)
     @Describe(name = "当前版本")
     private int version_;
@@ -77,5 +79,24 @@ public class EmployeeEntity extends CustomEntity {
     @Column(columnDefinition = "datetime")
     @Describe(name = "更新时间")
     private Datetime update_time_;
+
+    @Override
+    public void onInsertPost(IHandle handle) {
+        super.onInsertPost(handle);
+
+        this.setCreate_user_(handle.getUserCode());
+        this.setCreate_time_(new Datetime());
+
+        this.setUpdate_user_(handle.getUserCode());
+        this.setUpdate_time_(new Datetime());
+    }
+
+    @Override
+    public void onUpdatePost(IHandle handle) {
+        super.onUpdatePost(handle);
+
+        this.setUpdate_user_(handle.getUserCode());
+        this.setUpdate_time_(new Datetime());
+    }
 
 }

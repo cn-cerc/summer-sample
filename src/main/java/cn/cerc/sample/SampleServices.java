@@ -1,4 +1,4 @@
-package cn.cerc.sample.services;
+package cn.cerc.sample;
 
 import java.util.Set;
 
@@ -13,19 +13,29 @@ public class SampleServices {
     private static final UserCenterProxy proxy = new UserCenterProxy();
 
     public static class SvrEmployee {
-        /** 新增人员信息 */
-        public static final ServiceSign append = new ServiceSign("SvrEmployee.append", proxy).setVersion(5)
-                .setProperties(Set.of("code_", "name_", "gender_", "age_"));
-        /** 删除人员信息 */
+        /**
+         * 新增人员信息
+         */
+        public static final ServiceSign append = new ServiceSign("SvrEmployee.append", proxy).setVersion(3)
+                .setProperties(Set.of("code_", "name_", "gender_", "entry_date_"));
+        /**
+         * 删除人员信息
+         */
         public static final ServiceSign delete = new ServiceSign("SvrEmployee.delete", proxy).setVersion(5)
                 .setProperties(Set.of("code_"));
-        /** 获取人员信息 */
+        /**
+         * 获取员工信息
+         */
         public static final ServiceSign download = new ServiceSign("SvrEmployee.download", proxy).setVersion(3)
                 .setProperties(Set.of("code_"));
-        /** 修改人员信息 */
-        public static final ServiceSign modify = new ServiceSign("SvrEmployee.modify", proxy).setVersion(5)
-                .setProperties(Set.of("code_", "gender_"));
-        /** 根据条件查询人员信息 */
+        /**
+         * 修改人员信息
+         */
+        public static final ServiceSign modify = new ServiceSign("SvrEmployee.modify", proxy).setVersion(3)
+                .setProperties(Set.of("code_", "gender_", "entry_date_"));
+        /**
+         * 根据条件查询人员信息
+         */
         public static final ServiceSign search = new ServiceSign("SvrEmployee.search", proxy).setVersion(3);
     }
 

@@ -43,7 +43,7 @@ public class FrmWelcome extends AbstractForm {
         new UIUrl(content).setText("进入首页(免登录)").setSite("FrmIndex?sid=88888888");
         new UILine(content);
 
-        new UIUrl(content).setText("进入范例UI(免登录)").setSite("FrmUiExample?sid=88888888");
+        new UIUrl(content).setText("进入范例UI(免登录)").setSite("FrmEmployee?sid=88888888");
         new UILine(content);
         
         new UIUrl(content).setText("进入范例Mysql(免登录)").setSite("FrmUiExampleMysql?sid=88888888");
