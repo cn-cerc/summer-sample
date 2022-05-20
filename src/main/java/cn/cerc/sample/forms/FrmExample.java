@@ -2,8 +2,6 @@ package cn.cerc.sample.forms;
 
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -20,16 +18,17 @@ import cn.cerc.sample.core.CustomForm;
 import cn.cerc.sample.services.SampleServices.SvrExample;
 import cn.cerc.ui.core.JspFile;
 import cn.cerc.ui.core.UrlRecord;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 新建的Frm类请重写 logon() 函数（详见底部），否则会被过滤器拦截
  */
+@Slf4j
 @Webform(module = "", name = "范例", parent = "")
 @Permission("user.base")
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class FrmExample extends CustomForm {
-    private static final Logger log = LoggerFactory.getLogger(FrmExample.class);
 
     @Override
     public IPage execute() {
