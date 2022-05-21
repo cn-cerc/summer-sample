@@ -87,7 +87,7 @@ public class FrmPartInfo extends CustomForm {
         new StringColumn(actionForm, "品名", "desc_").setRequired(true);
         new StringColumn(actionForm, "规格", "spec_").setRequired(true);
         new StringColumn(actionForm, "单位", "unit_");
-        new StringColumn(actionForm, "备注", "remakr_");
+        new StringColumn(actionForm, "备注", "remark_");
 
         if (!Utils.isEmpty(actionForm.readAll())) {
             // 调用SvrCorpInfo.modify服务
@@ -130,7 +130,7 @@ public class FrmPartInfo extends CustomForm {
             new StringColumn(actionForm, "品名", "desc_").setRequired(true);
             new StringColumn(actionForm, "规格", "spec_").setRequired(true);
             new StringColumn(actionForm, "单位", "unit_").setRequired(true);
-            new StringColumn(actionForm, "备注", "remakr_");
+            new StringColumn(actionForm, "备注", "remark_");
 
             if (!Utils.isEmpty(actionForm.readAll())) {
                 // 调用SvrCorpInfo.modify服务
