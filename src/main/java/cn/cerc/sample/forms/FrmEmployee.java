@@ -15,7 +15,7 @@ import cn.cerc.mis.core.ServiceQuery;
 import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.mis.security.Permission;
 import cn.cerc.mis.security.Webform;
-import cn.cerc.sample.SampleServices.SvrEmployee;
+import cn.cerc.sample.SampleServicesConfig.SvrEmployee;
 import cn.cerc.sample.core.BufferUser;
 import cn.cerc.sample.core.CustomForm;
 import cn.cerc.sample.core.ui.UICustomPage;

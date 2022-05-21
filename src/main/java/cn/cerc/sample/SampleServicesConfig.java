@@ -5,7 +5,7 @@ import java.util.Set;
 import cn.cerc.mis.client.ServiceSign;
 import cn.cerc.sample.services.proxy.UserCenterProxy;
 
-public class SampleServices {
+public class SampleServicesConfig {
 
     /**
      * 用户中心服务代理
@@ -88,4 +88,8 @@ public class SampleServices {
                 .setProperties(Set.of("order_sn_", "it_", "num_"));
     }
 
+    public static class SvrOrderReport {
+        /** 订单统计服务 */
+        public static final ServiceSign search = new ServiceSign("SvrOrderReport.search").setVersion(3);
+    }
 }
