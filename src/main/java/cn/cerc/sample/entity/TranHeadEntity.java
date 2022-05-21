@@ -26,7 +26,7 @@ import lombok.Setter;
 @Entity
 @EntityKey(fields = { "corp_no_", "order_sn_" }, corpNo = true, cache = CacheLevelEnum.Disabled, smallTable = true)
 @Table(name = AppDB.s_tranh, indexes = { @Index(name = "PRIMARY", columnList = "UID_", unique = true),
-        @Index(name = "uk_corp_tb_order", columnList = "corp_no_,tb_,order_sn_", unique = true) })
+        @Index(name = "uk_corp_order", columnList = "corp_no_,order_sn_", unique = true) })
 @SqlServer(type = SqlServerType.Mysql)
 @Getter
 @Setter
