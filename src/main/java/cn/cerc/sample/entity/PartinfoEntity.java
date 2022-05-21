@@ -44,7 +44,7 @@ public class PartinfoEntity extends CustomEntity {
     private String corp_no_;
 
     @Column(length = 30, nullable = false)
-    @Describe(name = "编号")
+    @Describe(name = "料号")
     private String code_;
 
     @Column(length = 32, nullable = false)

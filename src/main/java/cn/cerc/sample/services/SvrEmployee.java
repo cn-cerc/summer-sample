@@ -111,9 +111,9 @@ public class SvrEmployee implements IService {
     @Description("删除人员信息")
     public DataSet delete(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
-        try (Transaction tx = new Transaction(handle)) {// 启用事务
-            EntityOne.open(handle, EmployeeInfoEntity.class, code).isEmptyThrow(() -> new RuntimeException("记录不存在"))
-                    .delete();
+        try (Transaction tx = new Transaction(handle)) {
+            EntityOne.open(handle, EmployeeInfoEntity.class, code)
+                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).delete();
             // 更新员数量合计栏位
             EntityOne<EmployeeTotalEntity> total = EntityOne.open(handle, EmployeeTotalEntity.class);
             if (total.isEmpty())

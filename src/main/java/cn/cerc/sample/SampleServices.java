@@ -39,4 +39,21 @@ public class SampleServices {
         public static final ServiceSign search = new ServiceSign("SvrEmployee.search", proxy).setVersion(3);
     }
 
+    public static class SvrPartInfo {
+        /** 新增商品信息 */
+        public static final ServiceSign append = new ServiceSign("SvrPartInfo.append").setVersion(3)
+                .setProperties(Set.of("code_", "desc_", "spec_", "unit_"));
+        /** 删除商品信息 */
+        public static final ServiceSign delete = new ServiceSign("SvrPartInfo.delete").setVersion(3)
+                .setProperties(Set.of("code_"));
+        /** 获取商品信息 */
+        public static final ServiceSign download = new ServiceSign("SvrPartInfo.download").setVersion(3)
+                .setProperties(Set.of("code_"));
+        /** 修改商品信息 */
+        public static final ServiceSign modify = new ServiceSign("SvrPartInfo.modify").setVersion(3)
+                .setProperties(Set.of("code_", "desc_", "spec_", "unit_"));
+        /** 商品查询服务 */
+        public static final ServiceSign search = new ServiceSign("SvrPartInfo.search").setVersion(3);
+    }
+
 }
