@@ -1,13 +1,18 @@
 package cn.cerc.sample.forms;
 
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import cn.cerc.db.core.DataRow;
 import cn.cerc.db.core.DataSet;
 import cn.cerc.db.core.Utils;
+import cn.cerc.mis.ado.EntityQuery;
 import cn.cerc.mis.client.ServiceExecuteException;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.RedirectPage;
@@ -20,15 +25,19 @@ import cn.cerc.sample.core.BufferUser;
 import cn.cerc.sample.core.CustomForm;
 import cn.cerc.sample.core.ui.UICustomPage;
 import cn.cerc.sample.core.ui.UINotice;
+import cn.cerc.sample.entity.PartinfoEntity;
+import cn.cerc.sample.entity.TranBodyEntity;
 import cn.cerc.sample.enums.TBType;
 import cn.cerc.ui.columns.CustomColumn;
 import cn.cerc.ui.columns.DateColumn;
 import cn.cerc.ui.columns.DoubleColumn;
 import cn.cerc.ui.columns.ItColumn;
+import cn.cerc.ui.columns.OptionColumn;
 import cn.cerc.ui.columns.StringColumn;
 import cn.cerc.ui.columns.UIGrid;
 import cn.cerc.ui.columns.UIPhoneLine;
 import cn.cerc.ui.core.UrlRecord;
+import cn.cerc.ui.panels.UIAppendPanel;
 import cn.cerc.ui.panels.UIModifyPanel;
 import cn.cerc.ui.panels.UISearchPanel;
 import cn.cerc.ui.vcl.UISpan;
@@ -112,6 +121,7 @@ public class FrmTranOrder extends CustomForm {
                 page.setMessage("orderSN 不允许为空");
                 return page;
             }
+            new UIUrl(page.getFooter()).setText("添加单身").setSite("FrmTranOrder.appendBody").putParam("orderSN", orderSN);
 
             ServiceQuery svr1 = ServiceQuery.open(this, SvrTranOrder.download, Map.of("order_sn_", orderSN));
             if (svr1.isFail()) {
@@ -164,6 +174,47 @@ public class FrmTranOrder extends CustomForm {
             }
         }
         return page;
+    }
+
+    public IPage appendBody() throws ServiceExecuteException {
+        UICustomPage page = new UICustomPage(this);
+
+        try (MemoryBuffer buff = new MemoryBuffer(BufferUser.Notice_UserCode, this.getUserCode(),
+                "FrmTranOrder.modify")) {
+            String orderSN = page.getValue(buff, "orderSN");
+            if (Utils.isEmpty(orderSN)) {
+                page.setMessage("orderSN 不允许为空");
+                return page;
+            }
+            new UIUrl(page.getFrontPanel()).setText("返回").setSite("FrmTranOrder.modify").putParam("orderSN", orderSN);
+
+            // 获取系统商品列表
+            List<String> bodys = EntityQuery.findMany(this, TranBodyEntity.class, orderSN).stream()
+                    .map(item -> item.getCode_()).collect(Collectors.toList());
+            Map<String, String> goods = new LinkedHashMap<>();
+            EntityQuery.findMany(this, PartinfoEntity.class).stream().filter(item -> !bodys.contains(item.getCode_()))
+                    .forEach(item -> goods.put(item.getCode_(), item.getDesc_()));
+
+            UIAppendPanel actionForm = new UIAppendPanel(page.getContent());
+            new OptionColumn(actionForm, "商品", "code_").setOptions(goods);
+            new DoubleColumn(actionForm, "数量", "num_");
+
+            if (!Utils.isEmpty(actionForm.readAll())) {
+                DataRow headIn = new DataRow();
+                headIn.copyValues(actionForm.getRecord());
+                headIn.setValue("order_sn_", orderSN);
+                ServiceQuery svr = ServiceQuery.open(this, SvrTranOrder.appendBody, headIn);
+                if (svr.isFail()) {
+                    page.setMessage(svr.dataOut().message());
+                    return page;
+                }
+                String code = svr.dataOut().getString("code_");
+                UINotice.sendInfo(getSession(), this.getClass(), "modify", String.format("新增商品 %s", code));
+                String modifyUrl = UrlRecord.builder("FrmTranOrder.modify").put("orderSN", orderSN).build().getUrl();
+                return new RedirectPage(this, modifyUrl);
+            }
+            return page;
+        }
     }
 
 }

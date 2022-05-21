@@ -71,6 +71,10 @@ public class SampleServices {
                 .setProperties(Set.of("order_sn_", "order_date_"));
         /** 订单查询服务 */
         public static final ServiceSign search = new ServiceSign("SvrTranOrder.search").setVersion(3);
+
+        /** 添加单身商品 */
+        public static final ServiceSign appendBody = new ServiceSign("SvrTranOrder.appendBody").setVersion(3)
+                .setProperties(Set.of("order_sn_", "code_"));
     }
 
 }

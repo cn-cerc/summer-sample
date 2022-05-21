@@ -24,7 +24,7 @@ import lombok.Setter;
 
 @Component
 @Entity
-@EntityKey(fields = { "corp_no_", "code_" }, corpNo = true, cache = CacheLevelEnum.Disabled, smallTable = true)
+@EntityKey(fields = { "corp_no_", "code_" }, corpNo = true, cache = CacheLevelEnum.Redis, smallTable = true)
 @Table(name = AppDB.s_partinfo, indexes = { @Index(name = "PRIMARY", columnList = "UID_", unique = true),
         @Index(name = "uk_corp_code", columnList = "corp_no_,code_", unique = true) })
 @SqlServer(type = SqlServerType.Mysql)
@@ -92,7 +92,7 @@ public class PartinfoEntity extends CustomEntity {
     public void onInsertPost(IHandle handle) {
         super.onInsertPost(handle);
         this.setCorp_no_(handle.getCorpNo());
-        this.stock_ = 0d;
+        this.setStock_(0d);
 
         this.setCreate_user_(handle.getUserCode());
         this.setCreate_time_(new Datetime());

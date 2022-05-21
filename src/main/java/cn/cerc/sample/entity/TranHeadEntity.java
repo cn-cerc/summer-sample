@@ -24,7 +24,7 @@ import lombok.Setter;
 
 @Component
 @Entity
-@EntityKey(fields = { "corp_no_", "order_sn_" }, corpNo = true, cache = CacheLevelEnum.Disabled, smallTable = true)
+@EntityKey(fields = { "corp_no_", "order_sn_" }, corpNo = true, cache = CacheLevelEnum.Redis, smallTable = true)
 @Table(name = AppDB.s_tranh, indexes = { @Index(name = "PRIMARY", columnList = "UID_", unique = true),
         @Index(name = "uk_corp_order", columnList = "corp_no_,order_sn_", unique = true) })
 @SqlServer(type = SqlServerType.Mysql)
@@ -61,7 +61,7 @@ public class TranHeadEntity extends CustomEntity {
 
     @Column(length = 10)
     @Describe(name = "数量汇总")
-    private Integer total_;
+    private Double total_;
 
     @Version
     @Column(length = 11, nullable = false)
@@ -88,7 +88,7 @@ public class TranHeadEntity extends CustomEntity {
     public void onInsertPost(IHandle handle) {
         super.onInsertPost(handle);
         this.setCorp_no_(handle.getCorpNo());
-        this.setTotal_(0);
+        this.setTotal_(0d);
 
         this.setCreate_user_(handle.getUserCode());
         this.setCreate_time_(new Datetime());
