@@ -68,14 +68,11 @@ public class SvrPartInfo implements IService {
     @Description("获取商品信息")
     @DataValidate(value = "code_", name = "料号")
     public DataSet download(IHandle handle, DataRow headIn) {
-        DataSet dataSet = new DataSet();
         String code = headIn.getString("code_");
-        try (Transaction tx = new Transaction(handle)) {
-            DataRow dataRow = EntityOne.open(handle, PartinfoEntity.class, code)
-                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 料号不存在", code))).current();
-            dataSet.append().copyRecord(dataRow);
-            tx.commit();
-        }
+        DataRow dataRow = EntityOne.open(handle, PartinfoEntity.class, code)
+                .isEmptyThrow(() -> new RuntimeException(String.format("%s 料号不存在", code))).current();
+        DataSet dataSet = new DataSet();
+        dataSet.append().copyRecord(dataRow);
         return dataSet.setState(ServiceState.OK).disableStorage();
     }
 
@@ -99,8 +96,8 @@ public class SvrPartInfo implements IService {
         return new DataSet().setState(ServiceState.OK).disableStorage();
     }
 
-    @DataValidate(value = "code_", name = "料号")
     @Description("删除商品信息")
+    @DataValidate(value = "code_", name = "料号")
     public DataSet delete(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
         try (Transaction tx = new Transaction(handle)) {

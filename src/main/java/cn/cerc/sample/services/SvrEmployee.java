@@ -77,14 +77,11 @@ public class SvrEmployee implements IService {
     @Description("获取员工信息")
     @DataValidate(value = "code_", name = "员工工号")
     public DataSet download(IHandle handle, DataRow headIn) {
-        DataSet dataSet = new DataSet();
         String code = headIn.getString("code_");
-        try (Transaction tx = new Transaction(handle)) {
-            DataRow dataRow = EntityOne.open(handle, EmployeeInfoEntity.class, code)
-                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).current();
-            dataSet.append().copyRecord(dataRow);
-            tx.commit();
-        }
+        DataRow dataRow = EntityOne.open(handle, EmployeeInfoEntity.class, code)
+                .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).current();
+        DataSet dataSet = new DataSet();
+        dataSet.append().copyRecord(dataRow);
         return dataSet.setState(ServiceState.OK).disableStorage();
     }
 
@@ -107,8 +104,8 @@ public class SvrEmployee implements IService {
         return new DataSet().setState(ServiceState.OK).disableStorage();
     }
 
-    @DataValidate(value = "code_", name = "员工工号")
     @Description("删除人员信息")
+    @DataValidate(value = "code_", name = "员工工号")
     public DataSet delete(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
         try (Transaction tx = new Transaction(handle)) {
