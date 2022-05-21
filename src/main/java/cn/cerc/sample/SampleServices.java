@@ -56,25 +56,36 @@ public class SampleServices {
         public static final ServiceSign search = new ServiceSign("SvrPartInfo.search").setVersion(3);
     }
 
-    public static class SvrTranOrder {
+    public static class SvrTranHead {
         /** 新增商品信息 */
-        public static final ServiceSign appendHead = new ServiceSign("SvrTranOrder.appendHead").setVersion(3)
+        public static final ServiceSign append = new ServiceSign("SvrTranHead.append").setVersion(3)
                 .setProperties(Set.of("tb_"));
         /** 删除订单信息 */
-        public static final ServiceSign deleteHead = new ServiceSign("SvrTranOrder.deleteHead").setVersion(3)
+        public static final ServiceSign delete = new ServiceSign("SvrTranHead.delete").setVersion(3)
                 .setProperties(Set.of("order_sn_"));
         /** 获取订单信息 */
-        public static final ServiceSign download = new ServiceSign("SvrTranOrder.download").setVersion(3)
-                .setProperties(Set.of("code_"));
+        public static final ServiceSign download = new ServiceSign("SvrTranHead.download").setVersion(3)
+                .setProperties(Set.of("order_sn_"));
         /** 修改单头信息 */
-        public static final ServiceSign modifyHead = new ServiceSign("SvrTranOrder.modifyHead").setVersion(3)
+        public static final ServiceSign modify = new ServiceSign("SvrTranHead.modify").setVersion(3)
                 .setProperties(Set.of("order_sn_", "order_date_"));
         /** 订单查询服务 */
-        public static final ServiceSign search = new ServiceSign("SvrTranOrder.search").setVersion(3);
+        public static final ServiceSign search = new ServiceSign("SvrTranHead.search").setVersion(3);
+    }
 
+    public static class SvrTranBody {
         /** 添加单身商品 */
-        public static final ServiceSign appendBody = new ServiceSign("SvrTranOrder.appendBody").setVersion(3)
-                .setProperties(Set.of("order_sn_", "code_"));
+        public static final ServiceSign append = new ServiceSign("SvrTranBody.append").setVersion(3)
+                .setProperties(Set.of("order_sn_", "code_", "num_"));
+        /** 删除单身信息 */
+        public static final ServiceSign delete = new ServiceSign("SvrTranBody.delete").setVersion(3)
+                .setProperties(Set.of("order_sn_", "it_"));
+        /** 获取单身信息 */
+        public static final ServiceSign download = new ServiceSign("SvrTranBody.download").setVersion(3)
+                .setProperties(Set.of("order_sn_", "it_"));
+        /** 修改单身信息 */
+        public static final ServiceSign modify = new ServiceSign("SvrTranBody.modify").setVersion(3)
+                .setProperties(Set.of("order_sn_", "it_", "num_"));
     }
 
 }

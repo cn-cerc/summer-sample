@@ -20,7 +20,8 @@ import cn.cerc.mis.core.ServiceQuery;
 import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.mis.security.Permission;
 import cn.cerc.mis.security.Webform;
-import cn.cerc.sample.SampleServices.SvrTranOrder;
+import cn.cerc.sample.SampleServices.SvrTranBody;
+import cn.cerc.sample.SampleServices.SvrTranHead;
 import cn.cerc.sample.core.BufferUser;
 import cn.cerc.sample.core.CustomForm;
 import cn.cerc.sample.core.ui.UICustomPage;
@@ -70,7 +71,7 @@ public class FrmTranOrder extends CustomForm {
         new StringColumn(search, "订单单号", "code_").setPlaceholder("请输入订单单号");
         search.readAll();
 
-        DataSet dataOut = ServiceQuery.open(this, SvrTranOrder.search, search.current()).getDataOutElseThrow();
+        DataSet dataOut = ServiceQuery.open(this, SvrTranHead.search, search.current()).getDataOutElseThrow();
         UIGrid grid = new UIGrid(page.getContent()).setDataSet(dataOut);
         UIPhoneLine line1 = grid.addPhoneLine(50, 50);
         UIPhoneLine line2 = grid.addPhoneLine(50, 50);
@@ -98,7 +99,7 @@ public class FrmTranOrder extends CustomForm {
     public IPage appendHead() {
         String tb = getRequest().getParameter("tb");
         TBType.validateTB(tb);
-        ServiceQuery svr = ServiceQuery.open(this, SvrTranOrder.appendHead, Map.of("tb_", tb));
+        ServiceQuery svr = ServiceQuery.open(this, SvrTranHead.append, Map.of("tb_", tb));
         if (svr.isFail()) {
             UINotice.sendInfo(getSession(), this.getClass(), "execute", svr.dataOut().message());
             return new RedirectPage(this, "FrmTranOrder");
@@ -123,7 +124,7 @@ public class FrmTranOrder extends CustomForm {
             }
             new UIUrl(page.getFooter()).setText("添加单身").setSite("FrmTranOrder.appendBody").putParam("orderSN", orderSN);
 
-            ServiceQuery svr1 = ServiceQuery.open(this, SvrTranOrder.download, Map.of("order_sn_", orderSN));
+            ServiceQuery svr1 = ServiceQuery.open(this, SvrTranHead.download, Map.of("order_sn_", orderSN));
             if (svr1.isFail()) {
                 page.setMessage(svr1.dataOut().message());
                 return page;
@@ -164,7 +165,7 @@ public class FrmTranOrder extends CustomForm {
             });
 
             if (!Utils.isEmpty(actionForm.readAll())) {
-                ServiceQuery svr = ServiceQuery.open(this, SvrTranOrder.modifyHead, actionForm.getRecord());
+                ServiceQuery svr = ServiceQuery.open(this, SvrTranHead.modify, actionForm.getRecord());
                 if (svr.isFail()) {
                     page.setMessage(svr.dataOut().message());
                     return page;
@@ -193,7 +194,8 @@ public class FrmTranOrder extends CustomForm {
                     .map(item -> item.getCode_()).collect(Collectors.toList());
             Map<String, String> goods = new LinkedHashMap<>();
             EntityQuery.findMany(this, PartinfoEntity.class).stream().filter(item -> !bodys.contains(item.getCode_()))
-                    .forEach(item -> goods.put(item.getCode_(), item.getDesc_()));
+                    .forEach(item -> goods.put(item.getCode_(),
+                            String.join("=>", item.getDesc_(), item.getSpec_(), String.valueOf(item.getStock_()))));
 
             UIAppendPanel actionForm = new UIAppendPanel(page.getContent());
             new OptionColumn(actionForm, "商品", "code_").setOptions(goods);
@@ -203,13 +205,60 @@ public class FrmTranOrder extends CustomForm {
                 DataRow headIn = new DataRow();
                 headIn.copyValues(actionForm.getRecord());
                 headIn.setValue("order_sn_", orderSN);
-                ServiceQuery svr = ServiceQuery.open(this, SvrTranOrder.appendBody, headIn);
+                ServiceQuery svr = ServiceQuery.open(this, SvrTranBody.append, headIn);
                 if (svr.isFail()) {
                     page.setMessage(svr.dataOut().message());
                     return page;
                 }
-                String code = svr.dataOut().getString("code_");
-                UINotice.sendInfo(getSession(), this.getClass(), "modify", String.format("新增商品 %s", code));
+                String it = svr.dataOut().getString("it_");
+                UINotice.sendInfo(getSession(), this.getClass(), "modify", String.format("新增单身 %s", it));
+                String modifyUrl = UrlRecord.builder("FrmTranOrder.modify").put("orderSN", orderSN).build().getUrl();
+                return new RedirectPage(this, modifyUrl);
+            }
+            return page;
+        }
+    }
+
+    public IPage modifyBody() throws ServiceExecuteException {
+        UICustomPage page = new UICustomPage(this);
+
+        try (MemoryBuffer buff = new MemoryBuffer(BufferUser.Notice_UserCode, this.getUserCode(),
+                "FrmTranOrder.modify")) {
+            String orderSN = page.getValue(buff, "orderSN");
+            if (Utils.isEmpty(orderSN)) {
+                page.setMessage("orderSN 不允许为空");
+                return page;
+            }
+            String it = page.getValue(buff, "it");
+            if (Utils.isEmpty(orderSN)) {
+                page.setMessage("it 不允许为空");
+                return page;
+            }
+            new UIUrl(page.getFrontPanel()).setText("返回").setSite("FrmTranOrder.modify").putParam("orderSN", orderSN);
+
+            // 获取系统商品列表
+            Map<String, String> goods = new LinkedHashMap<>();
+            EntityQuery.findMany(this, PartinfoEntity.class).stream().forEach(item -> goods.put(item.getCode_(),
+                    String.join("=>", item.getDesc_(), item.getSpec_(), String.valueOf(item.getStock_()))));
+
+            DataRow dataRow = ServiceQuery.open(this, SvrTranBody.download, Map.of("order_sn_", orderSN, "it_", it))
+                    .getDataOutElseThrow().current();
+            UIAppendPanel actionForm = new UIAppendPanel(page.getContent());
+            actionForm.setRecord(dataRow);
+            new OptionColumn(actionForm, "商品", "code_").setOptions(goods).setReadonly(true);
+            new DoubleColumn(actionForm, "数量", "num_");
+
+            if (!Utils.isEmpty(actionForm.readAll())) {
+                DataRow headIn = new DataRow();
+                headIn.copyValues(actionForm.getRecord());
+                headIn.setValue("order_sn_", orderSN);
+                headIn.setValue("it_", it);
+                ServiceQuery svr = ServiceQuery.open(this, SvrTranBody.modify, headIn);
+                if (svr.isFail()) {
+                    page.setMessage(svr.dataOut().message());
+                    return page;
+                }
+                UINotice.sendInfo(getSession(), this.getClass(), "modify", String.format("修改单身 %s", it));
                 String modifyUrl = UrlRecord.builder("FrmTranOrder.modify").put("orderSN", orderSN).build().getUrl();
                 return new RedirectPage(this, modifyUrl);
             }
