@@ -65,8 +65,8 @@ public class FrmPartInfo extends CustomForm {
         new StringColumn(line2.cell(0), "品名", "desc_", 6);
         new StringColumn(line2.cell(1), "规格", "spec_", 6);
 
-        new DoubleColumn(line3.cell(0), "库存", "stock_", 4);
-        new StringColumn(line3.cell(1), "单位", "unit_", 4);
+        new StringColumn(line3.cell(0), "单位", "unit_", 4);
+        new DoubleColumn(line3.cell(1), "库存", "stock_", 4);
         new StringColumn(line3.cell(2), "备注", "remark_", 6);
 
         CustomColumn customColumn = new CustomColumn(line4.cell(0));
