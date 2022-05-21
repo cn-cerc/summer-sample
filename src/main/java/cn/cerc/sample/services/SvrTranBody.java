@@ -72,7 +72,7 @@ public class SvrTranBody implements IService {
                 item.setIt_(it);
                 item.setCode_(code);
                 item.setNum_(num);
-                item.setCurrentNum_(stock);
+                item.setCurrentNum_(num - stock);
             });
             head.update(item -> item.setTotal_(item.getTotal_() + num));
             tx.commit();
@@ -111,7 +111,7 @@ public class SvrTranBody implements IService {
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 单号不存在", orderSN)));
 
             EntityOne<TranBodyEntity> entity = EntityOne.open(handle, TranBodyEntity.class, orderSN, it)
-                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品不存在于单身，不允许重复添加", it)));
+                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品不存在于单身，不允许修改数据", it)));
             String code = entity.get().getCode_();
             double original = entity.get().getNum_();// 原始数量
             double diff = num - original;// 差异量
@@ -153,6 +153,41 @@ public class SvrTranBody implements IService {
     public DataSet delete(IHandle handle, DataRow headIn) {
         DataSet dataSet = new DataSet();
 
+        String orderSN = headIn.getString("order_sn_");
+        String it = headIn.getString("it_");
+
+        try (Transaction tx = new Transaction(handle)) {
+            EntityOne<TranHeadEntity> head = EntityOne.open(handle, TranHeadEntity.class, orderSN)
+                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 单号不存在", orderSN)));
+
+            EntityOne<TranBodyEntity> entity = EntityOne.open(handle, TranBodyEntity.class, orderSN, it)
+                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品不存在于单身，不允许删除数据", it)));
+            String code = entity.get().getCode_();
+            double original = entity.get().getNum_();// 原始数量
+            double increment = entity.get().getCurrentNum_();// 变化增量
+
+            EntityOne<PartinfoEntity> partInfo = EntityOne.open(handle, PartinfoEntity.class, code)
+                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品编号不存在", code)));
+            final double stock = partInfo.get().getStock_();// 原始库存
+            switch (head.get().getTb_()) {
+            case "AB":
+                partInfo.update(item -> item.setStock_(stock - original));// AB 退货扣减库存
+                break;
+            case "AE":
+                partInfo.update(item -> item.setStock_(original - increment));
+                break;
+            case "BC":
+                partInfo.update(item -> item.setStock_(stock + original));// 归还库存
+                break;
+            default:
+                break;
+            }
+
+            entity.delete();
+            head.update(item -> item.setTotal_(item.getTotal_() - original));
+            tx.commit();
+            dataSet.append().setValue("it_", it);
+        }
         return dataSet.setState(ServiceState.OK).disableStorage();
     }
 

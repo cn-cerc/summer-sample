@@ -266,4 +266,34 @@ public class FrmTranOrder extends CustomForm {
         }
     }
 
+    public IPage deleteBody() throws ServiceExecuteException {
+        UICustomPage page = new UICustomPage(this);
+
+        try (MemoryBuffer buff = new MemoryBuffer(BufferUser.Notice_UserCode, this.getUserCode(),
+                "FrmTranOrder.modify")) {
+            String orderSN = page.getValue(buff, "orderSN");
+            if (Utils.isEmpty(orderSN)) {
+                page.setMessage("orderSN 不允许为空");
+                return page;
+            }
+            String it = page.getValue(buff, "it");
+            if (Utils.isEmpty(orderSN)) {
+                page.setMessage("it 不允许为空");
+                return page;
+            }
+
+            DataRow headIn = new DataRow();
+            headIn.setValue("order_sn_", orderSN);
+            headIn.setValue("it_", it);
+            ServiceQuery svr = ServiceQuery.open(this, SvrTranBody.delete, headIn);
+            if (svr.isFail()) {
+                page.setMessage(svr.dataOut().message());
+                return page;
+            }
+            UINotice.sendInfo(getSession(), this.getClass(), "modify", String.format("删除单身 %s", it));
+            String modifyUrl = UrlRecord.builder("FrmTranOrder.modify").put("orderSN", orderSN).build().getUrl();
+            return new RedirectPage(this, modifyUrl);
+        }
+    }
+
 }
