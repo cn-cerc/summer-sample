@@ -80,8 +80,11 @@ public class FrmTranOrder extends CustomForm {
 
         new ItColumn(line1.cell(0));
         new StringColumn(line1.cell(1), "单号", "order_sn_", 6);
+
         new StringColumn(line2.cell(0), "日期", "order_date_", 6);
         new StringColumn(line2.cell(1), "单别", "tb_", 4);
+
+        new DoubleColumn(line3.cell(0), "合计", "total_", 4);
         new StringColumn(line3.cell(1), "备注", "remark_", 6);
 
         CustomColumn customColumn = new CustomColumn(line4.cell(0));
@@ -230,7 +233,7 @@ public class FrmTranOrder extends CustomForm {
                 return page;
             }
             String it = page.getValue(buff, "it");
-            if (Utils.isEmpty(orderSN)) {
+            if (Utils.isEmpty(it)) {
                 page.setMessage("it 不允许为空");
                 return page;
             }
@@ -267,33 +270,45 @@ public class FrmTranOrder extends CustomForm {
     }
 
     public IPage deleteBody() throws ServiceExecuteException {
-        UICustomPage page = new UICustomPage(this);
-
-        try (MemoryBuffer buff = new MemoryBuffer(BufferUser.Notice_UserCode, this.getUserCode(),
-                "FrmTranOrder.modify")) {
-            String orderSN = page.getValue(buff, "orderSN");
-            if (Utils.isEmpty(orderSN)) {
-                page.setMessage("orderSN 不允许为空");
-                return page;
-            }
-            String it = page.getValue(buff, "it");
-            if (Utils.isEmpty(orderSN)) {
-                page.setMessage("it 不允许为空");
-                return page;
-            }
-
-            DataRow headIn = new DataRow();
-            headIn.setValue("order_sn_", orderSN);
-            headIn.setValue("it_", it);
-            ServiceQuery svr = ServiceQuery.open(this, SvrTranBody.delete, headIn);
-            if (svr.isFail()) {
-                page.setMessage(svr.dataOut().message());
-                return page;
-            }
-            UINotice.sendInfo(getSession(), this.getClass(), "modify", String.format("删除单身 %s", it));
-            String modifyUrl = UrlRecord.builder("FrmTranOrder.modify").put("orderSN", orderSN).build().getUrl();
-            return new RedirectPage(this, modifyUrl);
+        String message;
+        String orderSN = getRequest().getParameter("orderSN");
+        if (Utils.isEmpty(orderSN)) {
+            message = "orderSN 不允许为空";
+            UINotice.sendInfo(getSession(), this.getClass(), "modify", message);
         }
+        String it = getRequest().getParameter("it");
+        if (Utils.isEmpty(it)) {
+            message = "it 不允许为空";
+            UINotice.sendInfo(getSession(), this.getClass(), "modify", message);
+        }
+
+        DataRow headIn = new DataRow();
+        headIn.setValue("order_sn_", orderSN);
+        headIn.setValue("it_", it);
+        ServiceQuery svr = ServiceQuery.open(this, SvrTranBody.delete, headIn);
+        message = String.format("删除单身 %s", it);
+        if (svr.isFail())
+            message = svr.dataOut().message();
+        UINotice.sendInfo(getSession(), this.getClass(), "modify", message);
+        String modifyUrl = UrlRecord.builder("FrmTranOrder.modify").put("orderSN", orderSN).build().getUrl();
+        return new RedirectPage(this, modifyUrl);
+    }
+
+    public IPage delete() throws ServiceExecuteException {
+        String message;
+        String orderSN = getRequest().getParameter("orderSN");
+        if (Utils.isEmpty(orderSN)) {
+            message = "orderSN 不允许为空";
+            UINotice.sendInfo(getSession(), this.getClass(), "execute", message);
+        }
+
+        ServiceQuery svr = ServiceQuery.open(this, SvrTranHead.delete, Map.of("order_sn_", orderSN));
+        if (svr.isFail())
+            message = svr.dataOut().message();
+        else
+            message = String.format("删除订单 %s", orderSN);
+        UINotice.sendInfo(getSession(), this.getClass(), "execute", message);
+        return new RedirectPage(this, "FrmTranOrder");
     }
 
 }
