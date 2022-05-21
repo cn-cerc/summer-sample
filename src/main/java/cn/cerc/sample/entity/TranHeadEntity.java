@@ -61,12 +61,12 @@ public class TranHeadEntity extends CustomEntity {
 
     @Column(length = 10)
     @Describe(name = "数量汇总")
-    private int total_;
+    private Integer total_;
 
     @Version
     @Column(length = 11, nullable = false)
     @Describe(name = "当前版本")
-    private int version_;
+    private Integer version_;
 
     @Column(length = 10, nullable = false)
     @Describe(name = "创建人员")
@@ -88,6 +88,7 @@ public class TranHeadEntity extends CustomEntity {
     public void onInsertPost(IHandle handle) {
         super.onInsertPost(handle);
         this.setCorp_no_(handle.getCorpNo());
+        this.setTotal_(0);
 
         this.setCreate_user_(handle.getUserCode());
         this.setCreate_time_(new Datetime());

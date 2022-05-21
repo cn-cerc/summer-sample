@@ -49,7 +49,7 @@ public class TranBodyEntity extends CustomEntity {
 
     @Column(length = 11, nullable = false)
     @Describe(name = "单序")
-    private int it_;
+    private Integer it_;
 
     @Column(length = 32)
     @Describe(name = "商品编号")
@@ -66,7 +66,7 @@ public class TranBodyEntity extends CustomEntity {
     @Version
     @Column(length = 11, nullable = false)
     @Describe(name = "当前版本")
-    private int version_;
+    private Integer version_;
 
     @Column(length = 10, nullable = false)
     @Describe(name = "创建人员")

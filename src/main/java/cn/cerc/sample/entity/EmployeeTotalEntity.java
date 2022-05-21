@@ -50,7 +50,7 @@ public class EmployeeTotalEntity extends CustomEntity {
     @Version
     @Column(length = 11, nullable = false)
     @Describe(name = "当前版本")
-    private int version_;
+    private Integer version_;
 
     @Column(length = 10, nullable = false)
     @Describe(name = "创建人员")
