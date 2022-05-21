@@ -286,10 +286,12 @@ public class FrmTranOrder extends CustomForm {
         headIn.setValue("order_sn_", orderSN);
         headIn.setValue("it_", it);
         ServiceQuery svr = ServiceQuery.open(this, SvrTranBody.delete, headIn);
-        message = String.format("删除单身 %s", it);
         if (svr.isFail())
             message = svr.dataOut().message();
+        else
+            message = String.format("删除单身 %s", it);
         UINotice.sendInfo(getSession(), this.getClass(), "modify", message);
+
         String modifyUrl = UrlRecord.builder("FrmTranOrder.modify").put("orderSN", orderSN).build().getUrl();
         return new RedirectPage(this, modifyUrl);
     }
