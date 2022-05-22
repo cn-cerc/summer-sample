@@ -111,6 +111,9 @@ public class PartinfoEntity extends CustomEntity {
 
     /**
      * 新增商品库存
+     *
+     * @param tb  单别
+     * @param num 订单数量
      */
     public void appendStock(String tb, double num) {
         double newStock;
@@ -134,6 +137,10 @@ public class PartinfoEntity extends CustomEntity {
 
     /**
      * 回收商品库存
+     *
+     * @param tb        单别
+     * @param original  订单原始数量
+     * @param increment 订单变化增量
      */
     public void recycleStock(String tb, double original, double increment) {
         double newStock;
@@ -157,6 +164,9 @@ public class PartinfoEntity extends CustomEntity {
 
     /**
      * 增量调整商品库存
+     *
+     * @param tb   单别
+     * @param diff 新订单数量 - 旧订单数量
      */
     public void updateStock(String tb, double diff) {
         double newStock;

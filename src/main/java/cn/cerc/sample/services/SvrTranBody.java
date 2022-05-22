@@ -45,7 +45,7 @@ public class SvrTranBody implements IService {
 
             EntityMany<TranBodyEntity> entity = EntityMany.open(handle, TranBodyEntity.class, orderSN);
             if (entity.stream().anyMatch(item -> item.getCode_().equals(code)))
-                throw new RuntimeException(String.format("%s 商品已经存在单身，不允许重复添加", code));
+                throw new RuntimeException(String.format("%s 单序商品已经存在单身，不允许重复添加", code));
 
             EntityOne<PartinfoEntity> partInfo = EntityOne.open(handle, PartinfoEntity.class, code)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品编号不存在", code)));
@@ -99,7 +99,7 @@ public class SvrTranBody implements IService {
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 单号不存在", orderSN)));
 
             EntityOne<TranBodyEntity> entity = EntityOne.open(handle, TranBodyEntity.class, orderSN, it)
-                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品不存在于单身，不允许修改数据", it)));
+                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 单序商品不存在于单身，不允许修改数据", it)));
             String code = entity.get().getCode_();
             double increment = entity.get().getIncrement_();// 原始增量
             double original = entity.get().getNum_();// 原始数量
@@ -134,7 +134,7 @@ public class SvrTranBody implements IService {
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 单号不存在", orderSN)));
 
             EntityOne<TranBodyEntity> entity = EntityOne.open(handle, TranBodyEntity.class, orderSN, it)
-                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品不存在于单身，不允许删除数据", it)));
+                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 单序商品不存在于单身，不允许删除数据", it)));
             String code = entity.get().getCode_();
             double original = entity.get().getNum_();// 原始数量
             double increment = entity.get().getIncrement_();// 变化增量
