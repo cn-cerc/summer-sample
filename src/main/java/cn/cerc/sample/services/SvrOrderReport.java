@@ -43,7 +43,7 @@ public class SvrOrderReport implements IService {
 
         query.add("group by h.order_date_");
         query.openReadonly();
-        return query.setState(ServiceState.OK).disableStorage();
+        return query.setState(ServiceState.OK);
     }
 
     @Description("单日订单明细")
@@ -68,7 +68,7 @@ public class SvrOrderReport implements IService {
             query.setValue("desc_", item.getDesc_());
             query.setValue("spec_", item.getSpec_());
         }
-        return query.setState(ServiceState.OK).disableStorage();
+        return query.setState(ServiceState.OK);
     }
 
     public static void main(String[] args) {

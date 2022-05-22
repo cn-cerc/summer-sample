@@ -39,7 +39,7 @@ public class SvrEmployee implements IService {
         where.build();
         query.add("order by code_ desc");
         query.openReadonly();
-        return query.setState(ServiceState.OK).disableStorage();
+        return query.setState(ServiceState.OK);
     }
 
     @Description("新增人员信息")
@@ -48,41 +48,31 @@ public class SvrEmployee implements IService {
     @DataValidate(value = "gender_", name = "员工性别")
     @DataValidate(value = "entry_date_", name = "入职日期")
     public DataSet append(IHandle handle, DataRow headIn) {
-        DataSet dataSet = new DataSet();
+        String code = headIn.getString("code_");
+        EntityOne<EmployeeInfoEntity> entity = EntityOne.open(handle, EmployeeInfoEntity.class, code)
+                .isPresentThrow(() -> new RuntimeException("该工号已经存在，不允许重复登记"));
         try (Transaction tx = new Transaction(handle)) {// 启用事务管控
-            String code = headIn.getString("code_");
-            EntityOne<EmployeeInfoEntity> entity = EntityOne.open(handle, EmployeeInfoEntity.class, code)
-                    .isPresentThrow(() -> new RuntimeException("该工号已经存在，不允许重复登记"));
             entity.orElseInsert(item -> {
                 item.setCode_(code);
                 item.setName_(headIn.getString("name_"));
                 item.setGender_(headIn.getInt("gender_"));
                 item.setEntry_date_(headIn.getFastDate("entry_date_"));
-                item.setEnable_(true);// 默认状态为在职中
             });
-            dataSet.append().copyRecord(entity.current());
-
             // 更新员数量合计栏位
-            EntityOne<EmployeeTotalEntity> total = EntityOne.open(handle, EmployeeTotalEntity.class);
-            if (total.isEmpty())
-                total.orElseInsert(item -> item.setTotal_(1));
-            else
-                total.update(item -> item.setTotal_(item.getTotal_() + 1));
-
+            EntityOne.open(handle, EmployeeTotalEntity.class).update(item -> item.setTotal_(item.getTotal_() + 1))
+                    .orElseInsert(item -> item.setTotal_(1));
             tx.commit();
         }
-        return dataSet.setState(ServiceState.OK).disableStorage();
+        return entity.current().dataSet().setState(ServiceState.OK);
     }
 
     @Description("获取员工信息")
     @DataValidate(value = "code_", name = "员工工号")
     public DataSet download(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
-        DataRow dataRow = EntityOne.open(handle, EmployeeInfoEntity.class, code)
-                .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).current();
-        DataSet dataSet = new DataSet();
-        dataSet.append().copyRecord(dataRow);
-        return dataSet.setState(ServiceState.OK).disableStorage();
+        return EntityOne.open(handle, EmployeeInfoEntity.class, code)
+                .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).current().dataSet()
+                .setState(ServiceState.OK);
     }
 
     @Description("修改人员信息")
@@ -91,35 +81,29 @@ public class SvrEmployee implements IService {
     @DataValidate(value = "entry_date_", name = "入职日期")
     public DataSet modify(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
-        try (Transaction tx = new Transaction(handle)) {
-            EntityOne.open(handle, EmployeeInfoEntity.class, code)
-                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).update(item -> {
-                        item.setName_(headIn.getString("name_"));
-                        item.setGender_(headIn.getInt("gender_"));
-                        item.setEntry_date_(headIn.getFastDate("entry_date_"));
-                        item.setEnable_(headIn.getBoolean("enable_"));
-                    });
-            tx.commit();
-        }
-        return new DataSet().setState(ServiceState.OK).disableStorage();
+        return EntityOne.open(handle, EmployeeInfoEntity.class, code)
+                .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).update(item -> {
+                    item.setName_(headIn.getString("name_"));
+                    item.setGender_(headIn.getInt("gender_"));
+                    item.setEntry_date_(headIn.getFastDate("entry_date_"));
+                    item.setEnable_(headIn.getBoolean("enable_"));
+                }).current().dataSet().setState(ServiceState.OK);
     }
 
     @Description("删除人员信息")
     @DataValidate(value = "code_", name = "员工工号")
-    public DataSet delete(IHandle handle, DataRow headIn) {
+    public boolean delete(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
         try (Transaction tx = new Transaction(handle)) {
             EntityOne.open(handle, EmployeeInfoEntity.class, code)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).delete();
+
             // 更新员数量合计栏位
-            EntityOne<EmployeeTotalEntity> total = EntityOne.open(handle, EmployeeTotalEntity.class);
-            if (total.isEmpty())
-                total.orElseInsert(item -> item.setTotal_(1));
-            else
-                total.update(item -> item.setTotal_(item.getTotal_() - 1));
+            EntityOne.open(handle, EmployeeTotalEntity.class).update(item -> item.setTotal_(item.getTotal_() - 1))
+                    .orElseInsert(item -> item.setTotal_(1));
             tx.commit();
         }
-        return new DataSet().setState(ServiceState.OK).disableStorage();
+        return true;
     }
 
     public static void main(String[] args) {

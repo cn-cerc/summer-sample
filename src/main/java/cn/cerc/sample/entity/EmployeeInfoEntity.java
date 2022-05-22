@@ -94,6 +94,8 @@ public class EmployeeInfoEntity extends CustomEntity {
 
         this.setUpdate_user_(handle.getUserCode());
         this.setUpdate_time_(new Datetime());
+
+        this.setEnable_(true);// 默认状态为在职中
     }
 
     @Override

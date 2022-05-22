@@ -78,7 +78,7 @@ public class SvrTranBody implements IService {
             tx.commit();
             dataSet.append().setValue("it_", it);
         }
-        return dataSet.setState(ServiceState.OK).disableStorage();
+        return dataSet.setState(ServiceState.OK);
     }
 
     @Description("获取单身信息")
@@ -91,7 +91,7 @@ public class SvrTranBody implements IService {
                 .isEmptyThrow(() -> new RuntimeException("订单单身不存在")).current();
         DataSet dataSet = new DataSet();
         dataSet.append().copyRecord(dataRow);
-        return dataSet.setState(ServiceState.OK).disableStorage();
+        return dataSet.setState(ServiceState.OK);
     }
 
     @Description("修改单身信息")
@@ -144,7 +144,7 @@ public class SvrTranBody implements IService {
             tx.commit();
             dataSet.append().setValue("it_", it);
         }
-        return dataSet.setState(ServiceState.OK).disableStorage();
+        return dataSet.setState(ServiceState.OK);
     }
 
     @Description("删除单身信息")
@@ -188,7 +188,7 @@ public class SvrTranBody implements IService {
             tx.commit();
             dataSet.append().setValue("it_", it);
         }
-        return dataSet.setState(ServiceState.OK).disableStorage();
+        return dataSet.setState(ServiceState.OK);
     }
 
     public static void main(String[] args) {

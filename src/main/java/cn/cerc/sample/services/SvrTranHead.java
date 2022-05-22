@@ -47,7 +47,7 @@ public class SvrTranHead implements IService {
         where.build();
         query.add("order by order_sn_ desc");
         query.openReadonly();
-        return query.setState(ServiceState.OK).disableStorage();
+        return query.setState(ServiceState.OK);
     }
 
     @Description("新增商品信息")
@@ -69,7 +69,7 @@ public class SvrTranHead implements IService {
             dataSet.append().copyRecord(entity.current());
             tx.commit();
         }
-        return dataSet.setState(ServiceState.OK).disableStorage();
+        return dataSet.setState(ServiceState.OK);
     }
 
     @Description("获取订单信息")
@@ -92,7 +92,7 @@ public class SvrTranHead implements IService {
             dataSet.setValue("desc_", item.getDesc_());
             dataSet.setValue("spec_", item.getSpec_());
         }
-        return dataSet.setState(ServiceState.OK).disableStorage();
+        return dataSet.setState(ServiceState.OK);
     }
 
     @Description("修改单头信息")
@@ -108,7 +108,7 @@ public class SvrTranHead implements IService {
                     });
             tx.commit();
         }
-        return new DataSet().setState(ServiceState.OK).disableStorage();
+        return new DataSet().setState(ServiceState.OK);
     }
 
     @Description("删除订单信息")
@@ -129,7 +129,7 @@ public class SvrTranHead implements IService {
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 单号不存在", orderSN))).delete();
             tx.commit();
         }
-        return new DataSet().setState(ServiceState.OK).disableStorage();
+        return new DataSet().setState(ServiceState.OK);
     }
 
     public static void main(String[] args) {

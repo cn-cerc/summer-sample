@@ -39,7 +39,7 @@ public class SvrPartInfo implements IService {
         where.build();
         query.add("order by create_time_ desc");
         query.openReadonly();
-        return query.setState(ServiceState.OK).disableStorage();
+        return query.setState(ServiceState.OK);
     }
 
     @Description("新增商品信息")
@@ -62,7 +62,7 @@ public class SvrPartInfo implements IService {
             dataSet.append().copyRecord(entity.current());
             tx.commit();
         }
-        return dataSet.setState(ServiceState.OK).disableStorage();
+        return dataSet.setState(ServiceState.OK);
     }
 
     @Description("获取商品信息")
@@ -73,7 +73,7 @@ public class SvrPartInfo implements IService {
                 .isEmptyThrow(() -> new RuntimeException(String.format("%s 料号不存在", code))).current();
         DataSet dataSet = new DataSet();
         dataSet.append().copyRecord(dataRow);
-        return dataSet.setState(ServiceState.OK).disableStorage();
+        return dataSet.setState(ServiceState.OK);
     }
 
     @Description("修改商品信息")
@@ -93,7 +93,7 @@ public class SvrPartInfo implements IService {
                     });
             tx.commit();
         }
-        return new DataSet().setState(ServiceState.OK).disableStorage();
+        return new DataSet().setState(ServiceState.OK);
     }
 
     @Description("删除商品信息")
@@ -114,7 +114,7 @@ public class SvrPartInfo implements IService {
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 料号不存在", code))).delete();
             tx.commit();
         }
-        return new DataSet().setState(ServiceState.OK).disableStorage();
+        return new DataSet().setState(ServiceState.OK);
     }
 
     public static void main(String[] args) {
