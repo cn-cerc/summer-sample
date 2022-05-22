@@ -15,7 +15,7 @@ public class AppConfig {
     /**
      * 获取当前服务版本
      */
-    public final static OriginalEdition original() {
+    public static OriginalEdition original() {
         if (Utils.isEmpty(original))
             return OriginalEdition.STD;
         return Stream.of(OriginalEdition.values()).filter(item -> original.equals(item.name())).findFirst()
