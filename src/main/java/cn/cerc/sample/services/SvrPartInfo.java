@@ -47,11 +47,11 @@ public class SvrPartInfo implements IService {
     @DataValidate(value = "spec_", name = "规格")
     @DataValidate(value = "unit_", name = "单位")
     public DataSet append(IHandle handle, DataRow headIn) {
-        DataSet dataSet = new DataSet();
+        String code = handle.getCorpNo() + Utils.getNumRandom(6);
+        EntityOne<PartinfoEntity> entity = EntityOne.open(handle, PartinfoEntity.class, code)
+                .isPresentThrow(() -> new RuntimeException("该料号已经存在，不允许重复登记"));
+
         try (Transaction tx = new Transaction(handle)) {// 启用事务管控
-            String code = handle.getCorpNo() + Utils.getNumRandom(6);
-            EntityOne<PartinfoEntity> entity = EntityOne.open(handle, PartinfoEntity.class, code)
-                    .isPresentThrow(() -> new RuntimeException("该料号已经存在，不允许重复登记"));
             entity.orElseInsert(item -> {
                 item.setCode_(code);
                 item.setDesc_(headIn.getString("desc_"));
@@ -59,21 +59,18 @@ public class SvrPartInfo implements IService {
                 item.setUnit_(headIn.getString("unit_"));
                 item.setRemark_(headIn.getString("remark_"));
             });
-            dataSet.append().copyRecord(entity.current());
             tx.commit();
         }
-        return dataSet.setState(ServiceState.OK);
+        return entity.dataSet().setState(ServiceState.OK);
     }
 
     @Description("获取商品信息")
     @DataValidate(value = "code_", name = "料号")
     public DataSet download(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
-        DataRow dataRow = EntityOne.open(handle, PartinfoEntity.class, code)
-                .isEmptyThrow(() -> new RuntimeException(String.format("%s 料号不存在", code))).current();
-        DataSet dataSet = new DataSet();
-        dataSet.append().copyRecord(dataRow);
-        return dataSet.setState(ServiceState.OK);
+        return EntityOne.open(handle, PartinfoEntity.class, code)
+                .isEmptyThrow(() -> new RuntimeException(String.format("%s 料号不存在", code))).dataSet()
+                .setState(ServiceState.OK);
     }
 
     @Description("修改商品信息")
@@ -81,40 +78,33 @@ public class SvrPartInfo implements IService {
     @DataValidate(value = "desc_", name = "品名")
     @DataValidate(value = "spec_", name = "规格")
     @DataValidate(value = "unit_", name = "单位")
-    public DataSet modify(IHandle handle, DataRow headIn) {
+    public boolean modify(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
-        try (Transaction tx = new Transaction(handle)) {
-            EntityOne.open(handle, PartinfoEntity.class, code)
-                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 料号不存在", code))).update(item -> {
-                        item.setDesc_(headIn.getString("desc_"));
-                        item.setSpec_(headIn.getString("spec_"));
-                        item.setUnit_(headIn.getString("unit_"));
-                        item.setRemark_(headIn.getString("remark_"));
-                    });
-            tx.commit();
-        }
-        return new DataSet().setState(ServiceState.OK);
+        EntityOne.open(handle, PartinfoEntity.class, code)
+                .isEmptyThrow(() -> new RuntimeException(String.format("%s 料号不存在", code))).update(item -> {
+                    item.setDesc_(headIn.getString("desc_"));
+                    item.setSpec_(headIn.getString("spec_"));
+                    item.setUnit_(headIn.getString("unit_"));
+                    item.setRemark_(headIn.getString("remark_"));
+                });
+        return true;
     }
 
     @Description("删除商品信息")
     @DataValidate(value = "code_", name = "料号")
-    public DataSet delete(IHandle handle, DataRow headIn) {
+    public boolean delete(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
-        try (Transaction tx = new Transaction(handle)) {
-            MysqlQuery query = new MysqlQuery(handle);
-            query.add("select * from %s", AppDB.s_tranb);
-            query.addWhere().eq("corp_no_", handle.getCorpNo()).eq("code_", code).build();
-            query.setMaximum(1);
-            query.openReadonly();
-            if (!query.eof()) {
-                throw new RuntimeException(String.format("%s 料号已经在单据中使用，当前环境不允许删除", code));
-            }
+        MysqlQuery query = new MysqlQuery(handle);
+        query.add("select * from %s", AppDB.s_tranb);
+        query.addWhere().eq("corp_no_", handle.getCorpNo()).eq("code_", code).build();
+        query.setMaximum(1);
+        query.openReadonly();
+        if (!query.eof())
+            throw new RuntimeException(String.format("%s 料号已经在单据中使用，当前环境不允许删除", code));
 
-            EntityOne.open(handle, PartinfoEntity.class, code)
-                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 料号不存在", code))).delete();
-            tx.commit();
-        }
-        return new DataSet().setState(ServiceState.OK);
+        EntityOne.open(handle, PartinfoEntity.class, code)
+                .isEmptyThrow(() -> new RuntimeException(String.format("%s 料号不存在", code))).delete();
+        return true;
     }
 
     public static void main(String[] args) {
