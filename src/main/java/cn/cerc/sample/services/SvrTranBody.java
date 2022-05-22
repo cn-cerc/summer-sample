@@ -49,8 +49,9 @@ public class SvrTranBody implements IService {
 
             EntityOne<PartinfoEntity> partInfo = EntityOne.open(handle, PartinfoEntity.class, code)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品编号不存在", code)));
-            final double stock = partInfo.get().getStock_();// 原始库存
-            partInfo.update(item -> item.updateStock(head.get().getTb_(), num));
+            double stock = partInfo.get().getStock_();// 原始库存
+            double increment = num - stock;
+            partInfo.update(item -> item.updateStock(head.get().getTb_(), num, num));
 
             OptionalInt maxIt = entity.stream().mapToInt(t -> t.getIt_()).max();
             int it = maxIt.isEmpty() ? 1 : maxIt.getAsInt() + 1;
@@ -59,7 +60,7 @@ public class SvrTranBody implements IService {
                 item.setIt_(it);
                 item.setCode_(code);
                 item.setNum_(num);
-                item.setIncrement_(num - stock);
+                item.setIncrement_(increment);
             });
             head.update(item -> item.setTotal_(item.getTotal_() + num));
             tx.commit();
@@ -100,16 +101,17 @@ public class SvrTranBody implements IService {
             EntityOne<TranBodyEntity> entity = EntityOne.open(handle, TranBodyEntity.class, orderSN, it)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品不存在于单身，不允许修改数据", it)));
             String code = entity.get().getCode_();
-
+            double increment = entity.get().getIncrement_();// 原始增量
             double original = entity.get().getNum_();// 原始数量
+            double diff = num - original;
+
             EntityOne<PartinfoEntity> partInfo = EntityOne.open(handle, PartinfoEntity.class, code)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品编号不存在", code)));
-            partInfo.update(item -> item.updateStock(head.get().getTb_(), num));
-            double diff = original - partInfo.get().getStock_();
+            partInfo.update(item -> item.updateStock(head.get().getTb_(), num, diff));
 
             entity.update(item -> {
                 item.setNum_(num);
-                item.setIncrement_(diff);
+                item.setIncrement_(increment + diff);
             });
             head.update(item -> item.setTotal_(item.getTotal_() + diff));
             tx.commit();
@@ -137,7 +139,7 @@ public class SvrTranBody implements IService {
             double num = entity.get().getNum_();// 原始数量
             EntityOne<PartinfoEntity> partInfo = EntityOne.open(handle, PartinfoEntity.class, code)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品编号不存在", code)));
-            partInfo.update(item -> item.updateStock(head.get().getTb_(), -num));
+            partInfo.update(item -> item.updateStock(head.get().getTb_(), -num, -num));
 
             entity.delete();
             head.update(item -> item.setTotal_(item.getTotal_() - num));

@@ -109,14 +109,17 @@ public class PartinfoEntity extends CustomEntity {
         this.setUpdate_time_(new Datetime());
     }
 
-    public void updateStock(String tb, double num) {
+    /**
+     * 更新库存信息
+     */
+    public void updateStock(String tb, double num, double increment) {
         double newStock = 0;
         switch (tb) {
         case "AB":
-            newStock = this.stock_ + num;
+            newStock = this.stock_ + increment;
             break;
         case "BC":
-            newStock = this.stock_ - num;
+            newStock = this.stock_ - increment;
             break;
         case "AE":
             newStock = num;
