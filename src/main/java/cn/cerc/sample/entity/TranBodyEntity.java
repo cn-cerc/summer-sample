@@ -60,8 +60,8 @@ public class TranBodyEntity extends CustomEntity {
     private Double num_;
 
     @Column(precision = 18, scale = 4)
-    @Describe(name = "当前库存")
-    private Double currentNum_;
+    @Describe(name = "变化增量")
+    private Double increment_;
 
     @Version
     @Column(length = 11, nullable = false)
