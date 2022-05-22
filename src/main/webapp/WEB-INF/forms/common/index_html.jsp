@@ -7,7 +7,7 @@
 <body>
 <div>请根据需求文档，自行建立相关菜单文件</div>
 <div>
-    <a href="FrmExample">范例参考</a>
+    <a href="FrmEmployee">范例参考</a>
 </div>
 </body>
 </html>

@@ -1919,15 +1919,15 @@ var TGrid = /** @class */ (function (_super) {
     return TGrid;
 }(_ui_TTable__WEBPACK_IMPORTED_MODULE_3__["default"]));
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TGrid);
-// let json = '{"state":1,"body":[["UID_","corpNo_","code_","name_","sex_","age_","createTime_","updateTime_"],[97,null,12345,"毛巾",0,40,"2021-04-12 15:05:51","2021-05-25 18:06:47"],[98,null,111,"kyi",0,19,"2021-04-12 17:01:55","2021-04-12 17:01:55"],[99,null,555,"寇晶",0,28,"2021-04-12 17:02:27","2021-04-12 17:02:27"],[100,null,423,"朱大福",0,19,"2021-04-12 17:03:02","2021-04-12 19:14:24"],[101,null,321,"sk",1,24,"2021-05-13 08:45:37","2021-05-14 10:52:55"]]}';
+// let json = '{"state":1,"body":[["UID_","corpNo_","code_","name_","gender_","entry_date_","createTime_","updateTime_"],[97,null,12345,"毛巾",0,40,"2021-04-12 15:05:51","2021-05-25 18:06:47"],[98,null,111,"kyi",0,19,"2021-04-12 17:01:55","2021-04-12 17:01:55"],[99,null,555,"寇晶",0,28,"2021-04-12 17:02:27","2021-04-12 17:02:27"],[100,null,423,"朱大福",0,19,"2021-04-12 17:03:02","2021-04-12 19:14:24"],[101,null,321,"sk",1,24,"2021-05-13 08:45:37","2021-05-14 10:52:55"]]}';
 // let ds = new DataSet().json = json;
 // assertEquals(json, ds.json)
 // let grid = new TGrid(null);
 // new TGridColumn(grid, "code_", "代码").setWidth(35);
 // new TGridColumn(grid, "name_", "名称").setWidth(60);
-// new TGridColumn(grid.getGroup(1), "sex_", "性别").setCols('2');
+// new TGridColumn(grid.getGroup(1), "gender_", "员工性别").setCols('2');
 // grid.dataSet = ds;
-// ds.fieldDefs.get("sex_").onGetText = (row: DataRow, meta: FieldMeta) => {
+// ds.fieldDefs.get("gender_").onGetText = (row: DataRow, meta: FieldMeta) => {
 //     return row.getValue(meta.code) == 1 ? "男" : "女";
 // };
 // grid.render();
