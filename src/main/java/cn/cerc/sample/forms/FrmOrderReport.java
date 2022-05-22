@@ -2,6 +2,7 @@ package cn.cerc.sample.forms;
 
 import java.util.Map;
 
+import cn.cerc.sample.services.SvrTranHead;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,6 @@ import cn.cerc.sample.SampleServicesConfig.SvrOrderReport;
 import cn.cerc.sample.ui.CustomForm;
 import cn.cerc.sample.ui.UICustomPage;
 import cn.cerc.sample.ui.UINotice;
-import cn.cerc.sample.enums.TBType;
 import cn.cerc.ui.columns.CustomColumn;
 import cn.cerc.ui.columns.DateColumn;
 import cn.cerc.ui.columns.ItColumn;
@@ -56,15 +56,15 @@ public class FrmOrderReport extends CustomForm {
         new StringColumn(line1.cell(1), "日期", "order_date_", 6);
         new CustomColumn(line2.cell(0), "入库数量", "in_", 4).defineCell((content, record) -> {
             new UIUrl(content).setText(record.getString("in_")).setSite("FrmOrderReport.detail")
-                    .putParam("orderDate", record.getString("order_date_")).putParam("tb", TBType.AB.name());
+                    .putParam("orderDate", record.getString("order_date_")).putParam("tb", SvrTranHead.TBType.AB.name());
         });
         new CustomColumn(line2.cell(1), "出库数量", "out_", 4).defineCell((content, record) -> {
             new UIUrl(content).setText(record.getString("out_")).setSite("FrmOrderReport.detail")
-                    .putParam("orderDate", record.getString("order_date_")).putParam("tb", TBType.BC.name());
+                    .putParam("orderDate", record.getString("order_date_")).putParam("tb", SvrTranHead.TBType.BC.name());
         });
         new CustomColumn(line3.cell(0), "盘点数量", "reality_", 4).defineCell((content, record) -> {
             new UIUrl(content).setText(record.getString("reality_")).setSite("FrmOrderReport.detail")
-                    .putParam("orderDate", record.getString("order_date_")).putParam("tb", TBType.AE.name());
+                    .putParam("orderDate", record.getString("order_date_")).putParam("tb", SvrTranHead.TBType.AE.name());
         });
 
         CustomColumn customColumn = new CustomColumn(line4.cell(0));

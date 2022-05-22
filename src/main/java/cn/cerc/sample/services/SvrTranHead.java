@@ -1,5 +1,6 @@
 package cn.cerc.sample.services;
 
+import lombok.Getter;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Description;
 import org.springframework.context.annotation.Scope;
@@ -23,7 +24,8 @@ import cn.cerc.mis.security.Permission;
 import cn.cerc.sample.config.AppDB;
 import cn.cerc.sample.entity.TranBodyEntity;
 import cn.cerc.sample.entity.TranHeadEntity;
-import cn.cerc.sample.enums.TBType;
+
+import java.util.stream.Stream;
 
 @Permission(Permission.GUEST)
 @Component
@@ -108,4 +110,21 @@ public class SvrTranHead implements IService {
         ServiceSign.buildSourceCode(SvrTranHead.class);
     }
 
+    public enum TBType {
+        AB("进货单"), BC("出货单"), AE("盘点单");
+
+        @Getter
+        private final String desc;
+
+        private TBType(String desc) {
+            this.desc = desc;
+        }
+
+        public static void validateTB(String tb) {
+            boolean value = Stream.of(TBType.values()).anyMatch(item -> item.name().equals(tb));
+            if (!value)
+                throw new RuntimeException("非法单别！");
+        }
+
+    }
 }

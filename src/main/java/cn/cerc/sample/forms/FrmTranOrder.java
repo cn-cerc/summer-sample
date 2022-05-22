@@ -28,7 +28,6 @@ import cn.cerc.sample.ui.UICustomPage;
 import cn.cerc.sample.ui.UINotice;
 import cn.cerc.sample.entity.PartinfoEntity;
 import cn.cerc.sample.entity.TranBodyEntity;
-import cn.cerc.sample.enums.TBType;
 import cn.cerc.ui.columns.CustomColumn;
 import cn.cerc.ui.columns.DateColumn;
 import cn.cerc.ui.columns.DoubleColumn;
@@ -57,13 +56,13 @@ public class FrmTranOrder extends CustomForm {
         new UIUrl(page.getFrontPanel()).setText("返回").setSite("welcome");
         new UINotice(page.getFrontPanel()).receive(this, "execute");
         new UIUrl(page.getFooter()).setText("新增进货单").setSite("FrmTranOrder.appendHead").putParam("tb",
-                TBType.AB.name());
+                cn.cerc.sample.services.SvrTranHead.TBType.AB.name());
         new UIUrl(page.getFooter()).setText(" | ");
         new UIUrl(page.getFooter()).setText("新增出货单").setSite("FrmTranOrder.appendHead").putParam("tb",
-                TBType.BC.name());
+                cn.cerc.sample.services.SvrTranHead.TBType.BC.name());
         new UIUrl(page.getFooter()).setText(" | ");
         new UIUrl(page.getFooter()).setText("新增盘点单").setSite("FrmTranOrder.appendHead").putParam("tb",
-                TBType.AE.name());
+                cn.cerc.sample.services.SvrTranHead.TBType.AE.name());
 
         UISearchPanel search = new UISearchPanel(page.getContent());
         new DateColumn(search, "起始日期", "dateFrom_");
@@ -101,7 +100,7 @@ public class FrmTranOrder extends CustomForm {
 
     public IPage appendHead() {
         String tb = getRequest().getParameter("tb");
-        TBType.validateTB(tb);
+        cn.cerc.sample.services.SvrTranHead.TBType.validateTB(tb);
         ServiceQuery svr = ServiceQuery.open(this, SvrTranHead.append, Map.of("tb_", tb));
         if (svr.isFail()) {
             UINotice.sendInfo(getSession(), this.getClass(), "execute", svr.dataOut().message());
