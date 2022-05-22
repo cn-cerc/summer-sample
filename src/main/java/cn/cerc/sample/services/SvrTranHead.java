@@ -16,12 +16,15 @@ import cn.cerc.db.mysql.MysqlQuery;
 import cn.cerc.db.mysql.Transaction;
 import cn.cerc.mis.ado.EntityMany;
 import cn.cerc.mis.ado.EntityOne;
+import cn.cerc.mis.ado.EntityQuery;
+import cn.cerc.mis.ado.FindOneBatch;
 import cn.cerc.mis.client.ServiceSign;
 import cn.cerc.mis.core.DataValidate;
 import cn.cerc.mis.core.IService;
 import cn.cerc.mis.core.ServiceState;
 import cn.cerc.mis.security.Permission;
 import cn.cerc.sample.core.AppDB;
+import cn.cerc.sample.entity.PartinfoEntity;
 import cn.cerc.sample.entity.TranBodyEntity;
 import cn.cerc.sample.entity.TranHeadEntity;
 import cn.cerc.sample.enums.TBType;
@@ -80,6 +83,15 @@ public class SvrTranHead implements IService {
             dataSet = new DataSet();
         dataSet.setReadonly(false);
         dataSet.head().copyValues(dataHead);
+
+        FindOneBatch<PartinfoEntity> goods = EntityQuery.findOneBatch(handle, PartinfoEntity.class);
+        while (dataSet.fetch()) {
+            String code = dataSet.getString("code_");
+            PartinfoEntity item = goods.get(code)
+                    .orElseThrow(() -> new RuntimeException(String.format("%s 商品料号不存在", code)));
+            dataSet.setValue("desc_", item.getDesc_());
+            dataSet.setValue("spec_", item.getSpec_());
+        }
         return dataSet.setState(ServiceState.OK).disableStorage();
     }
 

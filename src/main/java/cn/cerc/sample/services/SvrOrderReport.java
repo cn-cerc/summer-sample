@@ -10,12 +10,15 @@ import cn.cerc.db.core.DataSet;
 import cn.cerc.db.core.IHandle;
 import cn.cerc.db.core.SqlWhere;
 import cn.cerc.db.mysql.MysqlQuery;
+import cn.cerc.mis.ado.EntityQuery;
+import cn.cerc.mis.ado.FindOneBatch;
 import cn.cerc.mis.client.ServiceSign;
 import cn.cerc.mis.core.DataValidate;
 import cn.cerc.mis.core.IService;
 import cn.cerc.mis.core.ServiceState;
 import cn.cerc.mis.security.Permission;
 import cn.cerc.sample.core.AppDB;
+import cn.cerc.sample.entity.PartinfoEntity;
 
 @Permission(Permission.GUEST)
 @Component
@@ -56,6 +59,15 @@ public class SvrOrderReport implements IService {
         where.build();
         query.add("order by b.code_");
         query.openReadonly();
+
+        FindOneBatch<PartinfoEntity> goods = EntityQuery.findOneBatch(handle, PartinfoEntity.class);
+        while (query.fetch()) {
+            String code = query.getString("code_");
+            PartinfoEntity item = goods.get(code)
+                    .orElseThrow(() -> new RuntimeException(String.format("%s 商品料号不存在", code)));
+            query.setValue("desc_", item.getDesc_());
+            query.setValue("spec_", item.getSpec_());
+        }
         return query.setState(ServiceState.OK).disableStorage();
     }
 

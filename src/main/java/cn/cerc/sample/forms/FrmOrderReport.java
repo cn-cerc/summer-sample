@@ -103,23 +103,19 @@ public class FrmOrderReport extends CustomForm {
         new StringColumn(line1.cell(1), "日期", "order_date_", 6);
 
         new StringColumn(line2.cell(0), "单别", "tb_", 4);
-        new StringColumn(line2.cell(0), "单号", "order_sn_", 4);
+        new CustomColumn(line2.cell(0), "单号", "order_sn_", 6).defineCell((content, record) -> {
+            new UIUrl(content).setText(record.getString("order_sn_")).setSite("FrmTranOrder.modify")
+                    .putParam("orderSN", record.getString("order_sn_")).setTarget("_blank");
+        });
 
         new StringColumn(line3.cell(1), "单序", "it_", 4);
         new StringColumn(line3.cell(1), "料号", "code_", 4);
 
-        new StringColumn(line4.cell(1), "品名", "desc_", 4);
-        new StringColumn(line5.cell(1), "规格", "spec_", 4);
+        new StringColumn(line4.cell(1), "品名", "desc_", 6);
+        new StringColumn(line5.cell(1), "规格", "spec_", 7);
 
-        new StringColumn(line5.cell(0), "商品数量", "num_", 4);
-        new StringColumn(line6.cell(0), "变化增量", "currentNum_", 4);
-
-        CustomColumn customColumn = new CustomColumn(line6.cell(0));
-        customColumn.setSpaceWidth(8);
-        customColumn.defineCell((content, record) -> {
-            new UIUrl(content).setText("查看订单").setSite("FrmTranOrder.modify")
-                    .putParam("orderSN", record.getString("order_sn_")).setTarget("_blank");
-        });
+        new StringColumn(line5.cell(0), "商品数量", "num_", 3);
+        new StringColumn(line6.cell(0), "变化增量", "increment_", 3);
         return page;
     }
 }
