@@ -12,6 +12,7 @@ import cn.cerc.sample.core.ui.UICustomPage;
 import cn.cerc.ui.core.UIComponent;
 import cn.cerc.ui.vcl.UIDiv;
 import cn.cerc.ui.vcl.UIScript;
+import cn.cerc.ui.vcl.UISpan;
 import cn.cerc.ui.vcl.UIText;
 import cn.cerc.ui.vcl.UIUrl;
 import cn.cerc.ui.vcl.ext.UIHtmlFile;
@@ -45,8 +46,21 @@ public class FrmWelcome extends AbstractForm {
 
         new UIUrl(content).setText("进入范例UI(免登录)").setSite("FrmEmployee?sid=88888888");
         new UILine(content);
-        
+
         new UIUrl(content).setText("进入范例Mysql(免登录)").setSite("FrmUiExampleMysql?sid=88888888");
+        new UILine(content);
+
+        // ------正式演示------
+        new UISpan(content).setText("简易进销存系统");
+        new UILine(content);
+
+        new UIUrl(content).setText("商品管理").setSite("FrmPartInfo?sid=88888888").setTarget("_blank");
+        new UILine(content);
+
+        new UIUrl(content).setText("订单管理").setSite("FrmTranOrder?sid=88888888").setTarget("_blank");
+        new UILine(content);
+
+        new UIUrl(content).setText("订单统计").setSite("FrmOrderReport?sid=88888888").setTarget("_blank");
         new UILine(content);
 
         /** sci.js 使用范例 */
