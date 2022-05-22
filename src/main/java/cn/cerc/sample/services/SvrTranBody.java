@@ -38,6 +38,7 @@ public class SvrTranBody implements IService {
         double num = headIn.getDouble("num_");
         if (num <= 0)
             throw new RuntimeException("商品数量必须大于0");
+
         try (Transaction tx = new Transaction(handle)) {
             EntityOne<TranHeadEntity> head = EntityOne.open(handle, TranHeadEntity.class, orderSN)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 单号不存在", orderSN)));

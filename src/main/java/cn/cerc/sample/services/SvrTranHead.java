@@ -13,18 +13,14 @@ import cn.cerc.db.core.IHandle;
 import cn.cerc.db.core.SqlWhere;
 import cn.cerc.db.core.Utils;
 import cn.cerc.db.mysql.MysqlQuery;
-import cn.cerc.db.mysql.Transaction;
 import cn.cerc.mis.ado.EntityMany;
 import cn.cerc.mis.ado.EntityOne;
-import cn.cerc.mis.ado.EntityQuery;
-import cn.cerc.mis.ado.FindOneBatch;
 import cn.cerc.mis.client.ServiceSign;
 import cn.cerc.mis.core.DataValidate;
 import cn.cerc.mis.core.IService;
 import cn.cerc.mis.core.ServiceState;
 import cn.cerc.mis.security.Permission;
 import cn.cerc.sample.core.AppDB;
-import cn.cerc.sample.entity.PartinfoEntity;
 import cn.cerc.sample.entity.TranBodyEntity;
 import cn.cerc.sample.entity.TranHeadEntity;
 import cn.cerc.sample.enums.TBType;
@@ -56,20 +52,15 @@ public class SvrTranHead implements IService {
         String tb = headIn.getString("tb_");
         TBType.validateTB(tb);
 
-        DataSet dataSet = new DataSet();
-        try (Transaction tx = new Transaction(handle)) {
-            String orderSn = tb + new Datetime().getYearMonth() + Utils.getNumRandom(3);
-            EntityOne<TranHeadEntity> entity = EntityOne.open(handle, TranHeadEntity.class, orderSn)
-                    .isPresentThrow(() -> new RuntimeException("该订单已经存在，不允许重复登记"));
-            entity.orElseInsert(item -> {
-                item.setTb_(tb);
-                item.setOrder_sn_(orderSn);
-                item.setOrder_date_(new FastDate());
-            });
-            dataSet.append().copyRecord(entity.current());
-            tx.commit();
-        }
-        return dataSet.setState(ServiceState.OK);
+        String orderSn = tb + new Datetime().getYearMonth() + Utils.getNumRandom(3);
+        EntityOne<TranHeadEntity> entity = EntityOne.open(handle, TranHeadEntity.class, orderSn)
+                .isPresentThrow(() -> new RuntimeException("该订单已经存在，不允许重复登记"));
+        entity.orElseInsert(item -> {
+            item.setTb_(tb);
+            item.setOrder_sn_(orderSn);
+            item.setOrder_date_(new FastDate());
+        });
+        return entity.dataSet().setState(ServiceState.OK);
     }
 
     @Description("获取订单信息")
@@ -78,21 +69,15 @@ public class SvrTranHead implements IService {
         String orderSN = headIn.getString("order_sn_");
         DataRow dataHead = EntityOne.open(handle, TranHeadEntity.class, orderSN)
                 .isEmptyThrow(() -> new RuntimeException(String.format("%s 单号不存在", orderSN))).current();
-        DataSet dataSet = EntityMany.open(handle, TranBodyEntity.class, orderSN).dataSet();
-        if (dataSet.eof())
-            dataSet = new DataSet();
-        dataSet.setReadonly(false);
-        dataSet.head().copyValues(dataHead);
 
-        FindOneBatch<PartinfoEntity> goods = EntityQuery.findOneBatch(handle, PartinfoEntity.class);
-        while (dataSet.fetch()) {
-            String code = dataSet.getString("code_");
-            PartinfoEntity item = goods.get(code)
-                    .orElseThrow(() -> new RuntimeException(String.format("%s 商品料号不存在", code)));
-            dataSet.setValue("desc_", item.getDesc_());
-            dataSet.setValue("spec_", item.getSpec_());
-        }
-        return dataSet.setState(ServiceState.OK);
+        MysqlQuery query = new MysqlQuery(handle);
+        query.add("select b.it_,b.code_,b.num_,b.increment_,b.order_sn_,pi.desc_,pi.spec_,pi.unit_");
+        query.add("from %s as b ", AppDB.s_tranb);
+        query.add("inner join %s as pi on b.code_=pi.code_ and b.corp_no_=pi.corp_no_ ", AppDB.s_partinfo);
+        query.addWhere().eq("b.corp_no_", handle.getCorpNo()).eq("b.order_sn_", orderSN);
+        query.openReadonly();
+        query.head().copyValues(dataHead);
+        return query.setState(ServiceState.OK);
     }
 
     @Description("修改单头信息")
@@ -100,36 +85,22 @@ public class SvrTranHead implements IService {
     @DataValidate(value = "order_date_", name = "单据日期")
     public DataSet modify(IHandle handle, DataRow headIn) {
         String orderSn = headIn.getString("order_sn_");
-        try (Transaction tx = new Transaction(handle)) {
-            EntityOne.open(handle, TranHeadEntity.class, orderSn)
-                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 料号不存在", orderSn))).update(item -> {
-                        item.setOrder_date_(headIn.getFastDate("order_date_"));
-                        item.setRemark_(headIn.getString("remark_"));
-                    });
-            tx.commit();
-        }
-        return new DataSet().setState(ServiceState.OK);
+        return EntityOne.open(handle, TranHeadEntity.class, orderSn)
+                .isEmptyThrow(() -> new RuntimeException(String.format("%s 料号不存在", orderSn))).update(item -> {
+                    item.setOrder_date_(headIn.getFastDate("order_date_"));
+                    item.setRemark_(headIn.getString("remark_"));
+                }).dataSet().setState(ServiceState.OK);
     }
 
     @Description("删除订单信息")
     @DataValidate(value = "order_sn_", name = "订单单号")
-    public DataSet delete(IHandle handle, DataRow headIn) {
+    public boolean delete(IHandle handle, DataRow headIn) {
         String orderSN = headIn.getString("order_sn_");
-        try (Transaction tx = new Transaction(handle)) {
-            MysqlQuery query = new MysqlQuery(handle);
-            query.add("select * from %s", AppDB.s_tranb);
-            query.addWhere().eq("corp_no_", handle.getCorpNo()).eq("order_sn_", orderSN).build();
-            query.setMaximum(1);
-            query.openReadonly();
-            if (!query.eof()) {
-                throw new RuntimeException(String.format("%s 单号单身数据不为空，当前环境不允许删除", orderSN));
-            }
-
-            EntityOne.open(handle, TranHeadEntity.class, orderSN)
-                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 单号不存在", orderSN))).delete();
-            tx.commit();
-        }
-        return new DataSet().setState(ServiceState.OK);
+        EntityMany.open(handle, TranBodyEntity.class, orderSN)
+                .isEmptyThrow(() -> new RuntimeException(String.format("%s 单号单身数据不为空，当前环境不允许删除", orderSN)));
+        EntityOne.open(handle, TranHeadEntity.class, orderSN)
+                .isEmptyThrow(() -> new RuntimeException(String.format("%s 单号不存在", orderSN))).delete();
+        return true;
     }
 
     public static void main(String[] args) {
