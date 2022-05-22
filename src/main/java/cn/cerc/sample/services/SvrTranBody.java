@@ -18,7 +18,7 @@ import cn.cerc.mis.core.DataValidate;
 import cn.cerc.mis.core.IService;
 import cn.cerc.mis.core.ServiceState;
 import cn.cerc.mis.security.Permission;
-import cn.cerc.sample.entity.PartinfoEntity;
+import cn.cerc.sample.entity.PartInfoEntity;
 import cn.cerc.sample.entity.TranBodyEntity;
 import cn.cerc.sample.entity.TranHeadEntity;
 
@@ -47,7 +47,7 @@ public class SvrTranBody implements IService {
             if (entity.stream().anyMatch(item -> item.getCode_().equals(code)))
                 throw new RuntimeException(String.format("%s 单序商品已经存在单身，不允许重复添加", code));
 
-            EntityOne<PartinfoEntity> partInfo = EntityOne.open(handle, PartinfoEntity.class, code)
+            EntityOne<PartInfoEntity> partInfo = EntityOne.open(handle, PartInfoEntity.class, code)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品编号不存在", code)));
             double stock = partInfo.get().getStock_();// 原始库存
             double increment = num - stock;
@@ -105,7 +105,7 @@ public class SvrTranBody implements IService {
             double original = entity.get().getNum_();// 原始数量
             double diff = num - original;
 
-            EntityOne<PartinfoEntity> partInfo = EntityOne.open(handle, PartinfoEntity.class, code)
+            EntityOne<PartInfoEntity> partInfo = EntityOne.open(handle, PartInfoEntity.class, code)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品编号不存在", code)));
             partInfo.update(item -> item.updateStock(head.get().getTb_(), diff));
 
@@ -139,7 +139,7 @@ public class SvrTranBody implements IService {
             double original = entity.get().getNum_();// 原始数量
             double increment = entity.get().getIncrement_();// 变化增量
 
-            EntityOne<PartinfoEntity> partInfo = EntityOne.open(handle, PartinfoEntity.class, code)
+            EntityOne<PartInfoEntity> partInfo = EntityOne.open(handle, PartInfoEntity.class, code)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品编号不存在", code)));
             partInfo.update(item -> item.recycleStock(head.get().getTb_(), original, increment));
 

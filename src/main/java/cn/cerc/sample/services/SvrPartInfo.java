@@ -19,7 +19,7 @@ import cn.cerc.mis.core.IService;
 import cn.cerc.mis.core.ServiceState;
 import cn.cerc.mis.security.Permission;
 import cn.cerc.sample.config.AppDB;
-import cn.cerc.sample.entity.PartinfoEntity;
+import cn.cerc.sample.entity.PartInfoEntity;
 
 @Permission(Permission.GUEST)
 @Component
@@ -48,7 +48,7 @@ public class SvrPartInfo implements IService {
     @DataValidate(value = "unit_", name = "单位")
     public DataSet append(IHandle handle, DataRow headIn) {
         String code = handle.getCorpNo() + Utils.getNumRandom(6);
-        EntityOne<PartinfoEntity> entity = EntityOne.open(handle, PartinfoEntity.class, code)
+        EntityOne<PartInfoEntity> entity = EntityOne.open(handle, PartInfoEntity.class, code)
                 .isPresentThrow(() -> new RuntimeException("该料号已经存在，不允许重复登记"));
 
         try (Transaction tx = new Transaction(handle)) {// 启用事务管控
@@ -68,7 +68,7 @@ public class SvrPartInfo implements IService {
     @DataValidate(value = "code_", name = "料号")
     public DataSet download(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
-        return EntityOne.open(handle, PartinfoEntity.class, code)
+        return EntityOne.open(handle, PartInfoEntity.class, code)
                 .isEmptyThrow(() -> new RuntimeException(String.format("%s 料号不存在", code))).dataSet()
                 .setState(ServiceState.OK);
     }
@@ -80,7 +80,7 @@ public class SvrPartInfo implements IService {
     @DataValidate(value = "unit_", name = "单位")
     public boolean modify(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
-        EntityOne.open(handle, PartinfoEntity.class, code)
+        EntityOne.open(handle, PartInfoEntity.class, code)
                 .isEmptyThrow(() -> new RuntimeException(String.format("%s 料号不存在", code))).update(item -> {
                     item.setDesc_(headIn.getString("desc_"));
                     item.setSpec_(headIn.getString("spec_"));
@@ -102,7 +102,7 @@ public class SvrPartInfo implements IService {
         if (!query.eof())
             throw new RuntimeException(String.format("%s 料号已经在单据中使用，当前环境不允许删除", code));
 
-        EntityOne.open(handle, PartinfoEntity.class, code)
+        EntityOne.open(handle, PartInfoEntity.class, code)
                 .isEmptyThrow(() -> new RuntimeException(String.format("%s 料号不存在", code))).delete();
         return true;
     }

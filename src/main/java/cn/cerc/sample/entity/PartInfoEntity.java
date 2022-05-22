@@ -31,7 +31,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Describe(name = "商品基本资料")
-public class PartinfoEntity extends CustomEntity {
+public class PartInfoEntity extends CustomEntity {
 
     @Id
     @GeneratedValue
@@ -185,6 +185,5 @@ public class PartinfoEntity extends CustomEntity {
             throw new RuntimeException("商品库存数量不允许为负数");
         this.setStock_(newStock);
     }
-
 
 }

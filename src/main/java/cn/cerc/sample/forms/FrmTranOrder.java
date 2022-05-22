@@ -26,7 +26,7 @@ import cn.cerc.sample.config.BufferUser;
 import cn.cerc.sample.ui.CustomForm;
 import cn.cerc.sample.ui.UICustomPage;
 import cn.cerc.sample.ui.UINotice;
-import cn.cerc.sample.entity.PartinfoEntity;
+import cn.cerc.sample.entity.PartInfoEntity;
 import cn.cerc.sample.entity.TranBodyEntity;
 import cn.cerc.ui.columns.CustomColumn;
 import cn.cerc.ui.columns.DateColumn;
@@ -195,7 +195,7 @@ public class FrmTranOrder extends CustomForm {
             List<String> bodys = EntityQuery.findMany(this, TranBodyEntity.class, orderSN).stream()
                     .map(item -> item.getCode_()).collect(Collectors.toList());
             Map<String, String> goods = new LinkedHashMap<>();
-            EntityQuery.findMany(this, PartinfoEntity.class).stream().filter(item -> !bodys.contains(item.getCode_()))
+            EntityQuery.findMany(this, PartInfoEntity.class).stream().filter(item -> !bodys.contains(item.getCode_()))
                     .forEach(item -> goods.put(item.getCode_(),
                             String.join("=>", item.getDesc_(), item.getSpec_(), String.valueOf(item.getStock_()))));
 
@@ -240,7 +240,7 @@ public class FrmTranOrder extends CustomForm {
 
             // 获取系统商品列表
             Map<String, String> goods = new LinkedHashMap<>();
-            EntityQuery.findMany(this, PartinfoEntity.class).stream().forEach(item -> goods.put(item.getCode_(),
+            EntityQuery.findMany(this, PartInfoEntity.class).stream().forEach(item -> goods.put(item.getCode_(),
                     String.join("=>", item.getDesc_(), item.getSpec_(), String.valueOf(item.getStock_()))));
 
             DataRow dataRow = ServiceQuery.open(this, SvrTranBody.download, Map.of("order_sn_", orderSN, "it_", it))
