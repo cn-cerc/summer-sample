@@ -18,6 +18,7 @@ import cn.cerc.sample.SampleServicesConfig.SvrOrderReport;
 import cn.cerc.sample.core.CustomForm;
 import cn.cerc.sample.core.ui.UICustomPage;
 import cn.cerc.sample.core.ui.UINotice;
+import cn.cerc.sample.enums.TBType;
 import cn.cerc.ui.columns.CustomColumn;
 import cn.cerc.ui.columns.DateColumn;
 import cn.cerc.ui.columns.ItColumn;
@@ -53,9 +54,18 @@ public class FrmOrderReport extends CustomForm {
 
         new ItColumn(line1.cell(0));
         new StringColumn(line1.cell(1), "日期", "order_date_", 6);
-        new StringColumn(line2.cell(0), "入库数量", "in_", 4);
-        new StringColumn(line2.cell(1), "出库数量", "out_", 4);
-        new StringColumn(line3.cell(0), "盘点数量", "reality_", 4);
+        new CustomColumn(line2.cell(0), "入库数量", "in_", 4).defineCell((content, record) -> {
+            new UIUrl(content).setText(record.getString("in_")).setSite("FrmOrderReport.detail")
+                    .putParam("orderDate", record.getString("order_date_")).putParam("tb", TBType.AB.name());
+        });
+        new CustomColumn(line2.cell(1), "出库数量", "out_", 4).defineCell((content, record) -> {
+            new UIUrl(content).setText(record.getString("out_")).setSite("FrmOrderReport.detail")
+                    .putParam("orderDate", record.getString("order_date_")).putParam("tb", TBType.BC.name());
+        });
+        new CustomColumn(line3.cell(0), "盘点数量", "reality_", 4).defineCell((content, record) -> {
+            new UIUrl(content).setText(record.getString("reality_")).setSite("FrmOrderReport.detail")
+                    .putParam("orderDate", record.getString("order_date_")).putParam("tb", TBType.AE.name());
+        });
 
         CustomColumn customColumn = new CustomColumn(line4.cell(0));
         customColumn.setSpaceWidth(8);
@@ -75,7 +85,11 @@ public class FrmOrderReport extends CustomForm {
             UINotice.sendInfo(this.getSession(), getClass(), "execute", "统计日期不允许为空");
             return new RedirectPage(this, "FrmOrderReport");
         }
-        DataSet dataOut = ServiceQuery.open(this, SvrOrderReport.detail, Map.of("order_date_", orderDate))
+        String tb = getRequest().getParameter("tb");
+        if (Utils.isEmpty(tb))
+            tb = "";
+
+        DataSet dataOut = ServiceQuery.open(this, SvrOrderReport.detail, Map.of("order_date_", orderDate, "tb_", tb))
                 .getDataOutElseThrow();
         UIGrid grid = new UIGrid(page.getContent()).setDataSet(dataOut);
         UIPhoneLine line1 = grid.addPhoneLine(50, 50);

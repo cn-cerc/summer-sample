@@ -25,7 +25,7 @@ public class SvrOrderReport implements IService {
     @Description("订单统计服务")
     public DataSet search(IHandle handle, DataRow headIn) {
         MysqlQuery query = new MysqlQuery(handle);
-        query.add("select h.order_date_,");
+        query.add("select h.order_date_,h.tb_,");
         query.add("sum(case when h.tb_='AB' then b.num_ else 0 end) as in_,");
         query.add("sum(case when h.tb_='BC' then b.num_ else 0 end) as out_,");
         query.add("sum(case when h.tb_='AE' then b.num_ else 0 end) as reality_");
@@ -49,8 +49,11 @@ public class SvrOrderReport implements IService {
         MysqlQuery query = new MysqlQuery(handle);
         query.add("select h.order_date_,h.tb_,b.* from %s h", AppDB.s_tranh);
         query.add("inner join s_tranb b on b.corp_no_=h.corp_no_ and b.order_sn_ =h.order_sn_");
-        query.addWhere().eq("h.corp_no_", handle.getCorpNo()).eq("order_date_", headIn.getFastDate("order_date_"))
-                .build();
+        SqlWhere where = query.addWhere();
+        where.eq("h.corp_no_", handle.getCorpNo()).eq("order_date_", headIn.getFastDate("order_date_"));
+        if (headIn.has("tb_"))
+            where.eq("h.tb_", headIn.getString("tb_"));
+        where.build();
         query.add("order by b.code_");
         query.openReadonly();
         return query.setState(ServiceState.OK).disableStorage();
