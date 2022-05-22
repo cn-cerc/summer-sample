@@ -8,7 +8,7 @@ import cn.cerc.ui.core.UIComponent;
 import cn.cerc.ui.vcl.UIUrl;
 
 public class UICustomMenuBar extends UIComponent {
-    private List<UIComponent> items = new ArrayList<>();
+    private final List<UIComponent> items = new ArrayList<>();
     private UIComponent defaultItem;
 
     public UICustomMenuBar(UIComponent owner) {

@@ -9,9 +9,9 @@ import cn.cerc.ui.core.UIComponent;
 import cn.cerc.ui.vcl.UIImage;
 
 public class UINotice extends UIComponent {
-    private String cssClass = "info";
+    private final String cssClass = "info";
     private String text;
-    private UIImage icon;
+    private final UIImage icon;
 
     public UINotice(UIComponent owner) {
         super(owner);

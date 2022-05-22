@@ -35,11 +35,11 @@ public class AppErrorPage extends AbstractForm implements IErrorPage {
     public String getErrorPage(HttpServletRequest req, HttpServletResponse resp, Throwable error) {
         pushRedis(req.getRequestURL().toString(), req.getParameterMap());
         ISession session = Application.getSession();
-        session.setRequest(req);
-        session.setResponse(resp);
-        Handle handle = new Handle(session);
 
-        try {
+        try (session) {
+            session.setRequest(req);
+            session.setResponse(resp);
+            Handle handle = new Handle(session);
             IForm from = (IForm) Application.getBean(handle, "appErrorPage");
             UICustomPage jspPage = new UICustomPage(from);
             jspPage.addCssFile("css/style-pc-5.css");
@@ -60,8 +60,6 @@ public class AppErrorPage extends AbstractForm implements IErrorPage {
             return jspPage.execute();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return null;
     }

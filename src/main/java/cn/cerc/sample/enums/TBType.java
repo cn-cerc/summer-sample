@@ -8,7 +8,7 @@ public enum TBType {
     AB("进货单"), BC("出货单"), AE("盘点单");
 
     @Getter
-    private String desc;
+    private final String desc;
 
     private TBType(String desc) {
         this.desc = desc;

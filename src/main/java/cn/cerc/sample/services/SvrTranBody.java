@@ -44,7 +44,7 @@ public class SvrTranBody implements IService {
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 单号不存在", orderSN)));
 
             EntityMany<TranBodyEntity> entity = EntityMany.open(handle, TranBodyEntity.class, orderSN);
-            if (entity.stream().filter(item -> item.getCode_().equals(code)).findAny().isPresent())
+            if (entity.stream().anyMatch(item -> item.getCode_().equals(code)))
                 throw new RuntimeException(String.format("%s 商品已经存在单身，不允许重复添加", code));
 
             EntityOne<PartinfoEntity> partInfo = EntityOne.open(handle, PartinfoEntity.class, code)
@@ -53,7 +53,7 @@ public class SvrTranBody implements IService {
             double increment = num - stock;
             partInfo.update(item -> item.updateStock(head.get().getTb_(), num, num));
 
-            OptionalInt maxIt = entity.stream().mapToInt(t -> t.getIt_()).max();
+            OptionalInt maxIt = entity.stream().mapToInt(TranBodyEntity::getIt_).max();
             int it = maxIt.isEmpty() ? 1 : maxIt.getAsInt() + 1;
             entity.insert(item -> {
                 item.setOrder_sn_(orderSN);
