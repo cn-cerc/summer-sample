@@ -148,6 +148,7 @@ public class FrmEmployee extends CustomForm {
         return page;
     }
 
+//    public IPage delete(@PathVariable("code") String code) {
     public IPage delete() {
         String code = getRequest().getParameter("code");
         ServiceQuery svr = ServiceQuery.open(this, SvrEmployee.delete, Map.of("code_", code));
