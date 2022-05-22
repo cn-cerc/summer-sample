@@ -1,4 +1,4 @@
-package cn.cerc.sample.core;
+package cn.cerc.sample.config;
 
 import java.util.Map;
 
@@ -21,7 +21,7 @@ import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.SystemBuffer;
 import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.mis.other.PageNotFoundException;
-import cn.cerc.sample.core.ui.UICustomPage;
+import cn.cerc.sample.ui.UICustomPage;
 import cn.cerc.ui.core.UrlRecord;
 import cn.cerc.ui.vcl.UIDiv;
 import redis.clients.jedis.Jedis;

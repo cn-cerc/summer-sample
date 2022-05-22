@@ -1,4 +1,4 @@
-package cn.cerc.sample.core;
+package cn.cerc.sample.config;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

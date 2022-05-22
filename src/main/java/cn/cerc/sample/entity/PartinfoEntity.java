@@ -18,7 +18,7 @@ import cn.cerc.db.core.IHandle;
 import cn.cerc.db.core.SqlServer;
 import cn.cerc.db.core.SqlServerType;
 import cn.cerc.mis.ado.CustomEntity;
-import cn.cerc.sample.core.AppDB;
+import cn.cerc.sample.config.AppDB;
 import lombok.Getter;
 import lombok.Setter;
 

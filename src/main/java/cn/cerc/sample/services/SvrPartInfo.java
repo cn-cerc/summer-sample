@@ -18,7 +18,7 @@ import cn.cerc.mis.core.DataValidate;
 import cn.cerc.mis.core.IService;
 import cn.cerc.mis.core.ServiceState;
 import cn.cerc.mis.security.Permission;
-import cn.cerc.sample.core.AppDB;
+import cn.cerc.sample.config.AppDB;
 import cn.cerc.sample.entity.PartinfoEntity;
 
 @Permission(Permission.GUEST)

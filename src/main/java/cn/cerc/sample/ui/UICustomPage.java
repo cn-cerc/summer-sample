@@ -1,4 +1,4 @@
-package cn.cerc.sample.core.ui;
+package cn.cerc.sample.ui;
 
 import cn.cerc.mis.core.AppClient;
 import cn.cerc.mis.core.HtmlContent;

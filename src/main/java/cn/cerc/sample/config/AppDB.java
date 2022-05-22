@@ -1,4 +1,4 @@
-package cn.cerc.sample.core;
+package cn.cerc.sample.config;
 
 public class AppDB {
     /**

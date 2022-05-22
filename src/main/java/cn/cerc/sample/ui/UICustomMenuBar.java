@@ -1,4 +1,4 @@
-package cn.cerc.sample.core.ui;
+package cn.cerc.sample.ui;
 
 import java.util.ArrayList;
 import java.util.List;

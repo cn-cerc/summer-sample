@@ -8,7 +8,7 @@ import cn.cerc.mis.core.AbstractForm;
 import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.security.Permission;
 import cn.cerc.mis.security.Webform;
-import cn.cerc.sample.core.ui.UICustomPage;
+import cn.cerc.sample.ui.UICustomPage;
 import cn.cerc.ui.core.UIComponent;
 import cn.cerc.ui.vcl.UIDiv;
 import cn.cerc.ui.vcl.UIScript;

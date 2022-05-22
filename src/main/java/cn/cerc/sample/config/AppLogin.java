@@ -1,4 +1,4 @@
-package cn.cerc.sample.core;
+package cn.cerc.sample.config;
 
 import java.io.IOException;
 
