@@ -74,7 +74,7 @@ public class SvrTranHead implements IService {
         query.add("select b.it_,b.code_,b.num_,b.increment_,b.order_sn_,pi.desc_,pi.spec_,pi.unit_");
         query.add("from %s as b ", AppDB.s_tranb);
         query.add("inner join %s as pi on b.code_=pi.code_ and b.corp_no_=pi.corp_no_ ", AppDB.s_partinfo);
-        query.addWhere().eq("b.corp_no_", handle.getCorpNo()).eq("b.order_sn_", orderSN);
+        query.addWhere().eq("b.corp_no_", handle.getCorpNo()).eq("b.order_sn_", orderSN).build();
         query.openReadonly();
         query.head().copyValues(dataHead);
         return query.setState(ServiceState.OK);
@@ -97,7 +97,7 @@ public class SvrTranHead implements IService {
     public boolean delete(IHandle handle, DataRow headIn) {
         String orderSN = headIn.getString("order_sn_");
         EntityMany.open(handle, TranBodyEntity.class, orderSN)
-                .isEmptyThrow(() -> new RuntimeException(String.format("%s 单号单身数据不为空，当前环境不允许删除", orderSN)));
+                .isPresentThrow(() -> new RuntimeException(String.format("%s 单号单身数据不为空，当前环境不允许删除", orderSN)));
         EntityOne.open(handle, TranHeadEntity.class, orderSN)
                 .isEmptyThrow(() -> new RuntimeException(String.format("%s 单号不存在", orderSN))).delete();
         return true;

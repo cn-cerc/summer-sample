@@ -22,6 +22,7 @@ import cn.cerc.sample.core.ui.UICustomPage;
 import cn.cerc.sample.core.ui.UINotice;
 import cn.cerc.ui.columns.BooleanColumn;
 import cn.cerc.ui.columns.CustomColumn;
+import cn.cerc.ui.columns.DateColumn;
 import cn.cerc.ui.columns.ItColumn;
 import cn.cerc.ui.columns.OptionColumn;
 import cn.cerc.ui.columns.StringColumn;
@@ -89,7 +90,7 @@ public class FrmEmployee extends CustomForm {
         new StringColumn(actionForm, "员工工号", "code_").setRequired(true);
         new StringColumn(actionForm, "员工姓名", "name_").setRequired(true);
         new OptionColumn(actionForm, "员工性别", "gender_").setOptions(Gender.values());
-        new StringColumn(actionForm, "入职日期", "entry_date_").setRequired(true).setPlaceholder("格式 2022-05-20");
+        new DateColumn(actionForm, "入职日期", "entry_date_");
 
         if (!Utils.isEmpty(actionForm.readAll())) {
             // 调用SvrCorpInfo.modify服务
@@ -131,7 +132,7 @@ public class FrmEmployee extends CustomForm {
             new StringColumn(actionForm, "员工工号", "code_").setReadonly(true);
             new StringColumn(actionForm, "员工姓名", "name_");
             new OptionColumn(actionForm, "员工性别", "gender_").setOptions(Gender.values());
-            new StringColumn(actionForm, "入职日期", "entry_date_").setPlaceholder("格式 2022-05-20");
+            new DateColumn(actionForm, "入职日期", "entry_date_");
             new BooleanColumn(actionForm, "在职状态", "enable_");
 
             if (!Utils.isEmpty(actionForm.readAll())) {
