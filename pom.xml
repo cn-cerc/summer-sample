@@ -1,21 +1,19 @@
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.cerc</groupId>
     <artifactId>summer-sample</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
-
-    <url>https://github.com/cn-cerc/summer-sample</url>
+    <url>https://gitee.com/mimrc/summer-sample</url>
 
     <properties>
-        <maven.compiler.target>8</maven.compiler.target>
-        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <cn.cerc.summer.version>3.0.1</cn.cerc.summer.version>
     </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -26,7 +24,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.2.0</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -38,31 +39,37 @@
     <dependencies>
         <dependency>
             <groupId>cn.cerc</groupId>
-            <artifactId>summer-mis-cn</artifactId>
-            <version>${cn.cerc.summer.version}</version>
+            <artifactId>summer-local-cn</artifactId>
+            <version>11.2.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.25</version>
+            <version>1.7.28</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.10</version>
-            <scope>provided</scope>
+            <version>1.18.22</version>
         </dependency>
     </dependencies>
+    <!-- 私服配置 -->
     <repositories>
         <repository>
             <id>diteng</id>
             <url>https://nexus.diteng.site/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
         </repository>
     </repositories>
 </project>

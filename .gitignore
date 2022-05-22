@@ -181,3 +181,7 @@ $RECYCLE.BIN/
 
 
 # End of https://www.gitignore.io/api/macos,eclipse,windows,java-web,intellij
+node_modules/
+package-lock.json
+
+.vscode/

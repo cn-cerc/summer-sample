@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         id="WebApp_ID"
-         version="3.1">
-    <display-name>app fishing</display-name>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+    id="WebApp_ID" version="3.1">
+    <display-name>summer sample</display-name>
     <!-- spring -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -11,13 +11,14 @@
     <listener>
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
     </listener>
+
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath*:application.xml</param-value>
     </context-param>
 
     <filter>
-        <filter-name>Set Character Encoding</filter-name>
+        <filter-name>encoding</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
         <init-param>
             <param-name>encoding</param-name>
@@ -25,34 +26,29 @@
         </init-param>
     </filter>
     <filter-mapping>
-        <filter-name>Set Character Encoding</filter-name>
+        <filter-name>encoding</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    <!-- 主入口，用于宣传页展示 -->
-    <filter>
-        <filter-name>StartApp</filter-name>
-        <filter-class>cn.cerc.ui.mvc.StartApp</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>StartApp</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <!-- 系统入口，需要登录方可使用 -->
-    <filter>
-        <filter-name>StartForms</filter-name>
-        <filter-class>cn.cerc.ui.mvc.StartForms</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>StartForms</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <!-- 原生客户端直接调用时使用 -->
+
     <servlet>
-        <servlet-name>StartServices</servlet-name>
-        <servlet-class>cn.cerc.mis.client.StartServices</servlet-class>
+        <servlet-name>spring-mvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath*:spring-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>StartServiceProxy</servlet-name>
+        <servlet-class>cn.cerc.ui.mvc.StartServices</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>StartServices</servlet-name>
+        <servlet-name>spring-mvc</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StartServiceProxy</servlet-name>
         <url-pattern>/services/*</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
@@ -64,6 +60,6 @@
         <welcome-file>default.jsp</welcome-file>
     </welcome-file-list>
     <session-config>
-        <session-timeout>120</session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
 </web-app>
