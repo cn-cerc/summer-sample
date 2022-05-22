@@ -58,6 +58,7 @@ public class FrmPartInfo extends CustomForm {
         UIPhoneLine line2 = grid.addPhoneLine(50, 50);
         UIPhoneLine line3 = grid.addPhoneLine(50, 50);
         UIPhoneLine line4 = grid.addPhoneLine(100);
+        UIPhoneLine line5 = grid.addPhoneLine(100);
 
         new ItColumn(line1.cell(0));
         new StringColumn(line1.cell(1), "料号", "code_", 4);
@@ -67,9 +68,10 @@ public class FrmPartInfo extends CustomForm {
 
         new StringColumn(line3.cell(0), "单位", "unit_", 4);
         new DoubleColumn(line3.cell(1), "库存", "stock_", 4);
-        new StringColumn(line3.cell(2), "备注", "remark_", 6);
 
-        CustomColumn customColumn = new CustomColumn(line4.cell(0));
+        new StringColumn(line4.cell(0), "备注", "remark_", 6);
+
+        CustomColumn customColumn = new CustomColumn(line5.cell(0));
         customColumn.setSpaceWidth(8);
         customColumn.defineCell((content, record) -> {
             new UIUrl(content).setText("修改").setSite("FrmPartInfo.modify").putParam("code", record.getString("code_"));

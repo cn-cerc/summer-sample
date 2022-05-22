@@ -35,32 +35,26 @@ public class FrmWelcome extends AbstractForm {
         text.add("此项目有助于您快速学习summer框架的使用方法");
         text.add("新的项目也可以以此为基础，快速建立");
 
-        new UIUrl(content).setText("进入首页(PC)").setSite("FrmIndex?device=pc");
+        new UIUrl(content).setText("进入网页版").setSite("welcome?device=pc");
         new UILine(content);
 
-        new UIUrl(content).setText("进入首页(Phone)").setSite("FrmIndex?device=phone");
-        new UILine(content);
-
-        new UIUrl(content).setText("进入首页(免登录)").setSite("FrmIndex?sid=88888888");
-        new UILine(content);
-
-        new UIUrl(content).setText("进入范例UI(免登录)").setSite("FrmEmployee?sid=88888888");
-        new UILine(content);
-
-        new UIUrl(content).setText("进入范例Mysql(免登录)").setSite("FrmUiExampleMysql?sid=88888888");
+        new UIUrl(content).setText("进入手机版").setSite("welcome?device=phone");
         new UILine(content);
 
         // ------正式演示------
         new UISpan(content).setText("简易进销存系统");
         new UILine(content);
 
-        new UIUrl(content).setText("商品管理").setSite("FrmPartInfo?sid=88888888").setTarget("_blank");
+        new UIUrl(content).setText("员工管理（(示例）").setSite("FrmEmployee?sid=88888888");
         new UILine(content);
 
-        new UIUrl(content).setText("订单管理").setSite("FrmTranOrder?sid=88888888").setTarget("_blank");
+        new UIUrl(content).setText("商品管理").setSite("FrmPartInfo?sid=88888888");
         new UILine(content);
 
-        new UIUrl(content).setText("订单统计").setSite("FrmOrderReport?sid=88888888").setTarget("_blank");
+        new UIUrl(content).setText("订单管理").setSite("FrmTranOrder?sid=88888888");
+        new UILine(content);
+
+        new UIUrl(content).setText("订单统计").setSite("FrmOrderReport?sid=88888888");
         new UILine(content);
 
         /** sci.js 使用范例 */

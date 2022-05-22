@@ -14,8 +14,10 @@ public class UIHeader extends UIComponent {
         if (this.getOrigin() instanceof IForm) {
             this.form = (IForm) this.getOrigin();
         }
+
         UIImage logo = new UIImage(this);
         logo.setSrc("images/home.png");
+        logo.setOnclick("javascript:location.href=\"welcome\"");
 
         UILabel label = new UILabel(this);
         label.setText(form.getName());
