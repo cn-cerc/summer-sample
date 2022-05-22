@@ -67,7 +67,6 @@ public class FrmWelcome extends AbstractForm {
         if (!this.getClient().isPhone()) {
             new UIHtmlFile(page.getFooter()).setFileName("/html/copyright.html");
         }
-
         return page;
     }
 
