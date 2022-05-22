@@ -8,7 +8,7 @@ import cn.cerc.mis.core.IPage;
 import cn.cerc.mis.core.JsonPage;
 import cn.cerc.mis.security.Permission;
 import cn.cerc.mis.security.Webform;
-import cn.cerc.sample.config.CustomForm;
+import cn.cerc.sample.ui.CustomForm;
 
 @Webform(module = "", name = "商品管理", parent = "")
 @Permission("user.base")

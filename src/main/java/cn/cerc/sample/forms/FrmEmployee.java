@@ -17,7 +17,7 @@ import cn.cerc.mis.security.Permission;
 import cn.cerc.mis.security.Webform;
 import cn.cerc.sample.SampleServicesConfig.SvrEmployee;
 import cn.cerc.sample.config.BufferUser;
-import cn.cerc.sample.config.CustomForm;
+import cn.cerc.sample.ui.CustomForm;
 import cn.cerc.sample.ui.UICustomPage;
 import cn.cerc.sample.ui.UINotice;
 import cn.cerc.ui.columns.BooleanColumn;

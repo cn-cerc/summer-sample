@@ -23,7 +23,7 @@ import cn.cerc.mis.security.Webform;
 import cn.cerc.sample.SampleServicesConfig.SvrTranBody;
 import cn.cerc.sample.SampleServicesConfig.SvrTranHead;
 import cn.cerc.sample.config.BufferUser;
-import cn.cerc.sample.config.CustomForm;
+import cn.cerc.sample.ui.CustomForm;
 import cn.cerc.sample.ui.UICustomPage;
 import cn.cerc.sample.ui.UINotice;
 import cn.cerc.sample.entity.PartinfoEntity;

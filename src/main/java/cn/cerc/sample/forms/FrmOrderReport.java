@@ -15,7 +15,7 @@ import cn.cerc.mis.core.ServiceQuery;
 import cn.cerc.mis.security.Permission;
 import cn.cerc.mis.security.Webform;
 import cn.cerc.sample.SampleServicesConfig.SvrOrderReport;
-import cn.cerc.sample.config.CustomForm;
+import cn.cerc.sample.ui.CustomForm;
 import cn.cerc.sample.ui.UICustomPage;
 import cn.cerc.sample.ui.UINotice;
 import cn.cerc.sample.enums.TBType;
