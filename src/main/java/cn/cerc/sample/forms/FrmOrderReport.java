@@ -41,7 +41,7 @@ public class FrmOrderReport extends CustomForm {
 
         UISearchPanel search = new UISearchPanel(page.getContent());
         new DateColumn(search, "起始日期", "dateFrom_");
-        new DateColumn(search, "起始日期", "dateTo");
+        new DateColumn(search, "起始日期", "dateTo_");
         search.readAll();
 
         DataSet dataOut = ServiceQuery.open(this, SvrOrderReport.search, search.current()).getDataOutElseThrow();

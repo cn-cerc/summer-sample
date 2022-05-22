@@ -67,8 +67,8 @@ public class FrmTranOrder extends CustomForm {
 
         UISearchPanel search = new UISearchPanel(page.getContent());
         new DateColumn(search, "起始日期", "dateFrom_");
-        new DateColumn(search, "起始日期", "dateTo");
-        new StringColumn(search, "订单单号", "code_").setPlaceholder("请输入订单单号");
+        new DateColumn(search, "起始日期", "dateTo_");
+        new StringColumn(search, "订单单号", "order_sn_").setPlaceholder("请输入订单单号");
         search.readAll();
 
         DataSet dataOut = ServiceQuery.open(this, SvrTranHead.search, search.current()).getDataOutElseThrow();
