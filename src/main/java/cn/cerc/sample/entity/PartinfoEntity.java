@@ -24,9 +24,9 @@ import lombok.Setter;
 
 @Component
 @Entity
-@EntityKey(fields = { "corp_no_", "code_" }, corpNo = true, cache = CacheLevelEnum.Redis, smallTable = true)
-@Table(name = AppDB.s_partinfo, indexes = { @Index(name = "PRIMARY", columnList = "UID_", unique = true),
-        @Index(name = "uk_corp_code", columnList = "corp_no_,code_", unique = true) })
+@EntityKey(fields = {"corp_no_", "code_"}, corpNo = true, cache = CacheLevelEnum.Redis, smallTable = true)
+@Table(name = AppDB.s_partinfo, indexes = {@Index(name = "PRIMARY", columnList = "UID_", unique = true),
+        @Index(name = "uk_corp_code", columnList = "corp_no_,code_", unique = true)})
 @SqlServer(type = SqlServerType.Mysql)
 @Getter
 @Setter
@@ -110,26 +110,71 @@ public class PartinfoEntity extends CustomEntity {
     }
 
     /**
-     * 更新库存信息
+     * 新增商品库存
      */
-    public void updateStock(String tb, double num, double increment) {
-        double newStock = 0;
+    public void appendStock(String tb, double num) {
+        double newStock;
         switch (tb) {
-        case "AB":
-            newStock = this.stock_ + increment;
-            break;
-        case "BC":
-            newStock = this.stock_ - increment;
-            break;
-        case "AE":
-            newStock = num;
-            break;
-        default:
-            throw new RuntimeException(String.format("不支持的的单别 ", tb));
+            case "AB":
+                newStock = this.stock_ + num;
+                break;
+            case "BC":
+                newStock = this.stock_ - num;
+                break;
+            case "AE":
+                newStock = num;
+                break;
+            default:
+                throw new RuntimeException(String.format("不支持的的单别 %s", tb));
         }
         if (newStock < 0)
             throw new RuntimeException("商品库存数量不允许为负数");
         this.setStock_(newStock);
     }
+
+    /**
+     * 回收商品库存
+     */
+    public void recycleStock(String tb, double original, double increment) {
+        double newStock;
+        switch (tb) {
+            case "AB":
+                newStock = this.stock_ - original;// AB 退货扣减库存
+                break;
+            case "AE":
+                newStock = original - increment;// AE 退还原始库存
+                break;
+            case "BC":
+                newStock = this.stock_ + original;// BC 退货返还库存
+                break;
+            default:
+                throw new RuntimeException(String.format("不支持的的单别 %s", tb));
+        }
+        if (newStock < 0)
+            throw new RuntimeException("商品库存数量不允许为负数");
+        this.setStock_(newStock);
+    }
+
+    /**
+     * 增量调整商品库存
+     */
+    public void updateStock(String tb, double diff) {
+        double newStock;
+        switch (tb) {
+            case "AB":
+            case "AE":
+                newStock = this.stock_ + diff;
+                break;
+            case "BC":
+                newStock = this.stock_ - diff;
+                break;
+            default:
+                throw new RuntimeException(String.format("不支持的的单别 %s", tb));
+        }
+        if (newStock < 0)
+            throw new RuntimeException("商品库存数量不允许为负数");
+        this.setStock_(newStock);
+    }
+
 
 }

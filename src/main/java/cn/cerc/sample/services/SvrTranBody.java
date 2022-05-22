@@ -51,7 +51,7 @@ public class SvrTranBody implements IService {
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品编号不存在", code)));
             double stock = partInfo.get().getStock_();// 原始库存
             double increment = num - stock;
-            partInfo.update(item -> item.updateStock(head.get().getTb_(), num, num));
+            partInfo.update(item -> item.appendStock(head.get().getTb_(), num));
 
             OptionalInt maxIt = entity.stream().mapToInt(TranBodyEntity::getIt_).max();
             int it = maxIt.isEmpty() ? 1 : maxIt.getAsInt() + 1;
@@ -107,7 +107,7 @@ public class SvrTranBody implements IService {
 
             EntityOne<PartinfoEntity> partInfo = EntityOne.open(handle, PartinfoEntity.class, code)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品编号不存在", code)));
-            partInfo.update(item -> item.updateStock(head.get().getTb_(), num, diff));
+            partInfo.update(item -> item.updateStock(head.get().getTb_(), diff));
 
             entity.update(item -> {
                 item.setNum_(num);
@@ -136,13 +136,15 @@ public class SvrTranBody implements IService {
             EntityOne<TranBodyEntity> entity = EntityOne.open(handle, TranBodyEntity.class, orderSN, it)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品不存在于单身，不允许删除数据", it)));
             String code = entity.get().getCode_();
-            double num = entity.get().getNum_();// 原始数量
+            double original = entity.get().getNum_();// 原始数量
+            double increment = entity.get().getIncrement_();// 变化增量
+
             EntityOne<PartinfoEntity> partInfo = EntityOne.open(handle, PartinfoEntity.class, code)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品编号不存在", code)));
-            partInfo.update(item -> item.updateStock(head.get().getTb_(), -num, -num));
+            partInfo.update(item -> item.recycleStock(head.get().getTb_(), original, increment));
 
             entity.delete();
-            head.update(item -> item.setTotal_(item.getTotal_() - num));
+            head.update(item -> item.setTotal_(item.getTotal_() - original));
             tx.commit();
             dataSet.append().setValue("it_", it);
         }
