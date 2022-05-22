@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import cn.cerc.db.core.DataRow;
 import cn.cerc.db.core.DataSet;
 import cn.cerc.db.core.IHandle;
+import cn.cerc.db.core.SqlWhere;
 import cn.cerc.db.mysql.MysqlQuery;
 import cn.cerc.mis.client.ServiceSign;
 import cn.cerc.mis.core.DataValidate;
@@ -30,7 +31,13 @@ public class SvrOrderReport implements IService {
         query.add("sum(case when h.tb_='AE' then b.num_ else 0 end) as reality_");
         query.add("from %s h", AppDB.s_tranh);
         query.add("inner join %s b on b.corp_no_=h.corp_no_ and b.order_sn_ =h.order_sn_", AppDB.s_tranb);
-        query.addWhere().eq("h.corp_no_", handle.getCorpNo()).build();
+
+        SqlWhere where = query.addWhere();
+        where.eq("h.corp_no_", handle.getCorpNo());
+        if (headIn.has("dateFrom_") && headIn.has("dateTo_"))
+            where.between("order_date_", headIn.getFastDate("dateFrom_"), headIn.getFastDate("dateTo_"));
+        where.build();
+
         query.add("group by h.order_date_");
         query.openReadonly();
         return query.setState(ServiceState.OK).disableStorage();
