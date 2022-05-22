@@ -89,7 +89,11 @@ public class SampleServicesConfig {
     }
 
     public static class SvrOrderReport {
+        /** 单日订单明细 */
+        public static final ServiceSign detail = new ServiceSign("SvrOrderReport.detail").setVersion(3)
+                .setProperties(Set.of("order_date_"));
         /** 订单统计服务 */
         public static final ServiceSign search = new ServiceSign("SvrOrderReport.search").setVersion(3);
     }
+
 }
