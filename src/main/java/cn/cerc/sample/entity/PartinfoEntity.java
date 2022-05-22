@@ -108,4 +108,25 @@ public class PartinfoEntity extends CustomEntity {
         this.setUpdate_user_(handle.getUserCode());
         this.setUpdate_time_(new Datetime());
     }
+
+    public void updateStock(String tb, double num) {
+        double newStock = 0;
+        switch (tb) {
+        case "AB":
+            newStock = this.stock_ + num;
+            break;
+        case "BC":
+            newStock = this.stock_ - num;
+            break;
+        case "AE":
+            newStock = num;
+            break;
+        default:
+            throw new RuntimeException(String.format("不支持的的单别 ", tb));
+        }
+        if (newStock < 0)
+            throw new RuntimeException("商品库存数量不允许为负数");
+        this.setStock_(newStock);
+    }
+
 }

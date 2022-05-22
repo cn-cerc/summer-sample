@@ -10,15 +10,12 @@ import cn.cerc.db.core.DataSet;
 import cn.cerc.db.core.IHandle;
 import cn.cerc.db.core.SqlWhere;
 import cn.cerc.db.mysql.MysqlQuery;
-import cn.cerc.mis.ado.EntityQuery;
-import cn.cerc.mis.ado.FindOneBatch;
 import cn.cerc.mis.client.ServiceSign;
 import cn.cerc.mis.core.DataValidate;
 import cn.cerc.mis.core.IService;
 import cn.cerc.mis.core.ServiceState;
 import cn.cerc.mis.security.Permission;
 import cn.cerc.sample.core.AppDB;
-import cn.cerc.sample.entity.PartinfoEntity;
 
 @Permission(Permission.GUEST)
 @Component
@@ -50,8 +47,10 @@ public class SvrOrderReport implements IService {
     @DataValidate(value = "order_date_", name = "订单日期")
     public DataSet detail(IHandle handle, DataRow headIn) {
         MysqlQuery query = new MysqlQuery(handle);
-        query.add("select h.order_date_,h.tb_,b.* from %s h", AppDB.s_tranh);
-        query.add("inner join s_tranb b on b.corp_no_=h.corp_no_ and b.order_sn_ =h.order_sn_");
+        query.add("select h.order_date_,h.tb_,pi.desc_,pi.spec_,");
+        query.add("b.code_,b.it_,b.num_,b.increment_ from %s h", AppDB.s_tranh);
+        query.add("inner join %s b on b.corp_no_=h.corp_no_ and b.order_sn_ =h.order_sn_", AppDB.s_tranb);
+        query.add("inner join %s pi on pi.corp_no_=b.corp_no_ and pi.code_=b.code_", AppDB.s_partinfo);
         SqlWhere where = query.addWhere();
         where.eq("h.corp_no_", handle.getCorpNo()).eq("order_date_", headIn.getFastDate("order_date_"));
         if (headIn.has("tb_"))
@@ -59,15 +58,6 @@ public class SvrOrderReport implements IService {
         where.build();
         query.add("order by b.code_");
         query.openReadonly();
-
-        FindOneBatch<PartinfoEntity> goods = EntityQuery.findOneBatch(handle, PartinfoEntity.class);
-        while (query.fetch()) {
-            String code = query.getString("code_");
-            PartinfoEntity item = goods.get(code)
-                    .orElseThrow(() -> new RuntimeException(String.format("%s 商品料号不存在", code)));
-            query.setValue("desc_", item.getDesc_());
-            query.setValue("spec_", item.getSpec_());
-        }
         return query.setState(ServiceState.OK);
     }
 

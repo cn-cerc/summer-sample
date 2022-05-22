@@ -50,21 +50,7 @@ public class SvrTranBody implements IService {
             EntityOne<PartinfoEntity> partInfo = EntityOne.open(handle, PartinfoEntity.class, code)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品编号不存在", code)));
             final double stock = partInfo.get().getStock_();// 原始库存
-            switch (head.get().getTb_()) {
-            case "AB":
-                partInfo.update(item -> item.setStock_(stock + num));
-                break;
-            case "AE":
-                partInfo.update(item -> item.setStock_(num));
-                break;
-            case "BC":
-                if (stock < num)
-                    throw new RuntimeException("商品库存数量不足于出库");
-                partInfo.update(item -> item.setStock_(stock - num));
-                break;
-            default:
-                break;
-            }
+            partInfo.update(item -> item.updateStock(head.get().getTb_(), num));
 
             OptionalInt maxIt = entity.stream().mapToInt(t -> t.getIt_()).max();
             int it = maxIt.isEmpty() ? 1 : maxIt.getAsInt() + 1;
@@ -114,32 +100,16 @@ public class SvrTranBody implements IService {
             EntityOne<TranBodyEntity> entity = EntityOne.open(handle, TranBodyEntity.class, orderSN, it)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品不存在于单身，不允许修改数据", it)));
             String code = entity.get().getCode_();
-            double original = entity.get().getNum_();// 原始数量
-            double diff = num - original;// 差异量
-            double increment = entity.get().getIncrement_();// 变化增量
 
+            double original = entity.get().getNum_();// 原始数量
             EntityOne<PartinfoEntity> partInfo = EntityOne.open(handle, PartinfoEntity.class, code)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品编号不存在", code)));
-            final double stock = partInfo.get().getStock_();// 原始库存
-            switch (head.get().getTb_()) {
-            case "AB":
-                partInfo.update(item -> item.setStock_(stock + diff));
-                break;
-            case "AE":
-                partInfo.update(item -> item.setStock_(num));
-                break;
-            case "BC":
-                if ((stock - diff) < num)
-                    throw new RuntimeException("商品库存数量不足于出库");
-                partInfo.update(item -> item.setStock_(stock - diff));
-                break;
-            default:
-                break;
-            }
+            partInfo.update(item -> item.updateStock(head.get().getTb_(), num));
+            double diff = original - partInfo.get().getStock_();
 
             entity.update(item -> {
                 item.setNum_(num);
-                item.setIncrement_(increment + diff);
+                item.setIncrement_(diff);
             });
             head.update(item -> item.setTotal_(item.getTotal_() + diff));
             tx.commit();
@@ -164,28 +134,13 @@ public class SvrTranBody implements IService {
             EntityOne<TranBodyEntity> entity = EntityOne.open(handle, TranBodyEntity.class, orderSN, it)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品不存在于单身，不允许删除数据", it)));
             String code = entity.get().getCode_();
-            double original = entity.get().getNum_();// 原始数量
-            double increment = entity.get().getIncrement_();// 变化增量
-
+            double num = entity.get().getNum_();// 原始数量
             EntityOne<PartinfoEntity> partInfo = EntityOne.open(handle, PartinfoEntity.class, code)
                     .isEmptyThrow(() -> new RuntimeException(String.format("%s 商品编号不存在", code)));
-            final double stock = partInfo.get().getStock_();// 原始库存
-            switch (head.get().getTb_()) {
-            case "AB":
-                partInfo.update(item -> item.setStock_(stock - original));// AB 退货扣减库存
-                break;
-            case "AE":
-                partInfo.update(item -> item.setStock_(original - increment));
-                break;
-            case "BC":
-                partInfo.update(item -> item.setStock_(stock + original));// 归还库存
-                break;
-            default:
-                break;
-            }
+            partInfo.update(item -> item.updateStock(head.get().getTb_(), -num));
 
             entity.delete();
-            head.update(item -> item.setTotal_(item.getTotal_() - original));
+            head.update(item -> item.setTotal_(item.getTotal_() - num));
             tx.commit();
             dataSet.append().setValue("it_", it);
         }
