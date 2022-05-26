@@ -25,22 +25,6 @@ import cn.cerc.sample.entity.EmployeeTotalEntity;
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class SvrEmployee implements IService {
 
-    @Description("根据条件查询人员信息")
-    public DataSet search(IHandle handle, DataRow headIn) {
-        MysqlQuery query = new MysqlQuery(handle);
-        query.add("select * from %s", EmployeeInfoEntity.TABLE);
-        SqlWhere where = query.addWhere();
-        where.eq("corp_no_", handle.getCorpNo());
-        if (headIn.has("code_"))
-            where.eq("code_", headIn.getString("code_"));
-        if (headIn.has("searchText_"))
-            where.like("name_", headIn.getString("searchText_"));
-        where.build();
-        query.add("order by code_ desc");
-        query.openReadonly();
-        return query.setState(ServiceState.OK);
-    }
-
     @Description("新增人员信息")
     @DataValidate(value = "code_", name = "员工工号")
     @DataValidate(value = "name_", name = "员工姓名")
@@ -65,13 +49,20 @@ public class SvrEmployee implements IService {
         return entity.dataSet().setState(ServiceState.OK);
     }
 
-    @Description("获取员工信息")
+    @Description("删除人员信息")
     @DataValidate(value = "code_", name = "员工工号")
-    public DataSet download(IHandle handle, DataRow headIn) {
+    public boolean delete(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
-        return EntityOne.open(handle, EmployeeInfoEntity.class, code)
-                .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).current().dataSet()
-                .setState(ServiceState.OK);
+        try (Transaction tx = new Transaction(handle)) {
+            EntityOne.open(handle, EmployeeInfoEntity.class, code)
+                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).delete();
+
+            // 更新员数量合计栏位
+            EntityOne.open(handle, EmployeeTotalEntity.class).update(item -> item.setTotal_(item.getTotal_() - 1))
+                    .orElseInsert(item -> item.setTotal_(1));
+            tx.commit();
+        }
+        return true;
     }
 
     @Description("修改人员信息")
@@ -89,20 +80,29 @@ public class SvrEmployee implements IService {
                 }).dataSet().setState(ServiceState.OK);
     }
 
-    @Description("删除人员信息")
+    @Description("获取员工信息")
     @DataValidate(value = "code_", name = "员工工号")
-    public boolean delete(IHandle handle, DataRow headIn) {
+    public DataSet download(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
-        try (Transaction tx = new Transaction(handle)) {
-            EntityOne.open(handle, EmployeeInfoEntity.class, code)
-                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).delete();
+        return EntityOne.open(handle, EmployeeInfoEntity.class, code)
+                .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).current().dataSet()
+                .setState(ServiceState.OK);
+    }
 
-            // 更新员数量合计栏位
-            EntityOne.open(handle, EmployeeTotalEntity.class).update(item -> item.setTotal_(item.getTotal_() - 1))
-                    .orElseInsert(item -> item.setTotal_(1));
-            tx.commit();
-        }
-        return true;
+    @Description("根据条件查询人员信息")
+    public DataSet search(IHandle handle, DataRow headIn) {
+        MysqlQuery query = new MysqlQuery(handle);
+        query.add("select * from %s", EmployeeInfoEntity.TABLE);
+        SqlWhere where = query.addWhere();
+        where.eq("corp_no_", handle.getCorpNo());
+        if (headIn.has("code_"))
+            where.eq("code_", headIn.getString("code_"));
+        if (headIn.has("searchText_"))
+            where.like("name_", headIn.getString("searchText_"));
+        where.build();
+        query.add("order by code_ desc");
+        query.openReadonly();
+        return query.setState(ServiceState.OK);
     }
 
     public static void main(String[] args) {

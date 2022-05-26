@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import cn.cerc.db.core.DataSet;
 import cn.cerc.db.core.Utils;
@@ -93,7 +94,6 @@ public class FrmEmployee extends CustomForm {
         new DateColumn(actionForm, "入职日期", "entry_date_");
 
         if (!Utils.isEmpty(actionForm.readAll())) {
-            // 调用SvrCorpInfo.modify服务
             ServiceQuery svr = ServiceQuery.open(this, SvrEmployee.append, actionForm.getRecord());
             if (svr.isFail()) {
                 page.setMessage(svr.dataOut().message());
@@ -105,6 +105,16 @@ public class FrmEmployee extends CustomForm {
             return new RedirectPage(this, modifyUrl);
         }
         return page;
+    }
+
+    public IPage delete(@PathVariable("code") String code) {
+        ServiceQuery svr = ServiceQuery.open(this, SvrEmployee.delete, Map.of("code_", code));
+        if (svr.isFail()) {
+            UINotice.sendInfo(getSession(), this.getClass(), "execute", svr.dataOut().message());
+            return new RedirectPage(this, "FrmEmployee");
+        }
+        UINotice.sendInfo(getSession(), this.getClass(), "execute", String.format("%s 删除成功", code));
+        return new RedirectPage(this, "FrmEmployee");
     }
 
     public IPage modify() {
@@ -149,16 +159,4 @@ public class FrmEmployee extends CustomForm {
         return page;
     }
 
-//    public IPage delete(@PathVariable("code") String code) {
-//    public IPage delete(int code, String name) {
-    public IPage delete() {
-        String code = getRequest().getParameter("code");
-        ServiceQuery svr = ServiceQuery.open(this, SvrEmployee.delete, Map.of("code_", code));
-        if (svr.isFail()) {
-            UINotice.sendInfo(getSession(), this.getClass(), "execute", svr.dataOut().message());
-            return new RedirectPage(this, "FrmEmployee");
-        }
-        UINotice.sendInfo(getSession(), this.getClass(), "execute", String.format("%s 删除成功", code));
-        return new RedirectPage(this, "FrmEmployee");
-    }
 }
