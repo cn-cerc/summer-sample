@@ -42,7 +42,7 @@ import cn.cerc.ui.vcl.UIUrl;
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class FrmEmployee extends CustomForm {
 
-    enum Gender {
+    enum GenderEnum {
         未知, 男, 女;
     }
 
@@ -69,7 +69,7 @@ public class FrmEmployee extends CustomForm {
         new ItColumn(line1.cell(0));
         new StringColumn(line1.cell(1), "员工工号", "code_", 4);
         new StringColumn(line2.cell(0), "员工姓名", "name_", 4);
-        new OptionColumn(line2.cell(1), "员工性别", "gender_", 3).setOptions(Gender.values());
+        new OptionColumn(line2.cell(1), "员工性别", "gender_", 3).setOptions(GenderEnum.values());
         new StringColumn(line3.cell(0), "入职日期", "entry_date_", 6);
         new BooleanColumn(line3.cell(1), "在职状态", "enable_");
 
@@ -90,15 +90,13 @@ public class FrmEmployee extends CustomForm {
 
         new StringColumn(actionForm, "员工工号", "code_").setRequired(true);
         new StringColumn(actionForm, "员工姓名", "name_").setRequired(true);
-        new OptionColumn(actionForm, "员工性别", "gender_").setOptions(Gender.values());
+        new OptionColumn(actionForm, "员工性别", "gender_").setOptions(GenderEnum.values());
         new DateColumn(actionForm, "入职日期", "entry_date_");
 
         if (!Utils.isEmpty(actionForm.readAll())) {
             ServiceQuery svr = ServiceQuery.open(this, SvrEmployee.append, actionForm.getRecord());
-            if (svr.isFail()) {
-                page.setMessage(svr.dataOut().message());
-                return page;
-            }
+            if (svr.isFail())
+                return page.setMessage(svr.dataOut().message());
             String code = svr.dataOut().getString("code_");
             UINotice.sendInfo(getSession(), this.getClass(), "modify", String.format("新增员工 %s", code));
             String modifyUrl = UrlRecord.builder("FrmEmployee.modify").put("code", code).build().getUrl();
@@ -125,10 +123,8 @@ public class FrmEmployee extends CustomForm {
         try (MemoryBuffer buff = new MemoryBuffer(BufferUser.Notice_UserCode, this.getUserCode(),
                 "FrmEmployee.modify")) {
             String code = page.getValue(buff, "code");
-            if (Utils.isEmpty(code)) {
-                page.setMessage("code 不允许为空");
-                return page;
-            }
+            if (Utils.isEmpty(code))
+                return page.setMessage("code 不允许为空");
 
             ServiceQuery svr1 = ServiceQuery.open(this, SvrEmployee.download, Map.of("code_", code));
             if (svr1.isFail()) {
@@ -141,17 +137,14 @@ public class FrmEmployee extends CustomForm {
 
             new StringColumn(actionForm, "员工工号", "code_").setReadonly(true);
             new StringColumn(actionForm, "员工姓名", "name_");
-            new OptionColumn(actionForm, "员工性别", "gender_").setOptions(Gender.values());
+            new OptionColumn(actionForm, "员工性别", "gender_").setOptions(GenderEnum.values());
             new DateColumn(actionForm, "入职日期", "entry_date_");
             new BooleanColumn(actionForm, "在职状态", "enable_");
 
             if (!Utils.isEmpty(actionForm.readAll())) {
-                // 调用SvrCorpInfo.modify服务
                 ServiceQuery svr = ServiceQuery.open(this, SvrEmployee.modify, actionForm.getRecord());
-                if (svr.isFail()) {
-                    page.setMessage(svr.dataOut().message());
-                    return page;
-                }
+                if (svr.isFail())
+                    return page.setMessage(svr.dataOut().message());
                 UINotice.sendInfo(getSession(), this.getClass(), "modify", "修改成功");
                 return new RedirectPage(this, "FrmEmployee.modify");
             }
