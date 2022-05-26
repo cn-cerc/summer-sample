@@ -18,16 +18,16 @@ import cn.cerc.db.core.IHandle;
 import cn.cerc.db.core.SqlServer;
 import cn.cerc.db.core.SqlServerType;
 import cn.cerc.mis.ado.CustomEntity;
-import cn.cerc.sample.config.AppDB;
 
 @Component
 @Entity
 @EntityKey(fields = { "corp_no_", "code_" }, corpNo = true, cache = CacheLevelEnum.Redis, smallTable = true)
-@Table(name = AppDB.s_partinfo, indexes = { @Index(name = "PRIMARY", columnList = "UID_", unique = true),
+@Table(name = PartInfoEntity.TABLE, indexes = { @Index(name = "PRIMARY", columnList = "UID_", unique = true),
         @Index(name = "uk_corp_code", columnList = "corp_no_,code_", unique = true) })
 @SqlServer(type = SqlServerType.Mysql)
 @Describe(name = "商品基本资料")
 public class PartInfoEntity extends CustomEntity {
+    public static final String TABLE = "s_partinfo";
 
     @Id
     @GeneratedValue

@@ -18,16 +18,16 @@ import cn.cerc.db.core.IHandle;
 import cn.cerc.db.core.SqlServer;
 import cn.cerc.db.core.SqlServerType;
 import cn.cerc.mis.ado.CustomEntity;
-import cn.cerc.sample.config.AppDB;
 
 @Component
 @Entity
 @EntityKey(fields = { "corp_no_", "order_sn_", "it_" }, corpNo = true, cache = CacheLevelEnum.Redis, smallTable = true)
-@Table(name = AppDB.s_tranb, indexes = { @Index(name = "PRIMARY", columnList = "UID_", unique = true),
+@Table(name = TranBodyEntity.TABLE, indexes = { @Index(name = "PRIMARY", columnList = "UID_", unique = true),
         @Index(name = "uk_corp_order_it", columnList = "corp_no_,order_sn_,it_", unique = true) })
 @SqlServer(type = SqlServerType.Mysql)
 @Describe(name = "订单单身")
 public class TranBodyEntity extends CustomEntity {
+    public static final String TABLE = "s_tranb";
 
     @Id
     @GeneratedValue

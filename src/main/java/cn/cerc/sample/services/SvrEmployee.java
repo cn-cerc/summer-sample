@@ -17,7 +17,6 @@ import cn.cerc.mis.core.DataValidate;
 import cn.cerc.mis.core.IService;
 import cn.cerc.mis.core.ServiceState;
 import cn.cerc.mis.security.Permission;
-import cn.cerc.sample.config.AppDB;
 import cn.cerc.sample.entity.EmployeeInfoEntity;
 import cn.cerc.sample.entity.EmployeeTotalEntity;
 
@@ -29,7 +28,7 @@ public class SvrEmployee implements IService {
     @Description("根据条件查询人员信息")
     public DataSet search(IHandle handle, DataRow headIn) {
         MysqlQuery query = new MysqlQuery(handle);
-        query.add("select * from %s", AppDB.s_employee_info);
+        query.add("select * from %s", EmployeeInfoEntity.TABLE);
         SqlWhere where = query.addWhere();
         where.eq("corp_no_", handle.getCorpNo());
         if (headIn.has("code_"))
