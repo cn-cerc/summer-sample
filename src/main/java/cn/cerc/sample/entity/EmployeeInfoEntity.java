@@ -18,20 +18,16 @@ import cn.cerc.db.core.IHandle;
 import cn.cerc.db.core.SqlServer;
 import cn.cerc.db.core.SqlServerType;
 import cn.cerc.mis.ado.CustomEntity;
-import cn.cerc.sample.config.AppDB;
-import lombok.Getter;
-import lombok.Setter;
 
 @Component
 @Entity
 @EntityKey(fields = { "corp_no_", "code_" }, corpNo = true, cache = CacheLevelEnum.Redis, smallTable = true)
-@Table(name = AppDB.s_employee_info, indexes = { @Index(name = "PRIMARY", columnList = "uid_", unique = true),
+@Table(name = EmployeeInfoEntity.TABLE, indexes = { @Index(name = "PRIMARY", columnList = "uid_", unique = true),
         @Index(name = "uk_corp_code", columnList = "corp_no_,code_", unique = true) })
 @SqlServer(type = SqlServerType.Mysql)
-@Getter
-@Setter
 @Describe(name = "员工信息表")
 public class EmployeeInfoEntity extends CustomEntity {
+    public static final String TABLE = "s_employee_info";
 
     @Id
     @GeneratedValue()
@@ -104,6 +100,102 @@ public class EmployeeInfoEntity extends CustomEntity {
 
         this.setUpdate_user_(handle.getUserCode());
         this.setUpdate_time_(new Datetime());
+    }
+
+    public Integer getUid_() {
+        return uid_;
+    }
+
+    public void setUid_(Integer uid_) {
+        this.uid_ = uid_;
+    }
+
+    public String getCorp_no_() {
+        return corp_no_;
+    }
+
+    public void setCorp_no_(String corp_no_) {
+        this.corp_no_ = corp_no_;
+    }
+
+    public String getCode_() {
+        return code_;
+    }
+
+    public void setCode_(String code_) {
+        this.code_ = code_;
+    }
+
+    public String getName_() {
+        return name_;
+    }
+
+    public void setName_(String name_) {
+        this.name_ = name_;
+    }
+
+    public Integer getGender_() {
+        return gender_;
+    }
+
+    public void setGender_(Integer gender_) {
+        this.gender_ = gender_;
+    }
+
+    public Datetime getEntry_date_() {
+        return entry_date_;
+    }
+
+    public void setEntry_date_(Datetime entry_date_) {
+        this.entry_date_ = entry_date_;
+    }
+
+    public Boolean getEnable_() {
+        return enable_;
+    }
+
+    public void setEnable_(Boolean enable_) {
+        this.enable_ = enable_;
+    }
+
+    public Integer getVersion_() {
+        return version_;
+    }
+
+    public void setVersion_(Integer version_) {
+        this.version_ = version_;
+    }
+
+    public String getCreate_user_() {
+        return create_user_;
+    }
+
+    public void setCreate_user_(String create_user_) {
+        this.create_user_ = create_user_;
+    }
+
+    public Datetime getCreate_time_() {
+        return create_time_;
+    }
+
+    public void setCreate_time_(Datetime create_time_) {
+        this.create_time_ = create_time_;
+    }
+
+    public String getUpdate_user_() {
+        return update_user_;
+    }
+
+    public void setUpdate_user_(String update_user_) {
+        this.update_user_ = update_user_;
+    }
+
+    public Datetime getUpdate_time_() {
+        return update_time_;
+    }
+
+    public void setUpdate_time_(Datetime update_time_) {
+        this.update_time_ = update_time_;
     }
 
 }

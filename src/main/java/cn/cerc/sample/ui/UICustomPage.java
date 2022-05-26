@@ -18,10 +18,11 @@ public class UICustomPage extends UIAbstractPage {
         new UIHeader(this.getHeader());
     }
 
-    public void setMessage(String msg) {
+    public UICustomPage setMessage(String msg) {
         if (notice == null)
             notice = new UINotice(this.getFrontPanel());
         notice.info(msg);
+        return this;
     }
 
     @Override

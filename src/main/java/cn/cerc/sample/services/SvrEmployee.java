@@ -17,7 +17,6 @@ import cn.cerc.mis.core.DataValidate;
 import cn.cerc.mis.core.IService;
 import cn.cerc.mis.core.ServiceState;
 import cn.cerc.mis.security.Permission;
-import cn.cerc.sample.config.AppDB;
 import cn.cerc.sample.entity.EmployeeInfoEntity;
 import cn.cerc.sample.entity.EmployeeTotalEntity;
 
@@ -25,22 +24,6 @@ import cn.cerc.sample.entity.EmployeeTotalEntity;
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class SvrEmployee implements IService {
-
-    @Description("根据条件查询人员信息")
-    public DataSet search(IHandle handle, DataRow headIn) {
-        MysqlQuery query = new MysqlQuery(handle);
-        query.add("select * from %s", AppDB.s_employee_info);
-        SqlWhere where = query.addWhere();
-        where.eq("corp_no_", handle.getCorpNo());
-        if (headIn.has("code_"))
-            where.eq("code_", headIn.getString("code_"));
-        if (headIn.has("searchText_"))
-            where.like("name_", headIn.getString("searchText_"));
-        where.build();
-        query.add("order by code_ desc");
-        query.openReadonly();
-        return query.setState(ServiceState.OK);
-    }
 
     @Description("新增人员信息")
     @DataValidate(value = "code_", name = "员工工号")
@@ -63,31 +46,7 @@ public class SvrEmployee implements IService {
                     .orElseInsert(item -> item.setTotal_(1));
             tx.commit();
         }
-        return entity.current().dataSet().setState(ServiceState.OK);
-    }
-
-    @Description("获取员工信息")
-    @DataValidate(value = "code_", name = "员工工号")
-    public DataSet download(IHandle handle, DataRow headIn) {
-        String code = headIn.getString("code_");
-        return EntityOne.open(handle, EmployeeInfoEntity.class, code)
-                .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).current().dataSet()
-                .setState(ServiceState.OK);
-    }
-
-    @Description("修改人员信息")
-    @DataValidate(value = "code_", name = "员工工号")
-    @DataValidate(value = "gender_", name = "员工性别")
-    @DataValidate(value = "entry_date_", name = "入职日期")
-    public DataSet modify(IHandle handle, DataRow headIn) {
-        String code = headIn.getString("code_");
-        return EntityOne.open(handle, EmployeeInfoEntity.class, code)
-                .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).update(item -> {
-                    item.setName_(headIn.getString("name_"));
-                    item.setGender_(headIn.getInt("gender_"));
-                    item.setEntry_date_(headIn.getFastDate("entry_date_"));
-                    item.setEnable_(headIn.getBoolean("enable_"));
-                }).current().dataSet().setState(ServiceState.OK);
+        return entity.dataSet().setState(ServiceState.OK);
     }
 
     @Description("删除人员信息")
@@ -104,6 +63,46 @@ public class SvrEmployee implements IService {
             tx.commit();
         }
         return true;
+    }
+
+    @Description("修改人员信息")
+    @DataValidate(value = "code_", name = "员工工号")
+    @DataValidate(value = "gender_", name = "员工性别")
+    @DataValidate(value = "entry_date_", name = "入职日期")
+    public DataSet modify(IHandle handle, DataRow headIn) {
+        String code = headIn.getString("code_");
+        return EntityOne.open(handle, EmployeeInfoEntity.class, code)
+                .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).update(item -> {
+                    item.setName_(headIn.getString("name_"));
+                    item.setGender_(headIn.getInt("gender_"));
+                    item.setEntry_date_(headIn.getFastDate("entry_date_"));
+                    item.setEnable_(headIn.getBoolean("enable_"));
+                }).dataSet().setState(ServiceState.OK);
+    }
+
+    @Description("获取员工信息")
+    @DataValidate(value = "code_", name = "员工工号")
+    public DataSet download(IHandle handle, DataRow headIn) {
+        String code = headIn.getString("code_");
+        return EntityOne.open(handle, EmployeeInfoEntity.class, code)
+                .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).dataSet()
+                .setState(ServiceState.OK);
+    }
+
+    @Description("根据条件查询人员信息")
+    public DataSet search(IHandle handle, DataRow headIn) {
+        MysqlQuery query = new MysqlQuery(handle);
+        query.add("select * from %s", EmployeeInfoEntity.TABLE);
+        SqlWhere where = query.addWhere();
+        where.eq("corp_no_", handle.getCorpNo());
+        if (headIn.has("code_"))
+            where.eq("code_", headIn.getString("code_"));
+        if (headIn.has("searchText_"))
+            where.like("name_", headIn.getString("searchText_"));
+        where.build();
+        query.add("order by code_ desc");
+        query.openReadonly();
+        return query.setState(ServiceState.OK);
     }
 
     public static void main(String[] args) {
