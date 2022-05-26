@@ -19,17 +19,13 @@ import cn.cerc.db.core.SqlServer;
 import cn.cerc.db.core.SqlServerType;
 import cn.cerc.mis.ado.CustomEntity;
 import cn.cerc.sample.config.AppDB;
-import lombok.Getter;
-import lombok.Setter;
 
 @Component
 @Entity
-@EntityKey(fields = {"corp_no_", "code_"}, corpNo = true, cache = CacheLevelEnum.Redis, smallTable = true)
-@Table(name = AppDB.s_partinfo, indexes = {@Index(name = "PRIMARY", columnList = "UID_", unique = true),
-        @Index(name = "uk_corp_code", columnList = "corp_no_,code_", unique = true)})
+@EntityKey(fields = { "corp_no_", "code_" }, corpNo = true, cache = CacheLevelEnum.Redis, smallTable = true)
+@Table(name = AppDB.s_partinfo, indexes = { @Index(name = "PRIMARY", columnList = "UID_", unique = true),
+        @Index(name = "uk_corp_code", columnList = "corp_no_,code_", unique = true) })
 @SqlServer(type = SqlServerType.Mysql)
-@Getter
-@Setter
 @Describe(name = "商品基本资料")
 public class PartInfoEntity extends CustomEntity {
 
@@ -118,17 +114,17 @@ public class PartInfoEntity extends CustomEntity {
     public void appendStock(String tb, double num) {
         double newStock;
         switch (tb) {
-            case "AB":
-                newStock = this.stock_ + num;
-                break;
-            case "BC":
-                newStock = this.stock_ - num;
-                break;
-            case "AE":
-                newStock = num;
-                break;
-            default:
-                throw new RuntimeException(String.format("不支持的的单别 %s", tb));
+        case "AB":
+            newStock = this.stock_ + num;
+            break;
+        case "BC":
+            newStock = this.stock_ - num;
+            break;
+        case "AE":
+            newStock = num;
+            break;
+        default:
+            throw new RuntimeException(String.format("不支持的的单别 %s", tb));
         }
         if (newStock < 0)
             throw new RuntimeException("商品库存数量不允许为负数");
@@ -145,17 +141,17 @@ public class PartInfoEntity extends CustomEntity {
     public void recycleStock(String tb, double original, double increment) {
         double newStock;
         switch (tb) {
-            case "AB":
-                newStock = this.stock_ - original;// AB 退货扣减库存
-                break;
-            case "AE":
-                newStock = original - increment;// AE 退还原始库存
-                break;
-            case "BC":
-                newStock = this.stock_ + original;// BC 退货返还库存
-                break;
-            default:
-                throw new RuntimeException(String.format("不支持的的单别 %s", tb));
+        case "AB":
+            newStock = this.stock_ - original;// AB 退货扣减库存
+            break;
+        case "AE":
+            newStock = original - increment;// AE 退还原始库存
+            break;
+        case "BC":
+            newStock = this.stock_ + original;// BC 退货返还库存
+            break;
+        default:
+            throw new RuntimeException(String.format("不支持的的单别 %s", tb));
         }
         if (newStock < 0)
             throw new RuntimeException("商品库存数量不允许为负数");
@@ -171,19 +167,123 @@ public class PartInfoEntity extends CustomEntity {
     public void updateStock(String tb, double diff) {
         double newStock;
         switch (tb) {
-            case "AB":
-            case "AE":
-                newStock = this.stock_ + diff;
-                break;
-            case "BC":
-                newStock = this.stock_ - diff;
-                break;
-            default:
-                throw new RuntimeException(String.format("不支持的的单别 %s", tb));
+        case "AB":
+        case "AE":
+            newStock = this.stock_ + diff;
+            break;
+        case "BC":
+            newStock = this.stock_ - diff;
+            break;
+        default:
+            throw new RuntimeException(String.format("不支持的的单别 %s", tb));
         }
         if (newStock < 0)
             throw new RuntimeException("商品库存数量不允许为负数");
         this.setStock_(newStock);
+    }
+
+    public Integer getUid_() {
+        return uid_;
+    }
+
+    public void setUid_(Integer uid_) {
+        this.uid_ = uid_;
+    }
+
+    public String getCorp_no_() {
+        return corp_no_;
+    }
+
+    public void setCorp_no_(String corp_no_) {
+        this.corp_no_ = corp_no_;
+    }
+
+    public String getCode_() {
+        return code_;
+    }
+
+    public void setCode_(String code_) {
+        this.code_ = code_;
+    }
+
+    public String getDesc_() {
+        return desc_;
+    }
+
+    public void setDesc_(String desc_) {
+        this.desc_ = desc_;
+    }
+
+    public String getSpec_() {
+        return spec_;
+    }
+
+    public void setSpec_(String spec_) {
+        this.spec_ = spec_;
+    }
+
+    public String getUnit_() {
+        return unit_;
+    }
+
+    public void setUnit_(String unit_) {
+        this.unit_ = unit_;
+    }
+
+    public Double getStock_() {
+        return stock_;
+    }
+
+    public void setStock_(Double stock_) {
+        this.stock_ = stock_;
+    }
+
+    public String getRemark_() {
+        return remark_;
+    }
+
+    public void setRemark_(String remark_) {
+        this.remark_ = remark_;
+    }
+
+    public Integer getVersion_() {
+        return version_;
+    }
+
+    public void setVersion_(Integer version_) {
+        this.version_ = version_;
+    }
+
+    public String getCreate_user_() {
+        return create_user_;
+    }
+
+    public void setCreate_user_(String create_user_) {
+        this.create_user_ = create_user_;
+    }
+
+    public Datetime getCreate_time_() {
+        return create_time_;
+    }
+
+    public void setCreate_time_(Datetime create_time_) {
+        this.create_time_ = create_time_;
+    }
+
+    public String getUpdate_user_() {
+        return update_user_;
+    }
+
+    public void setUpdate_user_(String update_user_) {
+        this.update_user_ = update_user_;
+    }
+
+    public Datetime getUpdate_time_() {
+        return update_time_;
+    }
+
+    public void setUpdate_time_(Datetime update_time_) {
+        this.update_time_ = update_time_;
     }
 
 }

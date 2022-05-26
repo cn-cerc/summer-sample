@@ -63,7 +63,7 @@ public class SvrEmployee implements IService {
                     .orElseInsert(item -> item.setTotal_(1));
             tx.commit();
         }
-        return entity.current().dataSet().setState(ServiceState.OK);
+        return entity.dataSet().setState(ServiceState.OK);
     }
 
     @Description("获取员工信息")
@@ -87,7 +87,7 @@ public class SvrEmployee implements IService {
                     item.setGender_(headIn.getInt("gender_"));
                     item.setEntry_date_(headIn.getFastDate("entry_date_"));
                     item.setEnable_(headIn.getBoolean("enable_"));
-                }).current().dataSet().setState(ServiceState.OK);
+                }).dataSet().setState(ServiceState.OK);
     }
 
     @Description("删除人员信息")
