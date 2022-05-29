@@ -86,11 +86,8 @@ public class FrmEmployeeV3 extends CustomForm {
         // 定义表格中特殊的操作列
         CustomColumn customColumn = new CustomColumn(line4.cell(0));
         customColumn.setSpaceWidth(8);
-        customColumn.defineCell((content, record) -> {
-            new UIUrl(content).setText("修改").setSite("FrmEmployeeV3.modify").putParam("code", record.getString("code_"));
-            new UISpan(content).setText("|");
-            new UIUrl(content).setText("删除").setSite("FrmEmployeeV3.delete").putParam("code", record.getString("code_"));
-        });
+        customColumn.defineCell((content, record) -> new UIUrl(content).setText("修改").setSite("FrmEmployeeV3.modify")
+                .putParam("code", record.getString("code_")));
 
         // 返回页面
         return page;
@@ -125,22 +122,6 @@ public class FrmEmployeeV3 extends CustomForm {
         return page;
     }
 
-    @Description("删除页面")
-    public IPage delete(@PathVariable("code") String code) {
-        // 接收参数并传给相应的服务
-        ServiceQuery svr = ServiceQuery.open(this, SvrEmployeeV3.delete, Map.of("code_", code));
-        if (svr.isFail()) {
-            // 将执行失败的原因，传递到默认的查询页面
-            UINotice.sendInfo(getSession(), this.getClass(), "execute", svr.dataOut().message());
-            // 重定向到默认的查询页面
-            return new RedirectPage(this, "FrmEmployeeV3");
-        }
-        // 传递成功的消息到默认的查询页面
-        UINotice.sendInfo(getSession(), this.getClass(), "execute", String.format("%s 删除成功", code));
-        // 重定向到默认的查询页面
-        return new RedirectPage(this, "FrmEmployeeV3");
-    }
-
     @Description("修改页面")
     public IPage modify() {
         // 创建一个自定义页面
@@ -159,6 +140,8 @@ public class FrmEmployeeV3 extends CustomForm {
             ServiceQuery svr1 = ServiceQuery.open(this, SvrEmployeeV3.download, Map.of("code_", code));
             if (svr1.isFail())
                 return page.setMessage(svr1.dataOut().message());
+
+            new UIUrl(page.getFooter()).setText("删除").setSite("FrmEmployeeV2.delete").putParam("code", code);
 
             // 定义一个修改专用的面板
             UIModifyPanel actionForm = new UIModifyPanel(page.getContent());
@@ -185,6 +168,26 @@ public class FrmEmployeeV3 extends CustomForm {
         }
 
         return page;
+    }
+
+    @Description("删除页面")
+//    public IPage delete(@PathVariable("code") String code) {
+//    public IPage delete(String code) {
+    public IPage delete() {
+        String code = getRequest().getParameter("code");
+
+        // 接收参数并传给相应的服务
+        ServiceQuery svr = ServiceQuery.open(this, SvrEmployeeV3.delete, Map.of("code_", code));
+        if (svr.isFail()) {
+            // 将执行失败的原因，传递到默认的查询页面
+            UINotice.sendInfo(getSession(), this.getClass(), "execute", svr.dataOut().message());
+            // 重定向到默认的查询页面
+            return new RedirectPage(this, "FrmEmployeeV3");
+        }
+        // 传递成功的消息到默认的查询页面
+        UINotice.sendInfo(getSession(), this.getClass(), "execute", String.format("%s 删除成功", code));
+        // 重定向到默认的查询页面
+        return new RedirectPage(this, "FrmEmployeeV3");
     }
 
 }

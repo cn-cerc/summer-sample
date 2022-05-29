@@ -1,5 +1,7 @@
 package cn.cerc.sample.entity;
 
+import java.util.Arrays;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import cn.cerc.db.core.CacheLevelEnum;
@@ -21,9 +24,9 @@ import cn.cerc.mis.ado.CustomEntity;
 
 @Component
 @Entity
-@EntityKey(fields = { "corp_no_", "order_sn_" }, corpNo = true, cache = CacheLevelEnum.Redis, smallTable = true)
-@Table(name = TranHeadEntity.TABLE, indexes = { @Index(name = "PRIMARY", columnList = "UID_", unique = true),
-        @Index(name = "uk_corp_order", columnList = "corp_no_,order_sn_", unique = true) })
+@EntityKey(fields = {"corp_no_", "order_sn_"}, corpNo = true, cache = CacheLevelEnum.Redis, smallTable = true)
+@Table(name = TranHeadEntity.TABLE, indexes = {@Index(name = "PRIMARY", columnList = "UID_", unique = true),
+        @Index(name = "uk_corp_order", columnList = "corp_no_,order_sn_", unique = true)})
 @SqlServer(type = SqlServerType.Mysql)
 @Describe(name = "订单单头")
 public class TranHeadEntity extends CustomEntity {
@@ -99,6 +102,23 @@ public class TranHeadEntity extends CustomEntity {
 
         this.setUpdate_user_(handle.getUserCode());
         this.setUpdate_time_(new Datetime());
+    }
+
+    public enum TBType {
+        AB("进货单"), BC("出货单"), AE("盘点单");
+
+        @Getter
+        private final String desc;
+
+        private TBType(String desc) {
+            this.desc = desc;
+        }
+
+        public static void validateTB(String tb) {
+            boolean value = Arrays.stream(TBType.values()).anyMatch(item -> item.name().equals(tb));
+            if (!value)
+                throw new RuntimeException("非法单别！");
+        }
     }
 
     public Integer getUid_() {

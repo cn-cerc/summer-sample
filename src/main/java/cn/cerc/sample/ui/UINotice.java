@@ -48,7 +48,8 @@ public class UINotice extends UIComponent {
     }
 
     public static void sendInfo(ISession session, Class<?> clazz, String key, String value) {
-        try (MemoryBuffer buff = new MemoryBuffer(BufferUser.Notice_UserCode, session.getUserCode(), clazz.getName(), key)) {
+        try (MemoryBuffer buff = new MemoryBuffer(BufferUser.Notice_UserCode, session.getUserCode(), clazz.getName(),
+                key)) {
             buff.setValue("level", "info");
             buff.setValue("message", value);
             buff.setExpires(60); // 60秒过期
@@ -56,7 +57,8 @@ public class UINotice extends UIComponent {
     }
 
     public static void sendWarn(ISession session, Class<?> clazz, String key, String value) {
-        try (MemoryBuffer buff = new MemoryBuffer(BufferUser.Notice_UserCode, session.getUserCode(), clazz.getName(), key)) {
+        try (MemoryBuffer buff = new MemoryBuffer(BufferUser.Notice_UserCode, session.getUserCode(), clazz.getName(),
+                key)) {
             buff.setValue("level", "warn");
             buff.setValue("message", value);
             buff.setExpires(60); // 60秒过期
@@ -64,7 +66,8 @@ public class UINotice extends UIComponent {
     }
 
     public static void sendError(ISession session, Class<?> clazz, String key, String value) {
-        try (MemoryBuffer buff = new MemoryBuffer(BufferUser.Notice_UserCode, session.getUserCode(), clazz.getName(), key)) {
+        try (MemoryBuffer buff = new MemoryBuffer(BufferUser.Notice_UserCode, session.getUserCode(), clazz.getName(),
+                key)) {
             buff.setValue("level", "error");
             buff.setValue("message", value);
             buff.setExpires(60); // 60秒过期
@@ -73,7 +76,8 @@ public class UINotice extends UIComponent {
 
     public boolean receive(AbstractForm form, String key) {
         boolean result = false;
-        try (MemoryBuffer buff = new MemoryBuffer(BufferUser.Notice_UserCode, form.getSession().getUserCode(), form.getClass().getName(), key)) {
+        try (MemoryBuffer buff = new MemoryBuffer(BufferUser.Notice_UserCode, form.getSession().getUserCode(),
+                form.getClass().getName(), key)) {
             if (buff.exists("message")) {
                 this.setCssClass(buff.getString("level"));
                 this.info(buff.getString("message"));
@@ -83,7 +87,6 @@ public class UINotice extends UIComponent {
         }
         return result;
     }
-
 
     public String getText() {
         return text;

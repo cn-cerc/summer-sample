@@ -21,9 +21,9 @@ public class LoginSystem implements SecurityService {
 
     @Override
     public boolean initSession(ISession session, String token) {
-        session.setProperty(ISession.TOKEN, token);
         if (token == null)
             return false;
+        session.setProperty(ISession.TOKEN, token);
         return true;
     }
 

@@ -45,26 +45,26 @@ public class FrmWelcome extends AbstractForm {
         new UISpan(content).setText("简易进销存系统");
         new UILine(content);
 
-        new UIUrl(content).setText("员工管理（示例-第二代写法）").setSite("FrmEmployeeV2?sid=88888888");
+        new UIUrl(content).setText("员工管理（示例-第二代写法）").setSite("FrmEmployeeV2?");
         new UILine(content);
 
-        new UIUrl(content).setText("员工管理（示例-第三代写法）").setSite("FrmEmployeeV3?sid=88888888");
+        new UIUrl(content).setText("员工管理（示例-第三代写法）").setSite("FrmEmployeeV3");
         new UILine(content);
 
-        new UIUrl(content).setText("商品管理").setSite("FrmPartInfo?sid=88888888");
+        new UIUrl(content).setText("商品管理").setSite("FrmPartInfo");
         new UILine(content);
 
-        new UIUrl(content).setText("订单管理").setSite("FrmTranOrder?sid=88888888");
+        new UIUrl(content).setText("订单管理").setSite("FrmTranOrder");
         new UILine(content);
 
-        new UIUrl(content).setText("订单统计").setSite("FrmOrderReport?sid=88888888");
+        new UIUrl(content).setText("订单统计").setSite("FrmOrderReport");
         new UILine(content);
 
-        /* sci.js 使用范例 */
+        /** sci.js 使用范例 */
         new UIDiv(content).setId("page");
         UIScript script = new UIScript(content);
         script.setSrc("js/FrmWelcome.js");
-        /* end */
+        /** end */
 
         new UILine(content);
         if (!this.getClient().isPhone()) {
