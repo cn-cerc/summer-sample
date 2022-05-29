@@ -45,7 +45,10 @@ public class FrmWelcome extends AbstractForm {
         new UISpan(content).setText("简易进销存系统");
         new UILine(content);
 
-        new UIUrl(content).setText("员工管理（(示例）").setSite("FrmEmployee?sid=88888888");
+        new UIUrl(content).setText("员工管理（示例-第二代写法）").setSite("FrmEmployeeV2?sid=88888888");
+        new UILine(content);
+
+        new UIUrl(content).setText("员工管理（示例-第三代写法）").setSite("FrmEmployeeV3?sid=88888888");
         new UILine(content);
 
         new UIUrl(content).setText("商品管理").setSite("FrmPartInfo?sid=88888888");
