@@ -17,7 +17,7 @@ import cn.cerc.mis.core.ServiceQuery;
 import cn.cerc.mis.other.MemoryBuffer;
 import cn.cerc.mis.security.Permission;
 import cn.cerc.mis.security.Webform;
-import cn.cerc.sample.SampleServicesConfig.SvrEmployee;
+import cn.cerc.sample.SampleServicesConfig.SvrEmployeeV2;
 import cn.cerc.sample.config.BufferUser;
 import cn.cerc.sample.ui.CustomForm;
 import cn.cerc.sample.ui.UICustomPage;
@@ -41,7 +41,7 @@ import cn.cerc.ui.vcl.UIUrl;
 @Permission("user.base")
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class FrmEmployee extends CustomForm {
+public class FrmEmployeeV2 extends CustomForm {
 
     enum GenderEnum {
         未知, 男, 女;
@@ -55,7 +55,7 @@ public class FrmEmployee extends CustomForm {
         new UIUrl(page.getFrontPanel()).setText("返回").setSite("welcome");
         // 检查是否有需要显示的消息，并予以输出
         new UINotice(page.getFrontPanel()).receive(this, "execute");
-        new UIUrl(page.getFooter()).setText("新增").setSite("FrmEmployee.append");
+        new UIUrl(page.getFooter()).setText("新增").setSite("FrmEmployeeV2.append");
 
         // 创建搜索面板
         UISearchPanel search = new UISearchPanel(page.getContent());
@@ -64,7 +64,7 @@ public class FrmEmployee extends CustomForm {
         search.readAll();
 
         // 调用查询服务
-        DataSet dataOut = ServiceQuery.open(this, SvrEmployee.search, search.current()).getDataOutElseThrow();
+        DataSet dataOut = ServiceQuery.open(this, SvrEmployeeV2.search, search.current()).getDataOutElseThrow();
 
         // 创建数据表格
         UIGrid grid = new UIGrid(page.getContent()).setDataSet(dataOut);
@@ -87,9 +87,9 @@ public class FrmEmployee extends CustomForm {
         CustomColumn customColumn = new CustomColumn(line4.cell(0));
         customColumn.setSpaceWidth(8);
         customColumn.defineCell((content, record) -> {
-            new UIUrl(content).setText("修改").setSite("FrmEmployee.modify").putParam("code", record.getString("code_"));
+            new UIUrl(content).setText("修改").setSite("FrmEmployeeV2.modify").putParam("code", record.getString("code_"));
             new UISpan(content).setText("|");
-            new UIUrl(content).setText("删除").setSite("FrmEmployee.delete").putParam("code", record.getString("code_"));
+            new UIUrl(content).setText("删除").setSite("FrmEmployeeV2.delete").putParam("code", record.getString("code_"));
         });
 
         // 返回页面
@@ -100,7 +100,7 @@ public class FrmEmployee extends CustomForm {
     public IPage append() {
         // 创建一个自定义页面
         UICustomPage page = new UICustomPage(this);
-        new UIUrl(page.getFrontPanel()).setText("返回").setSite("FrmEmployee");
+        new UIUrl(page.getFrontPanel()).setText("返回").setSite("FrmEmployeeV2");
 
         // 创建一个增加专用的面板
         UIAppendPanel actionForm = new UIAppendPanel(page.getContent());
@@ -112,14 +112,14 @@ public class FrmEmployee extends CustomForm {
 
         // 判断是否用户有点击保存按钮，若有则读取所有的提交到actionForm.getRecord()
         if (!Utils.isEmpty(actionForm.readAll())) {
-            ServiceQuery svr = ServiceQuery.open(this, SvrEmployee.append, actionForm.getRecord());
+            ServiceQuery svr = ServiceQuery.open(this, SvrEmployeeV2.append, actionForm.getRecord());
             if (svr.isFail())
                 return page.setMessage(svr.dataOut().message());
             String code = svr.dataOut().getString("code_");
             // 传递成功的消息到修改页面
             UINotice.sendInfo(getSession(), this.getClass(), "modify", String.format("新增员工 %s", code));
             // 跳转到修改页面
-            String modifyUrl = UrlRecord.builder("FrmEmployee.modify").put("code", code).build().getUrl();
+            String modifyUrl = UrlRecord.builder("FrmEmployeeV2.modify").put("code", code).build().getUrl();
             return new RedirectPage(this, modifyUrl);
         }
         return page;
@@ -128,35 +128,35 @@ public class FrmEmployee extends CustomForm {
     @Description("删除页面")
     public IPage delete(@PathVariable("code") String code) {
         // 接收参数并传给相应的服务
-        ServiceQuery svr = ServiceQuery.open(this, SvrEmployee.delete, Map.of("code_", code));
+        ServiceQuery svr = ServiceQuery.open(this, SvrEmployeeV2.delete, Map.of("code_", code));
         if (svr.isFail()) {
             // 将执行失败的原因，传递到默认的查询页面
             UINotice.sendInfo(getSession(), this.getClass(), "execute", svr.dataOut().message());
             // 重定向到默认的查询页面
-            return new RedirectPage(this, "FrmEmployee");
+            return new RedirectPage(this, "FrmEmployeeV2");
         }
         // 传递成功的消息到默认的查询页面
         UINotice.sendInfo(getSession(), this.getClass(), "execute", String.format("%s 删除成功", code));
         // 重定向到默认的查询页面
-        return new RedirectPage(this, "FrmEmployee");
+        return new RedirectPage(this, "FrmEmployeeV2");
     }
 
     @Description("修改页面")
     public IPage modify() {
         // 创建一个自定义页面
         UICustomPage page = new UICustomPage(this);
-        new UIUrl(page.getFrontPanel()).setText("返回").setSite("FrmEmployee");
+        new UIUrl(page.getFrontPanel()).setText("返回").setSite("FrmEmployeeV2");
         // 检查是否有需要显示的消息，并予以输出
         new UINotice(page.getFrontPanel()).receive(this, "modify");
 
         // 启用页面缓存
         try (MemoryBuffer buff = new MemoryBuffer(BufferUser.Notice_UserCode, this.getUserCode(),
-                "FrmEmployee.modify")) {
+                "FrmEmployeeV2.modify")) {
             String code = page.getValue(buff, "code");
             if (Utils.isEmpty(code))
                 return page.setMessage("code 不允许为空");
 
-            ServiceQuery svr1 = ServiceQuery.open(this, SvrEmployee.download, Map.of("code_", code));
+            ServiceQuery svr1 = ServiceQuery.open(this, SvrEmployeeV2.download, Map.of("code_", code));
             if (svr1.isFail())
                 return page.setMessage(svr1.dataOut().message());
 
@@ -174,13 +174,13 @@ public class FrmEmployee extends CustomForm {
 
             // 判断是否用户有点击保存按钮，若有则读取所有的提交到actionForm.getRecord()
             if (!Utils.isEmpty(actionForm.readAll())) {
-                ServiceQuery svr = ServiceQuery.open(this, SvrEmployee.modify, actionForm.getRecord());
+                ServiceQuery svr = ServiceQuery.open(this, SvrEmployeeV2.modify, actionForm.getRecord());
                 if (svr.isFail())
                     return page.setMessage(svr.dataOut().message());
                 // 传递成功的消息到修改页面
                 UINotice.sendInfo(getSession(), this.getClass(), "modify", "修改成功");
                 // 跳转到修改页面
-                return new RedirectPage(this, "FrmEmployee.modify");
+                return new RedirectPage(this, "FrmEmployeeV2.modify");
             }
         }
 

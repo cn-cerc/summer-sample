@@ -23,7 +23,8 @@ import cn.cerc.sample.entity.EmployeeTotalEntity;
 @Permission(Permission.GUEST)
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class SvrEmployee implements IService {
+@Description("第三代服务编写方式(正式项目中使用)")
+public class SvrEmployeeV3 implements IService {
 
     @Description("新增人员信息")
     @DataValidate(value = "code_", name = "员工工号")
@@ -107,7 +108,7 @@ public class SvrEmployee implements IService {
 
     public static void main(String[] args) {
         // 生成当前对象的服务签名
-        ServiceSign.buildSourceCode(SvrEmployee.class);
+        ServiceSign.buildSourceCode(SvrEmployeeV3.class);
     }
 
 }
