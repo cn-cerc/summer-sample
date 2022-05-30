@@ -71,7 +71,7 @@ public class SvrEmployeeV3 implements IService {
     public DataSet download(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
         return EntityOne.open(handle, EmployeeInfoEntity.class, code)
-                .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).current().dataSet()
+                .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).dataSet()
                 .setState(ServiceState.OK);
     }
 
