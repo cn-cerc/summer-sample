@@ -26,6 +26,22 @@ import cn.cerc.sample.entity.EmployeeTotalEntity;
 @Description("第二代服务编写方式(正式项目中逐渐淘汰)")
 public class SvrEmployeeV2 implements IService {
 
+    @Description("根据条件查询人员信息")
+    public DataSet search(IHandle handle, DataRow headIn) {
+        MysqlQuery query = new MysqlQuery(handle);
+        query.add("select * from %s", EmployeeInfoEntity.TABLE);
+        SqlWhere where = query.addWhere();
+        where.eq("corp_no_", handle.getCorpNo());
+        if (headIn.has("code_"))
+            where.eq("code_", headIn.getString("code_"));
+        if (headIn.has("searchText_"))
+            where.like("name_", headIn.getString("searchText_"));
+        where.build();
+        query.add("order by code_ desc");
+        query.openReadonly();
+        return query.setState(ServiceState.OK);
+    }
+
     @Description("新增人员信息")
     @DataValidate(value = "code_", name = "员工工号")
     @DataValidate(value = "name_", name = "员工姓名")
@@ -40,6 +56,7 @@ public class SvrEmployeeV2 implements IService {
         query.open();
         if (!query.eof())
             throw new RuntimeException("该工号已经存在，不允许重复登记");
+
         try (Transaction tx = new Transaction(handle)) {// 启用事务管控
             query.append();
             query.setValue("corp_no_", handle.getCorpNo());
@@ -56,15 +73,14 @@ public class SvrEmployeeV2 implements IService {
             query.post();
 
             updateTotal(handle, 1);
-
             tx.commit();
         }
         return query.setState(ServiceState.OK);
     }
 
-    @Description("删除人员信息")
+    @Description("获取员工信息")
     @DataValidate(value = "code_", name = "员工工号")
-    public boolean delete(IHandle handle, DataRow headIn) {
+    public DataSet download(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
         MysqlQuery query = new MysqlQuery(handle);
         query.add("select * from %s", EmployeeInfoEntity.TABLE);
@@ -72,16 +88,9 @@ public class SvrEmployeeV2 implements IService {
         query.add("and code_='%s'", code);
         query.open();
         if (query.eof())
-            throw new RuntimeException("该工号不存在，删除失败");
-        // 更新员数量合计栏位
-        try (Transaction tx = new Transaction(handle)) {// 启用事务管控
-            query.delete();
+            throw new RuntimeException(String.format("%s 员工编号不存在", code));
 
-            updateTotal(handle, -1);
-
-            tx.commit();
-        }
-        return true;
+        return query.setState(ServiceState.OK);
     }
 
     @Description("修改人员信息")
@@ -109,9 +118,9 @@ public class SvrEmployeeV2 implements IService {
         return query.setState(ServiceState.OK);
     }
 
-    @Description("获取员工信息")
+    @Description("删除人员信息")
     @DataValidate(value = "code_", name = "员工工号")
-    public DataSet download(IHandle handle, DataRow headIn) {
+    public boolean delete(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
         MysqlQuery query = new MysqlQuery(handle);
         query.add("select * from %s", EmployeeInfoEntity.TABLE);
@@ -119,25 +128,14 @@ public class SvrEmployeeV2 implements IService {
         query.add("and code_='%s'", code);
         query.open();
         if (query.eof())
-            throw new RuntimeException(String.format("%s 员工编号不存在", code));
-
-        return query.setState(ServiceState.OK);
-    }
-
-    @Description("根据条件查询人员信息")
-    public DataSet search(IHandle handle, DataRow headIn) {
-        MysqlQuery query = new MysqlQuery(handle);
-        query.add("select * from %s", EmployeeInfoEntity.TABLE);
-        SqlWhere where = query.addWhere();
-        where.eq("corp_no_", handle.getCorpNo());
-        if (headIn.has("code_"))
-            where.eq("code_", headIn.getString("code_"));
-        if (headIn.has("searchText_"))
-            where.like("name_", headIn.getString("searchText_"));
-        where.build();
-        query.add("order by code_ desc");
-        query.openReadonly();
-        return query.setState(ServiceState.OK);
+            throw new RuntimeException("该工号不存在，删除失败");
+        // 更新员数量合计栏位
+        try (Transaction tx = new Transaction(handle)) {// 启用事务管控
+            query.delete();
+            updateTotal(handle, -1);
+            tx.commit();
+        }
+        return true;
     }
 
     private void updateTotal(IHandle handle, int num) {
@@ -155,6 +153,7 @@ public class SvrEmployeeV2 implements IService {
             total.setValue("version_", 1);
         } else {
             total.setValue("total_", total.getInt("total_") + num);
+            total.setValue("version_", total.getInt("version_") + 1);
         }
         total.setValue("update_user_", handle.getUserCode());
         total.setValue("update_time_", new Datetime());

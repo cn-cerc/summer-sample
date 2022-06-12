@@ -6,7 +6,6 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Description;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import cn.cerc.db.core.DataSet;
 import cn.cerc.db.core.Utils;
@@ -34,7 +33,6 @@ import cn.cerc.ui.core.UrlRecord;
 import cn.cerc.ui.panels.UIAppendPanel;
 import cn.cerc.ui.panels.UIModifyPanel;
 import cn.cerc.ui.panels.UISearchPanel;
-import cn.cerc.ui.vcl.UISpan;
 import cn.cerc.ui.vcl.UIUrl;
 
 @Webform(module = "", name = "员工管理", parent = "")
@@ -78,8 +76,10 @@ public class FrmEmployeeV3 extends CustomForm {
         // 定义表格的数据列
         new ItColumn(line1.cell(0));
         new StringColumn(line1.cell(1), "员工工号", "code_", 4);
+
         new StringColumn(line2.cell(0), "员工姓名", "name_", 4);
         new OptionColumn(line2.cell(1), "员工性别", "gender_", 3).setOptions(GenderEnum.values());
+
         new StringColumn(line3.cell(0), "入职日期", "entry_date_", 6);
         new BooleanColumn(line3.cell(1), "在职状态", "enable_");
 
