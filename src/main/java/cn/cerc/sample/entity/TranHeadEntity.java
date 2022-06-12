@@ -10,7 +10,6 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import cn.cerc.db.core.CacheLevelEnum;
@@ -21,6 +20,7 @@ import cn.cerc.db.core.IHandle;
 import cn.cerc.db.core.SqlServer;
 import cn.cerc.db.core.SqlServerType;
 import cn.cerc.mis.ado.CustomEntity;
+import lombok.Getter;
 
 @Component
 @Entity
