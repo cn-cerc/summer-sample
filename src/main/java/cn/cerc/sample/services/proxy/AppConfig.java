@@ -18,7 +18,9 @@ public class AppConfig {
     public static OriginalEdition original() {
         if (Utils.isEmpty(original))
             return OriginalEdition.STD;
-        return Stream.of(OriginalEdition.values()).filter(item -> original.equals(item.name())).findFirst()
+        return Stream.of(OriginalEdition.values())
+                .filter(item -> original.equals(item.name()))
+                .findFirst()
                 .orElse(OriginalEdition.STD);
     }
 

@@ -24,9 +24,9 @@ import lombok.Getter;
 
 @Component
 @Entity
-@EntityKey(fields = {"corp_no_", "order_sn_"}, corpNo = true, cache = CacheLevelEnum.Redis, smallTable = true)
-@Table(name = TranHeadEntity.TABLE, indexes = {@Index(name = "PRIMARY", columnList = "UID_", unique = true),
-        @Index(name = "uk_corp_order", columnList = "corp_no_,order_sn_", unique = true)})
+@EntityKey(fields = { "corp_no_", "order_sn_" }, corpNo = true, cache = CacheLevelEnum.Redis, smallTable = true)
+@Table(name = TranHeadEntity.TABLE, indexes = { @Index(name = "PRIMARY", columnList = "UID_", unique = true),
+        @Index(name = "uk_corp_order", columnList = "corp_no_,order_sn_", unique = true) })
 @SqlServer(type = SqlServerType.Mysql)
 @Describe(name = "订单单头")
 public class TranHeadEntity extends CustomEntity {
@@ -105,7 +105,9 @@ public class TranHeadEntity extends CustomEntity {
     }
 
     public enum TBType {
-        AB("进货单"), BC("出货单"), AE("盘点单");
+        AB("进货单"),
+        BC("出货单"),
+        AE("盘点单");
 
         @Getter
         private final String desc;

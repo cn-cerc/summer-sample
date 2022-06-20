@@ -42,7 +42,9 @@ import cn.cerc.ui.vcl.UIUrl;
 public class FrmEmployeeV2 extends CustomForm {
 
     enum GenderEnum {
-        未知, 男, 女;
+        未知,
+        男,
+        女;
     }
 
     @Description("默认的查询页面")
@@ -84,7 +86,8 @@ public class FrmEmployeeV2 extends CustomForm {
         // 定义表格中特殊的操作列
         CustomColumn customColumn = new CustomColumn(line4.cell(0));
         customColumn.setSpaceWidth(4);
-        customColumn.defineCell((content, record) -> new UIUrl(content).setText("修改").setSite("FrmEmployeeV2.modify")
+        customColumn.defineCell((content, record) -> new UIUrl(content).setText("修改")
+                .setSite("FrmEmployeeV2.modify")
                 .putParam("code", record.getString("code_")));
 
         // 返回页面

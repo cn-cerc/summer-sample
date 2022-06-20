@@ -59,7 +59,8 @@ public class SvrEmployeeV3 implements IService {
                 item.setEntry_date_(headIn.getFastDate("entry_date_"));
             });
             // 更新员数量合计栏位
-            EntityOne.open(handle, EmployeeTotalEntity.class).update(item -> item.setTotal_(item.getTotal_() + 1))
+            EntityOne.open(handle, EmployeeTotalEntity.class)
+                    .update(item -> item.setTotal_(item.getTotal_() + 1))
                     .orElseInsert(item -> item.setTotal_(1));
             tx.commit();
         }
@@ -71,7 +72,8 @@ public class SvrEmployeeV3 implements IService {
     public DataSet download(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
         return EntityOne.open(handle, EmployeeInfoEntity.class, code)
-                .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).dataSet()
+                .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code)))
+                .dataSet()
                 .setState(ServiceState.OK);
     }
 
@@ -82,12 +84,15 @@ public class SvrEmployeeV3 implements IService {
     public DataSet modify(IHandle handle, DataRow headIn) {
         String code = headIn.getString("code_");
         return EntityOne.open(handle, EmployeeInfoEntity.class, code)
-                .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).update(item -> {
+                .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code)))
+                .update(item -> {
                     item.setName_(headIn.getString("name_"));
                     item.setGender_(headIn.getInt("gender_"));
                     item.setEntry_date_(headIn.getFastDate("entry_date_"));
                     item.setEnable_(headIn.getBoolean("enable_"));
-                }).dataSet().setState(ServiceState.OK);
+                })
+                .dataSet()
+                .setState(ServiceState.OK);
     }
 
     @Description("删除人员信息")
@@ -96,10 +101,12 @@ public class SvrEmployeeV3 implements IService {
         String code = headIn.getString("code_");
         try (Transaction tx = new Transaction(handle)) {
             EntityOne.open(handle, EmployeeInfoEntity.class, code)
-                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code))).delete();
+                    .isEmptyThrow(() -> new RuntimeException(String.format("%s 员工编号不存在", code)))
+                    .delete();
 
             // 更新员数量合计栏位
-            EntityOne.open(handle, EmployeeTotalEntity.class).update(item -> item.setTotal_(item.getTotal_() - 1))
+            EntityOne.open(handle, EmployeeTotalEntity.class)
+                    .update(item -> item.setTotal_(item.getTotal_() - 1))
                     .orElseInsert(item -> item.setTotal_(0));
             tx.commit();
         }

@@ -4,7 +4,8 @@ import cn.cerc.mis.core.IBufferKey;
 
 public enum BufferUser implements IBufferKey {
 
-    Notice_UserCode, UserList_CorpNo;
+    Notice_UserCode,
+    UserList_CorpNo;
 
     @Override
     public int getStartingPoint() {
