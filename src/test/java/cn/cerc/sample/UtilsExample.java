@@ -29,14 +29,13 @@ public class UtilsExample {
         // DataSet 范例说明
         DataSet dataSet = new DataSet();
         DataRow head = dataSet.head();
-        head.setValue("tbNo", "AB201903270001");
-        head.setValue("tDate", new Datetime());
+        head.setValue("tb_", "AB").setValue("order_sn_", "AB" + new Datetime().getYearMonth() + Utils.getNumRandom(3));
         log.info("dataSet 头部信息 {}", head);
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 1; i <= 3; i++) {
             dataSet.append();
-            dataSet.setValue("code_", "code_" + i);
-            dataSet.setValue("name_", "name_" + i);
+            dataSet.setValue("code_", "编号_" + i);
+            dataSet.setValue("name_", "商品_" + i);
         }
         log.info("dataSet 完整信息 {}", dataSet);
 
@@ -44,7 +43,7 @@ public class UtilsExample {
         while (dataSet.fetch()) {
             String code = dataSet.getString("code_");
             String name = dataSet.getString("name_");
-            log.info("{}, {}", code, name);
+            log.info("单序 {}，编号 {}, 品名 {}", dataSet.recNo(), code, name);
         }
     }
 
