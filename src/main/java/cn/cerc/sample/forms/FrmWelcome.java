@@ -45,7 +45,7 @@ public class FrmWelcome extends AbstractForm {
         new UISpan(content).setText("简易进销存系统");
         new UILine(content);
 
-        new UIUrl(content).setText("员工管理（示例-第二代写法）").setSite("FrmEmployeeV2?");
+        new UIUrl(content).setText("员工管理（示例-第二代写法）").setSite("FrmEmployeeV2");
         new UILine(content);
 
         new UIUrl(content).setText("员工管理（示例-第三代写法）").setSite("FrmEmployeeV3");
